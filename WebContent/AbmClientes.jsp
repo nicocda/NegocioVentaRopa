@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	import = "entidades.Cliente"
+	import = "java.util.ArrayList"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -8,17 +10,18 @@
 </head>
 <body>
 
-
-	<form>
-		<div>
-				<label>Nombre:</label>
-				<input type = "text" name = "txtDNI" class = "txtBox" value = "" placeholder = "Ingrese nombre del cliente">
-				<label>Apellido:</label>
-				<input type = "text" name = "txtNombre" class = "txtBox" value = "" placeholder = "Ingrese apellido del cliente">
-				<label>Direccion:</label>
-				<input type = "text" name = "txtApellido" class = "txtBox" value = "" placeholder = "Ingrese la direccion del cliente">
-				<input type = "text" name = "txtNacimiento" class = "txtBox" value = "" placeholder = "Ingrese nacimiento del nadador">
-		</div>
+	<%ArrayList<Cliente> cbCliente = (ArrayList<Cliente>)request.getAttribute("listaClientes"); %>
+	<select>
+	<%for(Cliente c : cbCliente)
+	{%>
+		<option value="<%= c.getId()%>"><%= c.getNombreApellido() %></option>
+	<%} %>
+	</select>
+	<form method="post" action="TestCliente">
+		<p>Nombre: <input type="text" name="txtNombre" class="txtBox" placeholder="Ingrese nombre del cliente"></p>
+		<p>Teléfono: <input type="text" name="txtTelefono" class="txtBox" placeholder="Ingrese teléfono del cliente"></p>
+		<p>Dirección: <input type="text" name="txtDireccion" class="txtBox" placeholder="Ingrese dirección del cliente"></p>
+		<input type="submit" name="btnAgregarCliente">
 	</form>
 </body>
 </html>

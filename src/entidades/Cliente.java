@@ -1,47 +1,60 @@
 package entidades;
 
-public class Cliente {
-
-	private int nroCliente, telefono;
-	private String nombre, apellido, direccion;
-	private float deuda;
+public class Cliente 
+{
+	//Fields
+	private int id;
+	private String nombreApellido, direccion, telefono;
 	
+	//Constructores
+	public Cliente()
+	{
+	}
 	
-	public int getNroCliente() {
-		return nroCliente;
+	public Cliente(int id, String nombreApellido, String direccion, String telefono)
+	{
+		this.setId(id);
+		this.setDireccion(direccion);
+		this.setNombreApellido(nombreApellido);
+		this.setTelefono(telefono);
 	}
-	public void setNroCliente(int nroCliente) {
-		this.nroCliente = nroCliente;
+	
+	//Getter-Setter
+	public int getId() 
+	{
+		return id;
 	}
-	public int getTelefono() {
-		return telefono;
+	public void setId(int id) 
+	{
+		this.id = id;
 	}
-	public void setTelefono(int telefono) {
-		this.telefono = telefono;
+	public String getNombreApellido() 
+	{
+		return nombreApellido;
 	}
-	public String getNombre() {
-		return nombre;
+	public void setNombreApellido(String nombreApellido) 
+	{
+		this.nombreApellido = nombreApellido;
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-	public String getApellido() {
-		return apellido;
-	}
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
-	}
-	public String getDireccion() {
+	public String getDireccion() 
+	{
 		return direccion;
 	}
-	public void setDireccion(String direccion) {
+	public void setDireccion(String direccion) 
+	{
 		this.direccion = direccion;
 	}
-	public float getDeuda() {
-		return deuda;
+	public String getTelefono()
+	{
+		return telefono;
 	}
-	public void setDeuda(float deuda) {
-		this.deuda = deuda;
+	public void setTelefono(String telefono) 
+	{
+		this.telefono = telefono;
 	}
+
+	
+	
+	
 	
 }

@@ -6,13 +6,13 @@ import java.sql.*;
 import conexion.DataConnection;
 import entidades.Cliente;
 
-public class CatalogoClientes {
-
-	public ArrayList<Cliente> buscarTodosClientes()
+public class CatalogoClientes 
+{
+	public ArrayList<Cliente> buscarClientes()
 	{
+		ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 		String sql="select * from cliente order by nombreApellido";
 		PreparedStatement sentencia = null;
-		ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 		Connection con = DataConnection.getInstancia().getConn();
 		try
 		{
@@ -20,34 +20,33 @@ public class CatalogoClientes {
 			ResultSet rs =sentencia.executeQuery();
 			while(rs.next())
 			{
-				Cliente cl = new Cliente();
-				cl.setDireccion(rs.getString("direccion"));
-				cl.setNombre(rs.getString("nombreApellido"));
-				cl.setTelefono(rs.getInt("telefono"));
-				cl.setNroCliente(rs.getInt("nroCliente"));
-				cl.setDeuda(rs.getFloat("deuda"));
-				clientes.add(cl);
+				Cliente cliente = new Cliente();
+				cliente.setId(rs.getInt("id"));
+				cliente.setNombreApellido(rs.getString("nombreApellido"));
+				cliente.setDireccion(rs.getString("direccion"));
+				cliente.setTelefono(rs.getString("telefono"));
+				clientes.add(cliente);
 			}
 		}
 		catch(SQLException e)
-			{
-				e.printStackTrace();
-			}
+		{
+			e.printStackTrace();
+		}
 		finally
+		{
+			try
 			{
-				try
+				if(sentencia!=null && !sentencia.isClosed())
 				{
-					if(sentencia!=null && !sentencia.isClosed())
-					{
-						sentencia.close();
-					}
-					DataConnection.getInstancia().CloseConn();
+					sentencia.close();
 				}
-				catch (SQLException sqle)
-				{
-					sqle.printStackTrace();
-				}
+				DataConnection.getInstancia().CloseConn();
 			}
+			catch (SQLException sqle)
+			{
+				sqle.printStackTrace();
+			}
+		}
 		return clientes;
 	}
 	
@@ -63,13 +62,12 @@ public class CatalogoClientes {
 			ResultSet rs = sentencia.executeQuery();
 			while(rs.next())
 			{
-				Cliente cl = new Cliente();
-				cl.setDireccion(rs.getString("direccion"));
-				cl.setNombre(rs.getString("nombreApellido"));
-				cl.setTelefono(rs.getInt("telefono"));
-				cl.setNroCliente(rs.getInt("nroCliente"));
-				cl.setDeuda(rs.getFloat("deuda"));
-				clientes.add(cl);
+				Cliente cliente = new Cliente();
+				cliente.setId(rs.getInt("id"));
+				cliente.setNombreApellido(rs.getString("nombreApellido"));
+				cliente.setDireccion(rs.getString("direccion"));
+				cliente.setTelefono(rs.getString("telefono"));
+				clientes.add(cliente);
 			}
 		}
 		catch(SQLException e)
@@ -95,18 +93,16 @@ public class CatalogoClientes {
 		return clientes;
 	}
 	
-	public void agregarCliente(Cliente cl)
+	public void agregarCliente(Cliente cliente)
 	{
-		String sql = "insert into cliente (nrCliente,nombreApellido,direccion,telefono,deuda) values (?,?,?,?,?)";
+		String sql = "insert into cliente (nombreApellido, direccion, telefono) values (?,?,?)";
 		PreparedStatement sentencia = null;
 		try
 		{
 			sentencia=DataConnection.getInstancia().getConn().prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-			sentencia.setInt(1, cl.getNroCliente());
-			sentencia.setString(2, cl.getNombre());
-			sentencia.setString(4, cl.getDireccion());
-			sentencia.setInt(5, cl.getTelefono());
-			sentencia.setFloat(6, cl.getDeuda());
+			sentencia.setString(1, cliente.getNombreApellido());
+			sentencia.setString(2, cliente.getDireccion());
+			sentencia.setString(3, cliente.getTelefono());
 			sentencia.executeUpdate();
 		}
 		catch(SQLException e)
@@ -130,14 +126,14 @@ public class CatalogoClientes {
 		}
 	}
 
-	public void eliminarCliente(int nroCliente)
+	public void eliminarCliente(int id)
 	{
-		String sql = "delete from cliente where nroCliente=?";
+		String sql = "delete from cliente where id=?";
 		PreparedStatement sentencia = null;
 		try
 		{
 			sentencia=DataConnection.getInstancia().getConn().prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-			sentencia.setInt(1, nroCliente);
+			sentencia.setInt(1, id);
 			sentencia.executeUpdate();
 		}
 		catch(SQLException e)
@@ -161,19 +157,18 @@ public class CatalogoClientes {
 		}
 	}
 	
-	public void modificarCliente(Cliente cl)
+	public void modificarCliente(Cliente cliente)
 	{
-		String sql = "update cliente set nrCliente=? ,nombreApellido=? ,direccion=? ,telefono=? ,deuda=? where nroCliente=?";
+		String sql = "update cliente set id=? ,nombreApellido=? ,direccion=? ,telefono=? where id=?";
 		PreparedStatement sentencia = null;
 		try
 		{
 			sentencia=DataConnection.getInstancia().getConn().prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-			sentencia.setInt(1, cl.getNroCliente());
-			sentencia.setString(2, cl.getNombre());
-			sentencia.setString(4, cl.getDireccion());
-			sentencia.setInt(5, cl.getTelefono());
-			sentencia.setFloat(6, cl.getDeuda());
-			sentencia.setInt(7, cl.getNroCliente());
+			sentencia.setInt(1, cliente.getId());
+			sentencia.setString(2, cliente.getNombreApellido());
+			sentencia.setString(3, cliente.getDireccion());
+			sentencia.setString(4, cliente.getTelefono());
+			sentencia.setInt(5, cliente.getId());
 			sentencia.executeUpdate();
 		}
 		catch(SQLException e)

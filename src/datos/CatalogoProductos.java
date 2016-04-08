@@ -25,7 +25,7 @@ public class CatalogoProductos {
 			while(rs.next())
 			{
 				Producto pr = new Producto();
-				pr.setCodProducto(rs.getString("codProducto"));
+				//pr.setCodProducto(rs.getString("codProducto"));
 				pr.setDescripcion(rs.getString("descripcion"));
 				pr.setEstado(rs.getInt("estado"));
 				productos.add(pr);
@@ -67,7 +67,7 @@ public class CatalogoProductos {
 			while(rs.next())
 			{
 				Producto pr = new Producto();
-				pr.setCodProducto(rs.getString("codProducto"));
+				//pr.setCodProducto(rs.getString("codProducto"));
 				pr.setDescripcion(rs.getString("descripcion"));
 				pr.setEstado(rs.getInt("estado"));
 				productos.add(pr);
@@ -109,7 +109,7 @@ public class CatalogoProductos {
 			while(rs.next())
 			{
 				Producto pr = new Producto();
-				pr.setCodProducto(rs.getString("codProducto"));
+				//pr.setCodProducto(rs.getString("codProducto"));
 				pr.setDescripcion(rs.getString("descripcion"));
 				pr.setEstado(rs.getInt("estado"));
 				productos.add(pr);
@@ -151,7 +151,7 @@ public class CatalogoProductos {
 			while(rs.next())
 			{
 				pr = new Producto();
-				pr.setCodProducto(rs.getString("codProducto"));
+				//pr.setCodProducto(rs.getString("codProducto"));
 				pr.setDescripcion(rs.getString("descripcion"));
 				pr.setEstado(rs.getInt("estado"));
 			}
@@ -185,7 +185,7 @@ public class CatalogoProductos {
 		try
 		{
 			sentencia=DataConnection.getInstancia().getConn().prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-			sentencia.setString(1, pr.getCodProducto());
+			//sentencia.setString(1, pr.getCodProducto());
 			sentencia.setString(2, pr.getDescripcion());
 			sentencia.setInt(3, pr.getEstado());
 			sentencia.executeUpdate();
@@ -218,10 +218,10 @@ public class CatalogoProductos {
 		try
 		{
 			sentencia=DataConnection.getInstancia().getConn().prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-			sentencia.setString(1, pr.getCodProducto());
+			//sentencia.setString(1, pr.getCodProducto());
 			sentencia.setString(2, pr.getDescripcion());
 			sentencia.setInt(3, pr.getEstado());
-			sentencia.setString(4, pr.getCodProducto());
+			//sentencia.setString(4, pr.getCodProducto());
 			sentencia.executeUpdate();
 		}
 		catch(SQLException e)

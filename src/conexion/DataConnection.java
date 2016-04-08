@@ -13,23 +13,26 @@ public class DataConnection
 		}
 		return instancia;
 	}
-
+	
+	private static String dbUrl="jdbc:mysql://localhost:3306/ropa";
+	private static String dbUser="root";
+	private static String dbPassword="root";
 	
 	//Construtor Default
-	public DataConnection()
+	private DataConnection()
 	{
 	}
 	
 	//Abrir Conexión y manejo de errores
 	private Connection conn;
-		public Connection getConn()
-		{
+	public Connection getConn()
+	{
 		try 
 		{
 			if(conn==null || !conn.isValid(3))
 			{
-				Class.forName("org.sqlite.JDBC").newInstance();
-				conn=DriverManager.getConnection("jdbc:sqlite:C:\\Users\\nicolas\\workspace\\NatacionWeb\\DataBase/natacion.db");
+				Class.forName("com.mysql.jdbc.Driver").newInstance();
+				conn=DriverManager.getConnection(dbUrl,dbUser,dbPassword);	
 			}
 			
 		} catch (InstantiationException e) 
