@@ -8,7 +8,7 @@ import entidades.Cliente;
 
 public class CatalogoClientes 
 {
-	public ArrayList<Cliente> buscarClientes()
+	public static ArrayList<Cliente> buscarClientes()
 	{
 		ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 		String sql="select * from cliente order by nombreApellido";
@@ -50,7 +50,7 @@ public class CatalogoClientes
 		return clientes;
 	}
 	
-	public ArrayList<Cliente> buscarClienteNombreApellido(String nombreApellido)
+	public static ArrayList<Cliente> buscarClienteNombreApellido(String nombreApellido)
 	{
 		ArrayList<Cliente> clientes = new ArrayList<Cliente>();  
 		PreparedStatement sentencia = null;
@@ -93,7 +93,7 @@ public class CatalogoClientes
 		return clientes;
 	}
 	
-	public void agregarCliente(Cliente cliente)
+	public static void agregarCliente(Cliente cliente)
 	{
 		String sql = "insert into cliente (nombreApellido, direccion, telefono) values (?,?,?)";
 		PreparedStatement sentencia = null;
@@ -126,7 +126,7 @@ public class CatalogoClientes
 		}
 	}
 
-	public void eliminarCliente(int id)
+	public static void eliminarCliente(int id)
 	{
 		String sql = "delete from cliente where id=?";
 		PreparedStatement sentencia = null;
@@ -157,7 +157,7 @@ public class CatalogoClientes
 		}
 	}
 	
-	public void modificarCliente(Cliente cliente)
+	public static void modificarCliente(Cliente cliente)
 	{
 		String sql = "update cliente set id=? ,nombreApellido=? ,direccion=? ,telefono=? where id=?";
 		PreparedStatement sentencia = null;

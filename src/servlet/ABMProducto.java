@@ -1,6 +1,9 @@
 package servlet;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,6 +11,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import datos.CatalogoClientes;
+import datos.CatalogoDevolucion;
+import datos.CatalogoProductos;
+import datos.CatalogoVentas;
+import entidades.Producto.estado;
+import entidades.Cliente;
+import entidades.Devolucion;
+import entidades.Precio;
+import entidades.Producto;
+import entidades.Venta;
+import entidades.Venta.formaPago;
+import excepciones.RespuestaServidor;
 
 @WebServlet("/ABMProducto")
 public class ABMProducto extends HttpServlet {
@@ -24,20 +38,12 @@ public class ABMProducto extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		/*if(request.getParameter("addProd")!=null)
-		{
-			char tipo=request.getParameter("tipo").charAt(0);
-			char subTipo=request.getParameter("subTipo").charAt(0);
-			int cod =Integer.parseInt(request.getParameter("cod"));
-			String descripcion = request.getParameter("desc");
-			String codigoCompleto= Character.toString(tipo)+String.valueOf(subTipo)+Integer.toString(cod);
-			request.setAttribute("desc", descripcion);
-			request.setAttribute("codigo", codigoCompleto);
-			request.getRequestDispatcher("codigoBarra.jsp").forward(request, response);;
-		}*/
-		CatalogoClientes cc = new CatalogoClientes();
-		request.setAttribute("listaClientes", cc.buscarClientes());
-		request.getRequestDispatcher("AbmClientes.jsp").forward(request, response);
+		Object[] retorno = CatalogoProductos.buscarProductosDisponibles();	
+		ArrayList<Producto> listaProductos = (ArrayList<Producto>)retorno[1];
+		RespuestaServidor rs = (RespuestaServidor)retorno[0];
+		request.setAttribute("listaProductos", listaProductos);
+		request.setAttribute("mensaje", rs);
+		request.getRequestDispatcher("jspPrincipales/AbmClientes.jsp").forward(request, response);
 	}
 
 }
