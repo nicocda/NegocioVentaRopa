@@ -12,6 +12,7 @@ import entidades.Precio;
 import entidades.Producto;
 import entidades.Producto.estado;
 import excepciones.RespuestaServidor;
+import javafx.scene.chart.PieChart.Data;
 
 public class CatalogoProductos
 {
@@ -29,7 +30,7 @@ public class CatalogoProductos
 			while(rs.next())
 			{
 				Producto pr = new Producto();
-				pr.setId(rs.getInt("id"));
+				pr.setId(rs.getString("id"));
 				//el setPrecio() lleva como parametro una instancia de precio (new Precio())
 				pr.setPrecio(new Precio(rs.getDate("fecha"),rs.getFloat("precio")));
 				pr.setDescripcion(rs.getString("descripcion"));
@@ -87,7 +88,7 @@ public class CatalogoProductos
 			while(rs.next())
 			{
 				Producto pr = new Producto();
-				pr.setId(rs.getInt("id"));
+				pr.setId(rs.getString("id"));
 				//el setPrecio() lleva como parametro una instancia de precio (new Precio())
 				pr.setPrecio(new Precio(rs.getDate("fecha"),rs.getFloat("precio")));
 				pr.setDescripcion(rs.getString("descripcion"));
@@ -116,7 +117,7 @@ public class CatalogoProductos
 			while(rs.next())
 			{
 				Producto pr = new Producto();
-				pr.setId(rs.getInt("id"));
+				pr.setId(rs.getString("id"));
 				//el setPrecio() lleva como parametro una instancia de precio (new Precio())
 				pr.setPrecio(new Precio(rs.getDate("fecha"),rs.getFloat("precio")));
 				pr.setDescripcion(rs.getString("descripcion"));
@@ -145,7 +146,7 @@ public class CatalogoProductos
 			while(rs.next())
 			{
 				Producto pr = new Producto();
-				pr.setId(rs.getInt("id"));
+				pr.setId(rs.getString("id"));
 				//el setPrecio() lleva como parametro una instancia de precio (new Precio())
 				pr.setPrecio(new Precio(rs.getDate("fecha"),rs.getFloat("precio")));
 				pr.setDescripcion(rs.getString("descripcion"));
@@ -189,7 +190,7 @@ public class CatalogoProductos
 			while(rs.next())
 			{
 				Producto pr = new Producto();
-				pr.setId(rs.getInt("id"));
+				pr.setId(rs.getString("id"));
 				//el setPrecio() lleva como parametro una instancia de precio (new Precio())
 				pr.setPrecio(new Precio(rs.getDate("fecha"),rs.getFloat("precio")));
 				pr.setDescripcion(rs.getString("descripcion"));
@@ -233,7 +234,7 @@ public class CatalogoProductos
 			if(rs.next())
 			{
 				pr = new Producto();
-				pr.setId(rs.getInt("id"));
+				pr.setId(rs.getString("id"));
 				//el setPrecio() lleva como parametro una instancia de precio (new Precio())
 				pr.setPrecio(new Precio(rs.getDate("fecha"),rs.getFloat("precio")));
 				pr.setDescripcion(rs.getString("descripcion"));
@@ -269,7 +270,7 @@ public class CatalogoProductos
 		try
 		{
 			sentencia=DataConnection.getInstancia().getConn().prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-			sentencia.setInt(1, pr.getId());
+			sentencia.setString(1, pr.getId());
 			sentencia.setString(2, pr.getDescripcion());
 			sentencia.setInt(3, pr.getEstado());
 			sentencia.executeUpdate();
@@ -297,15 +298,14 @@ public class CatalogoProductos
 	
 	public static void modificarProducto(Producto pr)
 	{
-		String sql="update producto set id=?, descripcion=?, estado=? where id=?";
+		String sql="update producto set  descripcion=?, estado=? where id=?";
 		PreparedStatement sentencia = null;
 		try
 		{
 			sentencia=DataConnection.getInstancia().getConn().prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-			sentencia.setInt(1, pr.getId());
-			sentencia.setString(2, pr.getDescripcion());
-			sentencia.setInt(3, pr.getEstado());
-			sentencia.setInt(4, pr.getId());
+			sentencia.setString(1, pr.getDescripcion());
+			sentencia.setInt(2, pr.getEstado());
+			sentencia.setString(3, pr.getId());
 			sentencia.executeUpdate();
 		}
 		catch(SQLException e)
@@ -329,7 +329,7 @@ public class CatalogoProductos
 		}
 	}
 	
-	public static void modificarEstadoProducto(int id, estado valor)
+	public static void modificarEstadoProducto(String id, estado valor)
 	{
 		String sql="update producto set estado=? where id=?"; //estado=0 es vendido 
 		PreparedStatement sentencia = null;
@@ -337,7 +337,7 @@ public class CatalogoProductos
 		{
 			sentencia = DataConnection.getInstancia().getConn().prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 			sentencia.setInt(1, valor.ordinal());
-			sentencia.setInt(2, id);
+			sentencia.setString(2, id);
 			sentencia.executeUpdate();
 		}
 		catch(SQLException e)
@@ -373,7 +373,7 @@ public class CatalogoProductos
 			{
 				sentencia.setInt(1, estado.VENDIDO.ordinal());
 				sentencia.setInt(2, idVenta);
-				sentencia.setInt(3, pr.getId());
+				sentencia.setString(3, pr.getId());
 				sentencia.executeUpdate();
 			}
 		}
@@ -410,7 +410,7 @@ public class CatalogoProductos
 			{
 				sentencia.setInt(1, estado.STOCK.ordinal());
 				sentencia.setInt(2, idDevolucion);
-				sentencia.setInt(3, pr.getId());
+				sentencia.setString(3, pr.getId());
 				sentencia.executeUpdate();
 			}
 		}
@@ -435,4 +435,40 @@ public class CatalogoProductos
 		}
 	}
 	
+	public static String ultimoIdProducto(char tipo, char subTipo)
+	{
+		String sql="select id from producto where id like '?%' order by id desc limit  1";
+		PreparedStatement sentencia = null;
+		String ultProd= null;
+		try
+		{
+			sentencia=DataConnection.getInstancia().getConn().prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+			sentencia.setString(1, Character.toString(tipo).concat(Character.toString(subTipo)));
+			ResultSet rs = sentencia.executeQuery();
+			if(rs.next())
+			{
+				ultProd=rs.getString("id");
+			}
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if(sentencia!=null && !sentencia.isClosed())
+				{
+					sentencia.close();
+				}
+				DataConnection.getInstancia().CloseConn();
+			}
+			catch (SQLException sqle)
+			{
+				sqle.printStackTrace();
+			}
+		}
+		return ultProd;
+	}
 }
