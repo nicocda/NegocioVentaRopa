@@ -80,6 +80,7 @@ public class Venta
 	//Enum
 	public static enum formaPago
 	{
+		NULL,
 		EFECTIVO,
 		CTACTE,
 		TARJETA

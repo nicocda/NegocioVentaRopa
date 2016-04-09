@@ -99,21 +99,6 @@ public class CatalogoProductos
 			{
 				e.printStackTrace();
 			}
-		finally
-			{
-				try
-				{
-					if(sentencia!=null && !sentencia.isClosed())
-					{
-						sentencia.close();
-					}
-					DataConnection.getInstancia().CloseConn();
-				}
-				catch (SQLException sqle)
-				{
-					sqle.printStackTrace();
-				}
-			}
 		return productos;
 	}
 	
@@ -142,21 +127,6 @@ public class CatalogoProductos
 		catch(SQLException e)
 			{
 				e.printStackTrace();
-			}
-		finally
-			{
-				try
-				{
-					if(sentencia!=null && !sentencia.isClosed())
-					{
-						sentencia.close();
-					}
-					DataConnection.getInstancia().CloseConn();
-				}
-				catch (SQLException sqle)
-				{
-					sqle.printStackTrace();
-				}
 			}
 		return productos;
 	}

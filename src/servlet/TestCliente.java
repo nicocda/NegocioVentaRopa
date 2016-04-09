@@ -27,7 +27,8 @@ public class TestCliente extends HttpServlet
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{		
-		request.setAttribute("url", "../jspPrincipales/Login.jsp");
+		request.setAttribute("servlet", "");
+		request.setAttribute("url", "../jspPrincipales/Ventas.jsp");
 		request.getRequestDispatcher("jspCompartido/MainLayout.jsp").forward(request, response);
 	}
 

@@ -50,7 +50,7 @@ public class CatalogoClientes
 		return clientes;
 	}
 	
-	public static ArrayList<Cliente> buscarClienteNombreApellido(String nombreApellido)
+	public static ArrayList<Cliente> buscarClientes(String nombreApellido)
 	{
 		ArrayList<Cliente> clientes = new ArrayList<Cliente>();  
 		PreparedStatement sentencia = null;
@@ -191,6 +191,33 @@ public class CatalogoClientes
 			}
 		}
 	}
+
+	public static Cliente buscarCliente(int id) {
+		Cliente cliente = null;
+		String sql="select * from cliente where id=?";
+		PreparedStatement sentencia = null;
+		Connection con = DataConnection.getInstancia().getConn();
+		try
+		{
+			sentencia =con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			sentencia.setInt(1, id);
+			ResultSet rs =sentencia.executeQuery();
+			if(rs.next())
+			{
+				cliente = new Cliente();
+				cliente.setId(rs.getInt("id"));
+				cliente.setNombreApellido(rs.getString("nombreApellido"));
+				cliente.setDireccion(rs.getString("direccion"));
+				cliente.setTelefono(rs.getString("telefono"));
+				
+			}
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return cliente;
+		}
 }
 
 
