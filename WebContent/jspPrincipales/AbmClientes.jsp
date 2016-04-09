@@ -8,9 +8,9 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>ABM Cliente</title>
-		<script type="text/javascript" src="scripts/lib/jquery-1.12.3.js"></script>
-		<script type="text/javascript" src="scripts/lib/jquery-ui.js"></script>
-		<link rel="stylesheet" href="themes/jquery-ui.css">
+		<script type="text/javascript" src="../scripts/lib/jquery-1.12.3.js"></script>
+		<script type="text/javascript" src="../scripts/lib/jquery-ui.js"></script>
+		<link rel="stylesheet" href="../themes/jquery-ui.css">
 		<script>
 		$(function() 
 		{

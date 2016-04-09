@@ -26,10 +26,9 @@ public class TestCliente extends HttpServlet
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-	{
-		Cliente cliente = new Cliente(0, request.getParameter("txtNombre"), request.getParameter("txtDireccion"), request.getParameter("txtTelefono"));
-		CatalogoClientes cc = new CatalogoClientes();
-		cc.agregarCliente(cliente);
+	{		
+		request.setAttribute("url", "../jspPrincipales/Login.jsp");
+		request.getRequestDispatcher("jspCompartido/MainLayout.jsp").forward(request, response);
 	}
 
 }
