@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	import="excepciones.RespuestaServidor"
+	import="java.util.ArrayList"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -42,14 +43,14 @@
 		</div>
 	</header>
 	<div class="abajoHeader">
-	<%RespuestaServidor mensaje = (RespuestaServidor)request.getAttribute("mensaje"); %>
-		<%if(mensaje!=null) 
+	<%ArrayList<String> errores = (ArrayList<String>)request.getAttribute("errores"); %>
+		<%if(errores!=null) 
 		{%>
-		<%if(!mensaje.getErrors().isEmpty() || !mensaje.getWarnings().isEmpty())
+		<%if(!errores.isEmpty())
 		{%>
 			<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"> 
 				<p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
-			    <%for(String m : mensaje.getErrors())
+			    <%for(String m : errores)
 			    {%>
 			    <strong>Alert:</strong><%=m%></p>
 			    <%}%>

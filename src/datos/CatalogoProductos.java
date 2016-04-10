@@ -17,7 +17,7 @@ import javafx.scene.chart.PieChart.Data;
 public class CatalogoProductos
 {
 	
-	public static Object[] buscarProductosDisponibles()
+	public static ArrayList<Producto> buscarProductosDisponibles()
 	{
 		String sql="select * from producto p inner join precio s on p.id=s.idProducto where estado=1 order by id";//estado=1 es en stock
 		PreparedStatement sentencia = null;
@@ -57,21 +57,7 @@ public class CatalogoProductos
 				sqle.printStackTrace();
 			}
 		}
-		Object[] retorno= { validar(productos), productos }; 
-		return retorno;
-	}
-	
-	private static RespuestaServidor validar(ArrayList<Producto> productos) 
-	{
-		RespuestaServidor rs = new RespuestaServidor();
-		
-		if (productos.isEmpty())
-		{
-			ArrayList<String> as = rs.getErrors();
-			rs.getErrors().add("No hay productos que mostrar.");
-		}
-		
-		return rs;
+		return productos;
 	}
 
 	public static ArrayList<Producto> buscarProductosVenta(int idVenta)
@@ -263,8 +249,11 @@ public class CatalogoProductos
 		return pr;
 	}
 
-	public static void agregarProducto(Producto pr)
+	public static RespuestaServidor agregarProducto(Producto pr)
 	{
+		RespuestaServidor sr = validarProducto(pr);
+		if(!sr.getStatus())
+			return sr;
 		String sql="insert into producto (id,descripcion,estado) values(?,?,?)";
 		PreparedStatement sentencia=null;
 		try
@@ -279,7 +268,7 @@ public class CatalogoProductos
 		{
 			e.printStackTrace();
 		}
-	finally
+		finally
 		{
 			try
 			{
@@ -294,8 +283,21 @@ public class CatalogoProductos
 				sqle.printStackTrace();
 			}
 		}
+		return sr;
 	}
 	
+	private static RespuestaServidor validarProducto(Producto pr) 
+	{
+		RespuestaServidor sr = new RespuestaServidor();
+		if(!(pr.getId() != null && !pr.getId().isEmpty()))
+			sr.addError("Ocurrió un error interno. El id es obligatorio.");
+		if(!(pr.getDescripcion() != null && !pr.getDescripcion().isEmpty()))
+			sr.addError("El producto debe tener una descripción.");
+		if(pr.getPrecio().getPrecio() < 0)
+			sr.addError("El precio ingresado no es válido.");
+		return sr;
+	}
+
 	public static void modificarProducto(Producto pr)
 	{
 		String sql="update producto set  descripcion=?, estado=? where id=?";

@@ -1,28 +1,45 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
-
-		<script type="text/javascript" src="scripts/lib/jquery-1.12.3.js"></script>
-		<script type="text/javascript" src="scripts/lib/jquery-ui.js"></script>
-		<link rel="stylesheet" href="themes/jquery-ui.css">
-		
-		<script>
-		$(function() 
-		{
-		   $( "#accordion" ).accordion();
-		 });
-		</script>
-</head>
-<body>
-
-	<div id="accordion">
-	<div><p>Hola</p></div>
-	<div><p>Hola</p></div>
+<div id="accordion">
+	<h3>Lista de Productos</h3>
+	<div style="max-height: 380px">
+		<table>
+			<tr>
+				<th>ID</th>
+				<th>Descripción</th>
+				<th>Estado</th>
+				<th>Precio</th>
+				<th></th>
+			</tr>
+			<%for(int i = 0; i <=10; i++)
+			{%>
+			<tr>
+				<td>0303</td>
+				<td>Teléfono</td>
+				<td>En stock</td>
+				<td>456</td>
+				<td><input type="button" class="botones" value="Editar"></td>
+			</tr>
+			<%} %>
+		</table>
 	</div>
-
-</body>
-</html>
+	<h3>Nuevo/Editar Producto:</h3>
+	<div>
+		<form action="TestCliente" method="post">
+			<select>
+				<option>Seleccione Tipo</option>
+				<option>Tipo1</option>
+				<option>Tipo2</option>
+				<option>Tipo3</option>
+			</select>
+			<select>
+				<option>Seleccione SubTipo</option>
+				<option>SubTipo1</option>
+				<option>SubTipo2</option>
+				<option>SubTipo3</option>
+			</select>
+			<input type="text" name="txtID" placeholder="ID" disabled="disabled">
+			<input type="text" name="txtDescripcion" placeholder="Descripción">
+			<input type="text" name="txtPrecio" placeholder="Precio">
+			<input type="submit" name="btnAceptar" class="botones" value="Agregar Producto">
+		</form>
+	</div>
+</div>

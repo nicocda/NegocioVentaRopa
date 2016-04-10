@@ -100,6 +100,7 @@ th
     background-color: #4CAF50;
     color: white;
 }
+
 /*Radio button*/
 
 input[type=radio].css-checkbox {
@@ -131,3 +132,6 @@ input[type=radio].css-checkbox {
 				-ms-user-select: none;
 				user-select: none;
 			}
+
+//Scrolleable tabla
+

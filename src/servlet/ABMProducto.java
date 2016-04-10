@@ -38,12 +38,7 @@ public class ABMProducto extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		Object[] retorno = CatalogoProductos.buscarProductosDisponibles();	
-		ArrayList<Producto> listaProductos = (ArrayList<Producto>)retorno[1];
-		RespuestaServidor rs = (RespuestaServidor)retorno[0];
-		request.setAttribute("listaProductos", listaProductos);
-		request.setAttribute("mensaje", rs);
-		request.getRequestDispatcher("jspPrincipales/AbmClientes.jsp").forward(request, response);
+		
 	}
 
 }
