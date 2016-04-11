@@ -37,10 +37,10 @@ public class TestCliente extends HttpServlet
 	{
 		if(request.getParameter("btnAceptar")!=null)
 		{
-			String descripcion = request.getParameter("txtDescripcion"), estado = request.getParameter("txtEstado"), id = request.getParameter("txtID"), precio=request.getParameter("txtPrecio");
+			String descripcion = request.getParameter("txtDescripcion"), id = request.getParameter("txtID"), precio=request.getParameter("txtPrecio");
 			Calendar today = Calendar.getInstance();
 			today.set(Calendar.HOUR_OF_DAY, 0);
-			Producto producto = new Producto(descripcion, Integer.parseInt(estado), id, new Precio(today.getTime(), Float.parseFloat(precio)));
+			Producto producto = new Producto(descripcion, 1, id, new Precio(today.getTime(), Float.parseFloat(precio)));
 			RespuestaServidor sr = CatalogoProductos.agregarProducto(producto);
 			ArrayList<String> errores = new ArrayList<String>();
 			for(ErrorServidor e : sr.getErrors())

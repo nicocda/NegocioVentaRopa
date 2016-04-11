@@ -20,17 +20,6 @@
 	</head>
 	
 	<body>
-		<%RespuestaServidor mensaje = (RespuestaServidor)request.getAttribute("mensaje"); %>
-		<%if(!mensaje.getErrors().isEmpty() || !mensaje.getWarnings().isEmpty())
-		{%>
-			<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"> 
-				<p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
-			    <%for(String m : mensaje.getErrors())
-			    {%>
-			    <strong>Alert:</strong><%=m%></p>
-			    <%}%>
-			</div>
-		<%}%>
 		<div id="accordion">
 		 	<h3>Section 1</h3>
 			 <div>

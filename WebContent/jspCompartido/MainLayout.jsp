@@ -42,7 +42,6 @@
 			</nav>
 		</div>
 	</header>
-	<div class="abajoHeader">
 	<%ArrayList<String> errores = (ArrayList<String>)request.getAttribute("errores"); %>
 		<%if(errores!=null) 
 		{%>
@@ -50,17 +49,19 @@
 		{%>
 			<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"> 
 				<p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+			    
+			    <strong>Error:</strong></p>
+			    <ul>
 			    <%for(String m : errores)
 			    {%>
-			    <strong>Alert:</strong><%=m%></p>
+			    	<li><%=m%></li>
 			    <%}%>
+			    </ul>
 			</div>
 		<%}
 		}%>
 		
 	<%String url = (String)request.getAttribute("url");%>
 	<jsp:include page="<%= url %>" flush="true" />
-	</div>
-
 </body>
 </html>

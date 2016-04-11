@@ -22,6 +22,7 @@ import entidades.Producto;
 import entidades.Venta;
 import entidades.Venta.formaPago;
 import excepciones.RespuestaServidor;
+import util.JsonResponses;
 
 @WebServlet("/ABMProducto")
 public class ABMProducto extends HttpServlet {
@@ -38,7 +39,16 @@ public class ABMProducto extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
+		//esta sr viene del controlador. Si está vacia muestra mensaje de exito.
+		RespuestaServidor sr = new RespuestaServidor();
+		sr.addError("Soy un error");
+		sr.addError("Soy otro error");
+		sr.addError("Yo también soy un error");
+		String mensajesJson = JsonResponses.devolverMensaje(sr);
 		
+		response.setContentType("json");
+	    response.setCharacterEncoding("UTF-8");
+	    response.getWriter().write(mensajesJson);
 	}
 
 }
