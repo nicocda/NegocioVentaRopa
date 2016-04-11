@@ -266,7 +266,8 @@ public class CatalogoProductos
 		}
 		catch(SQLException e)
 		{
-			e.printStackTrace();
+			sr.addError(e);
+			//e.printStackTrace();
 		}
 		finally
 		{
@@ -280,7 +281,8 @@ public class CatalogoProductos
 			}
 			catch (SQLException sqle)
 			{
-				sqle.printStackTrace();
+				sr.addError(sqle);
+				//sqle.printStackTrace();
 			}
 		}
 		return sr;
@@ -439,13 +441,13 @@ public class CatalogoProductos
 	
 	public static String ultimoIdProducto(char tipo, char subTipo)
 	{
-		String sql="select id from producto where id like '?%' order by id desc limit  1";
+		String sql="select id from producto where id like ? order by id desc limit  1";
 		PreparedStatement sentencia = null;
 		String ultProd= null;
 		try
 		{
 			sentencia=DataConnection.getInstancia().getConn().prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-			sentencia.setString(1, Character.toString(tipo).concat(Character.toString(subTipo)));
+			sentencia.setString(1, Character.toString(tipo).concat(Character.toString(subTipo) + "%"));
 			ResultSet rs = sentencia.executeQuery();
 			if(rs.next())
 			{

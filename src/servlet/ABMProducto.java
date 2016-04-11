@@ -3,12 +3,15 @@ package servlet;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 
 import datos.CatalogoClientes;
 import datos.CatalogoDevolucion;
@@ -21,7 +24,9 @@ import entidades.Precio;
 import entidades.Producto;
 import entidades.Venta;
 import entidades.Venta.formaPago;
+import excepciones.ErrorServidor;
 import excepciones.RespuestaServidor;
+import negocio.ControladorABM;
 import util.JsonResponses;
 
 @WebServlet("/ABMProducto")
@@ -34,16 +39,26 @@ public class ABMProducto extends HttpServlet {
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		doPost(request, response);	
+		doPost(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		//esta sr viene del controlador. Si está vacia muestra mensaje de exito.
-		RespuestaServidor sr = new RespuestaServidor();
-		sr.addError("Soy un error");
-		sr.addError("Soy otro error");
-		sr.addError("Yo también soy un error");
+		String descripcion = request.getParameter("descripcion"), 
+				precio=request.getParameter("precio");
+		
+		float precioFloat;
+		try
+		{
+			precioFloat = Float.parseFloat(precio);
+		}
+		catch(NumberFormatException e)
+		{
+			precioFloat = -1;
+		}		
+		ControladorABM cabm = new ControladorABM();
+		RespuestaServidor sr = cabm.agregarProducto('R', 'H', descripcion, 1, precioFloat);
+
 		String mensajesJson = JsonResponses.devolverMensaje(sr);
 		
 		response.setContentType("json");

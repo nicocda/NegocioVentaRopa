@@ -13,6 +13,7 @@
 	<script type="text/javascript" src="./scripts/lib/jquery-1.12.3.js"></script>
 	<script type="text/javascript" src="./scripts/lib/jquery-ui.js"></script>
 	<script type="text/javascript" src="./scripts/custom/popup.js"></script>
+	<script type="text/javascript" src="./scripts/custom/prueba.js"></script>	
 	<%}
 	else
 	{%>
@@ -21,7 +22,8 @@
 	<link rel="stylesheet" type="text/css" href="../themes/componentes.css">
 	<script type="text/javascript" src="../scripts/lib/jquery-1.12.3.js"></script>
 	<script type="text/javascript" src="../scripts/lib/jquery-ui.js"></script>
-	<script type="text/javascript" src="../scripts/custom/popup.js"></script>	
+	<script type="text/javascript" src="../scripts/custom/popup.js"></script>
+	<script type="text/javascript" src="../scripts/custom/prueba.js"></script>	
 	<%} %>
 	
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -30,6 +32,7 @@
 	
 </head>
 <body>
+	
 	<header>
 		<div class="wrapper">
 			<div class="logo">Ropa</div>
@@ -42,24 +45,7 @@
 			</nav>
 		</div>
 	</header>
-	<%ArrayList<String> errores = (ArrayList<String>)request.getAttribute("errores"); %>
-		<%if(errores!=null) 
-		{%>
-		<%if(!errores.isEmpty())
-		{%>
-			<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"> 
-				<p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
-			    
-			    <strong>Error:</strong></p>
-			    <ul>
-			    <%for(String m : errores)
-			    {%>
-			    	<li><%=m%></li>
-			    <%}%>
-			    </ul>
-			</div>
-		<%}
-		}%>
+
 		
 	<%String url = (String)request.getAttribute("url");%>
 	<jsp:include page="<%= url %>" flush="true" />
