@@ -9,14 +9,14 @@ import="negocio.ControladorABM" %>
 <div id="divError"></div>
 <div id="accordion">
 	<h3>Lista de Clientes</h3>
-	<div style="max-height: 380px">
-		<table>
+	<div style="max-height: 320px">
+		<table class="CSSTableGenerator">
 			<tr>
-				<th>ID</th>
-				<th>Nombre y Apellido</th>
-				<th>Dirección</th>
-				<th>Teléfono</th>
-				<th></th>
+				<td>ID</td>
+				<td>Nombre y Apellido</td>
+				<td>Dirección</td>
+				<td>Teléfono</td>
+				<td></td>
 			</tr>
 			<%
 			ArrayList<Cliente> clientes = ControladorABM.buscarClientes();

@@ -19,7 +19,8 @@ public class CatalogoProductos
 	
 	public static ArrayList<Producto> buscarProductosDisponibles()
 	{
-		String sql="select * from producto p inner join precio s on p.id=s.idProducto where estado=1 order by id";//estado=1 es en stock
+		//String sql ="select * from producto p inner join precio s on p.id=s.idProducto where estado=1 order by id";//estado=1 es en stock
+		String sql="select * from producto order by id";
 		PreparedStatement sentencia = null;
 		ArrayList<Producto> productos = new ArrayList<Producto>();
 		Connection con = DataConnection.getInstancia().getConn();
@@ -32,7 +33,7 @@ public class CatalogoProductos
 				Producto pr = new Producto();
 				pr.setId(rs.getString("id"));
 				//tengo que buscar el ultimo precio, por eso lo hago en el catalogo
-				pr.setPrecio(CatalogoPrecios.buscarPrecioProducto(pr.getId()));
+				//pr.setPrecio(CatalogoPrecios.buscarPrecioProducto(pr.getId()));
 				pr.setDescripcion(rs.getString("descripcion"));
 				pr.setEstado(rs.getInt("estado"));
 				productos.add(pr);

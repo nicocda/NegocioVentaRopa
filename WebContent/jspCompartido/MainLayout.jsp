@@ -1,8 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	import="excepciones.RespuestaServidor"
-	import="entidades.Cliente"
-	import="java.util.ArrayList"
-	import="negocio.ControladorABM"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -35,7 +31,7 @@
 	
 	<header>
 		<div class="wrapper">
-			<div class="logo">Ropa</div>
+			<div class="logo"><a href="#"><img height="78" width="150" src="http://vignette1.wikia.nocookie.net/logopedia/images/a/ab/200px-Lacoste_logo_svg.png/revision/latest?cb=20100911064850"></a></div>
 			
 			<nav>
 				<a href="#">Inicio</a>

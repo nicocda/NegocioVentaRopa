@@ -27,17 +27,14 @@ public class ABMCliente extends HttpServlet
 		doPost(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		
-		
-		
 			int id;
-			if(request.getParameter("id").isEmpty())  id=0; else
-			id = Integer.parseInt(request.getParameter("id"));
+			String idString = request.getParameter("id");
+			if(idString == null || idString.isEmpty())  
+				id=0; 
+			else
+				id = Integer.parseInt(idString);
 			String nya = request.getParameter("nombreApellido");
 			String dire = request.getParameter("direccion");
 			String tel = request.getParameter("telefono");
@@ -46,7 +43,6 @@ public class ABMCliente extends HttpServlet
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(mensajesJson);
-		
 	}
 
 }

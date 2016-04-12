@@ -4,7 +4,7 @@ header
 	overflow:hidden; /* Eliminamos errores de float */
 	background:#252932;
 	margin-bottom:20px;
-	height: 100px;
+	height: 80px;
 }
 
 .wrapper 
@@ -19,7 +19,7 @@ header .logo
 {
 	color:#f2f2f2;
 	font-size:50px;
-	line-height:100px;
+	line-height:80px;
 	float:left;
 }
 
@@ -36,7 +36,7 @@ header nav a
 	text-decoration:none;
 	padding:10px 20px;
 	line-height:normal;
-	font-size:15px;
+	font-size:18px;
 	font-weight:bold;
 }
 

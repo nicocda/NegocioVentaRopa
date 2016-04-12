@@ -1,48 +1,55 @@
+<%@page import="entidades.Producto.estado"%>
+<%@page import="entidades.Producto"%>
+<%@page import="negocio.ControladorABM"%>
 <script type="text/javascript" src="../scripts/custom/ABMProductos.js"></script>	
 <script type="text/javascript" src="./scripts/custom/ABMProductos.js"></script>	
 <script type="text/javascript" src="../scripts/custom/popup.js"></script>
 <script type="text/javascript" src="./scripts/custom/popup.js"></script>
 
-
+<H4>Productos</H4>
 <div id="divError"></div>
 <div id="accordion">
 	<h3>Lista de Productos</h3>
-	<div style="max-height: 380px">
-		<table>
+	<div style="max-height: 320px">
+		<table class="CSSTableGenerator">
 			<tr>
-				<th>ID</th>
-				<th>Descripción</th>
-				<th>Estado</th>
-				<th>Precio</th>
-				<th></th>
+				<td width="20%">ID</td>
+				<td width="40%">Descripción</td>
+				<td width="20%">Estado</td>
+				<td width="10%">Precio</td>
+				<td width="10%"></td>
 			</tr>
-			<%for(int i = 0; i <=10; i++)
+			<%for(Producto p : ControladorABM.buscarProductos())
 			{%>
 			<tr>
-				<td>0303</td>
-				<td>Teléfono</td>
-				<td>En stock</td>
-				<td>456</td>
-				<td><input type="button" class="botones" value="Editar"></td>
+				<td class="idTabla"><%=p.getId() %></td>
+				<td class="descripcionTabla"><%=p.getDescripcion() %></td>
+				<td><%=estado.values()[p.getEstado()].toString() %></td>
+				<td class="precioTabla">200</td>
+				<td><input type="button" class="botones btnEditar" value="Editar"></td>
 			</tr>
 			<%} %>
 		</table>
 	</div>
-	<h3>Nuevo/Editar Producto:</h3>
+	<h3 id="nuevoEditar">Nuevo/Editar Producto:</h3>
 	<div>
-		<select>
-			<option>Seleccione Tipo</option>
-			<option>Tipo1</option>
-			<option>Tipo2</option>
-			<option>Tipo3</option>
+		<select id="cbTipo">
+			<optgroup label="Tipo">
+				<option value="R">Ropa</option>
+				<option value="M">Marroquineria</option>
+				<option value="B">Bijouterie</option>
+				<option value="Z">Zapatos</option>
+			</optgroup>
 		</select>
-		<select>
-			<option>Seleccione SubTipo</option>
-			<option>SubTipo1</option>
-			<option>SubTipo2</option>
-			<option>SubTipo3</option>
+		<select id="cbSubTipo" >
+			<optgroup label="Subtipo">
+				<option value="H">Hombre</option>
+				<option value="M">Mujer</option>
+				<option value="N">Niño</option>
+			</optgroup>
 		</select>
-		<input type="text" id="txtID" placeholder="ID" disabled="disabled">
+		<button id="btnRestaurar">x</button>
+		<input type="text" id="txtID" placeholder="ID" disabled="disabled" value = <%=ControladorABM.obtenerIdCompleto('R', 'H')%>>
 		<input type="text" id="txtDescripcion" placeholder="Descripción">
 		<input type="text" id="txtPrecio" placeholder="Precio">
 		<input type="submit" id="btnAceptar" class="botones" value="Guardar Producto">

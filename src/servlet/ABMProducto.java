@@ -44,26 +44,38 @@ public class ABMProducto extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		String descripcion = request.getParameter("descripcion"), 
-				precio=request.getParameter("precio");
+		String action = request.getParameter("action");
 		
-		float precioFloat;
-		try
+		if (action.equals("alta"))
 		{
-			precioFloat = Float.parseFloat(precio);
+			String descripcion = request.getParameter("descripcion"), 
+					precio=request.getParameter("precio");
+			float precioFloat;
+			try
+			{
+				precioFloat = Float.parseFloat(precio);
+			}
+			catch(NumberFormatException e)
+			{
+				precioFloat = -1;
+			}		
+			RespuestaServidor sr = ControladorABM.agregarProducto('R', 'H', descripcion, 1, precioFloat);
+	
+			String mensajesJson = JsonResponses.devolverMensaje(sr, "Producto exitosamente cargado!");
+			
+			response.setContentType("json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(mensajesJson);
 		}
-		catch(NumberFormatException e)
+		else if (action.equals("buscarId"))
 		{
-			precioFloat = -1;
-		}		
-		ControladorABM cabm = new ControladorABM();
-		RespuestaServidor sr = cabm.agregarProducto('R', 'H', descripcion, 1, precioFloat);
-
-		String mensajesJson = JsonResponses.devolverMensaje(sr, "Producto exitosamente cargado!");
-		
-		response.setContentType("json");
-	    response.setCharacterEncoding("UTF-8");
-	    response.getWriter().write(mensajesJson);
+			String tipo = request.getParameter("tipo"), 
+					subTipo=request.getParameter("subTipo");
+			String ID = ControladorABM.obtenerIdCompleto(tipo.charAt(0), subTipo.charAt(0));
+			response.setContentType("json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write("{\"id\": \"" + ID + "\"}"); 
+		}
 	}
 
 }
