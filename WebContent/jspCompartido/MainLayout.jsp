@@ -12,8 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="./themes/componentes.css">
 	<script type="text/javascript" src="./scripts/lib/jquery-1.12.3.js"></script>
 	<script type="text/javascript" src="./scripts/lib/jquery-ui.js"></script>
-	<script type="text/javascript" src="./scripts/custom/popup.js"></script>
-	<script type="text/javascript" src="./scripts/custom/prueba.js"></script>	
+	<script type="text/javascript" src="./scripts/custom/Ajax.js"></script>	
 	<%}
 	else
 	{%>
@@ -22,8 +21,7 @@
 	<link rel="stylesheet" type="text/css" href="../themes/componentes.css">
 	<script type="text/javascript" src="../scripts/lib/jquery-1.12.3.js"></script>
 	<script type="text/javascript" src="../scripts/lib/jquery-ui.js"></script>
-	<script type="text/javascript" src="../scripts/custom/popup.js"></script>
-	<script type="text/javascript" src="../scripts/custom/prueba.js"></script>	
+	<script type="text/javascript" src="../scripts/custom/Ajax.js"></script>	
 	<%} %>
 	
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">

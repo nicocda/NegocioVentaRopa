@@ -59,7 +59,7 @@ public class ABMProducto extends HttpServlet {
 		ControladorABM cabm = new ControladorABM();
 		RespuestaServidor sr = cabm.agregarProducto('R', 'H', descripcion, 1, precioFloat);
 
-		String mensajesJson = JsonResponses.devolverMensaje(sr);
+		String mensajesJson = JsonResponses.devolverMensaje(sr, "Producto exitosamente cargado!");
 		
 		response.setContentType("json");
 	    response.setCharacterEncoding("UTF-8");

@@ -1,3 +1,9 @@
+<script type="text/javascript" src="../scripts/custom/ABMProductos.js"></script>	
+<script type="text/javascript" src="./scripts/custom/ABMProductos.js"></script>	
+<script type="text/javascript" src="../scripts/custom/popup.js"></script>
+<script type="text/javascript" src="./scripts/custom/popup.js"></script>
+
+
 <div id="divError"></div>
 <div id="accordion">
 	<h3>Lista de Productos</h3>
@@ -39,6 +45,6 @@
 		<input type="text" id="txtID" placeholder="ID" disabled="disabled">
 		<input type="text" id="txtDescripcion" placeholder="Descripción">
 		<input type="text" id="txtPrecio" placeholder="Precio">
-		<input type="submit" id="btnAceptar" class="botones" value="Agregar Producto">
+		<input type="submit" id="btnAceptar" class="botones" value="Guardar Producto">
 	</div>
 </div>

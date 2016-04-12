@@ -7,18 +7,22 @@ public class PruebaConsola
 
 	public static void main(String[] args) 
 	{
-		String id=  CatalogoProductos.ultimoIdProducto('R', 'H');
-		System.out.println(id);
-		String idNuevo = Integer.toString(Integer.parseInt(id.substring(2, 7))+1);
+		String[] arreglo1;
+		String[] arreglo2 = new String[4];
 		
-		int a = 5 - idNuevo.length();
-		for(int i = 1; i<=a; i++)
+		int i = -1;
+		for(String s : arreglo2)
 		{
-			idNuevo = "0"+idNuevo;
+			i++;
+			arreglo2[i] = Integer.toString(i);
 		}
-		System.out.println(idNuevo);
-		String idNuevoCompleto = Character.toString('R').concat(Character.toString('H')).concat(idNuevo);
-		System.out.println(idNuevoCompleto);
+		
+		arreglo1 = arreglo2;
+		
+		for(String s : arreglo1)
+		{
+			System.out.println(s);
+		}
 
 	}
 

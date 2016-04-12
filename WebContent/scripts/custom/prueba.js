@@ -20,14 +20,7 @@ $(document).ready(function()
 			},
 			success:function(result) 
 			{
-				if(result.tipoMensaje == "exito")
-				{
-					$("#divError").load("./jspCompartido/MensajeExito.jsp", function(){
-						$("#mensaje strong").append("&Eacute;xito!");
-						$("#mensaje").show("slow");
-					});
-				}
-				else
+				if(result.tipoMensaje == "error")
 				{
 					$("#divError").load("./jspCompartido/MensajeError.jsp", function(){
 						$("#mensaje ul").empty();
@@ -36,8 +29,14 @@ $(document).ready(function()
 							$("#mensaje ul").append("<li>" + this.mensaje + "</li>");
 							$("#mensaje").show("slow");
 						});
+					});					
+				}
+				else
+				{
+					$("#divError").load("./jspCompartido/MensajeExito.jsp", function(){
+					$("#mensaje strong").append(result.tipoMensaje);
+					$("#mensaje").show("slow");
 					});
-					
 				}
 			},
 			error:function()

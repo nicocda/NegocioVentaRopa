@@ -5,9 +5,9 @@ import excepciones.RespuestaServidor;
 public class JsonResponses 
 {
 
-	public static String devolverMensaje(RespuestaServidor sr)
+	public static String devolverMensaje(RespuestaServidor sr, String mensajeExito)
 	{
-		String tipoMensaje = sr.getErrors().isEmpty() ? "exito" : "error";
+		String tipoMensaje = sr.getErrors().isEmpty() ? mensajeExito : "error";
 		String mensajesJson = "{\"mensajes\":[{";
 		for(int i = 1; i <= sr.getErrors().size(); i++)
 		{

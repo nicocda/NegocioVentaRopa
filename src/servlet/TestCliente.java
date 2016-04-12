@@ -48,7 +48,7 @@ public class TestCliente extends HttpServlet
 			request.setAttribute("errores", errores);
 		}
 		request.setAttribute("servlet", "");
-		request.setAttribute("url", "../jspPrincipales/prueba.jsp");
+		request.setAttribute("url", "../jspPrincipales/AbmClientes.jsp");
 		request.getRequestDispatcher("jspCompartido/MainLayout.jsp").forward(request, response);
 	}
 
