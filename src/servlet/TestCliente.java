@@ -30,14 +30,18 @@ public class TestCliente extends HttpServlet
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		doPost(request, response);
+		String link = request.getParameter("link");
+		if(link!=null && !link.isEmpty())
+			request.setAttribute("url","../jspPrincipales/" +link.trim()+".jsp");
+		else
+			request.setAttribute("url", "../jspPrincipales/Hola.jsp");
+		request.setAttribute("servlet", "");
+		request.getRequestDispatcher("jspCompartido/MainLayout.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		request.setAttribute("servlet", "");
-		request.setAttribute("url", "../jspPrincipales/prueba.jsp");
-		request.getRequestDispatcher("jspCompartido/MainLayout.jsp").forward(request, response);
+		doGet(request, response);
 	}
 
 }

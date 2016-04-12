@@ -1,15 +1,14 @@
-
+<H4>Ventas</H4>
 <form>
-	
 	<label class="etiquetas">Cliente</label>
 	<input type="text" >
 	<label style="font-weight: bold;">Ventas</label>
 	
-	<table>
+	<table class="CSSTableGenerator">
 		<tr>
-			<th>Código</th>
-			<th>Descripción</th>
-			<th>Precio</th>
+			<td>Código</td>
+			<td>Descripción</td>
+			<td>Precio</td>
 		</tr>
 		<% for (int i = 0; i<2; i++)
 		{%>

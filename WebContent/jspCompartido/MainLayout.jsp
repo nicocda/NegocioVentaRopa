@@ -35,8 +35,8 @@
 			
 			<nav>
 				<a href="#">Inicio</a>
-				<a href="testCliente" name="editar">Editar Cliente</a>
-				<a href="#">Proyectos</a>
+				<a href="TestCliente?link=AbmClientes" name="editar">Clientes</a>
+				<a href="TestCliente?link=prueba">Productos</a>
 				<a href="#">Contacto</a>
 			</nav>
 		</div>

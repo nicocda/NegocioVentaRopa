@@ -6,6 +6,7 @@ import="negocio.ControladorABM" %>
 <script type="text/javascript" src="../scripts/custom/popup.js"></script>
 <script type="text/javascript" src="./scripts/custom/popup.js"></script>
 
+<H4>Clientes</H4>
 <div id="divError"></div>
 <div id="accordion">
 	<h3>Lista de Clientes</h3>
