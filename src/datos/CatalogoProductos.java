@@ -31,8 +31,8 @@ public class CatalogoProductos
 			{
 				Producto pr = new Producto();
 				pr.setId(rs.getString("id"));
-				//el setPrecio() lleva como parametro una instancia de precio (new Precio())
-				pr.setPrecio(new Precio(rs.getDate("fecha"),rs.getFloat("precio")));
+				//tengo que buscar el ultimo precio, por eso lo hago en el catalogo
+				pr.setPrecio(CatalogoPrecios.buscarPrecioProducto(pr.getId()));
 				pr.setDescripcion(rs.getString("descripcion"));
 				pr.setEstado(rs.getInt("estado"));
 				productos.add(pr);
@@ -75,8 +75,8 @@ public class CatalogoProductos
 			{
 				Producto pr = new Producto();
 				pr.setId(rs.getString("id"));
-				//el setPrecio() lleva como parametro una instancia de precio (new Precio())
-				pr.setPrecio(new Precio(rs.getDate("fecha"),rs.getFloat("precio")));
+				//tengo que buscar el ultimo precio, por eso lo hago en el catalogo
+				pr.setPrecio(CatalogoPrecios.buscarPrecioProducto(pr.getId()));
 				pr.setDescripcion(rs.getString("descripcion"));
 				pr.setEstado(rs.getInt("estado"));
 				productos.add(pr);
@@ -104,8 +104,8 @@ public class CatalogoProductos
 			{
 				Producto pr = new Producto();
 				pr.setId(rs.getString("id"));
-				//el setPrecio() lleva como parametro una instancia de precio (new Precio())
-				pr.setPrecio(new Precio(rs.getDate("fecha"),rs.getFloat("precio")));
+				//tengo que buscar el ultimo precio, por eso lo hago en el catalogo
+				pr.setPrecio(CatalogoPrecios.buscarPrecioProducto(pr.getId()));
 				pr.setDescripcion(rs.getString("descripcion"));
 				pr.setEstado(rs.getInt("estado"));
 				productos.add(pr);
@@ -133,8 +133,8 @@ public class CatalogoProductos
 			{
 				Producto pr = new Producto();
 				pr.setId(rs.getString("id"));
-				//el setPrecio() lleva como parametro una instancia de precio (new Precio())
-				pr.setPrecio(new Precio(rs.getDate("fecha"),rs.getFloat("precio")));
+				//tengo que buscar el ultimo precio, por eso lo hago en el catalogo
+				pr.setPrecio(CatalogoPrecios.buscarPrecioProducto(pr.getId()));
 				pr.setDescripcion(rs.getString("descripcion"));
 				pr.setEstado(rs.getInt("estado"));
 				productos.add(pr);
@@ -177,8 +177,8 @@ public class CatalogoProductos
 			{
 				Producto pr = new Producto();
 				pr.setId(rs.getString("id"));
-				//el setPrecio() lleva como parametro una instancia de precio (new Precio())
-				pr.setPrecio(new Precio(rs.getDate("fecha"),rs.getFloat("precio")));
+				//tengo que buscar el ultimo precio, por eso lo hago en el catalogo
+				pr.setPrecio(CatalogoPrecios.buscarPrecioProducto(pr.getId()));
 				pr.setDescripcion(rs.getString("descripcion"));
 				pr.setEstado(rs.getInt("estado"));
 				productos.add(pr);
@@ -221,8 +221,8 @@ public class CatalogoProductos
 			{
 				pr = new Producto();
 				pr.setId(rs.getString("id"));
-				//el setPrecio() lleva como parametro una instancia de precio (new Precio())
-				pr.setPrecio(new Precio(rs.getDate("fecha"),rs.getFloat("precio")));
+				//tengo que buscar el ultimo precio, por eso lo hago en el catalogo
+				pr.setPrecio(CatalogoPrecios.buscarPrecioProducto(pr.getId()));
 				pr.setDescripcion(rs.getString("descripcion"));
 				pr.setEstado(rs.getInt("estado"));
 			}
@@ -300,8 +300,11 @@ public class CatalogoProductos
 		return sr;
 	}
 
-	public static void modificarProducto(Producto pr)
+	public static RespuestaServidor modificarProducto(Producto pr)
 	{
+		RespuestaServidor sr = validarProducto(pr);
+		if(!sr.getStatus())
+			return sr;
 		String sql="update producto set  descripcion=?, estado=? where id=?";
 		PreparedStatement sentencia = null;
 		try
@@ -328,9 +331,11 @@ public class CatalogoProductos
 			}
 			catch (SQLException sqle)
 			{
-				sqle.printStackTrace();
+				sr.addError(sqle);
+				//sqle.printStackTrace();
 			}
 		}
+		return sr;
 	}
 	
 	public static void modificarEstadoProducto(String id, estado valor)

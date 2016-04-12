@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	import="excepciones.RespuestaServidor"
+	import="entidades.Cliente"
 	import="java.util.ArrayList"
+	import="negocio.ControladorABM"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -26,7 +28,7 @@
 	
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<title>Insert title here</title>
+	<title>Sistema de ventas</title>
 	
 </head>
 <body>
@@ -37,7 +39,7 @@
 			
 			<nav>
 				<a href="#">Inicio</a>
-				<a href="#">Servicios</a>
+				<a href="testCliente" name="editar">Editar Cliente</a>
 				<a href="#">Proyectos</a>
 				<a href="#">Contacto</a>
 			</nav>

@@ -1,3 +1,6 @@
+<%@ page import="entidades.Cliente"
+import="java.util.ArrayList"
+import="negocio.ControladorABM" %>
 <script type="text/javascript" src="../scripts/custom/ABMClientes.js"></script>	
 <script type="text/javascript" src="./scripts/custom/ABMClientes.js"></script>	
 <script type="text/javascript" src="../scripts/custom/popup.js"></script>
@@ -15,21 +18,23 @@
 				<th>Teléfono</th>
 				<th></th>
 			</tr>
-			<%for(int i = 0; i <=10; i++)
+			<%
+			ArrayList<Cliente> clientes = ControladorABM.buscarClientes();
+			for(Cliente cl : clientes)
 			{%>
 			<tr>
-				<td>1</td>
-				<td>Juan Grasso</td>
-				<td>San Lorenzo 1759</td>
-				<td>3444-532918</td>
+				<td><%=cl.getId() %></td>
+				<td><%=cl.getNombreApellido() %></td>
+				<td><%=cl.getDireccion() %></td>
+				<td><%=cl.getTelefono() %></td>
 				<td><input type="button" class="botones" value="Editar"></td>
 			</tr>
 			<%} %>
 		</table>
 	</div>
-	<h3>Nuevo/Editar Cliente:</h3>
+	<h3>Nuevo Cliente:</h3>
 	<div>
-		<input type="text" id="txtID" placeholder="ID" disabled="disabled" hidden="true">
+		<input type="text" id="txtID" placeholder="ID" disabled="disabled" >
 		<input type="text" id="txtNombreYApellido" placeholder="Nombre y Apellido">
 		<input type="text" id="txtDireccion" placeholder="Dirección">
 		<input type="text" id="txtTelefono" placeholder="Teléfono">

@@ -1,8 +1,11 @@
 package negocio;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
+import datos.CatalogoClientes;
 import datos.CatalogoProductos;
+import entidades.Cliente;
 import entidades.Precio;
 import entidades.Producto;
 import excepciones.RespuestaServidor;
@@ -27,11 +30,35 @@ public class ControladorABM
 		return sr;
 	}
 	
-	public void modificarProducto(String id, String newDescripcion,int estado, float newPrecio)
+	public static void modificarProducto(String id, String newDescripcion,int estado, float newPrecio)
 	{
 		Calendar today = Calendar.getInstance();
 		today.set(Calendar.HOUR_OF_DAY, 0);
 		CatalogoProductos.modificarProducto(new Producto(newDescripcion,estado, id,new Precio(today.getTime(), newPrecio)));
+	}
+	
+	public static ArrayList<Cliente> buscarClientes()
+	{
+		return CatalogoClientes.buscarClientes();
+	}
+	
+	public static RespuestaServidor agregarCliente(Cliente cl)
+	{
+			if(CatalogoClientes.buscarCliente(cl.getId()) != null && cl.getId() != 0)
+			{
+				return CatalogoClientes.modificarCliente(cl);
+			}
+			else if(CatalogoClientes.buscarCliente(cl.getId()) == null && cl.getId() == 0)
+			{
+				return CatalogoClientes.agregarCliente(cl);
+			}
+			else
+			{
+				RespuestaServidor sr = new RespuestaServidor();
+				sr.addError("No existe cliente");
+				return sr;
+			}
+		
 	}
 	
 

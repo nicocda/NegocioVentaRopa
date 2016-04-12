@@ -5,13 +5,14 @@ import java.util.ArrayList;
 import java.sql.*;
 import conexion.DataConnection;
 import entidades.Cliente;
+import excepciones.RespuestaServidor;
 
 public class CatalogoClientes 
 {
 	public static ArrayList<Cliente> buscarClientes()
 	{
 		ArrayList<Cliente> clientes = new ArrayList<Cliente>();
-		String sql="select * from cliente order by nombreApellido";
+		String sql="select * from cliente order by id";
 		PreparedStatement sentencia = null;
 		Connection con = DataConnection.getInstancia().getConn();
 		try
@@ -93,8 +94,14 @@ public class CatalogoClientes
 		return clientes;
 	}
 	
-	public static void agregarCliente(Cliente cliente)
+	public static RespuestaServidor agregarCliente(Cliente cliente)
 	{
+		RespuestaServidor sr = new RespuestaServidor();
+		sr=validarClienteAlta(cliente);
+		if(!sr.getStatus())
+		{
+			return sr;
+		}
 		String sql = "insert into cliente (nombreApellido, direccion, telefono) values (?,?,?)";
 		PreparedStatement sentencia = null;
 		try
@@ -107,7 +114,7 @@ public class CatalogoClientes
 		}
 		catch(SQLException e)
 		{
-			e.printStackTrace();
+			sr.addError(e);
 		}
 		finally
 		{
@@ -124,6 +131,24 @@ public class CatalogoClientes
 				sqle.printStackTrace();
 			}
 		}
+		return sr;
+	}
+	
+	private static RespuestaServidor validarClienteAlta(Cliente cl)
+	{
+		RespuestaServidor sr = new RespuestaServidor();
+		if(!(cl.getNombreApellido() != null && !cl.getNombreApellido().isEmpty()))
+			sr.addError("El cliente debe tener un nombre.");
+		return sr;
+	}
+	private static RespuestaServidor validarClienteUpdate(Cliente cl)
+	{
+		RespuestaServidor sr = new RespuestaServidor();
+		if(cl.getId()<0)
+			sr.addError("Ocurrió un error interno. El id no es válido");
+		if(!(cl.getNombreApellido() != null && !cl.getNombreApellido().isEmpty()))
+			sr.addError("El cliente debe tener un nombre.");
+		return sr;
 	}
 
 	public static void eliminarCliente(int id)
@@ -157,8 +182,14 @@ public class CatalogoClientes
 		}
 	}
 	
-	public static void modificarCliente(Cliente cliente)
+	public static RespuestaServidor modificarCliente(Cliente cliente)
 	{
+		RespuestaServidor sr = new RespuestaServidor();
+		sr=validarClienteUpdate(cliente);
+		if(!sr.getStatus())
+		{
+			return sr;
+		}
 		String sql = "update cliente set id=? ,nombreApellido=? ,direccion=? ,telefono=? where id=?";
 		PreparedStatement sentencia = null;
 		try
@@ -173,7 +204,7 @@ public class CatalogoClientes
 		}
 		catch(SQLException e)
 		{
-			e.printStackTrace();
+			sr.addError(e);
 		}
 		finally
 		{
@@ -190,6 +221,7 @@ public class CatalogoClientes
 				sqle.printStackTrace();
 			}
 		}
+		return sr;
 	}
 
 	public static Cliente buscarCliente(int id) {
