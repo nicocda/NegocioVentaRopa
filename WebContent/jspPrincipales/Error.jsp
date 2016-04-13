@@ -1,0 +1,1 @@
+Usted es un idiota

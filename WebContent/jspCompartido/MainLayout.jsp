@@ -28,22 +28,22 @@
 	
 </head>
 <body>
+		<header>
+			<div class="wrapper">
+				<div class="logo"><a href="TestCliente"><img height="78" width="150" src="http://vignette1.wikia.nocookie.net/logopedia/images/a/ab/200px-Lacoste_logo_svg.png/revision/latest?cb=20100911064850"></a></div>
+				
+				<nav>
+					<a href="/NegocioRopa">Inicio</a>
+					<a href="Index?link=AbmClientes" name="editar">Clientes</a>
+					<a href="Index?link=AbmProducto">Productos</a>
+					<a href="Index?link=Ventas">Venta</a>
+				</nav>
+			</div>
+		</header>
 	
-	<header>
-		<div class="wrapper">
-			<div class="logo"><a href="TestCliente"><img height="78" width="150" src="http://vignette1.wikia.nocookie.net/logopedia/images/a/ab/200px-Lacoste_logo_svg.png/revision/latest?cb=20100911064850"></a></div>
-			
-			<nav>
-				<a href="TestCliente">Inicio</a>
-				<a href="TestCliente?link=AbmClientes" name="editar">Clientes</a>
-				<a href="TestCliente?link=prueba">Productos</a>
-				<a href="#">Contacto</a>
-			</nav>
-		</div>
-	</header>
-
-		
+	<div class="contenedor">
 	<%String url = (String)request.getAttribute("url");%>
 	<jsp:include page="<%= url %>" flush="true" />
+	</div>
 </body>
 </html>

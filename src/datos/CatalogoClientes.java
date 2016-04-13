@@ -12,7 +12,7 @@ public class CatalogoClientes
 	public static ArrayList<Cliente> buscarClientes()
 	{
 		ArrayList<Cliente> clientes = new ArrayList<Cliente>();
-		String sql="select * from cliente order by id";
+		String sql="select * from cliente order by nombreApellido";
 		PreparedStatement sentencia = null;
 		Connection con = DataConnection.getInstancia().getConn();
 		try

@@ -18,12 +18,12 @@ import entidades.Producto;
 import excepciones.ErrorServidor;
 import excepciones.RespuestaServidor;
 
-@WebServlet("/TestCliente")
-public class TestCliente extends HttpServlet 
+@WebServlet("/Index")
+public class Index extends HttpServlet 
 {
 	private static final long serialVersionUID = 1L;
 
-    public TestCliente()
+    public Index()
     {
         super();
     }
@@ -34,7 +34,7 @@ public class TestCliente extends HttpServlet
 		if(link!=null && !link.isEmpty())
 			request.setAttribute("url","../jspPrincipales/" +link.trim()+".jsp");
 		else
-			request.setAttribute("url", "../jspPrincipales/Hola.jsp");
+			request.setAttribute("url", "../jspPrincipales/AbmClientes.jsp");
 		request.setAttribute("servlet", "");
 		request.getRequestDispatcher("jspCompartido/MainLayout.jsp").forward(request, response);
 	}

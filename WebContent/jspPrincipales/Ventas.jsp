@@ -1,7 +1,9 @@
+<script type="text/javascript" src="./scripts/custom/AutoComplete.js"></script>	
+<script type="text/javascript" src="../scripts/custom/AutoComplete.js"></script>	
 <H4>Ventas</H4>
 <form>
 	<label class="etiquetas">Cliente</label>
-	<input type="text" >
+	<input type="text" id="txtClientes"/>
 	<label style="font-weight: bold;">Ventas</label>
 	
 	<table class="CSSTableGenerator">

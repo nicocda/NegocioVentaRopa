@@ -1,5 +1,8 @@
 package util;
 
+import java.util.ArrayList;
+
+import entidades.Cliente;
 import excepciones.RespuestaServidor;
 
 public class JsonResponses 
@@ -18,5 +21,16 @@ public class JsonResponses
 		}
 		mensajesJson = mensajesJson + "}], \"tipoMensaje\":\"" + tipoMensaje +"\"}";
 		return mensajesJson;
+	}
+	
+	public static String jsonClientes(ArrayList<Cliente> clientes)
+	{
+		String rsp = "{\"array\": [\"";
+	    for(int i=0;i<clientes.size()-1;i++)
+	    {
+	    	rsp=rsp.concat(clientes.get(i).getNombreApellido()+"\", \"");
+	    }
+	    rsp=rsp.concat(clientes.get(clientes.size()-1).getNombreApellido()+"\"]}");
+	    return rsp;
 	}
 }
