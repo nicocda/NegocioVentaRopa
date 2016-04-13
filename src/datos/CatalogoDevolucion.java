@@ -9,8 +9,6 @@ import java.util.ArrayList;
 
 import conexion.DataConnection;
 import entidades.Devolucion;
-import entidades.Producto;
-import entidades.Producto.estado;
 
 
 public class CatalogoDevolucion

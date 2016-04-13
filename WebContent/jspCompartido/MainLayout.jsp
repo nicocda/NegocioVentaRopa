@@ -31,10 +31,10 @@
 	
 	<header>
 		<div class="wrapper">
-			<div class="logo"><a href="#"><img height="78" width="150" src="http://vignette1.wikia.nocookie.net/logopedia/images/a/ab/200px-Lacoste_logo_svg.png/revision/latest?cb=20100911064850"></a></div>
+			<div class="logo"><a href="TestCliente"><img height="78" width="150" src="http://vignette1.wikia.nocookie.net/logopedia/images/a/ab/200px-Lacoste_logo_svg.png/revision/latest?cb=20100911064850"></a></div>
 			
 			<nav>
-				<a href="#">Inicio</a>
+				<a href="TestCliente">Inicio</a>
 				<a href="TestCliente?link=AbmClientes" name="editar">Clientes</a>
 				<a href="TestCliente?link=prueba">Productos</a>
 				<a href="#">Contacto</a>
