@@ -13,27 +13,27 @@ import="negocio.ControladorABM" %>
 	<div style="max-height: 320px">
 		<table class="CSSTableGenerator">
 			<tr>
-				<td>ID</td>
-				<td>Nombre y Apellido</td>
-				<td>Dirección</td>
-				<td>Teléfono</td>
-				<td></td>
+				<td width="10%">ID</td>
+				<td width="40%">Nombre y Apellido</td>
+				<td width="20%">Dirección</td>
+				<td width="20%">Teléfono</td>
+				<td width="10%"></td>
 			</tr>
 			<%
 			ArrayList<Cliente> clientes = ControladorABM.buscarClientes();
 			for(Cliente cl : clientes)
 			{%>
 			<tr>
-				<td><%=cl.getId() %></td>
-				<td><%=cl.getNombreApellido() %></td>
-				<td><%=cl.getDireccion() %></td>
-				<td><%=cl.getTelefono() %></td>
-				<td><input type="button" class="botones" value="Editar"></td>
+				<td align="center" class="idTabla"><%=cl.getId() %></td>
+				<td class="nyaTabla"><%=cl.getNombreApellido() %></td>
+				<td class="direTabla"><%=cl.getDireccion() %></td>
+				<td class="telTabla"><%=cl.getTelefono() %></td>
+				<td align="center"><input type="button" class="botones btnEditar" value="Editar"></td>
 			</tr>
 			<%} %>
 		</table>
 	</div>
-	<h3>Nuevo Cliente:</h3>
+	<h3 id="nuevoEditar">Nuevo Cliente:</h3>
 	<div>
 		<input type="text" id="txtID" placeholder="ID" disabled="disabled" >
 		<input type="text" id="txtNombreYApellido" placeholder="Nombre y Apellido">
