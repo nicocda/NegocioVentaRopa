@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	import = "entidades.Usuario"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -40,15 +41,19 @@
 				</nav>
 			</div>
 		</header>
+		<form action="Login" method="POST">
 		<div class="ajustar">
 		<label for="userId">Usuario:</label>
 		<input type="text" autofocus="autofocus" id="txtLogin"/>
 		<label for="userPassword">Contraseña:</label>
 		<input type="password" id="txtPass"/>
 		<label id="mensaje"></label><br>
-		<input class="botones" id="btnIngresar" type="button" value="Ingresar"/><br>
+		<input class="botones" id="btnIngresar" type="submit" value="Ingresar"/><br>
 		<a href=#>¿No puedes ingresar?</a>
+		<%Usuario usu = (Usuario) request.getAttribute("usuario");%>
+		<label><%=usu.getNombreYApellido() %></label>
 		</div>
+		</form>
 		
 		
 		<!-- HTML para el popup -->
