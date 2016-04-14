@@ -1,3 +1,7 @@
+<%@page import="entidades.Usuario"%>
+<%
+if (((Usuario)session.getAttribute("usuarioActual")).getTipoUsuario() == 1) 
+{%>
 <script type="text/javascript" src="./scripts/custom/AutoComplete.js"></script>	
 <script type="text/javascript" src="../scripts/custom/AutoComplete.js"></script>	
 <H4>Ventas</H4>
@@ -55,4 +59,9 @@
 		</tr>
 	</table>
 </div>
+<%}
+else
+{%>
+<script>window.location.href='/NegocioRopa/Index?link=Error';</script>
+<%}%>
  	

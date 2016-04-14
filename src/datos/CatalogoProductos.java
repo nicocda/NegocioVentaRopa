@@ -12,7 +12,6 @@ import entidades.Precio;
 import entidades.Producto;
 import entidades.Producto.estado;
 import excepciones.RespuestaServidor;
-import javafx.scene.chart.PieChart.Data;
 
 public class CatalogoProductos
 {

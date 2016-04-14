@@ -1,3 +1,7 @@
+<%@page import="entidades.Usuario"%>
+<%
+if (((Usuario)session.getAttribute("usuarioActual")).getTipoUsuario() == 1) 
+{%>
 <%@ page import="entidades.Cliente"
 import="java.util.ArrayList"
 import="negocio.ControladorABM" %>
@@ -42,3 +46,11 @@ import="negocio.ControladorABM" %>
 		<input type="submit" id="btnAceptar" class="botones" value="Guardar Cliente">
 	</div>
 </div>
+<%}
+else
+{%>
+<script>window.location.href='/NegocioRopa/Index?link=Error';</script>
+<%}%>
+
+
+	
