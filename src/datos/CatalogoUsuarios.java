@@ -13,7 +13,7 @@ public class CatalogoUsuarios {
 	
 	public static Usuario buscarUsuario(String id, String pass) {
 		Usuario usu = null;
-		String sql="select * from usuario where nombreUsuario=? and password=?";
+		String sql="select * from usuario where usuario=? and password=?";
 		PreparedStatement sentencia = null;
 		Connection con = DataConnection.getInstancia().getConn();
 		try
@@ -26,11 +26,10 @@ public class CatalogoUsuarios {
 			{
 				usu = new Usuario();
 				usu.setEmail(rs.getString("mail"));
-				usu.setNombreUsuario(rs.getString("nombreUsuario"));
+				usu.setUsuario(rs.getString("usuario"));
 				usu.setNombreYApellido(rs.getString("nombreyApellido"));
 				usu.setPassword(rs.getString("password"));
 				usu.setTipoUsuario(rs.getInt("tipoUsuario"));
-				
 			}
 		}
 		catch(SQLException e)

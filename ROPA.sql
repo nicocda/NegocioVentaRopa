@@ -4,7 +4,7 @@ USE `ropa`;
 --
 -- Host: localhost    Database: ropa
 -- ------------------------------------------------------
--- Server version	5.6.26-log
+-- Server version	5.6.27-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -161,11 +161,12 @@ DROP TABLE IF EXISTS `usuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `usuario` (
-  `nombreUsuario` varchar(45) NOT NULL,
+  `usuario` varchar(45) NOT NULL,
   `password` varchar(45) DEFAULT NULL,
   `nombreyApellido` varchar(45) DEFAULT NULL,
   `mail` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`nombreUsuario`)
+  `tipoUsuario` int(11) DEFAULT '0',
+  PRIMARY KEY (`usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -175,7 +176,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES ('Juan','Grasso','Juan Cruz Grasso','juangrasso@gmail.com'),('Leo','Peretti','Leonardo Gabriel Peretti','leo.peretti5@gmail.com');
+INSERT INTO `usuario` VALUES ('Juan','Grasso','Juan Cruz Grasso','juangrasso@gmail.com',0),('Leo','Peretti','Leonardo Gabriel Peretti','leo.peretti5@gmail.com',0),('nicocda','nicolas23','Nicolas Giordano','nicocda09@gmail.com',0);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -211,10 +212,6 @@ LOCK TABLES `venta` WRITE;
 INSERT INTO `venta` VALUES (6,'3916-02-01',0,0,0,NULL,1,0,400);
 /*!40000 ALTER TABLE `venta` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping routines for database 'ropa'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -225,4 +222,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-13 21:05:42
+-- Dump completed on 2016-04-14 10:14:41

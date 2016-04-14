@@ -50,8 +50,7 @@
 		<label id="mensaje"></label><br>
 		<input class="botones" id="btnIngresar" type="submit" value="Ingresar"/><br>
 		<a href=#>¿No puedes ingresar?</a>
-		<%Usuario usu = (Usuario) request.getAttribute("usuario");%>
-		<label><%=usu.getNombreYApellido() %></label>
+		
 		</div>
 		</form>
 		
