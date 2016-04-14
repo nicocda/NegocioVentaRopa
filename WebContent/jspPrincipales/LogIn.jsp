@@ -11,7 +11,8 @@
 		<script type="text/javascript" src="./scripts/lib/jquery-1.12.3.js"></script>
 		<script type="text/javascript" src="./scripts/lib/jquery-ui.js"></script>
 		<script type="text/javascript" src="./scripts/custom/Ajax.js"></script>	
-		<script type="text/javascript" src="./scripts/custom/popup.js"></script>	
+		<script type="text/javascript" src="./scripts/custom/popup.js"></script>
+		<script type="text/javascript" src="./scripts/custom/login.js"></script>		
 		<%}
 		else
 		{%>
@@ -21,7 +22,8 @@
 		<script type="text/javascript" src="../scripts/lib/jquery-1.12.3.js"></script>
 		<script type="text/javascript" src="../scripts/lib/jquery-ui.js"></script>
 		<script type="text/javascript" src="../scripts/custom/Ajax.js"></script>	
-		<script type="text/javascript" src="../scripts/custom/popup.js"></script>	
+		<script type="text/javascript" src="../scripts/custom/popup.js"></script>
+		<script type="text/javascript" src="../scripts/custom/login.js"></script>	
 		<%} %>
 	
 	
@@ -38,14 +40,15 @@
 				</nav>
 			</div>
 		</header>
+		<div class="ajustar">
 		<label for="userId">Usuario:</label>
-		<input type="text" autofocus="autofocus" id="userId"/>
+		<input type="text" autofocus="autofocus" id="txtLogin"/>
 		<label for="userPassword">Contraseña:</label>
-		<input type="password" id="userPassword"/>
-		<input type="button" value="Ingresar"/>
-		<label>Recordar Usuario</label>
-		<input type="checkbox">
+		<input type="password" id="txtPass"/>
+		<label id="mensaje"></label><br>
+		<input class="botones" id="btnIngresar" type="button" value="Ingresar"/><br>
 		<a href=#>¿No puedes ingresar?</a>
+		</div>
 		
 		
 		<!-- HTML para el popup -->
@@ -54,7 +57,7 @@
 			<input type="text" id="registrarId"/>
 			<label for="userPassword">Contraseña:</label>
 			<input type="password" id="registrarPass"/>
-			<input type="button" id="button" value="Ingresar"/>
+			<input class="botones" type="button" value="Ingresar"/>
 		</div>
 	</body>
 </html>

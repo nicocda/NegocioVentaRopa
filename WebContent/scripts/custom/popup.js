@@ -6,7 +6,16 @@ $(document).ready(function()
 function mostrarPopup()
 {
 	 $( "#dialog" ).dialog({
-	      modal: true
+	      
+	      autoOpen: false,
+	      show: {
+	        effect: "blind",
+	        duration: 1000
+	      },
+	      hide: {
+	        effect: "blind",
+	        duration: 1000
+	      }
 	  });
 }
 
@@ -14,9 +23,10 @@ function eventos()
 {
 	 $("#agregar").click(function()
 	 {
-		 mostrarPopup();
+		 $( "#dialog" ).dialog("open");
 	 })
 	 
+	 mostrarPopup();
 	 
 	 var icons = 
 	 {
