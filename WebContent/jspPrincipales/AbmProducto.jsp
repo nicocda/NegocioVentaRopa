@@ -2,13 +2,22 @@
 <%
 if ((Usuario)session.getAttribute("usuarioActual")!= null && ((Usuario)session.getAttribute("usuarioActual")).getTipoUsuario() == 1) 
 {%>
-<%@page import="entidades.Producto.estado"%>
-<%@page import="entidades.Producto"%>
-<%@page import="negocio.ControladorABM"%>
+<%@page import="entidades.Producto.estado"
+	import="entidades.Producto"
+	 import="negocio.ControladorABM"%>
 <script type="text/javascript" src="../scripts/custom/ABMProductos.js"></script>	
 <script type="text/javascript" src="./scripts/custom/ABMProductos.js"></script>	
 <script type="text/javascript" src="../scripts/custom/popup.js"></script>
 <script type="text/javascript" src="./scripts/custom/popup.js"></script>
+<style type="text/css">
+  @font-face {
+    font-family: PF;
+    src: url("fonts/PF.ttf") format("truetype"); 
+  }
+  .barcode {
+    font-family: "PF";  
+  }
+  </style>
 
 <H4>Productos</H4>
 <div id="divError"></div>
@@ -30,7 +39,10 @@ if ((Usuario)session.getAttribute("usuarioActual")!= null && ((Usuario)session.g
 				<td class="descripcionTabla"><%=p.getDescripcion() %></td>
 				<td><%=estado.values()[p.getEstado()].toString() %></td>
 				<td class="precioTabla">200</td>
-				<td><input type="button" class="botones btnEditar" value="Editar"></td>
+				<td><input type="button" class="botones btnEditar" value="Editar"> 
+<!-- El boton codigo podria ir en cualquier lado, lo que tiene que hacer es mostrar el barcode 
+intente hacer un popup pero no se usar javascript, gracias-->
+				<input type="button" id="agregar" class="botones barcode" value="Código"></td>
 			</tr>
 			<%} %>
 		</table>
@@ -64,3 +76,15 @@ else
 {%>
 <script>window.location.href='/NegocioRopa/Index?link=Error';</script>
 <%}%>
+
+		<!-- HTML para el popup -->
+	<div  id="dialog" >
+	<%if(request.getAttribute("codigo") != null && request.getAttribute("desc")  != null) 
+	{%>
+	<h2>CODIGO DE BARRAS</h2> <br>
+	<div class="barcode"><%=request.getAttribute("codigo") %></div>
+	<div><%=request.getAttribute("codigo") %></div>
+	<br>
+	<label><%=request.getAttribute("desc") %></label>
+	<%} %>
+	</div>

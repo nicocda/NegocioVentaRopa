@@ -14,11 +14,11 @@
   }
   </style>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Barcode</title>
 </head>
 <body>
 <h2>CODIGO DE BARRAS</h2> <br>
-<div class="barcode"><%=request.getAttribute("codigo") %></div>
+<div  id="dialog" class="barcode"><%=request.getAttribute("codigo") %></div>
 <div><%=request.getAttribute("codigo") %></div>
 <br>
 <label><%=request.getAttribute("desc") %></label>

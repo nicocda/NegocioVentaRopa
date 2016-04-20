@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	import = "entidades.Usuario"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -43,20 +44,23 @@
 		<h4>Iniciar Sesión</h4>
 		<div class="ajustar"></div>
 		<div class="borde">		
-		<div style="text-align:center;">
-			<h4>Ingresar</h4>
-			*Voy a ser un error
+			<div style="text-align:center;">
+				<h4>Ingresar</h4>
+				*Voy a ser un error
+			</div>
+			<form action="Login" method="POST">
+			<label for="userId">Usuario:</label>
+			<input type="text" autofocus="autofocus" id="txtLogin"/>
+			<label for="userPassword">Contraseña:</label>
+			<input type="password" id="txtPass"/>
+			<label id="mensaje"></label><br>
+			<div style="text-align:center;">
+				<input class="botones" id="btnIngresar" type="button" value="Ingresar"/><br>
+				<a href=#>No puedo ingresar</a>
+			</div>
+			</form>
 		</div>
-		<label for="userId">Usuario:</label>
-		<input type="text" autofocus="autofocus" id="txtLogin"/>
-		<label for="userPassword">Contraseña:</label>
-		<input type="password" id="txtPass"/>
-		<label id="mensaje"></label><br>
-		<div style="text-align:center;">
-			<input class="botones" id="btnIngresar" type="button" value="Ingresar"/><br>
-			<a href=#>No puedo ingresar</a>
-		</div>
-		</div>
+		
 		
 		
 		<!-- HTML para el popup -->

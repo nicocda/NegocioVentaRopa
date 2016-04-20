@@ -2,7 +2,13 @@ package entidades;
 
 public class Usuario 
 {
-	String nombreYApellido, nombreUsuario, password, email;
+	String nombreYApellido, usuario, password, email;
+	public String getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
 	int tipoUsuario;
 	public String getNombreYApellido() {
 		return nombreYApellido;
@@ -10,12 +16,7 @@ public class Usuario
 	public void setNombreYApellido(String nombreYApellido) {
 		this.nombreYApellido = nombreYApellido;
 	}
-	public String getNombreUsuario() {
-		return nombreUsuario;
-	}
-	public void setNombreUsuario(String nombreUsuario) {
-		this.nombreUsuario = nombreUsuario;
-	}
+	
 	public String getPassword() {
 		return password;
 	}

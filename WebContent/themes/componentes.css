@@ -85,7 +85,6 @@ input[type="text"].focus
 	display:inline-block;
 	cursor:pointer;
 	color:#777777;
-	font-family:Arial;
 	font-size:15px;
 	font-weight:bold;
 	padding:6px 24px;
@@ -308,10 +307,5 @@ input[type=radio].css-checkbox {
   height: 35px;
 }
 
-@media screen and (max-width: 700px)
-{
-	.ajustar{
-	width: 100%;
-	}
-}
+
 /*Fin login*/

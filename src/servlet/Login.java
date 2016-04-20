@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import entidades.Usuario;
+import negocio.ControladorTransaccion;
+
 /**
  * Servlet implementation class Login
  */
@@ -14,29 +17,22 @@ import javax.servlet.http.HttpServletResponse;
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public Login() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+ 
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		response.setContentType("json");
+		String id = (String) request.getParameter("txtLogin");
+		String pass = (String) request.getParameter("txtPass");
+		ControladorTransaccion ct = new ControladorTransaccion();
+		Usuario usu = ct.buscarUsuario(id, pass);
+		request.setAttribute("usuario", usu);
+	/*	response.setContentType("json");
 	    response.setCharacterEncoding("UTF-8");
-	    response.getWriter().write("{\"usuario\":\"leo\",\"mensaje\":\"contraseña mal puesta\"}");
+	    response.getWriter().write("{\"usuario\":\"leo\",\"mensaje\":\"contraseña mal puesta\"}");*/
+	    request.getRequestDispatcher("AbmClientes.jsp").forward(request, response);
 
 	}
 
