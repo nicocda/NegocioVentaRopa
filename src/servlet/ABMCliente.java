@@ -29,6 +29,9 @@ public class ABMCliente extends HttpServlet
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
+		String action = request.getParameter("action");
+		if (action.equals("agregarCliente"))
+		{
 			int id;
 			String idString = request.getParameter("id");
 			if(idString == null || idString.isEmpty())  
@@ -43,6 +46,13 @@ public class ABMCliente extends HttpServlet
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(mensajesJson);
+		}
+		else if (action.equals("recargarTabla"))
+		{
+			response.setContentType("json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(JsonResponses.arrayTodosClientes(ControladorABM.buscarClientes()));
+		}
 	}
 
 }

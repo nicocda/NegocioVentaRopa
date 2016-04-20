@@ -15,7 +15,9 @@ function mostrarPopup()
 	      hide: {
 	        effect: "blind",
 	        duration: 1000
-	      }
+	      },
+	      modal: true,
+	      dialogClass: 'registrarPopup'
 	  });
 }
 

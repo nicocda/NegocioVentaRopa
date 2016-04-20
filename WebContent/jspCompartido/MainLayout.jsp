@@ -30,7 +30,7 @@
 <body>
 		<header>
 			<div class="wrapper">
-				<div class="logo"><a href="TestCliente"><img height="78" width="150" src="http://vignette1.wikia.nocookie.net/logopedia/images/a/ab/200px-Lacoste_logo_svg.png/revision/latest?cb=20100911064850"></a></div>
+				<div class="logo"><a href="/NegocioRopa"><img height="100" width="100" src="http://vignette1.wikia.nocookie.net/dcuo/images/a/ab/GreenLanternSymbol.png/revision/latest?cb=20120103064916"></a></div>
 				
 				<nav>
 					<a href="/NegocioRopa">Inicio</a>

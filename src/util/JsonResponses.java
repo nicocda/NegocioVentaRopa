@@ -33,4 +33,15 @@ public class JsonResponses
 	    rsp=rsp.concat(clientes.get(clientes.size()-1).getNombreApellido()+"\"]}");
 	    return rsp;
 	}
+	
+	public static String arrayTodosClientes(ArrayList<Cliente> clientes)
+	{
+		String rsp = "{\"clientes\": [";
+	    for(int i=0;i<clientes.size()-1;i++)
+	    {
+	    	rsp= rsp + "{\"nombreApellido\": \"" + clientes.get(i).getNombreApellido()+"\", \"direccion\": \"" + clientes.get(i).getDireccion() + "\", \"id\": \"" + clientes.get(i).getId() + "\", \"telefono\": \"" + clientes.get(i).getTelefono() + "\"},";
+	    }
+	    rsp= rsp + "{\"nombreApellido\": \"" + clientes.get(clientes.size()-1).getNombreApellido()+"\", \"direccion\": \"" + clientes.get(clientes.size()-1).getDireccion() + "\", \"id\": \"" + clientes.get(clientes.size()-1).getId() + "\", \"telefono\": \"" + clientes.get(clientes.size()-1).getTelefono() +"\"}]}";
+	    return rsp;
+	}
 }

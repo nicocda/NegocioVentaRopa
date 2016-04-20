@@ -32,7 +32,7 @@
 	<body>
 		<header>
 			<div class="wrapper">
-				<div class="logo"><a href="TestCliente"><img height="78" width="150" src="http://vignette1.wikia.nocookie.net/logopedia/images/a/ab/200px-Lacoste_logo_svg.png/revision/latest?cb=20100911064850"></a></div>
+				<div class="logo"><a href="/NegocioRopa"><img height="100" width="100" src="http://vignette1.wikia.nocookie.net/dcuo/images/a/ab/GreenLanternSymbol.png/revision/latest?cb=20120103064916""></a></div>
 				
 				<nav>
 					<a href="#">Contacto</a>
@@ -40,14 +40,22 @@
 				</nav>
 			</div>
 		</header>
-		<div class="ajustar">
+		<h4>Iniciar Sesión</h4>
+		<div class="ajustar"></div>
+		<div class="borde">		
+		<div style="text-align:center;">
+			<h4>Ingresar</h4>
+			*Voy a ser un error
+		</div>
 		<label for="userId">Usuario:</label>
 		<input type="text" autofocus="autofocus" id="txtLogin"/>
 		<label for="userPassword">Contraseña:</label>
 		<input type="password" id="txtPass"/>
 		<label id="mensaje"></label><br>
-		<input class="botones" id="btnIngresar" type="button" value="Ingresar"/><br>
-		<a href=#>¿No puedes ingresar?</a>
+		<div style="text-align:center;">
+			<input class="botones" id="btnIngresar" type="button" value="Ingresar"/><br>
+			<a href=#>No puedo ingresar</a>
+		</div>
 		</div>
 		
 		
@@ -57,7 +65,13 @@
 			<input type="text" id="registrarId"/>
 			<label for="userPassword">Contraseña:</label>
 			<input type="password" id="registrarPass"/>
-			<input class="botones" type="button" value="Ingresar"/>
+			<label for="userPassword">Validar Contraseña:</label>
+			<input type="password" id="validarPass"/>
+			<label for="userPassword">Nombre y Apellido:</label>
+			<input type="text" id="registrarNomyAp"/>
+			<label for="userPassword">Email:</label>
+			<input type="text" id="registrarEmail"/>
+			<input class="botones" type="button" value="Registrar"/>
 		</div>
 	</body>
 </html>

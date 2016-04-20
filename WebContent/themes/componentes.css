@@ -276,12 +276,23 @@ input[type=radio].css-checkbox {
 
 /*Login*/
 	
-.ajustar{
+.ajustar
+{
+	 padding-top: 50px;
+}
+
+
+.borde
+{
 	width: 30%;
 	margin:0 auto;
-	overflow: hidden;
-	padding-top: 10%;
+	overflow: hidden;	
+	border: solid 1px #c9c9c9;
+	border-radius: 15px;
+	
+	padding: 30px;
 }
+
 #txtLogin, #txtPass
 {
   display: block;
@@ -291,9 +302,10 @@ input[type=radio].css-checkbox {
   font-size: 18px;
   appearance: none;
   box-shadow: none;
-  border-radius: none;
   border: solid 5px #c9c9c9;
+  border-radius: 15px;
   transition: border 0.3s;
+  height: 35px;
 }
 
 @media screen and (max-width: 700px)

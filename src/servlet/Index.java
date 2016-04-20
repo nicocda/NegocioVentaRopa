@@ -40,7 +40,7 @@ public class Index extends HttpServlet
 		if(link!=null && !link.isEmpty())
 			request.setAttribute("url","../jspPrincipales/" +link.trim()+".jsp");
 		else
-			request.setAttribute("url", "../jspPrincipales/AbmClientes.jsp");
+			request.setAttribute("url", "../jspPrincipales/LogIn.jsp");
 		request.setAttribute("servlet", "");
 		request.getRequestDispatcher("jspCompartido/MainLayout.jsp").forward(request, response);
 	}

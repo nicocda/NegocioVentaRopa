@@ -1,6 +1,6 @@
 <%@page import="entidades.Usuario"%>
 <%
-if (((Usuario)session.getAttribute("usuarioActual")).getTipoUsuario() == 1) 
+if ((Usuario)session.getAttribute("usuarioActual")!= null && ((Usuario)session.getAttribute("usuarioActual")).getTipoUsuario() == 1) 
 {%>
 <%@ page import="entidades.Cliente"
 import="java.util.ArrayList"
@@ -13,9 +13,9 @@ import="negocio.ControladorABM" %>
 <H4>Clientes</H4>
 <div id="divError"></div>
 <div id="accordion">
-	<h3>Lista de Clientes</h3>
+	<h3 id="mostrar">Lista de Clientes</h3>
 	<div style="max-height: 320px">
-		<table class="CSSTableGenerator">
+		<table class="CSSTableGenerator" id="tablaClientes">
 			<tr>
 				<td width="10%">ID</td>
 				<td width="40%">Nombre y Apellido</td>

@@ -1,6 +1,6 @@
 <%@page import="entidades.Usuario"%>
 <%
-if (((Usuario)session.getAttribute("usuarioActual")).getTipoUsuario() == 1) 
+if ((Usuario)session.getAttribute("usuarioActual")!= null && ((Usuario)session.getAttribute("usuarioActual")).getTipoUsuario() == 1) 
 {%>
 <%@page import="entidades.Producto.estado"%>
 <%@page import="entidades.Producto"%>
