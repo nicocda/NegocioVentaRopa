@@ -1,6 +1,6 @@
 <%@page import="entidades.Usuario"%>
 <%
-if ((Usuario)session.getAttribute("usuarioActual")!= null && ((Usuario)session.getAttribute("usuarioActual")).getTipoUsuario() == 1) 
+if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttribute("usuario")).getTipoUsuario() == 1) 
 {%>
 <script type="text/javascript" src="./scripts/custom/AutoComplete.js"></script>	
 <script type="text/javascript" src="../scripts/custom/AutoComplete.js"></script>	

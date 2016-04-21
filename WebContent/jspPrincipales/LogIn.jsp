@@ -46,14 +46,13 @@
 		<div class="borde">		
 			<div style="text-align:center;">
 				<h4>Ingresar</h4>
-				*Voy a ser un error
+				<label id="mensaje"></label>
 			</div>
 			<form action="Login" method="POST">
 			<label for="userId">Usuario:</label>
 			<input type="text" autofocus="autofocus" id="txtLogin"/>
 			<label for="userPassword">Contraseña:</label>
-			<input type="password" id="txtPass"/>
-			<label id="mensaje"></label><br>
+			<input type="password" id="txtPass"/><br>
 			<div style="text-align:center;">
 				<input class="botones" id="btnIngresar" type="button" value="Ingresar"/><br>
 				<a href=#>No puedo ingresar</a>

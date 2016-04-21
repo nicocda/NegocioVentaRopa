@@ -32,10 +32,6 @@ public class Index extends HttpServlet
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		Usuario u = new Usuario();
-		u.setTipoUsuario(1);
-		HttpSession session = request.getSession();
-		session.setAttribute("usuarioActual", u);
 		String link = request.getParameter("link");
 		if(link!=null && !link.isEmpty())
 			request.setAttribute("url","../jspPrincipales/" +link.trim()+".jsp");

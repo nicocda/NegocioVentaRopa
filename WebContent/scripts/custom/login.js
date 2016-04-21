@@ -2,9 +2,16 @@ $(document).ready(function()
 {	
 	$("#btnIngresar").click(function(){
 		$.post("/NegocioRopa/Login", {"action":"login","usuario":$("#txtLogin").val(),"password":$("#txtPass").val()},function(result){
-			cambiarBorde();
-			$("#mensaje").empty();
-			$("#mensaje").append(result.usuario+" el error es: "+result.mensaje);
+			if (!result.exito)
+			{
+				cambiarBorde();
+				$("#mensaje").empty();
+				$("#mensaje").append(result.mensaje);
+			}
+			else
+			{
+				window.location.href = "/NegocioRopa/Index?link=AbmClientes"
+			}
 		});
 
 	});

@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	import="entidades.Usuario"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -33,6 +34,10 @@
 				<div class="logo"><a href="/NegocioRopa"><img height="100" width="100" src="http://vignette1.wikia.nocookie.net/dcuo/images/a/ab/GreenLanternSymbol.png/revision/latest?cb=20120103064916"></a></div>
 				
 				<nav>
+					<%if (((Usuario)session.getAttribute("usuario")) != null) 
+					{%>
+					<a href="#">Hola <%=((Usuario)session.getAttribute("usuario")).getNombreYApellido()%></a>
+					<%}%>
 					<a href="/NegocioRopa">Inicio</a>
 					<a href="Index?link=AbmClientes" name="editar">Clientes</a>
 					<a href="Index?link=AbmProducto">Productos</a>
