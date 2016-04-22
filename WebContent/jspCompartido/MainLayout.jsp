@@ -31,8 +31,15 @@
 <body>
 		<header>
 			<div class="wrapper">
+				<%String url = (String)request.getAttribute("url");%>
+				<%if (url.contains("Error"))
+				{%>
+				<div class="logo"><a href="/NegocioRopa"><img height="100" width="100" src="https://joyleedotnet.files.wordpress.com/2012/12/error-sadface-f0f0f0.png?w=605"></a></div>
+				<%}
+				else
+				{%>
 				<div class="logo"><a href="/NegocioRopa"><img height="100" width="100" src="http://vignette1.wikia.nocookie.net/dcuo/images/a/ab/GreenLanternSymbol.png/revision/latest?cb=20120103064916"></a></div>
-				
+				<%} %>
 				<nav>
 					<%if (((Usuario)session.getAttribute("usuario")) != null) 
 					{%>
@@ -47,7 +54,7 @@
 		</header>
 	
 	<div class="contenedor">
-	<%String url = (String)request.getAttribute("url");%>
+	
 	<jsp:include page="<%= url %>" flush="true" />
 	</div>
 </body>
