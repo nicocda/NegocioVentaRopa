@@ -1,19 +1,14 @@
 $(document).ready(function()
 {	
 	$("#btnIngresar").click(function(){
-		$.post("/NegocioRopa/Login", {"action":"login","usuario":$("#txtLogin").val(),"password":$("#txtPass").val()},function(result){
-			if (!result.exito)
-			{
-				cambiarBorde();
-				$("#mensaje").empty();
-				$("#mensaje").append(result.mensaje);
-			}
-			else
-			{
-				window.location.href = "/NegocioRopa/Index?link=AbmClientes"
-			}
-		});
-
+		ingresar();
+	});
+	
+	$(document).keypress(function(e) {
+	    if(e.which == 13) 
+	    {
+	        ingresar();
+	    }
 	});
 	
 	$("#txtLogin").click(function(){
@@ -34,5 +29,20 @@ function cambiarBorde(cambia)
 {
 		$("#txtPass").css("border", "solid 5px #FF0000");
 		$("#txtLogin").css("border", "solid 5px #FF0000");
+}
 
+function ingresar()
+{
+	$.post("/NegocioRopa/Login", {"action":"login","usuario":$("#txtLogin").val(),"password":$("#txtPass").val()},function(result){
+		if (!result.exito)
+		{
+			cambiarBorde();
+			$("#mensaje").empty();
+			$("#mensaje").append(result.mensaje);
+		}
+		else
+		{
+			window.location.href = "/NegocioRopa/Index?link=AbmClientes"
+		}
+	});
 }

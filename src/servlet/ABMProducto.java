@@ -17,9 +17,9 @@ import util.JsonResponses;
 public class ABMProducto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public ABMProducto() {
+    public ABMProducto() 
+    {
         super();
-        
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{

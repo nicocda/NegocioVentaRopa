@@ -39,7 +39,8 @@ import="negocio.ControladorABM" %>
 	</div>
 	<h3 id="nuevoEditar">Nuevo Cliente:</h3>
 	<div>
-		<input type="text" id="txtID" placeholder="ID" disabled="disabled" >
+		<button id="btnRestaurar">x</button>
+		<input type="text" id="txtID" placeholder="ID" disabled="disabled" style="display: none">		
 		<input type="text" id="txtNombreYApellido" placeholder="Nombre y Apellido">
 		<input type="text" id="txtDireccion" placeholder="Dirección">
 		<input type="text" id="txtTelefono" placeholder="Teléfono">

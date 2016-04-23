@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import conexion.DataConnection;
-import entidades.Precio;
 import entidades.Producto;
 import entidades.Producto.estado;
 import excepciones.RespuestaServidor;
@@ -31,8 +30,6 @@ public class CatalogoProductos
 			{
 				Producto pr = new Producto();
 				pr.setId(rs.getString("id"));
-				//tengo que buscar el ultimo precio, por eso lo hago en el catalogo
-				//pr.setPrecio(CatalogoPrecios.buscarPrecioProducto(pr.getId()));
 				pr.setDescripcion(rs.getString("descripcion"));
 				pr.setEstado(rs.getInt("estado"));
 				productos.add(pr);
@@ -57,6 +54,10 @@ public class CatalogoProductos
 				sqle.printStackTrace();
 			}
 		}
+		for (Producto prod : productos)
+		{
+			prod.setPrecio(CatalogoPrecios.buscarPrecioProducto(prod.getId()));
+		}
 		return productos;
 	}
 
@@ -75,7 +76,6 @@ public class CatalogoProductos
 			{
 				Producto pr = new Producto();
 				pr.setId(rs.getString("id"));
-				//tengo que buscar el ultimo precio, por eso lo hago en el catalogo
 				pr.setPrecio(CatalogoPrecios.buscarPrecioProducto(pr.getId()));
 				pr.setDescripcion(rs.getString("descripcion"));
 				pr.setEstado(rs.getInt("estado"));
@@ -83,9 +83,28 @@ public class CatalogoProductos
 			}
 		}
 		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			try
 			{
-				e.printStackTrace();
+				if(sentencia!=null && !sentencia.isClosed())
+				{
+					sentencia.close();
+				}
+				DataConnection.getInstancia().CloseConn();
 			}
+			catch (SQLException sqle)
+			{
+				sqle.printStackTrace();
+			}
+		}
+		for (Producto prod : productos)
+		{
+			prod.setPrecio(CatalogoPrecios.buscarPrecioProducto(prod.getId()));
+		}
 		return productos;
 	}
 	
@@ -104,7 +123,6 @@ public class CatalogoProductos
 			{
 				Producto pr = new Producto();
 				pr.setId(rs.getString("id"));
-				//tengo que buscar el ultimo precio, por eso lo hago en el catalogo
 				pr.setPrecio(CatalogoPrecios.buscarPrecioProducto(pr.getId()));
 				pr.setDescripcion(rs.getString("descripcion"));
 				pr.setEstado(rs.getInt("estado"));
@@ -112,9 +130,28 @@ public class CatalogoProductos
 			}
 		}
 		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			try
 			{
-				e.printStackTrace();
+				if(sentencia!=null && !sentencia.isClosed())
+				{
+					sentencia.close();
+				}
+				DataConnection.getInstancia().CloseConn();
 			}
+			catch (SQLException sqle)
+			{
+				sqle.printStackTrace();
+			}
+		}
+		for (Producto prod : productos)
+		{
+			prod.setPrecio(CatalogoPrecios.buscarPrecioProducto(prod.getId()));
+		}
 		return productos;
 	}
 	
@@ -133,7 +170,6 @@ public class CatalogoProductos
 			{
 				Producto pr = new Producto();
 				pr.setId(rs.getString("id"));
-				//tengo que buscar el ultimo precio, por eso lo hago en el catalogo
 				pr.setPrecio(CatalogoPrecios.buscarPrecioProducto(pr.getId()));
 				pr.setDescripcion(rs.getString("descripcion"));
 				pr.setEstado(rs.getInt("estado"));
@@ -141,24 +177,28 @@ public class CatalogoProductos
 			}
 		}
 		catch(SQLException e)
-			{
-				e.printStackTrace();
-			}
+		{
+			e.printStackTrace();
+		}
 		finally
+		{
+			try
 			{
-				try
+				if(sentencia!=null && !sentencia.isClosed())
 				{
-					if(sentencia!=null && !sentencia.isClosed())
-					{
-						sentencia.close();
-					}
-					DataConnection.getInstancia().CloseConn();
+					sentencia.close();
 				}
-				catch (SQLException sqle)
-				{
-					sqle.printStackTrace();
-				}
+				DataConnection.getInstancia().CloseConn();
 			}
+			catch (SQLException sqle)
+			{
+				sqle.printStackTrace();
+			}
+		}
+		for (Producto prod : productos)
+		{
+			prod.setPrecio(CatalogoPrecios.buscarPrecioProducto(prod.getId()));
+		}
 		return productos;
 	}
 	
@@ -177,7 +217,6 @@ public class CatalogoProductos
 			{
 				Producto pr = new Producto();
 				pr.setId(rs.getString("id"));
-				//tengo que buscar el ultimo precio, por eso lo hago en el catalogo
 				pr.setPrecio(CatalogoPrecios.buscarPrecioProducto(pr.getId()));
 				pr.setDescripcion(rs.getString("descripcion"));
 				pr.setEstado(rs.getInt("estado"));
@@ -185,24 +224,28 @@ public class CatalogoProductos
 			}
 		}
 		catch(SQLException e)
-			{
-				e.printStackTrace();
-			}
+		{
+			e.printStackTrace();
+		}
 		finally
+		{
+			try
 			{
-				try
+				if(sentencia!=null && !sentencia.isClosed())
 				{
-					if(sentencia!=null && !sentencia.isClosed())
-					{
-						sentencia.close();
-					}
-					DataConnection.getInstancia().CloseConn();
+					sentencia.close();
 				}
-				catch (SQLException sqle)
-				{
-					sqle.printStackTrace();
-				}
+				DataConnection.getInstancia().CloseConn();
 			}
+			catch (SQLException sqle)
+			{
+				sqle.printStackTrace();
+			}
+		}
+		for (Producto prod : productos)
+		{
+			prod.setPrecio(CatalogoPrecios.buscarPrecioProducto(prod.getId()));
+		}
 		return productos;
 	}
 	
@@ -221,31 +264,30 @@ public class CatalogoProductos
 			{
 				pr = new Producto();
 				pr.setId(rs.getString("id"));
-				//tengo que buscar el ultimo precio, por eso lo hago en el catalogo
-				pr.setPrecio(CatalogoPrecios.buscarPrecioProducto(pr.getId()));
 				pr.setDescripcion(rs.getString("descripcion"));
 				pr.setEstado(rs.getInt("estado"));
 			}
 		}
 		catch(SQLException e)
-			{
-				e.printStackTrace();
-			}
+		{
+			e.printStackTrace();
+		}
 		finally
+		{
+			try
 			{
-				try
+				if(sentencia!=null && !sentencia.isClosed())
 				{
-					if(sentencia!=null && !sentencia.isClosed())
-					{
-						sentencia.close();
-					}
-					DataConnection.getInstancia().CloseConn();
+					sentencia.close();
 				}
-				catch (SQLException sqle)
-				{
-					sqle.printStackTrace();
-				}
+				DataConnection.getInstancia().CloseConn();
 			}
+			catch (SQLException sqle)
+			{
+				sqle.printStackTrace();
+			}
+		}
+		pr.setPrecio(CatalogoPrecios.buscarPrecioProducto(pr.getId()));
 		return pr;
 	}
 
@@ -285,6 +327,8 @@ public class CatalogoProductos
 				//sqle.printStackTrace();
 			}
 		}
+		if(sr.getStatus())
+			sr = CatalogoPrecios.agregarPrecio(pr.getPrecio().getPrecio(), pr.getId());
 		return sr;
 	}
 	
@@ -305,7 +349,7 @@ public class CatalogoProductos
 		RespuestaServidor sr = validarProducto(pr);
 		if(!sr.getStatus())
 			return sr;
-		String sql="update producto set  descripcion=?, estado=? where id=?";
+		String sql="update producto set descripcion=?, estado=? where id=?";
 		PreparedStatement sentencia = null;
 		try
 		{
@@ -319,7 +363,7 @@ public class CatalogoProductos
 		{
 			e.printStackTrace();
 		}
-	finally
+		finally
 		{
 			try
 			{
@@ -335,6 +379,8 @@ public class CatalogoProductos
 				//sqle.printStackTrace();
 			}
 		}
+		if(sr.getStatus())
+			sr = CatalogoPrecios.agregarPrecio(pr.getPrecio().getPrecio(), pr.getId());
 		return sr;
 	}
 	
@@ -353,7 +399,7 @@ public class CatalogoProductos
 		{
 			e.printStackTrace();
 		}
-	finally
+		finally
 		{
 			try
 			{
@@ -390,7 +436,7 @@ public class CatalogoProductos
 		{
 			e.printStackTrace();
 		}
-	finally
+		finally
 		{
 			try
 			{

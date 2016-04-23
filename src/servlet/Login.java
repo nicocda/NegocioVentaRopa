@@ -24,7 +24,12 @@ public class Login extends HttpServlet
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		String action = request.getParameter("action");
-		if (action.equals("login"))
+		if (action == null)
+		{
+			request.setAttribute("servlet", "");
+			request.getRequestDispatcher("jspPrincipales/LogIn.jsp").forward(request, response);
+		}
+		else if (action.equals("login"))
 		{
 			String usuario = (String) request.getParameter("usuario");
 			String pass = (String) request.getParameter("password");

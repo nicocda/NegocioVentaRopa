@@ -8,14 +8,16 @@ import com.mysql.jdbc.Statement;
 
 import conexion.DataConnection;
 import entidades.Precio;
+import excepciones.RespuestaServidor;
 
 public class CatalogoPrecios {
 
 	public static Precio buscarPrecioProducto(String idProducto)
 	{
-		//Creo tabla temporal, busco mayor fecha que no sobrepase la de hoy(para ese producto)  y joineo con precio para el precio
-		String sql="drop temporary table if exists precio2; create temporary table precio2{select max(fecha) as maxFecha from precio where idProducto=? and fecha <= NOW()}; "
-		+ "select * from precio p inner join precio2 p2 on p.fecha=p2.maxFecha where idProducto = ?";
+		String sql="select * from precio p inner join "
+				//hago un inner join con una consulta
+		+ "(select max(fecha) as maxFecha from precio where idProducto=? and fecha <= NOW()) p2 "
+		+ " on p.fecha=p2.maxFecha where idProducto = ?";
 		PreparedStatement sentencia = null;
 		Precio precio = null;
 		try
@@ -35,13 +37,28 @@ public class CatalogoPrecios {
 		{
 			e.printStackTrace();
 		}
-		//No cierro la conexion porque son metodos que se usan en otro catalogo
+		finally
+		{
+			try
+			{
+				if(sentencia!=null && !sentencia.isClosed())
+				{
+					sentencia.close();
+				}
+				DataConnection.getInstancia().CloseConn();
+			}
+			catch (SQLException sqle)
+			{
+				sqle.printStackTrace();
+			}
+		}		
 		return precio;
 	}
 	
-	public static void agregarPrecio(float precio, String idProducto)
+	public static RespuestaServidor agregarPrecio(float precio, String idProducto)
 	{
-		String sql="insert into precios values (NOW(),?,?)";
+		RespuestaServidor sr = new RespuestaServidor();
+		String sql="insert into precio values (NOW(),?,?)";
 		PreparedStatement sentencia = null;
 		try
 		{
@@ -52,7 +69,8 @@ public class CatalogoPrecios {
 		}
 		catch(SQLException e)
 		{	
-			e.printStackTrace();
+			//e.printStackTrace();
+			sr.addError(e);
 		}
 		finally
 		{
@@ -69,5 +87,7 @@ public class CatalogoPrecios {
 				sqle.printStackTrace();
 			}
 		}
+		return sr;
 	}
 }
+

@@ -4,10 +4,13 @@ $(document).ready(function()
 	{
 		$.postData('/NegocioRopa/ABMCliente', { "id": $("#txtID").val(), "nombreApellido": $("#txtNombreYApellido").val(), 
 			"direccion": $("#txtDireccion").val(), "telefono": $("#txtTelefono").val(), "action": "agregarCliente" });
-		sleep(200);
+		sleep(400);
 		recargarTabla();
 		$("#accordion #mostrar").click();
 		limpiarCampos();
+		$("#nuevoEditar").empty();
+		$("#nuevoEditar").append("Nuevo Cliente:");
+		$("#txtID").css("display", "none");
 	});
 	
 	$(document).on('click', "#btnCerrarMensaje", function()
@@ -17,6 +20,9 @@ $(document).ready(function()
 	
 	$(document).on('click', ".btnEditar", function(){
 		var row = $(this).closest("tr");
+		$("#nuevoEditar").empty();
+		$("#nuevoEditar").append("Editar Cliente:");
+		$("#txtID").css("display", "inline");
 		$("#txtID").val(row.find(".idTabla").text());
 		$("#txtNombreYApellido").val(row.find(".nyaTabla").text());
 		$("#txtDireccion").val(row.find(".direTabla").text());
@@ -24,6 +30,12 @@ $(document).ready(function()
 		$("#accordion #nuevoEditar").click();
 	});
 	
+	$("#btnRestaurar").click(function(){
+		limpiarCampos();
+		$("#nuevoEditar").empty();
+		$("#nuevoEditar").append("Nuevo Cliente:");
+		$("#txtID").css("display", "none");
+	});
 });
 
 function recargarTabla()

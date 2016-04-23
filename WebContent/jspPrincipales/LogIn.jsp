@@ -31,6 +31,8 @@
 		<title>Iniciar sesión</title>
 	</head>
 	<body>
+	<%if ((Usuario)session.getAttribute("usuario")== null)
+	{%>
 		<header>
 			<div class="wrapper">
 				<div class="logo"><a href="/NegocioRopa"><img height="100" width="100" src="http://vignette1.wikia.nocookie.net/dcuo/images/a/ab/GreenLanternSymbol.png/revision/latest?cb=20120103064916""></a></div>
@@ -76,5 +78,10 @@
 			<input type="text" id="registrarEmail"/>
 			<input class="botones" type="button" value="Registrar"/>
 		</div>
+	<%}
+	else
+	{%>
+		<script>window.location.href='/NegocioRopa/Index?link=AbmClientes';</script>
+	<%}%>
 	</body>
 </html>

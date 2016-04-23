@@ -38,7 +38,7 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 				<td class="idTabla"><%=p.getId() %></td>
 				<td class="descripcionTabla"><%=p.getDescripcion() %></td>
 				<td><%=estado.values()[p.getEstado()].toString() %></td>
-				<td class="precioTabla">200</td>
+				<td class="precioTabla"><%=p.getPrecio().getPrecio() %></td>
 				<td><input type="button" class="botones btnEditar" value="Editar"> 
 <!-- El boton codigo podria ir en cualquier lado, lo que tiene que hacer es mostrar el barcode 
 intente hacer un popup pero no se usar javascript, gracias-->
