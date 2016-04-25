@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import conexion.DataConnection;
+import entidades.Precio;
 import entidades.Producto;
 import entidades.Producto.estado;
 import excepciones.RespuestaServidor;
@@ -249,7 +250,7 @@ public class CatalogoProductos
 		return productos;
 	}
 	
-	public static Producto buscarProducto(int id)
+	public static Producto buscarProducto(String id)
 	{
 		String sql="select * from producto p inner join precio pr on p.id = pr.idProducto where id=?";
 		PreparedStatement sentencia = null;
@@ -258,7 +259,7 @@ public class CatalogoProductos
 		try
 		{
 			sentencia =con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			sentencia.setInt(1, id);
+			sentencia.setString(1, id);
 			ResultSet rs =sentencia.executeQuery();
 			if(rs.next())
 			{
@@ -287,7 +288,10 @@ public class CatalogoProductos
 				sqle.printStackTrace();
 			}
 		}
-		pr.setPrecio(CatalogoPrecios.buscarPrecioProducto(pr.getId()));
+		if(pr!=null)
+		{
+			pr.setPrecio(CatalogoPrecios.buscarPrecioProducto(pr.getId()));
+		}
 		return pr;
 	}
 
@@ -361,7 +365,8 @@ public class CatalogoProductos
 		}
 		catch(SQLException e)
 		{
-			e.printStackTrace();
+			//e.printStackTrace();
+			sr.addError(e);
 		}
 		finally
 		{
@@ -379,7 +384,8 @@ public class CatalogoProductos
 				//sqle.printStackTrace();
 			}
 		}
-		if(sr.getStatus())
+		Precio precio = CatalogoPrecios.buscarPrecioProducto(pr.getId());
+		if(sr.getStatus() && precio.getPrecio() != pr.getPrecio().getPrecio())
 			sr = CatalogoPrecios.agregarPrecio(pr.getPrecio().getPrecio(), pr.getId());
 		return sr;
 	}

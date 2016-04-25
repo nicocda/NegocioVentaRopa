@@ -41,11 +41,23 @@ public class ControladorABM
 		return Character.toString(tipo).concat(Character.toString(subTipo)).concat(idNuevo);
 	}
 
-	public static void modificarProducto(String id, String newDescripcion,int estado, float newPrecio)
+	public static RespuestaServidor modificarCargarProducto(String id, char tipo, char subTipo, String newDescripcion,int estado, float newPrecio)
 	{
+		Producto pr = CatalogoProductos.buscarProducto(id);
+		RespuestaServidor rs = new RespuestaServidor();
 		Calendar today = Calendar.getInstance();
 		today.set(Calendar.HOUR_OF_DAY, 0);
-		CatalogoProductos.modificarProducto(new Producto(newDescripcion,estado, id,new Precio(today.getTime(), newPrecio)));
+		if(pr!=null)
+		{
+			rs=CatalogoProductos.modificarProducto(new Producto(newDescripcion,estado, id,new Precio(today.getTime(), newPrecio)));
+		}
+		else
+		{
+			String idNuevoCompleto = obtenerIdCompleto(tipo, subTipo);
+			pr = new Producto(newDescripcion,estado,idNuevoCompleto,new Precio(today.getTime(), newPrecio));
+			rs=CatalogoProductos.agregarProducto(pr);
+		}
+		return rs;
 	}
 	
 	public static ArrayList<Cliente> buscarClientes()

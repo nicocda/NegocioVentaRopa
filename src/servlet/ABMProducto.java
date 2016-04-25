@@ -33,7 +33,10 @@ public class ABMProducto extends HttpServlet {
 		if (action.equals("alta"))
 		{
 			String descripcion = request.getParameter("descripcion"), 
-					precio=request.getParameter("precio");
+					precio=request.getParameter("precio"),
+					id = request.getParameter("id"),
+					tipo = request.getParameter("tipo"), 
+					subTipo=request.getParameter("subTipo");
 			float precioFloat;
 			try
 			{
@@ -43,8 +46,8 @@ public class ABMProducto extends HttpServlet {
 			{
 				precioFloat = -1;
 			}		
-			RespuestaServidor sr = ControladorABM.agregarProducto('R', 'H', descripcion, 1, precioFloat);
-	
+			RespuestaServidor sr = ControladorABM.modificarCargarProducto(id,tipo.charAt(0),subTipo.charAt(0), descripcion, 1, precioFloat);
+			
 			String mensajesJson = JsonResponses.devolverMensaje(sr, "Producto exitosamente cargado!");
 			
 			response.setContentType("json");

@@ -30,7 +30,7 @@ CREATE TABLE `cliente` (
   `direccion` varchar(45) DEFAULT NULL,
   `telefono` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (1,'Leo Peretti','direccion','34122222'),(2,'Juan Grasso','Sanlo','34122222'),(3,'Nico Giordano','Santi','34122222'),(6,'Lola menzeguez','la dire','3451123'),(7,NULL,NULL,NULL),(8,'Carlos Lopez','lavilla31','1445665'),(9,'Carlos Puto','puto','2345puto'),(10,'Juan se la come','',''),(11,'Leo musculito','',''),(12,'gghopgoghiogho','',''),(13,'me canse de agregar clientes','','');
+INSERT INTO `cliente` VALUES (1,'Leo Peretti','direccion','34122222'),(15,'NicolasGiordano','Santiago 1492','341  - 667 - 8013'),(16,'yo','',''),(17,'nico','direccion','34122222'),(18,'asdas','Sadas','asdas'),(19,'asdsa','213','2312');
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -103,7 +103,7 @@ DROP TABLE IF EXISTS `precio`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `precio` (
-  `fecha` date NOT NULL,
+  `fecha` datetime NOT NULL,
   `precio` varchar(45) DEFAULT NULL,
   `idProducto` varchar(12) NOT NULL,
   PRIMARY KEY (`fecha`,`idProducto`),
@@ -118,7 +118,7 @@ CREATE TABLE `precio` (
 
 LOCK TABLES `precio` WRITE;
 /*!40000 ALTER TABLE `precio` DISABLE KEYS */;
-INSERT INTO `precio` VALUES ('2016-04-12','200','RH00002'),('2016-04-12','300','RH00003'),('2016-04-12','400','RH00004'),('2016-04-12','500','RM00001');
+INSERT INTO `precio` VALUES ('2016-04-23 00:00:00','234.23','RH00001'),('2016-04-23 00:00:00','123.65','RH00002'),('2016-04-23 00:00:00','234.23','RH00003'),('2016-04-25 00:00:00','58.0','BN00001'),('2016-04-25 00:00:00','121.0','RH00002'),('2016-04-25 00:00:00','234.23','RH00003'),('2016-04-25 00:00:00','356.0','ZH00001'),('2016-04-25 11:24:43','1217.0','RH00002');
 /*!40000 ALTER TABLE `precio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,7 +149,7 @@ CREATE TABLE `producto` (
 
 LOCK TABLES `producto` WRITE;
 /*!40000 ALTER TABLE `producto` DISABLE KEYS */;
-INSERT INTO `producto` VALUES ('RH00002','Remera roja Lacoste',1,NULL,NULL),('RH00003','Pantalón azul Lacoste ',1,NULL,NULL),('RH00004','Camisa blanca Lacoste',1,NULL,NULL),('RH00005','Pantalón amarillo Lacoste ',1,NULL,NULL),('RM00001','Camisa blanca Lacoste',1,NULL,NULL);
+INSERT INTO `producto` VALUES ('BN00001','Reloj ben10 ',1,NULL,NULL),('RH00001','Remera Hombre Camisa abierta',1,NULL,NULL),('RH00002','Camisa a cuadro azul',1,NULL,NULL),('RH00003','Remera Hombre Canterbury Roja Talle \"M\"',1,NULL,NULL),('ZH00001','Zapatillas Reebok azul talle 38',1,NULL,NULL);
 /*!40000 ALTER TABLE `producto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -176,7 +176,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES ('Juan','Grasso','Juan Cruz Grasso','juangrasso@gmail.com',0),('Leo','Peretti','Leonardo Gabriel Peretti','leo.peretti5@gmail.com',0),('nicocda','nicolas23','Nicolas Giordano','nicocda09@gmail.com',0);
+INSERT INTO `usuario` VALUES ('Juan','Grasso','Juan Cruz Grasso','juangrasso@gmail.com',1),('Leo','Peretti','Leonardo Gabriel Peretti','leo.peretti5@gmail.com',2),('nicocda','nicolas23','Nicolas Giordano','nicocda09@gmail.com',1);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -222,4 +222,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-14 10:14:41
+-- Dump completed on 2016-04-25 11:25:48

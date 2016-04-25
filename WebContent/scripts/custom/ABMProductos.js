@@ -11,7 +11,8 @@ function eventosRelacionados()
 	$("#btnAceptar").click(function()
 	{
 		$.postData('/NegocioRopa/ABMProducto', { "id": $("#txtID").val(), "descripcion": $("#txtDescripcion").val(), 
-			"precio": $("#txtPrecio").val(), "action": "alta" });
+			"precio": $("#txtPrecio").val(), "action": "alta" , "tipo": $("#cbTipo").val(), 
+			"subTipo": $("#cbSubTipo").val()});
 	});
 	
 	//Con on agrego de forma dinámica el evento.
