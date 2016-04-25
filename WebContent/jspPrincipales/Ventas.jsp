@@ -1,13 +1,15 @@
-<%@page import="entidades.Usuario"%>
+<%@page import="entidades.Usuario"
+		import="entidades.Producto"
+		import="java.util.ArrayList"%>
 <%
 if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttribute("usuario")).getTipoUsuario() == 1) 
 {%>
 <script type="text/javascript" src="./scripts/custom/AutoComplete.js"></script>	
 <script type="text/javascript" src="../scripts/custom/AutoComplete.js"></script>	
-<script type="text/javascript" src="./scripts/custom/popup.js"></script>	
-<script type="text/javascript" src="../scripts/custom/popup.js"></script>
+<script type="text/javascript" src="./scripts/custom/Ventas.js"></script>	
+<script type="text/javascript" src="../scripts/custom/Ventas.js"></script>
 <H4>Venta</H4>
-<form>
+<form action="Ventas" method="POST">
 
 	<input type="text" id="txtClientes" placeholder="Cliente"/>
 
@@ -17,19 +19,19 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 			<td width="50%">Descripción</td>
 			<td width="30%">Precio</td>
 		</tr>
-		<tr>
-			<td>1</td>
-			<td>Descripción</td>
-			<td align="right">200</td>
-		</tr>
-		<tr>
-			<td>2</td>
-			<td>Descripción</td>
-			<td align="right">300</td>
-		</tr>
+		<%ArrayList<Producto> productosVenta = new ArrayList<Producto>();
+		if(productosVenta != null)
+		{
+			for(Producto p : productosVenta)
+			{%>
+			<td width="10%" value="<%=p.getId() %>"> <%=p.getId() %></td>
+			<td width="50%" value="<%=p.getDescripcion() %>"> <%=p.getDescripcion() %></td>
+			<td width="30%" value="<%=p.getPrecio().getPrecio() %>"> <%=p.getPrecio().getPrecio() %></td>
+		<%	}
+		} %>
 		<tr>
 			<td style="background-color: #C0C0C0;"><input id="agregar" class="botones" type="button" value="Agregar +"></td>
-			<td style="background-color: #C0C0C0;"></td>
+			<td style="background-color: #C0C0C0;"><input id="txtID" type="text" placeholder="Codigo Producto"></td>
 			<td align="right" style="background-color: #C0C0C0;"><b>Total:</b></td>
 		<tr>
 	</table>
@@ -51,13 +53,13 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 <div id="dialog" title="Agregar Producto" style="display:none;">
 	<table>
 		<tr>
-			<th>Hola</th>
+			<th>Ingrese codigo de producto</th>
 		</tr>
 		<tr>
-			<td><input type="text"></td>
+			<td><input type="text" name="idProducto"></td>
 		</tr>
 		<tr>
-			<td><input class="botones" type="button" value="Ok"> </td>
+			<td><input class="botones" type="button" id="addProducto" value="Ok"> </td>
 		</tr>
 	</table>
 </div>

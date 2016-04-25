@@ -27,8 +27,11 @@ function eventos()
 	 {
 		 $( "#dialog" ).dialog("open");
 	 })
-	 
 	 mostrarPopup();
+	 $("#addProducto").click(function()
+			 {
+				 $( "#dialog" ).dialog("open");
+			 })
 	 
 	 var icons = 
 	 {
