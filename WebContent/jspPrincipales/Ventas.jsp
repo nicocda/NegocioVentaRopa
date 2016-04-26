@@ -13,22 +13,13 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 
 	<input type="text" id="txtClientes" placeholder="Cliente"/>
 
-	<table class="CSSTableGenerator">
+	<table class="CSSTableGenerator" id="tablaProductos">
 		<tr>
 			<td width="10%">Código</td>
 			<td width="50%">Descripción</td>
 			<td width="30%">Precio</td>
 		</tr>
-		<%ArrayList<Producto> productosVenta = new ArrayList<Producto>();
-		if(productosVenta != null)
-		{
-			for(Producto p : productosVenta)
-			{%>
-			<td width="10%" value="<%=p.getId() %>"> <%=p.getId() %></td>
-			<td width="50%" value="<%=p.getDescripcion() %>"> <%=p.getDescripcion() %></td>
-			<td width="30%" value="<%=p.getPrecio().getPrecio() %>"> <%=p.getPrecio().getPrecio() %></td>
-		<%	}
-		} %>
+		<tr id="trTablaProducto"></tr>
 		<tr>
 			<td style="background-color: #C0C0C0;"><input id="agregar" class="botones" type="button" value="Agregar +"></td>
 			<td style="background-color: #C0C0C0;"><input id="txtID" type="text" placeholder="Codigo Producto"></td>

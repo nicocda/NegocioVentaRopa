@@ -76,7 +76,10 @@ public class Venta
 	{
 		this.productos = productos;
 	}
-	
+	public void addProducto(Producto pr)
+	{
+		this.productos.add(pr);
+	}
 	//Enum
 	public static enum formaPago
 	{

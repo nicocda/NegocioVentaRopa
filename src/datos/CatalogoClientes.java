@@ -250,6 +250,48 @@ public class CatalogoClientes
 		}
 		return cliente;
 		}
+
+	public static Cliente buscarCliente(String nombreCliente) { 
+		PreparedStatement sentencia = null;
+		Cliente cliente = null;
+		String sql= "select * from cliente where nombreApellido like ? order by nombreApellido";
+		try
+		{
+			sentencia = DataConnection.getInstancia().getConn().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			sentencia.setString(1, nombreCliente+"%");
+			ResultSet rs = sentencia.executeQuery();
+			if(rs.next())
+			{
+				cliente = new Cliente();
+				cliente.setId(rs.getInt("id"));
+				cliente.setNombreApellido(rs.getString("nombreApellido"));
+				cliente.setDireccion(rs.getString("direccion"));
+				cliente.setTelefono(rs.getString("telefono"));
+			}
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if(sentencia!=null && !sentencia.isClosed())
+				{
+					sentencia.close();
+				}
+				DataConnection.getInstancia().CloseConn();
+			}
+			catch (SQLException sqle)
+			{
+				sqle.printStackTrace();
+			}
+		}
+		
+		return cliente;
+	
+	}
 }
 
 
