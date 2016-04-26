@@ -15,6 +15,7 @@ public class Venta
 	//Constructores
 	public Venta()
 	{
+		this.productos= new ArrayList<Producto>();
 	}
 	
 	public Venta(int id, int formaPago, float importe, Date fechaVenta, Cliente cliente, ArrayList<Producto> productos)

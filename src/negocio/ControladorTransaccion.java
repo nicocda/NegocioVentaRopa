@@ -2,9 +2,11 @@ package negocio;
 import entidades.Cliente;
 import entidades.Producto;
 import entidades.Usuario;
+import entidades.Venta;
 import datos.CatalogoClientes;
 import datos.CatalogoProductos;
 import datos.CatalogoUsuarios;
+import datos.CatalogoVentas;
 
 public class ControladorTransaccion {
 
@@ -24,4 +26,8 @@ public class ControladorTransaccion {
 		return CatalogoClientes.buscarCliente(nombreCliente);
 	}
 
+	public static void registrarVenta(Venta vta)
+	{
+		 CatalogoVentas.registrarVenta(vta);
+	}
 }

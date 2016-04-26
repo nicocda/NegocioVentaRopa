@@ -145,20 +145,7 @@ public class CatalogoVentas {
 			sentencia.setFloat(4, vta.getImporte());
 			//obtengo el id generado para modificar el idVenta de los productos relacionados
 			//el modificar idVenta de los productos esta hecho en el finnally porque se tiene que ejecutar despues de cerrar la conexion
-			int rowsAfectadas = sentencia.executeUpdate();
-			 if (rowsAfectadas == 0) 
-				 throw new SQLException("Creating user failed, no rows affected.");
-	        try (ResultSet generatedKeys = sentencia.getGeneratedKeys()) 
-	        {
-	            if (generatedKeys.next()) 
-	            {
-	                idVenta = generatedKeys.getInt("id");
-	            }
-	            else 
-	            {
-	                throw new SQLException("Creating user failed, no ID obtained.");
-	            }
-	        }
+			sentencia.executeUpdate();
 		}
 		catch(SQLException e)
 		{
@@ -178,11 +165,34 @@ public class CatalogoVentas {
 			{
 				sqle.printStackTrace();
 			}
+			idVenta = ultimoNroVenta()+1;
 			//Deberíamos hacer un stored procedure con StartTransaction.
 			CatalogoProductos.venderProducto(idVenta, vta.getProductos());
 		}
 		
 		
+	}
+	
+	private static int ultimoNroVenta()
+	{
+		String sql = "select MAX(id) from venta";
+		PreparedStatement sentencia = null;
+		int nroVenta = 0;
+		Connection con = DataConnection.getInstancia().getConn();
+		try
+		{
+			sentencia = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+			ResultSet rs = sentencia.executeQuery();
+			if(rs.next())
+			{
+				nroVenta = rs.getInt(1);
+			}
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return nroVenta;
 	}
 
 	public static Venta buscarVenta(int idVenta) 
