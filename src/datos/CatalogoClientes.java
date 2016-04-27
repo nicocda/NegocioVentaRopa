@@ -224,7 +224,14 @@ public class CatalogoClientes
 		return sr;
 	}
 
-	public static Cliente buscarCliente(int id) {
+	public static Cliente buscarCliente(int id) throws RespuestaServidor
+	{
+		RespuestaServidor sr = new RespuestaServidor();
+		sr = validarCliente(id);
+		
+		if(!sr.getStatus())
+			throw sr;
+		
 		Cliente cliente = null;
 		String sql="select * from cliente where id=?";
 		PreparedStatement sentencia = null;
@@ -246,11 +253,22 @@ public class CatalogoClientes
 		}
 		catch(SQLException e)
 		{
-			e.printStackTrace();
+			sr.addError(e);
+			throw sr;
+			//e.printStackTrace();
 		}
 		return cliente;
-		}
-
+	}
+	
+	private static RespuestaServidor validarCliente(int id)
+	{
+		RespuestaServidor sr = new RespuestaServidor();
+		
+		if (id <= 0)
+			sr.addError("El id de usuario ingresado es inválido.");
+		
+		return sr;
+	}
 	public static Cliente buscarCliente(String nombreCliente) { 
 		PreparedStatement sentencia = null;
 		Cliente cliente = null;

@@ -41,7 +41,15 @@ public class ABMCliente extends HttpServlet
 			String nya = request.getParameter("nombreApellido");
 			String dire = request.getParameter("direccion");
 			String tel = request.getParameter("telefono");
-			RespuestaServidor sr = ControladorABM.agregarCliente(new Cliente(id,nya,dire,tel));
+			RespuestaServidor sr;
+			try
+			{
+				sr = ControladorABM.agregarCliente(new Cliente(id,nya,dire,tel));
+			}
+			catch(RespuestaServidor res)
+			{
+				sr = res;
+			}
 			String mensajesJson = JsonResponses.devolverMensaje(sr, "Se guardo correctamente el cliente");
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");

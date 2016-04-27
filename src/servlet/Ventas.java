@@ -15,6 +15,7 @@ import util.JsonResponses;
 import entidades.Cliente;
 import entidades.Producto;
 import entidades.Venta;
+import excepciones.RespuestaServidor;
 import negocio.ControladorABM;
 import negocio.ControladorTransaccion;
 
@@ -71,37 +72,39 @@ public class Ventas extends HttpServlet {
 		else if(action.equals("realizarVenta"))
 		{
 			
-			String nombreCliente = request.getParameter("nombreCliente");
-			Cliente cli=ControladorTransaccion.buscarCliente(nombreCliente);
-			if(cli!= null)
+			String idCliente = request.getParameter("idCliente");
+			RespuestaServidor sr = new RespuestaServidor();
+			Cliente cli = null;
+			try
+			{
+				cli=ControladorABM.buscarCliente(Integer.parseInt(idCliente));
+			}
+			catch(RespuestaServidor res)
+			{
+				sr = res;
+			}
+			
+			String formaPago = request.getParameter("formaPago");
+
+			String msj;
+			
+			/*if(!sr.getStatus())
 			{
 				vta.setCliente(cli);
+				Calendar today = Calendar.getInstance();
+				today.set(Calendar.HOUR_OF_DAY, 0);
+				vta.setFechaVenta(today.getTime());
+				vta.setFormaPago(Integer.parseInt(formaPago));
+				ControladorTransaccion.registrarVenta(vta);
+				msj = JsonResponses.devolverMensaje(sr, "Éxito(?)");
 			}
 			else 
-			{
-				mensaje = "{\"tipoMensaje\":\"error\", \"mensajeError\":\"Cliente no existe\"}";
-			}
-			Calendar today = Calendar.getInstance();
-			today.set(Calendar.HOUR_OF_DAY, 0);
-			vta.setFechaVenta(today.getTime());
-			String formaPago = request.getParameter("formaPago");
-			if(formaPago != "0")
-			{
-				vta.setFormaPago(Integer.parseInt(formaPago));
-			}
-			else
-			{
-				mensaje = "{\"tipoMensaje\":\"error\", \"mensajeError\":\"No se selecciono forma de pago\"}";
-			}
-			if(mensaje == null)
-			{
-				mensaje = "{\"tipoMensaje\":\"exito\", \"mensajeError\":\"Venta Realizada con éxito\", \"importe\":\"0\"}";
-				ControladorTransaccion.registrarVenta(vta);
-				session.setAttribute("venta", new Venta());
-			}
+				msj = JsonResponses.devolverMensaje(sr, "Éxito(?)");*/
+			
+			
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
-		    response.getWriter().write(mensaje);
+		    response.getWriter().write(JsonResponses.devolverMensaje(sr, "Éxito(?)"));
 			
 		}
 		

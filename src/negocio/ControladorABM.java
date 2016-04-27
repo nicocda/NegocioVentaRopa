@@ -2,7 +2,6 @@ package negocio;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-
 import datos.CatalogoClientes;
 import datos.CatalogoProductos;
 import entidades.Cliente;
@@ -65,7 +64,7 @@ public class ControladorABM
 		return CatalogoClientes.buscarClientes();
 	}
 	
-	public static RespuestaServidor agregarCliente(Cliente cl)
+	public static RespuestaServidor agregarCliente(Cliente cl) throws RespuestaServidor
 	{
 			if(CatalogoClientes.buscarCliente(cl.getId()) != null && cl.getId() != 0)
 			{
@@ -93,5 +92,10 @@ public class ControladorABM
 	{
 		//en realidad quiero todos. Hay que hacer métodos en el catálogo
 		return CatalogoProductos.buscarProductosDisponibles();
+	}
+	
+	public static Cliente buscarCliente(int idCliente) throws RespuestaServidor
+	{
+		return CatalogoClientes.buscarCliente(idCliente);
 	}
 }

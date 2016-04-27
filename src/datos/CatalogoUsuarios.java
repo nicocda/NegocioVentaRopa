@@ -13,7 +13,7 @@ import excepciones.RespuestaServidor;
 public class CatalogoUsuarios 
 {
 	
-	public static Usuario buscarUsuario(String id, String pass) throws RespuestaServidor 
+	public static Usuario buscarUsuario(String id, String pass)
 	{
 		Usuario usu = null;
 		String sql="select * from usuario where usuario=? and password=?";
@@ -37,10 +37,7 @@ public class CatalogoUsuarios
 		}
 		catch(SQLException e)
 		{
-			RespuestaServidor sr = new RespuestaServidor();
-			sr.addError("Hola");
-			throw sr;
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
 		return usu;
 		

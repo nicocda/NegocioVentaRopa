@@ -29,7 +29,7 @@ $(document).ready(function()
 						var formaPago = 3;
 					else 
 						var formaPago = 0;
-					$.postData('/NegocioRopa/Ventas', {"action":"realizarVenta", "nombreCliente": $("#txtClientes").val(), "formaPago": formaPago }, function(result)
+					$.postData('/NegocioRopa/Ventas', {"action":"realizarVenta", "idCliente": $("#txtClientes").val(), "formaPago": formaPago }, function(result)
 							{
 								sleep(400);
 								recargarTabla(result);

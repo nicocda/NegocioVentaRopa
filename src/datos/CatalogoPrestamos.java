@@ -25,7 +25,7 @@ public class CatalogoPrestamos {
 			while(rs.next())
 			{
 				Prestamo pr = new Prestamo();
-				pr.setCliente(CatalogoClientes.buscarCliente(rs.getInt("idCliente")));
+				//pr.setCliente(CatalogoClientes.buscarCliente(rs.getInt("idCliente")));
 				pr.setFechaVenta(rs.getDate("fechaVenta"));
 				pr.setFormaPago(formaPago.NULL.ordinal());
 				pr.setId(rs.getInt("id"));
@@ -69,7 +69,7 @@ public class CatalogoPrestamos {
 			while(rs.next())
 			{
 				Prestamo pr = new Prestamo();
-				pr.setCliente(CatalogoClientes.buscarCliente(rs.getInt("idCliente")));
+				//pr.setCliente(CatalogoClientes.buscarCliente(rs.getInt("idCliente")));
 				pr.setFechaVenta(rs.getDate("fechaVenta"));
 				pr.setFormaPago(formaPago.NULL.ordinal());
 				pr.setId(rs.getInt("v.id"));
@@ -113,7 +113,7 @@ public class CatalogoPrestamos {
 			while(rs.next())
 			{
 				pr = new Prestamo();
-				pr.setCliente(CatalogoClientes.buscarCliente(rs.getInt("idCliente")));
+				//pr.setCliente(CatalogoClientes.buscarCliente(rs.getInt("idCliente")));
 				pr.setFechaVenta(rs.getDate("fechaVenta"));
 				pr.setFormaPago(formaPago.NULL.ordinal());
 				pr.setId(rs.getInt("id"));
