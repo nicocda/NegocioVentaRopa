@@ -136,8 +136,12 @@ public class CatalogoVentas {
 		return ventas;
 	}
 	
-	public static void registrarVenta(Venta vta)
+	public static void registrarVenta(Venta vta) throws RespuestaServidor
 	{
+		RespuestaServidor sr = new RespuestaServidor();
+		sr = validarVenta(vta);
+		if(!sr.getStatus())
+			throw sr;
 		int idVenta = -1;
 		String sql="insert into venta (fechaVenta,idCliente,formaPago, importe) values (?,?,?,?)";
 		PreparedStatement sentencia = null;
@@ -154,7 +158,9 @@ public class CatalogoVentas {
 		}
 		catch(SQLException e)
 		{
-			e.printStackTrace();
+			sr.addError(e);
+			throw sr;
+			//e.printStackTrace();
 		}
 		finally
 		{
@@ -168,7 +174,9 @@ public class CatalogoVentas {
 			}
 			catch (SQLException sqle)
 			{
-				sqle.printStackTrace();
+				sr.addError(sqle);
+				throw sr;
+				//sqle.printStackTrace();
 			}
 			idVenta = ultimoNroVenta()+1;
 			//Deberíamos hacer un stored procedure con StartTransaction.
@@ -178,6 +186,23 @@ public class CatalogoVentas {
 		
 	}
 	
+	private static RespuestaServidor validarVenta(Venta vta) {
+		RespuestaServidor sr = new RespuestaServidor();
+		if(vta.getProductos().isEmpty())
+		{
+			sr.addError("La venta no posee ningún producto");
+		}
+		if(vta.getFormaPago() == 0)
+		{
+			sr.addError("No seleccionó la forma de pago");
+		}
+		if(vta.getCliente() == null)
+		{
+			sr.addError("El cliente ingresado no es válido");
+		}
+		return sr;
+	}
+
 	private static int ultimoNroVenta()
 	{
 		String sql = "select MAX(id) from venta";

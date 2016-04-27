@@ -30,7 +30,7 @@ public class ControladorTransaccion {
 		return CatalogoClientes.buscarCliente(nombreCliente);
 	}
 
-	public static void registrarVenta(Venta vta)
+	public static void registrarVenta(Venta vta) throws RespuestaServidor
 	{
 		 CatalogoVentas.registrarVenta(vta);
 	}
