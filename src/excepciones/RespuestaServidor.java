@@ -2,8 +2,9 @@ package excepciones;
 
 import java.util.ArrayList;
 
-public class RespuestaServidor 
+public class RespuestaServidor extends Exception 
 {
+	private static final long serialVersionUID = 1L;
 	private ArrayList<ErrorServidor> errors;
 	private int returnId;
 	private String returnCode, returnName;

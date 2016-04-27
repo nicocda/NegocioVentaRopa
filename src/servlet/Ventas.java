@@ -29,16 +29,14 @@ public class Ventas extends HttpServlet {
 		doPost(request,response);
 	}
 
-	@SuppressWarnings("unused")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 		Venta vta = (Venta) session.getAttribute("venta");
 		String action = request.getParameter("action");	
-		String mensaje;
+		String mensaje=null;
 		//hago esta validacion para saber si entra del boton del header o de otro lado
 		if (action.equals("agregarProducto"))
 		{
-		
 			String id = request.getParameter("id");
 			Producto pro = ControladorTransaccion.buscarProducto(id);
 			
@@ -72,27 +70,39 @@ public class Ventas extends HttpServlet {
 		}
 		else if(action.equals("realizarVenta"))
 		{
+			
 			String nombreCliente = request.getParameter("nombreCliente");
 			Cliente cli=ControladorTransaccion.buscarCliente(nombreCliente);
 			if(cli!= null)
 			{
 				vta.setCliente(cli);
-				mensaje = "{\"error\":false, \"mensajeError\":\"Venta Realizada con éxito\"}";
-				
 			}
 			else 
 			{
-				mensaje = "{\"error\":true, \"mensajeError\":\"Cliente no existe\"}";
+				mensaje = "{\"tipoMensaje\":\"error\", \"mensajeError\":\"Cliente no existe\"}";
 			}
 			Calendar today = Calendar.getInstance();
 			today.set(Calendar.HOUR_OF_DAY, 0);
 			vta.setFechaVenta(today.getTime());
 			String formaPago = request.getParameter("formaPago");
-			if(formaPago != null)
+			if(formaPago != "0")
 			{
-			vta.setFormaPago(Integer.parseInt(formaPago));
+				vta.setFormaPago(Integer.parseInt(formaPago));
 			}
-			ControladorTransaccion.registrarVenta(vta);
+			else
+			{
+				mensaje = "{\"tipoMensaje\":\"error\", \"mensajeError\":\"No se selecciono forma de pago\"}";
+			}
+			if(mensaje == null)
+			{
+				mensaje = "{\"tipoMensaje\":\"exito\", \"mensajeError\":\"Venta Realizada con éxito\", \"importe\":\"0\"}";
+				ControladorTransaccion.registrarVenta(vta);
+				session.setAttribute("venta", new Venta());
+			}
+			response.setContentType("json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(mensaje);
+			
 		}
 		
 	}

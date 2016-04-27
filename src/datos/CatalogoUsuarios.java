@@ -8,10 +8,13 @@ import java.sql.Statement;
 
 import conexion.DataConnection;
 import entidades.Usuario;
+import excepciones.RespuestaServidor;
 
-public class CatalogoUsuarios {
+public class CatalogoUsuarios 
+{
 	
-	public static Usuario buscarUsuario(String id, String pass) {
+	public static Usuario buscarUsuario(String id, String pass) throws RespuestaServidor 
+	{
 		Usuario usu = null;
 		String sql="select * from usuario where usuario=? and password=?";
 		PreparedStatement sentencia = null;
@@ -34,7 +37,10 @@ public class CatalogoUsuarios {
 		}
 		catch(SQLException e)
 		{
-			e.printStackTrace();
+			RespuestaServidor sr = new RespuestaServidor();
+			sr.addError("Hola");
+			throw sr;
+			//e.printStackTrace();
 		}
 		return usu;
 		

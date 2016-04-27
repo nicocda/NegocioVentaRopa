@@ -5,7 +5,7 @@ $(document).ready(function()
 
 	function agregarEventos()
 	{
-		$("#agregar").click(function()
+		$(document).on("click", "#agregar", function()
 				{
 					$.post('/NegocioRopa/Ventas', { "action": "agregarProducto" , "id": $("#txtID").val()}, function(result){
 						if(result.error)
@@ -21,17 +21,19 @@ $(document).ready(function()
 		
 		$("#realizarVenta").click(function()
 				{
-					if($("#radio1").checked())
+					if($("#radio1").prop("checked"))
 						var formaPago = 1;
-					if($("#radio2").checked())
+					else if($("#radio2").prop("checked"))
 						var formaPago = 2;
-					if($("#radio3").checked())
+					else if($("#radio3").prop("checked"))
 						var formaPago = 3;
-					$.post('/NegocioRopa/Ventas', {"action":"realizarVenta", "nombreCliente": $("#txtClientes").val(), "formaPago": formaPago }, function(result)
+					else 
+						var formaPago = 0;
+					$.postData('/NegocioRopa/Ventas', {"action":"realizarVenta", "nombreCliente": $("#txtClientes").val(), "formaPago": formaPago }, function(result)
 							{
-								//Si es exito, el mensaje muestra un exito
-								alert(result.mensajeError);
-							
+								sleep(400);
+								recargarTabla(result);
+								
 							});
 				});
 				

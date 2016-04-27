@@ -11,6 +11,7 @@
 	<link rel="stylesheet" type="text/css" href="./themes/componentes.css">
 	<script type="text/javascript" src="./scripts/lib/jquery-1.12.3.js"></script>
 	<script type="text/javascript" src="./scripts/lib/jquery-ui.js"></script>
+	<script type="text/javascript" src="./scripts/lib/select2.js"></script>
 	<script type="text/javascript" src="./scripts/custom/Ajax.js"></script>	
 	<%}
 	else
@@ -20,6 +21,7 @@
 	<link rel="stylesheet" type="text/css" href="../themes/componentes.css">
 	<script type="text/javascript" src="../scripts/lib/jquery-1.12.3.js"></script>
 	<script type="text/javascript" src="../scripts/lib/jquery-ui.js"></script>
+	<script type="text/javascript" src="../scripts/lib/select2.js"></script>
 	<script type="text/javascript" src="../scripts/custom/Ajax.js"></script>	
 	<%} %>
 	

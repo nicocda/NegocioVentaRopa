@@ -10,6 +10,7 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 <script type="text/javascript" src="./scripts/custom/Ventas.js"></script>	
 <script type="text/javascript" src="../scripts/custom/Ventas.js"></script>
 <H4>Venta</H4> <p align="right"><%if(request.getParameter("time") != null)%><%=request.getParameter("time") %></p>
+<div id="divError"></div>
 <form action="Ventas" method="POST">
 	<input type="text" id="txtClientes" placeholder="Cliente"/>
 
@@ -47,9 +48,8 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 		<label class="css-label radGroup1" for="radio2">Cuenta Corriente</label><br><br>
 		<input type="radio" name="radio" id="radio3" class="css-checkbox"/>
 		<label class="css-label radGroup1" for="radio3">Tarjeta</label>
-		
-		<input class="botones" type="button" id="realizarVenta" value="Realizar Venta">
 	</div>
+		<input class="botones" type="button" id="realizarVenta" value="Realizar Venta">
 
 </form>
 

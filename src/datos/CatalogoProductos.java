@@ -11,6 +11,7 @@ import conexion.DataConnection;
 import entidades.Precio;
 import entidades.Producto;
 import entidades.Producto.estado;
+import entidades.Venta;
 import excepciones.RespuestaServidor;
 
 public class CatalogoProductos
@@ -19,7 +20,7 @@ public class CatalogoProductos
 	public static ArrayList<Producto> buscarProductosDisponibles()
 	{
 		//String sql ="select * from producto p inner join precio s on p.id=s.idProducto where estado=1 order by id";//estado=1 es en stock
-		String sql="select * from producto order by id";
+		String sql="select * from producto where estado=1 order by id";
 		PreparedStatement sentencia = null;
 		ArrayList<Producto> productos = new ArrayList<Producto>();
 		Connection con = DataConnection.getInstancia().getConn();
@@ -61,6 +62,8 @@ public class CatalogoProductos
 		}
 		return productos;
 	}
+	
+	
 
 	public static ArrayList<Producto> buscarProductosVenta(int idVenta)
 	{
