@@ -1,17 +1,22 @@
 package datos;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import org.apache.naming.java.javaURLContextFactory;
 
 import conexion.DataConnection;
 import entidades.Cliente;
+import entidades.Prestamo;
+import entidades.Reserva;
 import entidades.Venta;
+import excepciones.RespuestaServidor;
 
 public class CatalogoVentas {
 
@@ -250,5 +255,96 @@ public class CatalogoVentas {
 				}
 			}
 		return venta;
+	}
+
+	public static ArrayList<Venta> buscarVentas(Calendar today) throws RespuestaServidor
+	{
+		String sql="select * from venta "
+				+ "where fechaVenta=? "
+				+ "order by fechaVenta desc";
+		PreparedStatement sentencia = null;
+		ArrayList<Venta> ventas = new ArrayList<Venta>();
+		Connection con = DataConnection.getInstancia().getConn();
+		
+		try
+		{
+			sentencia =con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			sentencia.setDate(1, new java.sql.Date(today.getTimeInMillis()));
+			//sentencia.setString(1, today);
+			ResultSet rs =sentencia.executeQuery();
+			
+			while(rs.next())
+			{
+				int id=rs.getInt("id");
+				if(rs.getBoolean("isReserva"))
+				{
+					Reserva v = new Reserva();
+					v.setImporte(rs.getFloat("seña"));
+					v.setFechaCaducidad(rs.getDate("fechaCaducidad"));
+					//v.setCliente(CatalogoClientes.buscarCliente(id));
+					v.setFechaVenta(rs.getDate("fechaVenta"));
+					v.setFormaPago(rs.getInt("formaPago"));
+					v.setId(rs.getInt("id"));
+					v.setImporte(rs.getFloat("importe"));
+					//busco los productos en el catalogo de productos y los seteo en la vento
+					//v.setProductos(CatalogoProductos.buscarProductosVenta(id));
+					ventas.add(v);
+				}
+				else if(rs.getBoolean("isPrestamo"))
+				{
+					Prestamo v = new Prestamo();
+					//v.setCliente(CatalogoClientes.buscarCliente(id));
+					v.setFechaVenta(rs.getDate("fechaVenta"));
+					v.setFormaPago(rs.getInt("formaPago"));
+					v.setId(rs.getInt("id"));
+					v.setImporte(rs.getFloat("importe"));
+					//busco los productos en el catalogo de productos y los seteo en la vento
+					//v.setProductos(CatalogoProductos.buscarProductosVenta(id));
+					ventas.add(v);
+				}
+				else
+				{
+					Venta v = new Venta();
+					//v.setCliente(CatalogoClientes.buscarCliente(id));
+					v.setFechaVenta(rs.getDate("fechaVenta"));
+					v.setFormaPago(rs.getInt("formaPago"));
+					v.setId(rs.getInt("id"));
+					v.setImporte(rs.getFloat("importe"));
+					//busco los productos en el catalogo de productos y los seteo en la vento
+					//v.setProductos(CatalogoProductos.buscarProductosVenta(id));
+					ventas.add(v);
+				}
+				
+			}
+			
+		}
+		catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+		finally
+			{
+				try
+				{
+					if(sentencia!=null && !sentencia.isClosed())
+					{
+						sentencia.close();
+					}
+					DataConnection.getInstancia().CloseConn();
+				}
+				catch (SQLException sqle)
+				{
+					sqle.printStackTrace();
+				}
+			}
+		for(Venta vta : ventas)
+		{
+			int id= vta.getId();
+			vta.setCliente(CatalogoClientes.buscarCliente(id));
+			vta.setProductos(CatalogoProductos.buscarProductosVenta(id));
+		}
+		
+		return ventas;
+		
 	}
 }

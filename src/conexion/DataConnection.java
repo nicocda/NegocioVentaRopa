@@ -16,15 +16,26 @@ public class DataConnection
 	
 	private static String dbUrl="jdbc:mysql://localhost:3306/ropa";
 	private static String dbUser="root";
-	private static String dbPassword="1234";
+	private static String dbPassword="root";
+	
+	private Connection conn;
+	private int cantCon;
 	
 	//Construtor Default
 	private DataConnection()
 	{
+		try{
+			Class.forName("com.mysql.jdbc.Driver");
+			conn=null;
+			cantCon=0;
+		} catch(ClassNotFoundException e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	//Abrir Conexión y manejo de errores
-	private Connection conn;
+	
 	public Connection getConn()
 	{
 		try 
@@ -32,7 +43,8 @@ public class DataConnection
 			if(conn==null || !conn.isValid(3))
 			{
 				Class.forName("com.mysql.jdbc.Driver").newInstance();
-				conn=DriverManager.getConnection(dbUrl,dbUser,dbPassword);	
+				conn=DriverManager.getConnection(dbUrl,dbUser,dbPassword);
+				cantCon++;
 			}
 			
 		} catch (InstantiationException e) 
@@ -51,12 +63,15 @@ public class DataConnection
 
 		return conn;
 	}
+
 	
 	//Cerrar conexió y manejo de errores
 	public void CloseConn()
 	{
-		try {
-			if(conn!=null && !conn.isClosed())
+		try
+		{
+			cantCon--;
+			if(cantCon==0)
 			{
 				conn.close();
 			}

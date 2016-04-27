@@ -4,6 +4,10 @@ import entidades.Producto;
 import entidades.Usuario;
 import entidades.Venta;
 import excepciones.RespuestaServidor;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+
 import datos.CatalogoClientes;
 import datos.CatalogoProductos;
 import datos.CatalogoUsuarios;
@@ -29,5 +33,20 @@ public class ControladorTransaccion {
 	public static void registrarVenta(Venta vta)
 	{
 		 CatalogoVentas.registrarVenta(vta);
+	}
+	
+	public static ArrayList<Venta> buscarVentasDia()
+	{
+		Calendar today = Calendar.getInstance();
+		today.set(Calendar.HOUR_OF_DAY,0);
+		try
+		{
+			return CatalogoVentas.buscarVentas(today);
+		}
+		catch (RespuestaServidor sr)
+		{
+			return new ArrayList<>();
+			//HAY QUE VALIDAR! :D
+		}
 	}
 }
