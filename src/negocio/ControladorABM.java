@@ -11,14 +11,14 @@ import excepciones.RespuestaServidor;
 
 public class ControladorABM 
 {
-	public static RespuestaServidor agregarProducto(char tipo, char subTipo, String descripcion, int estado, float precio)
+	public static void agregarProducto(char tipo, char subTipo, String descripcion, int estado, float precio) throws RespuestaServidor
 	{
 		String idNuevoCompleto = obtenerIdCompleto(tipo, subTipo);
 		Calendar today = Calendar.getInstance();
 		today.set(Calendar.HOUR_OF_DAY, 0);
 		Producto pr = new Producto(descripcion,estado,idNuevoCompleto,new Precio(today.getTime(), precio));
-		RespuestaServidor sr = CatalogoProductos.agregarProducto(pr);
-		return sr;
+		CatalogoProductos.agregarProducto(pr);
+		
 	}
 	
 	//si no existe me da el primero para ese tipo y para ese subtipo.
@@ -40,23 +40,21 @@ public class ControladorABM
 		return Character.toString(tipo).concat(Character.toString(subTipo)).concat(idNuevo);
 	}
 
-	public static RespuestaServidor modificarCargarProducto(String id, char tipo, char subTipo, String newDescripcion,int estado, float newPrecio)
+	public static void modificarCargarProducto(String id, char tipo, char subTipo, String newDescripcion,int estado, float newPrecio) throws RespuestaServidor
 	{
 		Producto pr = CatalogoProductos.buscarProducto(id);
-		RespuestaServidor rs = new RespuestaServidor();
 		Calendar today = Calendar.getInstance();
 		today.set(Calendar.HOUR_OF_DAY, 0);
 		if(pr!=null)
 		{
-			rs=CatalogoProductos.modificarProducto(new Producto(newDescripcion,estado, id,new Precio(today.getTime(), newPrecio)));
+			CatalogoProductos.modificarProducto(new Producto(newDescripcion,estado, id,new Precio(today.getTime(), newPrecio)));
 		}
 		else
 		{
 			String idNuevoCompleto = obtenerIdCompleto(tipo, subTipo);
 			pr = new Producto(newDescripcion,estado,idNuevoCompleto,new Precio(today.getTime(), newPrecio));
-			rs=CatalogoProductos.agregarProducto(pr);
+			CatalogoProductos.agregarProducto(pr);
 		}
-		return rs;
 	}
 	
 	public static ArrayList<Cliente> buscarClientes()

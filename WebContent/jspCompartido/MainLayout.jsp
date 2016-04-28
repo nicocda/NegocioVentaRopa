@@ -45,7 +45,7 @@
 				<nav>
 					<%if (((Usuario)session.getAttribute("usuario")) != null) 
 					{%>
-					<a href="Index?link=LogOut">Hola <%=((Usuario)session.getAttribute("usuario")).getNombreYApellido()%></a>
+					<a href="Index?link=LogOut">Bienvenido <%=((Usuario)session.getAttribute("usuario")).getNombreYApellido()%></a>
 					<%}%>
 					<a href="/NegocioRopa">Inicio</a>
 					<a href="Index?link=AbmClientes" name="editar">Clientes</a>

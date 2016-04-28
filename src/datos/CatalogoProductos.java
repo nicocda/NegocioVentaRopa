@@ -298,11 +298,11 @@ public class CatalogoProductos
 		return pr;
 	}
 
-	public static RespuestaServidor agregarProducto(Producto pr)
+	public static void agregarProducto(Producto pr) throws RespuestaServidor
 	{
 		RespuestaServidor sr = validarProducto(pr);
 		if(!sr.getStatus())
-			return sr;
+			throw sr;
 		String sql="insert into producto (id,descripcion,estado) values(?,?,?)";
 		PreparedStatement sentencia=null;
 		try
@@ -316,7 +316,7 @@ public class CatalogoProductos
 		catch(SQLException e)
 		{
 			sr.addError(e);
-			//e.printStackTrace();
+			throw sr;
 		}
 		finally
 		{
@@ -331,12 +331,10 @@ public class CatalogoProductos
 			catch (SQLException sqle)
 			{
 				sr.addError(sqle);
-				//sqle.printStackTrace();
+				throw sr;
 			}
 		}
-		if(sr.getStatus())
-			sr = CatalogoPrecios.agregarPrecio(pr.getPrecio().getPrecio(), pr.getId());
-		return sr;
+			CatalogoPrecios.agregarPrecio(pr.getPrecio().getPrecio(), pr.getId());
 	}
 	
 	private static RespuestaServidor validarProducto(Producto pr) 
@@ -351,11 +349,11 @@ public class CatalogoProductos
 		return sr;
 	}
 
-	public static RespuestaServidor modificarProducto(Producto pr)
+	public static void modificarProducto(Producto pr) throws RespuestaServidor
 	{
 		RespuestaServidor sr = validarProducto(pr);
 		if(!sr.getStatus())
-			return sr;
+			throw sr;
 		String sql="update producto set descripcion=?, estado=? where id=?";
 		PreparedStatement sentencia = null;
 		try
@@ -368,8 +366,8 @@ public class CatalogoProductos
 		}
 		catch(SQLException e)
 		{
-			//e.printStackTrace();
 			sr.addError(e);
+			throw sr;
 		}
 		finally
 		{
@@ -384,13 +382,12 @@ public class CatalogoProductos
 			catch (SQLException sqle)
 			{
 				sr.addError(sqle);
-				//sqle.printStackTrace();
+				throw sr;
 			}
 		}
+		//Saco los rs porque el precio ya se valida apenas se entra a este metodo, por lo tanto despues ya no puede fallar, porque el throw me corta la ejecucion.
 		Precio precio = CatalogoPrecios.buscarPrecioProducto(pr.getId());
-		if(sr.getStatus() && precio.getPrecio() != pr.getPrecio().getPrecio())
-			sr = CatalogoPrecios.agregarPrecio(pr.getPrecio().getPrecio(), pr.getId());
-		return sr;
+			CatalogoPrecios.agregarPrecio(pr.getPrecio().getPrecio(), pr.getId());
 	}
 	
 	public static void modificarEstadoProducto(String id, estado valor)

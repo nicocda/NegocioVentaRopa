@@ -16,7 +16,7 @@ public class DataConnection
 	
 	private static String dbUrl="jdbc:mysql://localhost:3306/ropa";
 	private static String dbUser="root";
-	private static String dbPassword="1234";
+	private static String dbPassword="123peretto";
 	
 	private Connection conn;
 	private int cantCon;

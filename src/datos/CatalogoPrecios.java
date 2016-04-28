@@ -56,7 +56,7 @@ public class CatalogoPrecios {
 		return precio;
 	}
 	
-	public static RespuestaServidor agregarPrecio(float precio, String idProducto)
+	public static void agregarPrecio(float precio, String idProducto)
 	{
 		RespuestaServidor sr = new RespuestaServidor();
 		String sql="insert into precio values (NOW(),?,?)";
@@ -88,7 +88,6 @@ public class CatalogoPrecios {
 				sqle.printStackTrace();
 			}
 		}
-		return sr;
 	}
 	
 	

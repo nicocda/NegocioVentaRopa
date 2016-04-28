@@ -46,8 +46,15 @@ public class ABMProducto extends HttpServlet {
 			{
 				precioFloat = -1;
 			}		
-			RespuestaServidor sr = ControladorABM.modificarCargarProducto(id,tipo.charAt(0),subTipo.charAt(0), descripcion, 1, precioFloat);
-			
+			RespuestaServidor sr = new RespuestaServidor();
+			try
+			{
+				ControladorABM.modificarCargarProducto(id,tipo.charAt(0),subTipo.charAt(0), descripcion, 1, precioFloat);
+			}
+			catch (RespuestaServidor e)
+			{
+				sr = e;
+			}
 			String mensajesJson = JsonResponses.devolverMensaje(sr, "Producto exitosamente cargado!");
 			
 			response.setContentType("json");

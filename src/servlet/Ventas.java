@@ -15,7 +15,6 @@ import util.JsonResponses;
 import entidades.Cliente;
 import entidades.Producto;
 import entidades.Venta;
-import excepciones.ErrorServidor;
 import excepciones.RespuestaServidor;
 import negocio.ControladorABM;
 import negocio.ControladorTransaccion;
@@ -91,7 +90,6 @@ public class Ventas extends HttpServlet {
 			{
 				
 			}
-			String msj;
 			vta.setCliente(cli);
 			Calendar today = Calendar.getInstance();
 			today.set(Calendar.HOUR_OF_DAY, 0);
@@ -108,7 +106,7 @@ public class Ventas extends HttpServlet {
 			}
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
-		    response.getWriter().write(JsonResponses.devolverMensaje(sr, "Éxito(?)"));
+		    response.getWriter().write(JsonResponses.devolverMensaje(sr, "La venta se registró con éxito"));
 		}
 	}
 }
