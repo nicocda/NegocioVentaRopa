@@ -94,13 +94,13 @@ public class CatalogoClientes
 		return clientes;
 	}
 	
-	public static RespuestaServidor agregarCliente(Cliente cliente)
+	public static void agregarCliente(Cliente cliente) throws RespuestaServidor
 	{
 		RespuestaServidor sr = new RespuestaServidor();
 		sr=validarClienteAlta(cliente);
 		if(!sr.getStatus())
 		{
-			return sr;
+			throw sr;
 		}
 		String sql = "insert into cliente (nombreApellido, direccion, telefono) values (?,?,?)";
 		PreparedStatement sentencia = null;
@@ -115,6 +115,7 @@ public class CatalogoClientes
 		catch(SQLException e)
 		{
 			sr.addError(e);
+			throw sr;
 		}
 		finally
 		{
@@ -128,10 +129,10 @@ public class CatalogoClientes
 			}
 			catch (SQLException sqle)
 			{
-				sqle.printStackTrace();
+				sr.addError(sqle);
+				throw sr;
 			}
 		}
-		return sr;
 	}
 	
 	private static RespuestaServidor validarClienteAlta(Cliente cl)
@@ -182,13 +183,13 @@ public class CatalogoClientes
 		}
 	}
 	
-	public static RespuestaServidor modificarCliente(Cliente cliente)
+	public static void modificarCliente(Cliente cliente) throws RespuestaServidor
 	{
 		RespuestaServidor sr = new RespuestaServidor();
 		sr=validarClienteUpdate(cliente);
 		if(!sr.getStatus())
 		{
-			return sr;
+			throw sr;
 		}
 		String sql = "update cliente set id=? ,nombreApellido=? ,direccion=? ,telefono=? where id=?";
 		PreparedStatement sentencia = null;
@@ -205,6 +206,7 @@ public class CatalogoClientes
 		catch(SQLException e)
 		{
 			sr.addError(e);
+			throw sr;
 		}
 		finally
 		{
@@ -218,20 +220,20 @@ public class CatalogoClientes
 			}
 			catch (SQLException sqle)
 			{
-				sqle.printStackTrace();
+				sr.addError(sqle);
+				throw sr;
 			}
 		}
-		return sr;
 	}
 
 	public static Cliente buscarCliente(int id) throws RespuestaServidor
 	{
 		RespuestaServidor sr = new RespuestaServidor();
 		sr = validarCliente(id);
-		
 		if(!sr.getStatus())
+		{
 			throw sr;
-		
+		}
 		Cliente cliente = null;
 		String sql="select * from cliente where id=?";
 		PreparedStatement sentencia = null;
@@ -255,7 +257,6 @@ public class CatalogoClientes
 		{
 			sr.addError(e);
 			throw sr;
-			//e.printStackTrace();
 		}
 		return cliente;
 	}
@@ -263,10 +264,10 @@ public class CatalogoClientes
 	private static RespuestaServidor validarCliente(int id)
 	{
 		RespuestaServidor sr = new RespuestaServidor();
-		
 		if (id <= 0)
+		{
 			sr.addError("El id de usuario ingresado es inválido.");
-		
+		}
 		return sr;
 	}
 	public static Cliente buscarCliente(String nombreCliente) { 

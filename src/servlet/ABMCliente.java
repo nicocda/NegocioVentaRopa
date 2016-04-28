@@ -33,6 +33,7 @@ public class ABMCliente extends HttpServlet
 		if (action.equals("agregarCliente"))
 		{
 			int id;
+			//TODO HACE FALTA VALIDAR ESTO?
 			String idString = request.getParameter("id");
 			if(idString == null || idString.isEmpty())  
 				id=0; 
@@ -41,10 +42,10 @@ public class ABMCliente extends HttpServlet
 			String nya = request.getParameter("nombreApellido");
 			String dire = request.getParameter("direccion");
 			String tel = request.getParameter("telefono");
-			RespuestaServidor sr;
+			RespuestaServidor sr = new RespuestaServidor();
 			try
 			{
-				sr = ControladorABM.agregarCliente(new Cliente(id,nya,dire,tel));
+				ControladorABM.agregarCliente(new Cliente(id,nya,dire,tel));
 			}
 			catch(RespuestaServidor res)
 			{

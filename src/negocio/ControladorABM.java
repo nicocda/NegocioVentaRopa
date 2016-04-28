@@ -62,23 +62,16 @@ public class ControladorABM
 		return CatalogoClientes.buscarClientes();
 	}
 	
-	public static RespuestaServidor agregarCliente(Cliente cl) throws RespuestaServidor
+	public static void agregarCliente(Cliente cl) throws RespuestaServidor
 	{
 			if(CatalogoClientes.buscarCliente(cl.getId()) != null && cl.getId() != 0)
 			{
-				return CatalogoClientes.modificarCliente(cl);
+				CatalogoClientes.modificarCliente(cl);
 			}
 			else if(CatalogoClientes.buscarCliente(cl.getId()) == null && cl.getId() == 0)
 			{
-				return CatalogoClientes.agregarCliente(cl);
+				CatalogoClientes.agregarCliente(cl);
 			}
-			else
-			{
-				RespuestaServidor sr = new RespuestaServidor();
-				sr.addError("No existe cliente");
-				return sr;
-			}
-		
 	}
 	
 	public static String buscarUltimoIdProducto(char tipo, char subTipo)
