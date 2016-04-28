@@ -64,13 +64,29 @@ public class ControladorABM
 	
 	public static void agregarCliente(Cliente cl) throws RespuestaServidor
 	{
-			if(CatalogoClientes.buscarCliente(cl.getId()) != null && cl.getId() != 0)
+		Cliente cli;
+		try
+		{
+			cli = CatalogoClientes.buscarCliente(cl.getId());
+		}
+		catch (RespuestaServidor sr)
+		{
+			cli = null;
+		}
+			if(cli != null && cl.getId() != 0)
 			{
 				CatalogoClientes.modificarCliente(cl);
 			}
-			else if(CatalogoClientes.buscarCliente(cl.getId()) == null && cl.getId() == 0)
+			else if(cli == null && cl.getId() == 0)
 			{
 				CatalogoClientes.agregarCliente(cl);
+			}
+			else
+			{
+				//ESTO SOLO PASA SI YO PUDIERA EDITAR EL ID Y PONGO UNO POSITIVO PERO DISTINTO A LOS EXISTENTES
+				RespuestaServidor sr = new RespuestaServidor();
+				sr.addError("No se encontró el cliente!");
+				throw sr;
 			}
 	}
 	

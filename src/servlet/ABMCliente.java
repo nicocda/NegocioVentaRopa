@@ -33,7 +33,7 @@ public class ABMCliente extends HttpServlet
 		if (action.equals("agregarCliente"))
 		{
 			int id;
-			//TODO HACE FALTA VALIDAR ESTO?
+
 			String idString = request.getParameter("id");
 			if(idString == null || idString.isEmpty())  
 				id=0; 
