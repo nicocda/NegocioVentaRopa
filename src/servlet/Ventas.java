@@ -39,25 +39,55 @@ public class Ventas extends HttpServlet {
 		if (action.equals("agregarProducto"))
 		{
 			String id = request.getParameter("id");
-			Producto pro = ControladorTransaccion.buscarProducto(id);
-			
+			Producto pro;
+			try
+			{
+				pro= ControladorTransaccion.buscarProducto(id);
+			}
+			catch(Exception sr)
+			{
+				pro = null;
+			}
 			if(pro != null)
 			{
-				vta.addProducto(pro);
-				session.setAttribute("venta", vta);
-				float importe= 0;
-				for(Producto p : vta.getProductos())
+				if(pro.getEstado()==1)
 				{
-					importe= importe + p.getPrecio().getPrecio();
+					boolean bandera=true;
+					for(Producto p : vta.getProductos())
+					{
+						if(p.getId() == pro.getId())
+						{
+							bandera= false;
+						}
+					}
+					if(bandera)
+					{
+						vta.addProducto(pro);	
+					}
+					session.setAttribute("venta", vta);
+					float importe= 0;
+					for(Producto p : vta.getProductos())
+					{
+						importe= importe + p.getPrecio().getPrecio();
+					}
+					vta.setImporte(importe);
+					mensaje = "{\"error\":false, \"id\":\""+ pro.getId() +"\", \"descripcion\":\""+pro.getDescripcion()+"\", \"precio\":\""+pro.getPrecio().getPrecio()+"\", \"importe\":\""+importe+"\"}";
+					request.setAttribute("productosVenta", vta.getProductos());
 				}
-				vta.setImporte(importe);
-				mensaje = "{\"error\":false, \"id\":\""+ pro.getId() +"\", \"descripcion\":\""+pro.getDescripcion()+"\", \"precio\":\""+pro.getPrecio().getPrecio()+"\", \"importe\":\""+importe+"\"}";
-				request.setAttribute("productosVenta", vta.getProductos());
+				else if (pro.getEstado() == 0)
+				{
+					mensaje = "{\"error\":true, \"mensajeError\":\"Producto No Disponible\"}";
+				}
+				else if (pro.getEstado() == 2)
+				{
+					mensaje = "{\"error\":true, \"mensajeError\":\"Producto Señado\"}";
+				}
 			}
 			else
 			{
 				mensaje = "{\"error\":true, \"mensajeError\":\"no existe producto\"}";
 			}
+			
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(mensaje);
@@ -81,14 +111,14 @@ public class Ventas extends HttpServlet {
 			}
 			RespuestaServidor sr = new RespuestaServidor();
 
-			Cliente cli = null;
+			Cliente cli;
 			try
 			{
 				cli=ControladorABM.buscarCliente(idCliente);
 			}
 			catch(RespuestaServidor res)
 			{
-				
+				cli = null;
 			}
 			vta.setCliente(cli);
 			Calendar today = Calendar.getInstance();
@@ -99,6 +129,7 @@ public class Ventas extends HttpServlet {
 			try
 			{
 				ControladorTransaccion.registrarVenta(vta);
+				session.setAttribute("venta", new Venta());
 			}
 			catch(RespuestaServidor e)
 			{

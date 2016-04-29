@@ -33,7 +33,6 @@ $(document).ready(function()
 							{
 								sleep(400);
 								recargarTabla(result);
-								
 							});
 				});
 				

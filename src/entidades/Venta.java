@@ -79,7 +79,10 @@ public class Venta
 	}
 	public void addProducto(Producto pr)
 	{
-		this.productos.add(pr);
+		if(!productos.contains(pr))
+		{
+			productos.add(pr);
+		}
 	}
 	//Enum
 	public static enum formaPago

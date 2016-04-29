@@ -178,7 +178,7 @@ public class CatalogoVentas {
 				throw sr;
 				//sqle.printStackTrace();
 			}
-			idVenta = ultimoNroVenta()+1;
+			idVenta = ultimoNroVenta();
 			//Deberíamos hacer un stored procedure con StartTransaction.
 			CatalogoProductos.venderProducto(idVenta, vta.getProductos());
 		}
