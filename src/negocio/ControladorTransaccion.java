@@ -5,8 +5,10 @@ import entidades.Usuario;
 import entidades.Venta;
 import excepciones.RespuestaServidor;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import datos.CatalogoClientes;
 import datos.CatalogoProductos;
@@ -35,18 +37,9 @@ public class ControladorTransaccion {
 		 CatalogoVentas.registrarVenta(vta);
 	}
 	
-	public static ArrayList<Venta> buscarVentasDia()
+	public static ArrayList<Venta> buscarVentasDia() throws RespuestaServidor
 	{
-		Calendar today = Calendar.getInstance();
-		today.set(Calendar.HOUR_OF_DAY,0);
-		try
-		{
-			return CatalogoVentas.buscarVentas(today);
-		}
-		catch (RespuestaServidor sr)
-		{
-			return new ArrayList<>();
-			//HAY QUE VALIDAR! :D
-		}
+			return CatalogoVentas.buscarVentasPorDia();
+		
 	}
 }

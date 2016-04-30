@@ -51,6 +51,7 @@
 					<a href="Index?link=AbmClientes" name="editar">Clientes</a>
 					<a href="Index?link=AbmProducto">Productos</a>
 					<a href="Index?link=Ventas">Venta</a>
+					<a href="Index?link=ReporteVentasDia">Reportes</a>
 				</nav>
 			</div>
 		</header>

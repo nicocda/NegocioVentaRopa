@@ -89,7 +89,7 @@ public class Venta
 	{
 		NULL,
 		EFECTIVO,
-		CTACTE,
+		CTACORRIENTE,
 		TARJETA
 	}
 }

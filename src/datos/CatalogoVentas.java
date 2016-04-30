@@ -1,11 +1,12 @@
 package datos;
 
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -14,6 +15,7 @@ import org.apache.naming.java.javaURLContextFactory;
 import conexion.DataConnection;
 import entidades.Cliente;
 import entidades.Prestamo;
+import entidades.Producto;
 import entidades.Reserva;
 import entidades.Venta;
 import excepciones.RespuestaServidor;
@@ -282,7 +284,7 @@ public class CatalogoVentas {
 		return venta;
 	}
 
-	public static ArrayList<Venta> buscarVentas(Calendar today) throws RespuestaServidor
+	public static ArrayList<Venta> buscarVentasPorDia() throws RespuestaServidor
 	{
 		String sql="select * from venta "
 				+ "where fechaVenta=? "
@@ -290,14 +292,16 @@ public class CatalogoVentas {
 		PreparedStatement sentencia = null;
 		ArrayList<Venta> ventas = new ArrayList<Venta>();
 		Connection con = DataConnection.getInstancia().getConn();
-		
+		//Las 4 lineas de codigo siguientes obtienen la fecha actual y la transforman al tipo que tiene la DB
+		Date diaActual = new Date();
+        SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
+        formateador.format(diaActual);
+        java.sql.Date sqlDate = new java.sql.Date(diaActual.getTime());
 		try
 		{
 			sentencia =con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			sentencia.setDate(1, new java.sql.Date(today.getTimeInMillis()));
-			//sentencia.setString(1, today);
+			sentencia.setDate(1, sqlDate);
 			ResultSet rs =sentencia.executeQuery();
-			
 			while(rs.next())
 			{
 				int id=rs.getInt("id");
@@ -311,6 +315,8 @@ public class CatalogoVentas {
 					v.setFormaPago(rs.getInt("formaPago"));
 					v.setId(rs.getInt("id"));
 					v.setImporte(rs.getFloat("importe"));
+					v.setCliente(CatalogoClientes.buscarCliente(rs.getInt("idCliente")));
+					v.setProductos(CatalogoProductos.buscarProductosVenta(rs.getInt("idCliente")));
 					//busco los productos en el catalogo de productos y los seteo en la vento
 					//v.setProductos(CatalogoProductos.buscarProductosVenta(id));
 					ventas.add(v);
@@ -323,6 +329,8 @@ public class CatalogoVentas {
 					v.setFormaPago(rs.getInt("formaPago"));
 					v.setId(rs.getInt("id"));
 					v.setImporte(rs.getFloat("importe"));
+					v.setCliente(CatalogoClientes.buscarCliente(rs.getInt("idCliente")));
+					v.setProductos(CatalogoProductos.buscarProductosVenta(rs.getInt("idCliente")));
 					//busco los productos en el catalogo de productos y los seteo en la vento
 					//v.setProductos(CatalogoProductos.buscarProductosVenta(id));
 					ventas.add(v);
@@ -335,10 +343,11 @@ public class CatalogoVentas {
 					v.setFormaPago(rs.getInt("formaPago"));
 					v.setId(rs.getInt("id"));
 					v.setImporte(rs.getFloat("importe"));
-					//busco los productos en el catalogo de productos y los seteo en la vento
-					//v.setProductos(CatalogoProductos.buscarProductosVenta(id));
+					v.setCliente(CatalogoClientes.buscarCliente(rs.getInt("idCliente")));
+					v.setProductos(CatalogoProductos.buscarProductosVenta(rs.getInt("idCliente")));
 					ventas.add(v);
 				}
+				
 				
 			}
 			
@@ -362,13 +371,6 @@ public class CatalogoVentas {
 					sqle.printStackTrace();
 				}
 			}
-		for(Venta vta : ventas)
-		{
-			int id= vta.getId();
-			vta.setCliente(CatalogoClientes.buscarCliente(id));
-			vta.setProductos(CatalogoProductos.buscarProductosVenta(id));
-		}
-		
 		return ventas;
 		
 	}
