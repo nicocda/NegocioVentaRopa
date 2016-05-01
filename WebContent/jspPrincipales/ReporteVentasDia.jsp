@@ -7,34 +7,38 @@
 <%@page import="negocio.ControladorTransaccion"%>
 <%@page import="entidades.Venta.formaPago"%>
 
+<script type="text/javascript" src="./scripts/custom/ReporteVenta.js"></script>	
+<script type="text/javascript" src="../scripts/custom/ReporteVenta.js"></script>
+
 <H4>Reporte de Ventas</H4>
 	<div>
 	<h3>Filtro Por Clientes</h3>
-		<select>
+		<select  class="styled-select">
 			<%for(Cliente c: ControladorABM.buscarClientes()){ %>
 			<option><%=c.getNombreApellido() %></option>
 			<%} %>
 		</select>
 	</div>
 	
-	<% ArrayList<Venta> ventas = ControladorTransaccion.buscarVentasDia();
-		if(ventas!= null)
-		{%>
+	
 		
 	<div>
 	<h3>Filtro Por Fechas</h3>
-		<select>
-			<option>Ultimo Año</option>
-			<option>Ultimo Mes</option>
-			<option>Del Día</option>
-		</select>
-		Fecha mínima:<input type="date" class="botones btnEditar" value="Detalle Venta">
-		Fecha máxima:<input type="date" class="botones btnEditar" value="Detalle Venta">
+	<div id="datepicker"></div>
+		<select id="cbFecha"  class="styled-select">
+			<option value="1">Ultimo Año</option>
+			<option value="2">Ultimo Mes</option>
+			<option value="3">Del Día</option>
+		</select><br>
+		Fecha mínima:<input style="width: 20%;" type="text" id="fechaMinima" >
+		Fecha máxima:<input style="width: 20%;" type="text" id="fechaMaxima" >
+		<input style="width: 20%;" type="button" class="botones btnEditar" id="btnFiltrarPorFecha" value="Filtrar">
+		
 	</div>
 	
 	<div>
 	<h3>Filtro Por Tipo de Pago</h3>
-		<select>
+		<select  class="styled-select">
 		<%
 		for(formaPago e : formaPago.values())
 			{%>
@@ -43,6 +47,9 @@
 		</select>
 	</div>
 	
+	<% ArrayList<Venta> ventas = ControladorTransaccion.buscarVentasDia("04/28/2016", "05/01/2016");
+		if(ventas!= null)
+		{%>
 	<h3>Ventas Realizadas</h3>
 	<div style="max-width: 80%">
 		<table class="CSSTableGenerator">
@@ -58,7 +65,7 @@
 			<tr>
 				<td><%=vta.getCliente().getNombreApellido() %></td>
 				<td><%=vta.getFechaVenta() %></td>
-				<td><input type="button" class="botones btnEditar" value="Detalle Venta"></td> 			
+				<td><input type="button" class="botones btnEditar" id="verDetalle" value="Detalle Venta"></td> 			
 			</tr>
 			<%}
 		}%>

@@ -284,27 +284,23 @@ public class CatalogoVentas {
 		return venta;
 	}
 
-	public static ArrayList<Venta> buscarVentasPorDia() throws RespuestaServidor
+	public static ArrayList<Venta> buscarVentasPorDia(String fechaMin, String fechaMax) throws RespuestaServidor
 	{
-		String sql="select * from venta "
-				+ "where fechaVenta=? "
-				+ "order by fechaVenta desc";
+		String sql="select * from venta where fechaVenta BETWEEN ? AND ? order by fechaVenta desc";
 		PreparedStatement sentencia = null;
 		ArrayList<Venta> ventas = new ArrayList<Venta>();
 		Connection con = DataConnection.getInstancia().getConn();
-		//Las 4 lineas de codigo siguientes obtienen la fecha actual y la transforman al tipo que tiene la DB
-		Date diaActual = new Date();
-        SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
-        formateador.format(diaActual);
-        java.sql.Date sqlDate = new java.sql.Date(diaActual.getTime());
+		//Paso de String a java.sql.Date
+		java.sql.Date sqlDate1 = java.sql.Date.valueOf(fechaMin);
+		java.sql.Date sqlDate2 = java.sql.Date.valueOf(fechaMax);
 		try
 		{
 			sentencia =con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			sentencia.setDate(1, sqlDate);
+			sentencia.setDate(1, sqlDate1);
+			sentencia.setDate(2, sqlDate2);
 			ResultSet rs =sentencia.executeQuery();
 			while(rs.next())
 			{
-				int id=rs.getInt("id");
 				if(rs.getBoolean("isReserva"))
 				{
 					Reserva v = new Reserva();

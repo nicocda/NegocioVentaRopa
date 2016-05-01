@@ -4,11 +4,14 @@ import entidades.Producto;
 import entidades.Usuario;
 import entidades.Venta;
 import excepciones.RespuestaServidor;
+import util.UtilidadesWeb;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import com.sun.javafx.webkit.UtilitiesImpl;
 
 import datos.CatalogoClientes;
 import datos.CatalogoProductos;
@@ -37,9 +40,8 @@ public class ControladorTransaccion {
 		 CatalogoVentas.registrarVenta(vta);
 	}
 	
-	public static ArrayList<Venta> buscarVentasDia() throws RespuestaServidor
+	public static ArrayList<Venta> buscarVentasDia(String fechaMin, String fechaMax) throws RespuestaServidor
 	{
-			return CatalogoVentas.buscarVentasPorDia();
-		
+			return CatalogoVentas.buscarVentasPorDia(UtilidadesWeb.pasajeAStringValido(fechaMin), UtilidadesWeb.pasajeAStringValido(fechaMax));
 	}
 }

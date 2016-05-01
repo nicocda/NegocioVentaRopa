@@ -309,3 +309,13 @@ input[type=radio].css-checkbox {
 
 
 /*Fin login*/
+
+/*Como boxes*/
+
+.styled-select {
+   width: 15%;
+   height: 28px;
+   overflow: hidden;
+   background: url(new_arrow.png) no-repeat right #ddd;
+   border: 1px solid #ccc;
+   }
