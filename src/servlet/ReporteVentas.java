@@ -45,8 +45,7 @@ public class ReporteVentas extends HttpServlet {
 		{
 			String fechaMinima = request.getParameter("fechaMinima");
 			String fechaMaxima = request.getParameter("fechaMaxima");
-			System.out.println(fechaMinima);
-
+			
 		
 		}
 	}

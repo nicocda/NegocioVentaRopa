@@ -28,11 +28,11 @@
 		<select id="cbFecha"  class="styled-select">
 			<option value="1">Ultimo Año</option>
 			<option value="2">Ultimo Mes</option>
-			<option value="3">Del Día</option>
+			<option value="3">Ultima Semana</option>
+			<option value="4">Del Día</option>
 		</select><br>
 		Fecha mínima:<input style="width: 20%;" type="text" id="fechaMinima" >
 		Fecha máxima:<input style="width: 20%;" type="text" id="fechaMaxima" >
-		<input style="width: 20%;" type="button" class="botones btnEditar" id="btnFiltrarPorFecha" value="Filtrar">
 		
 	</div>
 	
@@ -55,7 +55,7 @@
 		<table class="CSSTableGenerator">
 			<tr>
 				<td width="20%">Comprador </td>
-				<td width="20%">Fecha de Realización</td>
+				<td width="30%">Fecha de Realización (año-mes-día)</td>
 				<td width="20%">Detalle</td>
 			</tr>
 			<%
