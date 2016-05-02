@@ -5,14 +5,16 @@
 <%
 if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttribute("usuario")).getTipoUsuario() == 1) 
 {%>
-<script type="text/javascript" src="./scripts/custom/AutoComplete.js"></script>	
-<script type="text/javascript" src="../scripts/custom/AutoComplete.js"></script>	
+
 <script type="text/javascript" src="./scripts/custom/Ventas.js"></script>	
 <script type="text/javascript" src="../scripts/custom/Ventas.js"></script>
 <H4>Venta</H4> <p align="right"><%if(request.getParameter("time") != null)%><%=request.getParameter("time") %></p>
 <div id="divError"></div>
 <form action="Ventas" method="POST">
-	<input type="text" id="txtClientes" placeholder="Cliente"/>
+
+	<select id="comboClientes" style="width: 100%" class="js-example-basic-single">
+	    <option value="" disabled selected>Seleccione un cliente</option>
+	</select>
 
 	<table class="CSSTableGenerator" id="tablaProductos">
 		<tr>
@@ -45,11 +47,12 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 		<input type="radio" name="radio" id="radio1" class="css-checkbox"/>
 		<label class="css-label radGroup1" for="radio1">Efectivo</label>
 		<input type="radio" name="radio" id="radio2" class="css-checkbox"/>
-		<label class="css-label radGroup1" for="radio2">Cuenta Corriente</label><br><br>
+		<label class="css-label radGroup1" for="radio2">Cuenta Corriente</label>
 		<input type="radio" name="radio" id="radio3" class="css-checkbox"/>
 		<label class="css-label radGroup1" for="radio3">Tarjeta</label>
-	</div>
+		<br><br>
 		<input class="botones" type="button" id="realizarVenta" value="Realizar Venta">
+	</div>
 
 </form>
 
@@ -72,4 +75,3 @@ else
 {%>
 <script>window.location.href='/NegocioRopa/Index?link=Error';</script>
 <%}%>
- 	
