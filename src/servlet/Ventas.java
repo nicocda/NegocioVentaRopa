@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import util.JsonResponses;
 import entidades.Cliente;
 import entidades.Producto;
+import entidades.Producto.estado;
 import entidades.Venta;
 import excepciones.RespuestaServidor;
 import negocio.ControladorABM;
@@ -26,20 +27,23 @@ public class Ventas extends HttpServlet {
         super();
     }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
 		doPost(request,response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
 		HttpSession session = request.getSession(false);
 		Venta vta = (Venta) session.getAttribute("venta");
 		String action = request.getParameter("action");	
-		String mensaje=null;
-		//hago esta validacion para saber si entra del boton del header o de otro lado
+		
 		if (action.equals("agregarProducto"))
-		{
+		{	
+			//Primero intento buscar y validar el producto
 			String id = request.getParameter("id");
 			Producto pro;
+			
 			try
 			{
 				pro= ControladorTransaccion.buscarProducto(id);
@@ -48,55 +52,41 @@ public class Ventas extends HttpServlet {
 			{
 				pro = null;
 			}
-			if(pro != null)
-			{
-				if(pro.getEstado()==1)
-				{
-					boolean bandera=true;
-					for(Producto p : vta.getProductos())
-					{
-						if(p.getId() == pro.getId())
-						{
-							bandera= false;
-						}
-					}
-					if(bandera)
-					{
-						vta.addProducto(pro);	
-					}
-					session.setAttribute("venta", vta);
-					float importe= 0;
-					for(Producto p : vta.getProductos())
-					{
-						importe= importe + p.getPrecio().getPrecio();
-					}
-					vta.setImporte(importe);
-					mensaje = "{\"error\":false, \"id\":\""+ pro.getId() +"\", \"descripcion\":\""+pro.getDescripcion()+"\", \"precio\":\""+pro.getPrecio().getPrecio()+"\", \"importe\":\""+importe+"\"}";
-					request.setAttribute("productosVenta", vta.getProductos());
-				}
-				else if (pro.getEstado() == 0)
-				{
-					mensaje = "{\"error\":true, \"mensajeError\":\"Producto No Disponible\"}";
-				}
-				else if (pro.getEstado() == 2)
-				{
-					mensaje = "{\"error\":true, \"mensajeError\":\"Producto Señado\"}";
-				}
-			}
-			else
-			{
-				mensaje = "{\"error\":true, \"mensajeError\":\"no existe producto\"}";
-			}
 			
-			response.setContentType("json");
-		    response.setCharacterEncoding("UTF-8");
-		    response.getWriter().write(mensaje);
+			RespuestaServidor sr = new RespuestaServidor();
+			sr = validarProducto(pro, vta);
+			
+			//Si el producto ingresado no es correcto, muestro el mensaje
+			if (!sr.getStatus())
+			{
+				response.setContentType("json");
+			    response.setCharacterEncoding("UTF-8");
+			    response.getWriter().write(JsonResponses.devolverMensaje(sr, ""));
+			}
+			//Sino lo agrego a la lista de la venta, y actualizo el importe.
+			else	
+			{
+				vta.addProducto(pro);
+				
+				float importe= 0;
+				for(Producto p : vta.getProductos())
+				{
+					importe= importe + p.getPrecio().getPrecio();
+				}
+				vta.setImporte(importe);
+				
+				session.setAttribute("venta", vta);
+				
+				response.setContentType("json");
+			    response.setCharacterEncoding("UTF-8");
+			    response.getWriter().write(JsonResponses.devolverMensaje(sr, ""));
+			}
 		}
 		else if (action.equals("recargarTabla"))
 		{
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
-		    response.getWriter().write(JsonResponses.arrayTodosProductosVenta(vta.getProductos()));
+		    response.getWriter().write(JsonResponses.arrayTodosProductosVenta(vta));
 		}
 		else if(action.equals("realizarVenta"))
 		{
@@ -139,5 +129,32 @@ public class Ventas extends HttpServlet {
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(JsonResponses.devolverMensaje(sr, "La venta se registró con éxito"));
 		}
+	}
+	
+	private RespuestaServidor validarProducto(Producto pro, Venta venta)
+	{
+		RespuestaServidor sr = new RespuestaServidor();
+		
+		if(pro == null)
+			sr.addError("El producto ingresado no existe.");
+		
+		if (pro != null)
+		{
+			if(pro.getEstado() == estado.VENDIDO.ordinal())
+				sr.addError("El producto ingresado ya fue vendido.");
+			
+			if(pro.getEstado() == estado.SEÑADO.ordinal())
+				sr.addError("El producto ingresado está señado.");
+		
+			boolean enLista = false;
+			for(Producto p : venta.getProductos())
+			{
+				if(p.getId().equals(pro.getId()))
+					enLista = true;
+			}
+			if(enLista)
+				sr.addError("El producto seleccionado ya fue ingresado en esta venta");
+		}
+		return sr;
 	}
 }

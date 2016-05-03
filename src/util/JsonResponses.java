@@ -47,14 +47,15 @@ public class JsonResponses
 	    return rsp;
 	}
 
-	public static String arrayTodosProductosVenta(ArrayList<Producto> products)
+	public static String arrayTodosProductosVenta(Venta venta)
 	{
-		String rsp = "{\"productos\": [";
-	    for(int i=0;i<products.size()-1;i++)
+		ArrayList<Producto> productos = venta.getProductos();
+		String rsp = "{\"importe\": \" "+ venta.getImporte() +" \", \"productos\": [";
+	    for(int i=0;i<productos.size()-1;i++)
 	    {
-	    	rsp= rsp + "{\"id\": \"" + products.get(i).getId()+"\", \"descripcion\": \"" + products.get(i).getDescripcion() + "\", \"precio\": \"" + products.get(i).getPrecio().getPrecio() +"\"},";
+	    	rsp= rsp + "{\"id\": \"" + productos.get(i).getId()+"\", \"descripcion\": \"" + productos.get(i).getDescripcion() + "\", \"precio\": \"" + productos.get(i).getPrecio().getPrecio() +"\"},";
 	    }
-	    rsp= rsp + "{\"id\": \"" + products.get(products.size()-1).getId()+"\", \"descripcion\": \"" + products.get(products.size()-1).getDescripcion() + "\", \"precio\": \"" + products.get(products.size()-1).getPrecio().getPrecio() +"\"}]}";
+	    rsp= rsp + "{\"id\": \"" + productos.get(productos.size()-1).getId()+"\", \"descripcion\": \"" + productos.get(productos.size()-1).getDescripcion() + "\", \"precio\": \"" + productos.get(productos.size()-1).getPrecio().getPrecio() +"\"}]}";
 	    return rsp;
 	}
 	

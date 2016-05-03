@@ -77,12 +77,11 @@ public class Venta
 	{
 		this.productos = productos;
 	}
+	
+	//Metodos Customizados
 	public void addProducto(Producto pr)
 	{
-		if(!productos.contains(pr))
-		{
-			productos.add(pr);
-		}
+		productos.add(pr);
 	}
 	//Enum
 	public static enum formaPago

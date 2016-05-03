@@ -8,12 +8,9 @@ function agregarEventos()
 {
 	$(document).on("click", "#agregar", function()
 	{
-		$.post('/NegocioRopa/Ventas', { "action": "agregarProducto" , "id": $("#txtID").val()}, function(result)
+		$.postDataSinExito('/NegocioRopa/Ventas', { "action": "agregarProducto" , "id": $("#txtID").val()}, function()
 		{
-			if(result.error)
-				alert(result.mensajeError);
-			else
-				recargarTabla(result);
+			recargarTabla();
 		});
 	});
 	
@@ -30,7 +27,7 @@ function agregarEventos()
 		$.postData('/NegocioRopa/Ventas', {"action":"realizarVenta", "idCliente": $("#comboClientes").val(), "formaPago": formaPago }, function(result)
 		{
 			sleep(400);
-			recargarTabla(result);
+			recargarTabla();
 			
 		});
 	});
@@ -42,14 +39,14 @@ function agregarEventos()
 	
 }
 
-function recargarTabla(result)
+function recargarTabla()
 {
 	$.post('/NegocioRopa/Ventas', { "action": "recargarTabla" }, function(resultado)
 	{
 		$("#tablaProductos tr").remove();
 		agregarEncabezado();
 		agregarFilas(resultado);
-		agregarFooter(result);
+		agregarFooter(resultado.importe);
 	});
 }
 
@@ -62,13 +59,13 @@ function agregarEncabezado()
 	trEncabezado.append($('<td width="30%">Precio</td>'));
 }
 
-function agregarFooter(resultado)
+function agregarFooter(importe)
 {
 	var trFooter = $("<tr />");
 	$("#tablaProductos").append(trFooter);
 	trFooter.append($('<td style="background-color: #C0C0C0;"><input id="agregar" class="botones" type="button" value="Agregar +"></td>'));
 	trFooter.append($('<td style="background-color: #C0C0C0;"><input id="txtID" type="text" placeholder="Codigo Producto"></td>'));
-	trFooter.append($('<td align="right" style="background-color: #C0C0C0;"><b id="total">Total: '+resultado.importe+'</b></td>'));
+	trFooter.append($('<td align="right" style="background-color: #C0C0C0;"><b id="total">Total: '+importe+'</b></td>'));
 }
 
 function agregarFilas(resultado)
