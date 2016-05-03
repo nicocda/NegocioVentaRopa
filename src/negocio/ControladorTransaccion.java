@@ -40,8 +40,8 @@ public class ControladorTransaccion {
 		 CatalogoVentas.registrarVenta(vta);
 	}
 	
-	public static ArrayList<Venta> buscarVentasDia(String fechaMin, String fechaMax) throws RespuestaServidor
+	public static ArrayList<Venta> buscarVentasDia(Date fechaMin, Date fechaMax) throws RespuestaServidor
 	{
-			return CatalogoVentas.buscarVentasPorDia(UtilidadesWeb.pasajeAStringValido(fechaMin), UtilidadesWeb.pasajeAStringValido(fechaMax));
+			return CatalogoVentas.buscarVentasPorDia(fechaMin, fechaMax);
 	}
 }

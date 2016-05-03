@@ -284,89 +284,57 @@ public class CatalogoVentas {
 		return venta;
 	}
 
-	public static ArrayList<Venta> buscarVentasPorDia(String fechaMin, String fechaMax) throws RespuestaServidor
+	public static ArrayList<Venta> buscarVentasPorDia(Date fechaMin, Date fechaMax) throws RespuestaServidor
 	{
 		String sql="select * from venta where fechaVenta BETWEEN ? AND ? order by fechaVenta desc";
 		PreparedStatement sentencia = null;
 		ArrayList<Venta> ventas = new ArrayList<Venta>();
 		Connection con = DataConnection.getInstancia().getConn();
-		//Paso de String a java.sql.Date
-		java.sql.Date sqlDate1 = java.sql.Date.valueOf(fechaMin);
-		java.sql.Date sqlDate2 = java.sql.Date.valueOf(fechaMax);
 		try
 		{
 			sentencia =con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			sentencia.setDate(1, sqlDate1);
-			sentencia.setDate(2, sqlDate2);
+			sentencia.setDate(1, new java.sql.Date(fechaMin.getTime()));
+			sentencia.setDate(2, new java.sql.Date(fechaMax.getTime()));
 			ResultSet rs =sentencia.executeQuery();
 			while(rs.next())
 			{
-				if(rs.getBoolean("isReserva"))
-				{
-					Reserva v = new Reserva();
-					v.setImporte(rs.getFloat("seña"));
-					v.setFechaCaducidad(rs.getDate("fechaCaducidad"));
-					//v.setCliente(CatalogoClientes.buscarCliente(id));
-					v.setFechaVenta(rs.getDate("fechaVenta"));
-					v.setFormaPago(rs.getInt("formaPago"));
-					v.setId(rs.getInt("id"));
-					v.setImporte(rs.getFloat("importe"));
-					v.setCliente(CatalogoClientes.buscarCliente(rs.getInt("idCliente")));
-					v.setProductos(CatalogoProductos.buscarProductosVenta(rs.getInt("idCliente")));
-					//busco los productos en el catalogo de productos y los seteo en la vento
-					//v.setProductos(CatalogoProductos.buscarProductosVenta(id));
-					ventas.add(v);
-				}
-				else if(rs.getBoolean("isPrestamo"))
-				{
-					Prestamo v = new Prestamo();
-					//v.setCliente(CatalogoClientes.buscarCliente(id));
-					v.setFechaVenta(rs.getDate("fechaVenta"));
-					v.setFormaPago(rs.getInt("formaPago"));
-					v.setId(rs.getInt("id"));
-					v.setImporte(rs.getFloat("importe"));
-					v.setCliente(CatalogoClientes.buscarCliente(rs.getInt("idCliente")));
-					v.setProductos(CatalogoProductos.buscarProductosVenta(rs.getInt("idCliente")));
-					//busco los productos en el catalogo de productos y los seteo en la vento
-					//v.setProductos(CatalogoProductos.buscarProductosVenta(id));
-					ventas.add(v);
-				}
-				else
-				{
-					Venta v = new Venta();
-					//v.setCliente(CatalogoClientes.buscarCliente(id));
-					v.setFechaVenta(rs.getDate("fechaVenta"));
-					v.setFormaPago(rs.getInt("formaPago"));
-					v.setId(rs.getInt("id"));
-					v.setImporte(rs.getFloat("importe"));
-					v.setCliente(CatalogoClientes.buscarCliente(rs.getInt("idCliente")));
-					v.setProductos(CatalogoProductos.buscarProductosVenta(rs.getInt("idCliente")));
-					ventas.add(v);
-				}
+				Venta v = new Venta();
+				//v.setCliente(CatalogoClientes.buscarCliente(id));
+				v.setFechaVenta(rs.getDate("fechaVenta"));
+				v.setFormaPago(rs.getInt("formaPago"));
+				v.setId(rs.getInt("id"));
+				v.setCliente(new Cliente());
+				v.getCliente().setId(rs.getInt("idCliente"));
+				v.setImporte(rs.getFloat("importe"));
 				
-				
+				ventas.add(v);
 			}
 			
 		}
 		catch(SQLException e)
-			{
-				e.printStackTrace();
-			}
+		{
+			e.printStackTrace();
+		}
 		finally
+		{
+			try
 			{
-				try
+				if(sentencia!=null && !sentencia.isClosed())
 				{
-					if(sentencia!=null && !sentencia.isClosed())
-					{
-						sentencia.close();
-					}
-					DataConnection.getInstancia().CloseConn();
+					sentencia.close();
 				}
-				catch (SQLException sqle)
-				{
-					sqle.printStackTrace();
-				}
+				DataConnection.getInstancia().CloseConn();
 			}
+			catch (SQLException sqle)
+			{
+				sqle.printStackTrace();
+			}
+		}
+		for(Venta v : ventas)
+		{
+			v.setCliente(CatalogoClientes.buscarCliente(v.getCliente().getId()));
+			v.setProductos(CatalogoProductos.buscarProductosVenta(v.getCliente().getId()));
+		}
 		return ventas;
 		
 	}

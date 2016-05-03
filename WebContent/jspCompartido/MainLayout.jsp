@@ -9,6 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="./themes/header.css">
 	<link rel="stylesheet" type="text/css" href="./themes/jquery-ui.css">
 	<link rel="stylesheet" type="text/css" href="./themes/componentes.css">
+	<link rel="stylesheet" type="text/css" href="./themes/select2.css">
 	<script type="text/javascript" src="./scripts/lib/jquery-1.12.3.js"></script>
 	<script type="text/javascript" src="./scripts/lib/jquery-ui.js"></script>
 	<script type="text/javascript" src="./scripts/lib/select2.js"></script>
@@ -19,6 +20,7 @@
 	<link rel="stylesheet" type="text/css" href="../themes/header.css">
 	<link rel="stylesheet" type="text/css" href="../themes/jquery-ui.css">
 	<link rel="stylesheet" type="text/css" href="../themes/componentes.css">
+	<link rel="stylesheet" type="text/css" href="../themes/select2.css">
 	<script type="text/javascript" src="../scripts/lib/jquery-1.12.3.js"></script>
 	<script type="text/javascript" src="../scripts/lib/jquery-ui.js"></script>
 	<script type="text/javascript" src="../scripts/lib/select2.js"></script>

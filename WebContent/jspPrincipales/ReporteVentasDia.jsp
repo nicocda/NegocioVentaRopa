@@ -11,64 +11,47 @@
 <script type="text/javascript" src="../scripts/custom/ReporteVenta.js"></script>
 
 <H4>Reporte de Ventas</H4>
-	<div>
-	<h3>Filtro Por Clientes</h3>
-		<select  class="styled-select">
-			<%for(Cliente c: ControladorABM.buscarClientes()){ %>
-			<option><%=c.getNombreApellido() %></option>
-			<%} %>
+<div class="filtros">
+	<label style="color: #6F6F6F">Clientes</label>
+	<div style="padding: 20px">
+		Cliente:
+		<select id="comboClientes" style="width: 200px">
+	    	<option value="" disabled selected>Seleccione un cliente</option>
 		</select>
-	</div>
-	
-	
-		
-	<div>
-	<h3>Filtro Por Fechas</h3>
-	<div id="datepicker"></div>
-		<select id="cbFecha"  class="styled-select">
-			<option value="1">Ultimo Año</option>
-			<option value="2">Ultimo Mes</option>
-			<option value="3">Ultima Semana</option>
-			<option value="4">Del Día</option>
-		</select><br>
-		Fecha mínima:<input style="width: 20%;" type="text" id="fechaMinima" >
-		Fecha máxima:<input style="width: 20%;" type="text" id="fechaMaxima" >
-		
-	</div>
-	
-	<div>
-	<h3>Filtro Por Tipo de Pago</h3>
-		<select  class="styled-select">
-		<%
-		for(formaPago e : formaPago.values())
-			{%>
-			<option><%=e.toString() %></option>
-				<%} %>
-		</select>
-	</div>
-	
-	<% ArrayList<Venta> ventas = ControladorTransaccion.buscarVentasDia("04/28/2016", "05/01/2016");
-		if(ventas!= null)
-		{%>
-	<h3>Ventas Realizadas</h3>
-	<div style="max-width: 80%">
-		<table class="CSSTableGenerator">
-			<tr>
-				<td width="20%">Comprador </td>
-				<td width="30%">Fecha de Realización (año-mes-día)</td>
-				<td width="20%">Detalle</td>
-			</tr>
+		Tipo de Pago:
+		<select id="cbTipoPago" style="width: 200px">
+			<option value="" disabled selected>Seleccione tipo de pago</option>
 			<%
-			for(Venta vta : ventas)
-			{
-			%>
-			<tr>
-				<td><%=vta.getCliente().getNombreApellido() %></td>
-				<td><%=vta.getFechaVenta() %></td>
-				<td><input type="button" class="botones btnEditar" id="verDetalle" value="Detalle Venta"></td> 			
-			</tr>
-			<%}
-		}%>
-		</table>
-	</div>		
+			for(formaPago e : formaPago.values())
+			{%>
+				<option><%=e.toString() %></option>
+			<%}%>
+		</select>
+	</div>
+</div>
+<div class="filtros">
+	<label style="color: #6F6F6F">Fechas</label>
+	<div style="padding: 20px">
+		Rango:	
+		<select id="cbFecha" style="width: 200px">
+			<option value="" disabled selected>Seleccione rango</option>
+			<option value="1">Hoy</option>
+			<option value="2">Desde Ayer</option>
+			<option value="3">Última Semana</option>
+			<option value="4">Últimas 2 Semanas</option>
+			<option value="5">Último Mes</option>
+			<option value="6">Últimos 2 Meses</option>
+			<option value="7">Último Año</option>
+			<option value="8">Últimos 2 Años</option>
+			<option value="9">Siempre</option>
+		</select>
+		Desde:<input id="fechaMinima" readonly="true">
+		Hasta:<input id="fechaMaxima" readonly="true">
+		<button id="btnBuscar" class="botones">Buscar</button>
+	</div>
+</div>
+<br>
 
+<table class="CSSTableGenerator" id="tablaTransacciones">
+</table>
+	

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import entidades.Cliente;
 import entidades.Producto;
+import entidades.Venta;
 import excepciones.RespuestaServidor;
 
 public class JsonResponses 
@@ -55,5 +56,21 @@ public class JsonResponses
 	    }
 	    rsp= rsp + "{\"id\": \"" + products.get(products.size()-1).getId()+"\", \"descripcion\": \"" + products.get(products.size()-1).getDescripcion() + "\", \"precio\": \"" + products.get(products.size()-1).getPrecio().getPrecio() +"\"}]}";
 	    return rsp;
+	}
+	
+	public static String jsonVentas(ArrayList<Venta> ventas)
+	{
+		if (!ventas.isEmpty())
+		{
+			String rsp = "{\"ventas\": [";
+		    for(int i=0;i<ventas.size()-1;i++)
+		    {
+		    	rsp= rsp + "{\"nombreApellido\": \"" + ventas.get(i).getCliente().getNombreApellido()+"\", \"fecha\": \"" + ventas.get(i).getFechaVenta().toString() +"\"},";
+		    }
+		    rsp= rsp + "{\"nombreApellido\": \"" + ventas.get(ventas.size()-1).getCliente().getNombreApellido()+"\", \"fecha\": \"" +  ventas.get(ventas.size()-1).getFechaVenta().toString() +"\"}]}";
+		    return rsp;
+		}
+		else 
+			return "{\"ventas\": []}";
 	}
 }

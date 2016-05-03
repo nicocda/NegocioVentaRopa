@@ -1,8 +1,12 @@
 package servlet;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,41 +16,60 @@ import javax.servlet.http.HttpServletResponse;
 
 import excepciones.RespuestaServidor;
 import negocio.ControladorTransaccion;
+import util.JsonResponses;
 
 
-/**
- * Servlet implementation class ReporteVentas
- */
 @WebServlet("/ReporteVentas")
-public class ReporteVentas extends HttpServlet {
+public class ReporteVentas extends HttpServlet 
+{
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ReporteVentas() {
+
+    public ReporteVentas()
+    {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
 		doPost(request,response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
 		String action = request.getParameter("action");
 		if (action.equals("mostrarVenta"))
 		{
-			String fechaMinima = request.getParameter("fechaMinima");
-			String fechaMaxima = request.getParameter("fechaMaxima");
+			String fechaMinimastr = request.getParameter("fechaMinima");
+			String fechaMaximastr = request.getParameter("fechaMaxima");
 			
-		
+			//Busco las fechas y parseo a Date
+			DateFormat df = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss", Locale.US);
+			Date fechaMinima = null, fechaMaxima = null;
+			
+			try 
+			{
+				fechaMinima = df.parse(fechaMinimastr);
+				fechaMaxima =  df.parse(fechaMaximastr);  
+			} 
+			catch (ParseException e) 
+			{
+				e.printStackTrace();
+			}  
+			
+			String jsonVentas = null;
+			
+			try
+			{
+				jsonVentas = JsonResponses.jsonVentas(ControladorTransaccion.buscarVentasDia(fechaMinima, fechaMaxima));
+			}
+			catch (RespuestaServidor sr)
+			{	
+			}
+			
+			response.setContentType("json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(jsonVentas);
 		}
 	}
 
