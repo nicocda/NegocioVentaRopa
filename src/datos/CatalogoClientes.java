@@ -311,6 +311,23 @@ public class CatalogoClientes
 		return cliente;
 	
 	}
+	private void cerrarSentencia(PreparedStatement sentencia)
+	{
+		try
+		{
+			if(sentencia!=null && !sentencia.isClosed())
+			{
+				sentencia.close();
+			}
+			DataConnection.getInstancia().CloseConn();
+		}
+		catch (SQLException sqle)
+		{
+			sqle.printStackTrace();
+		}
+	}
+	
+	
 }
 
 

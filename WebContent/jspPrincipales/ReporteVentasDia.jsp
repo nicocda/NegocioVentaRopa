@@ -16,15 +16,15 @@
 	<div style="padding: 20px">
 		Cliente:
 		<select id="comboClientes" style="width: 200px">
-	    	<option value="" disabled selected>Seleccione un cliente</option>
+	    	<option value="" selected>TODOS</option>
 		</select>
 		Tipo de Pago:
 		<select id="cbTipoPago" style="width: 200px">
-			<option value="" disabled selected>Seleccione tipo de pago</option>
+			<option value="">TODOS</option>
 			<%
 			for(formaPago e : formaPago.values())
 			{%>
-				<option><%=e.toString() %></option>
+				<option value ="<%=e.ordinal()%>"><%=e.toString() %></option>
 			<%}%>
 		</select>
 	</div>

@@ -10,7 +10,8 @@ function agregarEventos()
 {
 	$("#btnBuscar").click(function()
 	{
-		$.post('/NegocioRopa/ReporteVentas', { "action": "mostrarVenta", "fechaMinima": $("#fechaMinima").datepicker( "getDate" ), "fechaMaxima": $("#fechaMaxima").datepicker( "getDate" ) }, function(resultado)
+		$.post('/NegocioRopa/ReporteVentas', { "action": "mostrarVenta", "fechaMinima": $("#fechaMinima").datepicker( "getDate" ), 
+			"fechaMaxima": $("#fechaMaxima").datepicker( "getDate" ), "idCliente": $("#comboClientes").val(), "tipoPago": $("#cbTipoPago").val() }, function(resultado)
 		{
 			$("#tablaTransacciones tr").remove();
 			agregarEncabezado();

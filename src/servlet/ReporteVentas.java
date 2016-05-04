@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import excepciones.RespuestaServidor;
+import negocio.ControladorABM;
 import negocio.ControladorTransaccion;
 import util.JsonResponses;
 
@@ -42,10 +43,46 @@ public class ReporteVentas extends HttpServlet
 		{
 			String fechaMinimastr = request.getParameter("fechaMinima");
 			String fechaMaximastr = request.getParameter("fechaMaxima");
-			
+			String idClientestr = request.getParameter("idCliente");
+			String tipoPagostr = request.getParameter("tipoPago");
+				
 			//Busco las fechas y parseo a Date
 			DateFormat df = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss", Locale.US);
 			Date fechaMinima = null, fechaMaxima = null;
+			
+			int tipoPago;
+			int idCliente;
+			if(!idClientestr.isEmpty() && idClientestr!= null)
+			{	
+				try
+				{
+					idCliente = Integer.parseInt(idClientestr);
+				}
+				catch(NumberFormatException e)
+				{
+					idCliente = -2;
+				}
+			}
+			else
+			{
+				idCliente = -1;
+			}
+			
+			if(!tipoPagostr.isEmpty() && tipoPagostr!= null)
+			{	
+				try
+				{
+					tipoPago = Integer.parseInt(tipoPagostr);
+				}
+				catch(NumberFormatException e)
+				{
+					tipoPago = -2;
+				}
+			}
+			else
+			{
+				tipoPago = -1;
+			}
 			
 			try 
 			{
@@ -61,7 +98,7 @@ public class ReporteVentas extends HttpServlet
 			
 			try
 			{
-				jsonVentas = JsonResponses.jsonVentas(ControladorTransaccion.buscarVentasDia(fechaMinima, fechaMaxima));
+				jsonVentas = JsonResponses.jsonVentas(ControladorTransaccion.buscarVentasDia(fechaMinima, fechaMaxima, idCliente, tipoPago));
 			}
 			catch (RespuestaServidor sr)
 			{	

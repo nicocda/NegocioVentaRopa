@@ -5,6 +5,7 @@ import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLType;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -256,9 +257,6 @@ public class CatalogoVentas {
 				venta.setFormaPago(rs.getInt("formaPago"));
 				venta.setId(rs.getInt("v.id"));
 				venta.setImporte(rs.getFloat("importe"));
-				//busco los productos en el catalogo de productos y los seteo en la vento
-				int id=rs.getInt("v.id");
-				venta.setProductos(CatalogoProductos.buscarProductosVenta(id));
 			}
 			
 		}
@@ -281,20 +279,33 @@ public class CatalogoVentas {
 					sqle.printStackTrace();
 				}
 			}
+		venta.setProductos(CatalogoProductos.buscarProductosVenta(venta.getId()));
 		return venta;
 	}
-
-	public static ArrayList<Venta> buscarVentasPorDia(Date fechaMin, Date fechaMax) throws RespuestaServidor
+	
+	public static ArrayList<Venta> buscarVentasPorDia(Date fechaMin, Date fechaMax, int idCliente, int formaPago) throws RespuestaServidor
 	{
-		String sql="select * from venta where fechaVenta BETWEEN ? AND ? order by fechaVenta desc";
+		String sql="select * from venta where (? IS NULL OR idCliente = ?) AND (? IS NULL OR formaPago = ?) AND fechaVenta BETWEEN ? AND ? order by fechaVenta desc";
 		PreparedStatement sentencia = null;
 		ArrayList<Venta> ventas = new ArrayList<Venta>();
 		Connection con = DataConnection.getInstancia().getConn();
 		try
 		{
 			sentencia =con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			sentencia.setDate(1, new java.sql.Date(fechaMin.getTime()));
-			sentencia.setDate(2, new java.sql.Date(fechaMax.getTime()));
+			if(idCliente == -1)  
+				sentencia.setNull(1, java.sql.Types.NULL);
+			else
+				sentencia.setInt(1, idCliente);
+			sentencia.setInt(2, idCliente);		
+			
+			if(formaPago == -1)  
+				sentencia.setNull(3, java.sql.Types.NULL);
+			else
+				sentencia.setInt(3, formaPago);
+			sentencia.setInt(4, formaPago);	
+			
+			sentencia.setDate(5, new java.sql.Date(fechaMin.getTime()));
+			sentencia.setDate(6, new java.sql.Date(fechaMax.getTime()));
 			ResultSet rs =sentencia.executeQuery();
 			while(rs.next())
 			{
