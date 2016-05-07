@@ -13,11 +13,11 @@ import excepciones.RespuestaServidor;
 import negocio.ControladorABM;
 import util.JsonResponses;
 
-@WebServlet("/ABMProducto")
-public class ABMProducto extends HttpServlet {
+@WebServlet("/ABMProductos")
+public class ABMProductos extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public ABMProducto() 
+    public ABMProductos() 
     {
         super();
     }

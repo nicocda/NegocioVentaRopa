@@ -9,6 +9,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
 import entidades.Cliente;
+import entidades.Producto;
+import excepciones.RespuestaServidor;
 
 public class CatalogoClientes extends CatalogoBase
 {	
@@ -25,8 +27,11 @@ public class CatalogoClientes extends CatalogoBase
 		}
 	}
 	
-	public static void guardarCliente(Cliente cliente)
+	public static void guardarCliente(Cliente cliente) throws RespuestaServidor
 	{
+		RespuestaServidor rs = validarCliente(cliente);
+		if (!rs.getStatus())
+		throw rs;
 		abrirEntityManager();
 		try
 		{
@@ -68,6 +73,19 @@ public class CatalogoClientes extends CatalogoBase
 		{
 			cerrarEntityManager();
 		}
+	}
+	
+	private static RespuestaServidor validarCliente(Cliente cl) 
+	{
+		RespuestaServidor sr = new RespuestaServidor();
+		
+		if((cl.getId() < 0))
+			sr.addError("Ocurrió un error interno. El id es obligatorio.");
+		
+		if(!(cl.getNombreApellido() != null && !cl.getNombreApellido().isEmpty()))
+			sr.addError("El producto debe tener una descripción.");
+		
+		return sr;
 	}
 }
 

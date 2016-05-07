@@ -141,7 +141,7 @@ function agregarFilas(resultado)
 
 function cargarComboClientes()
 {
-	$.post('/NegocioRopa/ABMCliente', { "action": "recargarTabla" }, function(resultado)
+	$.post('/NegocioRopa/ABMClientes', { "action": "recargarTabla" }, function(resultado)
 	{
 		var clientes = [];
 		jQuery.each(resultado.clientes, function()

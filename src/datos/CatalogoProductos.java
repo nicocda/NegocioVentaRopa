@@ -16,13 +16,20 @@ public class CatalogoProductos extends CatalogoBase
 	public static Producto buscarProducto(String idProducto)
 	{
 		abrirEntityManager();
-		Producto producto = getEm().find(Producto.class, idProducto);
 		
-		if (producto != null)
-			buscarUltimoPrecio(producto);
-		
-		cerrarEntityManager();
-		return producto;
+		try
+		{
+			Producto producto = getEm().find(Producto.class, idProducto);
+			
+			if (producto != null)
+				buscarUltimoPrecio(producto);
+			
+			return producto;
+		}
+		finally
+		{
+			cerrarEntityManager();
+		}
 	}
 	
 	public static void guardarProducto(Producto producto) throws RespuestaServidor
@@ -32,18 +39,23 @@ public class CatalogoProductos extends CatalogoBase
 			throw rs;
 		
 		abrirEntityManager();
-		Producto dbProducto = getEm().find(Producto.class, producto.getId());
-		
-		getEm().getTransaction().begin();
-		
-		if(dbProducto == null)
-			getEm().persist(producto);
-		else
-			getEm().merge(producto);
-		
-		getEm().getTransaction().commit();
-		
-		cerrarEntityManager();
+		try
+		{
+			Producto dbProducto = getEm().find(Producto.class, producto.getId());
+			
+			getEm().getTransaction().begin();
+			
+			if(dbProducto == null)
+				getEm().persist(producto);
+			else
+				getEm().merge(producto);
+			
+			getEm().getTransaction().commit();
+		}
+		finally
+		{
+			cerrarEntityManager();
+		}
 	}
 	
 
@@ -51,24 +63,35 @@ public class CatalogoProductos extends CatalogoBase
 	public static ArrayList<Producto> buscarTodosProductos()
 	{
 		abrirEntityManager();
-		ArrayList<Producto> todosProductos = (ArrayList<Producto>)getEm().createQuery("SELECT p FROM Producto p").getResultList();
-		
-		for(Producto p : todosProductos)
-			buscarUltimoPrecio(p);
+		try
+		{
+			ArrayList<Producto> todosProductos = (ArrayList<Producto>)getEm().createQuery("SELECT p FROM Producto p").getResultList();
+			
+			for(Producto p : todosProductos)
+				buscarUltimoPrecio(p);
 	
-		cerrarEntityManager();
-		return todosProductos;
+			return todosProductos;
+		}
+		finally
+		{
+			cerrarEntityManager();
+		}
 	}
 	
 	public static String buscarUltimoIdProducto(char tipo, char subtipo)
 	{
 		abrirEntityManager();
 		
-		String parametro = Character.toString(tipo) + Character.toString(subtipo) + "%";
-		String resultado = (String)getEm().createQuery("SELECT p.id FROM Producto p WHERE p.id like (:tiposubtipo) ORDER BY p.id DESC").setMaxResults(1).setParameter("tiposubtipo", parametro).getSingleResult();
-		
-		cerrarEntityManager();
-		return resultado;
+		try
+		{
+			String parametro = Character.toString(tipo) + Character.toString(subtipo) + "%";
+			String resultado = (String)getEm().createQuery("SELECT p.id FROM Producto p WHERE p.id like (:tiposubtipo) ORDER BY p.id DESC").setMaxResults(1).setParameter("tiposubtipo", parametro).getSingleResult();
+			return resultado;
+		}
+		finally
+		{
+			cerrarEntityManager();
+		}
 	}
 	
 	private static void buscarUltimoPrecio(Producto producto)

@@ -29,7 +29,7 @@ $.postData = function(url, data)
 		},
 		error:function()
 		{
-			alert("error");
+			alert("JSON INCORRECTO");
 		}
 	});
 }

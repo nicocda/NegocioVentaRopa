@@ -55,6 +55,11 @@ public class Venta
 	{
 		this.productos = productos;
 	}
+	public void addProducto(Producto pr)
+	{
+		this.productos.add(pr);
+		pr.setVenta(this);
+	}
 	public List<Devolucion> getDevoluciones()
 	{
 		return devoluciones;

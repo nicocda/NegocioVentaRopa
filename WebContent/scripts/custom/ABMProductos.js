@@ -10,7 +10,7 @@ function eventosRelacionados()
 	//a postData (método del js custom que se llama Ajax) le paso url y data para que muestre el mensaje.
 	$("#btnAceptar").click(function()
 	{
-		$.postData('/NegocioRopa/ABMProducto', { "id": $("#txtID").val(), "descripcion": $("#txtDescripcion").val(), 
+		$.postData('/NegocioRopa/ABMProductos', { "id": $("#txtID").val(), "descripcion": $("#txtDescripcion").val(), 
 			"precio": $("#txtPrecio").val(), "action": "alta" , "tipo": $("#cbTipo").val(), 
 			"subTipo": $("#cbSubTipo").val()});
 		buscarId();
@@ -49,7 +49,7 @@ function eventosRelacionados()
 
 function buscarId()
 {
-	$.post('/NegocioRopa/ABMProducto', {"action": "buscarId", "tipo": $("#cbTipo").val(), 
+	$.post('/NegocioRopa/ABMProductos', {"action": "buscarId", "tipo": $("#cbTipo").val(), 
 		"subTipo": $("#cbSubTipo").val()}, function(result){
 			$("#txtID").val(result.id);
 		});	

@@ -2,7 +2,7 @@ $(document).ready(function()
 {	
 	$("#btnAceptar").click(function()
 	{
-		$.postData('/NegocioRopa/ABMCliente', { "id": $("#txtID").val(), "nombreApellido": $("#txtNombreYApellido").val(), 
+		$.postData('/NegocioRopa/ABMClientes', { "id": $("#txtID").val(), "nombreApellido": $("#txtNombreYApellido").val(), 
 			"direccion": $("#txtDireccion").val(), "telefono": $("#txtTelefono").val(), "action": "agregarCliente" });
 		sleep(400);
 		recargarTabla();
@@ -40,7 +40,7 @@ $(document).ready(function()
 
 function recargarTabla()
 {
-	$.post('/NegocioRopa/ABMCliente', { "action": "recargarTabla" }, function(resultado){
+	$.post('/NegocioRopa/ABMClientes', { "action": "recargarTabla" }, function(resultado){
 		$("#tablaClientes tr").remove();
 		agregarEncabezado();
 		agregarFilas(resultado);

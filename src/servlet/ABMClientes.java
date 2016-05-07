@@ -12,12 +12,12 @@ import excepciones.RespuestaServidor;
 import negocio.ControladorABM;
 import util.JsonResponses;
 
-@WebServlet("/ABMCliente")
-public class ABMCliente extends HttpServlet 
+@WebServlet("/ABMClientes")
+public class ABMClientes extends HttpServlet 
 {
 	private static final long serialVersionUID = 1L;
 
-    public ABMCliente() 
+    public ABMClientes() 
     {
         super();
     }

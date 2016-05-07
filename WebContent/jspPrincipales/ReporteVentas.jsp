@@ -7,8 +7,8 @@
 <%@page import="negocio.ControladorTransaccion"%>
 <%@page import="entidades.Venta.formaPago"%>
 
-<script type="text/javascript" src="./scripts/custom/ReporteVenta.js"></script>	
-<script type="text/javascript" src="../scripts/custom/ReporteVenta.js"></script>
+<script type="text/javascript" src="./scripts/custom/ReporteVentas.js"></script>	
+<script type="text/javascript" src="../scripts/custom/ReporteVentas.js"></script>
 
 <H4>Reporte de Ventas</H4>
 <div class="filtros">

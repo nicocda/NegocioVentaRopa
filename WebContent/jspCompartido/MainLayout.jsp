@@ -50,10 +50,10 @@
 					<a href="Index?link=LogOut">Bienvenido <%=((Usuario)session.getAttribute("usuario")).getNombreYApellido()%></a>
 					<%}%>
 					<a href="/NegocioRopa">Inicio</a>
-					<a href="Index?link=AbmClientes" name="editar">Clientes</a>
-					<a href="Index?link=AbmProducto">Productos</a>
+					<a href="Index?link=ABMCliente">Clientes</a>
+					<a href="Index?link=ABMProductos">Productos</a>
 					<a href="Index?link=Ventas">Venta</a>
-					<a href="Index?link=ReporteVentasDia">Reportes</a>
+					<a href="Index?link=ReporteVentas">Reportes</a>
 				</nav>
 			</div>
 		</header>

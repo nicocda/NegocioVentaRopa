@@ -22,7 +22,13 @@ public class ControladorTransaccion {
 
 	public Usuario buscarUsuario(String id, String pass)
 	{	
-		return CatalogoUsuarios.buscarUsuario(id, pass);	
+		Usuario usu = null;
+		usu = CatalogoUsuarios.buscarUsuario(id);
+		if(usu.getPassword() != pass)
+		{
+			usu = null;
+		}
+		return usu; 	
 	}
 	
 	public static Producto buscarProducto (String id)
@@ -30,9 +36,9 @@ public class ControladorTransaccion {
 		return CatalogoProductos.buscarProducto(id);
 	}
 
-	public static Cliente buscarCliente(String nombreCliente) {
+	public static Cliente buscarCliente(int idCliente) {
 		
-		return CatalogoClientes.buscarCliente(nombreCliente);
+		return CatalogoClientes.buscarCliente(idCliente);
 	}
 
 	public static void registrarVenta(Venta vta) throws RespuestaServidor
