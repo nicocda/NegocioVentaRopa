@@ -2,34 +2,68 @@ package entidades;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="venta")
 public class Venta 
 {
-	//Fields
-	private int id, formaPago;
-	private float importe;
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int id;
+		
 	private Date fechaVenta;
+	private boolean isReserva;
+	private boolean isPrestamo;
+	private float seña;
+	private Date fechaCaducidad;
+	
+	@ManyToOne(optional=true)
+	@JoinColumn(name="idCliente")
 	private Cliente cliente;
-	private ArrayList<Producto> productos;
 	
-	//Constructores
-	public Venta()
+	@OneToMany(mappedBy="venta")
+	private List<Devolucion> devoluciones;
+	
+	@OneToMany(mappedBy="venta")
+	private List<Producto> productos;
+	
+	public List<Producto> getProductos() 
 	{
-		this.productos= new ArrayList<Producto>();
+		return productos;
 	}
-	
-	public Venta(int id, int formaPago, float importe, Date fechaVenta, Cliente cliente, ArrayList<Producto> productos)
+	public ArrayList<Producto> getProductosArrayList() 
 	{
-		this.setCliente(cliente);
-		this.setFechaVenta(fechaVenta);
-		this.setFormaPago(formaPago);
-		this.setId(id);
-		this.setImporte(importe);
-		this.setProductos(productos);
+		return new ArrayList<Producto>(productos);
 	}
-	
-	//Getters - Setters
-	public int getId()
+	public void setProductos(List<Producto> productos) 
+	{
+		this.productos = productos;
+	}
+	public void setProductos(ArrayList<Producto> productos) 
+	{
+		this.productos = productos;
+	}
+	public List<Devolucion> getDevoluciones()
+	{
+		return devoluciones;
+	}
+	public void setDevoluciones(List<Devolucion> devoluciones)
+	{
+		this.devoluciones = devoluciones;
+	}
+	public int getId() 
 	{
 		return id;
 	}
@@ -37,7 +71,55 @@ public class Venta
 	{
 		this.id = id;
 	}
-	public int getFormaPago()
+	public Date getFechaVenta() 
+	{
+		return fechaVenta;
+	}
+	public void setFechaVenta(Date fechaVenta) 
+	{
+		this.fechaVenta = fechaVenta;
+	}
+	public boolean isReserva()
+	{
+		return isReserva;
+	}
+	public void setReserva(boolean isReserva) 
+	{
+		this.isReserva = isReserva;
+	}
+	public boolean isPrestamo() 
+	{
+		return isPrestamo;
+	}
+	public void setPrestamo(boolean isPrestamo) 
+	{
+		this.isPrestamo = isPrestamo;
+	}
+	public float getSeña() 
+	{
+		return seña;
+	}
+	public void setSeña(float seña)
+	{
+		this.seña = seña;
+	}
+	public Date getFechaCaducidad() 
+	{
+		return fechaCaducidad;
+	}
+	public void setFechaCaducidad(Date fechaCaducidad) 
+	{
+		this.fechaCaducidad = fechaCaducidad;
+	}
+	public Cliente getCliente()
+	{
+		return cliente;
+	}
+	public void setCliente(Cliente cliente)
+	{
+		this.cliente = cliente;
+	}
+	public int getFormaPago() 
 	{
 		return formaPago;
 	}
@@ -53,36 +135,9 @@ public class Venta
 	{
 		this.importe = importe;
 	}
-	public Date getFechaVenta() 
-	{
-		return fechaVenta;
-	}
-	public void setFechaVenta(Date fechaVenta)
-	{
-		this.fechaVenta = fechaVenta;
-	}
-	public Cliente getCliente() 
-	{
-		return cliente;
-	}
-	public void setCliente(Cliente cliente) 
-	{
-		this.cliente = cliente;
-	}
-	public ArrayList<Producto> getProductos()
-	{
-		return productos;
-	}
-	public void setProductos(ArrayList<Producto> productos)
-	{
-		this.productos = productos;
-	}
+	int formaPago;
+	float importe;
 	
-	//Metodos Customizados
-	public void addProducto(Producto pr)
-	{
-		productos.add(pr);
-	}
 	//Enum
 	public static enum formaPago
 	{

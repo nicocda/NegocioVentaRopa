@@ -39,13 +39,15 @@ public class ABMCliente extends HttpServlet
 				id=0; 
 			else
 				id = Integer.parseInt(idString);
-			String nya = request.getParameter("nombreApellido");
-			String dire = request.getParameter("direccion");
-			String tel = request.getParameter("telefono");
+			
+			String nombreApellido = request.getParameter("nombreApellido");
+			String direccion = request.getParameter("direccion");
+			String telefono = request.getParameter("telefono");
+			
 			RespuestaServidor sr = new RespuestaServidor();
 			try
 			{
-				ControladorABM.agregarCliente(new Cliente(id,nya,dire,tel));
+				ControladorABM.guardarCliente(id, nombreApellido, direccion, telefono);
 			}
 			catch(RespuestaServidor res)
 			{
@@ -60,7 +62,7 @@ public class ABMCliente extends HttpServlet
 		{
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
-		    response.getWriter().write(JsonResponses.arrayTodosClientes(ControladorABM.buscarClientes()));
+		    response.getWriter().write(JsonResponses.arrayTodosClientes(ControladorABM.buscarTodosClientes()));
 		}
 	}
 

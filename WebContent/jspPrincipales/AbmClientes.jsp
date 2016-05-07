@@ -24,7 +24,7 @@ import="negocio.ControladorABM" %>
 				<td width="10%"></td>
 			</tr>
 			<%
-			ArrayList<Cliente> clientes = ControladorABM.buscarClientes();
+			ArrayList<Cliente> clientes = ControladorABM.buscarTodosClientes();
 			for(Cliente cl : clientes)
 			{%>
 			<tr>

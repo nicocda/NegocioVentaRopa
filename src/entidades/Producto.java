@@ -1,36 +1,75 @@
 package entidades;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity 
+@Table(name = "producto")
 public class Producto 
 {
-	//Fields
-	private String descripcion,id;
+	@Id
+	@Column(name = "id")
+	private String id;
+	
+	@Column(name = "descripcion")
+	private String descripcion;
+	
+	@Column(name = "estado")
 	private int estado;
+	
+	@ManyToOne(optional=true)
+	@JoinColumn(name="idVenta")
+	private Venta venta;
+	
+	@ManyToOne(optional=true)
+	@JoinColumn(name="idDevolucion")
+	private Devolucion devolucion;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="producto")
+	private List<Precio> precios = new ArrayList<Precio>();
+
+	@Transient
 	private Precio precio;
 	
-	//Constructores
-	public Producto()
+	public List<Precio> getPrecios()
 	{
+		return precios;
 	}
-	
-	public Producto(String descripcion, int estado, String id, Precio precio)
+	public ArrayList<Precio> getPreciosArrayList()
 	{
-		this.setDescripcion(descripcion);
-		this.setEstado(estado);
-		this.setId(id);
-		this.setPrecio(precio);
-		
+		return new ArrayList<Precio>(precios);
 	}
-	
-	//Getters - Setters
+	public void setPrecios(List<Precio> precios)
+	{
+		this.precios = precios;
+	}
+	public void setPrecios(ArrayList<Precio> precios)
+	{
+		this.precios = precios;
+	}
 	public String getDescripcion() 
 	{
 		return descripcion;
 	}
-	public String getId() {
+	public String getId() 
+	{
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(String id)
+	{
 		this.id = id;
 	}
 	
@@ -42,21 +81,44 @@ public class Producto
 	{
 		return estado;
 	}
-	/**
-	 * @param estado
-	 */
+
 	public void setEstado(int estado) 
 	{
 		this.estado = estado;
+	}
+	
+	public Venta getVenta() 
+	{
+		return venta;
+	}
+
+	public void setVenta(Venta venta) 
+	{
+		this.venta = venta;
+	}
+	
+	public Devolucion getDevolucion()
+	{
+		return devolucion;
+	}
+
+	public void setDevolucion(Devolucion devolucion)
+	{
+		this.devolucion = devolucion;
 	}
 	
 	public Precio getPrecio() 
 	{
 		return precio;
 	}
-	public void setPrecio(Precio precio)
+	public void setPrecio(Precio precio) 
 	{
 		this.precio = precio;
+	}
+	public void addPrecio(Precio precio)
+	{
+		this.precios.add(precio);
+		precio.setProducto(this);
 	}
 	
 	//Enums

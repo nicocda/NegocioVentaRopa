@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import entidades.Usuario;
 import entidades.Venta;
+import negocio.ControladorABM;
 import negocio.ControladorTransaccion;
 
 @WebServlet("/Login")
@@ -36,8 +37,7 @@ public class Login extends HttpServlet
 		{
 			String usuario = (String) request.getParameter("usuario");
 			String pass = (String) request.getParameter("password");
-			ControladorTransaccion ct = new ControladorTransaccion();
-			Usuario usu = ct.buscarUsuario(usuario, pass);
+			Usuario usu = ControladorABM.validarUsuario(usuario, pass);
 			if (usu != null)
 			{
 				HttpSession session = request.getSession();

@@ -1,25 +1,37 @@
 package entidades;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="cliente")
 public class Cliente 
 {
-	//Fields
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
-	private String nombreApellido, direccion, telefono;
 	
-	//Constructores
-	public Cliente()
-	{
-	}
+	@Column(name = "nombreApellido")
+	private String nombreApellido;
 	
-	public Cliente(int id, String nombreApellido, String direccion, String telefono)
-	{
-		this.setId(id);
-		this.setDireccion(direccion);
-		this.setNombreApellido(nombreApellido);
-		this.setTelefono(telefono);
-	}
+	@Column(name = "direccion")
+	private String direccion;
 	
-	//Getter-Setter
+	@Column(name = "telefono")
+	private String telefono;
+	
+	@OneToMany(mappedBy="cliente")
+	private List<Venta> ventas;
+	
 	public int getId() 
 	{
 		return id;
@@ -44,17 +56,28 @@ public class Cliente
 	{
 		this.direccion = direccion;
 	}
-	public String getTelefono()
+	public String getTelefono() 
 	{
 		return telefono;
 	}
 	public void setTelefono(String telefono) 
 	{
 		this.telefono = telefono;
+	} 
+	public List<Venta> getVentas() 
+	{
+		return ventas;
 	}
-
-	
-	
-	
-	
+	public void setVentas(List<Venta> ventas)
+	{
+		this.ventas = ventas;
+	}
+	public void setVentas(ArrayList<Venta> ventas)
+	{
+		this.ventas = ventas;
+	}
+	public ArrayList<Venta> getVentasArrayList()
+	{
+		return new ArrayList<Venta>(ventas);
+	}
 }

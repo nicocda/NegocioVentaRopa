@@ -2,28 +2,47 @@ package entidades;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "devolucion")
 public class Devolucion
 {
 	//Fields
+	@Id
 	private int id;
-	private Date fecha;
+	
+	@Column(name = "fechaDevolucion")
+	private Date fechaDevolucion;
+	
+	@ManyToOne(optional=true)
+	@JoinColumn(name = "idVenta")
 	private Venta venta;
-	private ArrayList<Producto> productos;
 	
-	//Constructores
-	public Devolucion()
-	{
+	@OneToMany(mappedBy = "devolucion")
+	private List<Producto> productos;
+	
+	
+	public Venta getVenta() {
+		return venta;
 	}
-	
-	public Devolucion(int id, Date fecha, Venta venta, ArrayList<Producto> productos)
-	{
-		this.setFecha(fecha);
-		this.setId(id);
-		this.setVenta(venta);
-		this.setProductos(productos);
+	public void setVenta(Venta venta) {
+		this.venta = venta;
 	}
-	
+	public List<Producto> getProductos() {
+		return productos;
+	}
+	public void setProductos(List<Producto> productos) {
+		this.productos = productos;
+	}
 	public int getId() 
 	{
 		return id;
@@ -34,28 +53,10 @@ public class Devolucion
 	}
 	public Date getFecha()
 	{
-		return fecha;
+		return fechaDevolucion;
 	}
 	public void setFecha(Date fecha)
 	{
-		this.fecha = fecha;
-	}
-	public Venta getVenta() 
-	{
-		return venta;
-	}
-	public void setVenta(Venta venta)
-	{
-		this.venta = venta;
-	}
-
-	public ArrayList<Producto> getProductos() 
-	{
-		return productos;
-	}
-
-	public void setProductos(ArrayList<Producto> productos) 
-	{
-		this.productos = productos;
+		this.fechaDevolucion = fecha;
 	}
 }

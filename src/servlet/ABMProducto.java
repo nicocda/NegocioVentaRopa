@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+import entidades.Producto;
 import excepciones.RespuestaServidor;
 import negocio.ControladorABM;
 import util.JsonResponses;
@@ -34,9 +34,8 @@ public class ABMProducto extends HttpServlet {
 		{
 			String descripcion = request.getParameter("descripcion"), 
 					precio=request.getParameter("precio"),
-					id = request.getParameter("id"),
-					tipo = request.getParameter("tipo"), 
-					subTipo=request.getParameter("subTipo");
+					id = request.getParameter("id");
+
 			float precioFloat;
 			try
 			{
@@ -46,10 +45,11 @@ public class ABMProducto extends HttpServlet {
 			{
 				precioFloat = -1;
 			}		
+			
 			RespuestaServidor sr = new RespuestaServidor();
 			try
 			{
-				ControladorABM.modificarCargarProducto(id,tipo.charAt(0),subTipo.charAt(0), descripcion, 1, precioFloat);
+				ControladorABM.guardarProducto(id, descripcion, Producto.estado.STOCK.ordinal(), precioFloat);
 			}
 			catch (RespuestaServidor e)
 			{

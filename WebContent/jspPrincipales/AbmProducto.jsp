@@ -32,7 +32,7 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 				<td width="10%">Precio</td>
 				<td width="10%"></td>
 			</tr>
-			<%for(Producto p : ControladorABM.buscarProductos())
+			<%for(Producto p : ControladorABM.buscarTodosProductos())
 			{%>
 			<tr>
 				<td class="idTabla"><%=p.getId() %></td>

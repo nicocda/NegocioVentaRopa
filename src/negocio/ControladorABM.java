@@ -2,107 +2,103 @@ package negocio;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+
 import datos.CatalogoClientes;
 import datos.CatalogoProductos;
+import datos.CatalogoUsuarios;
 import entidades.Cliente;
 import entidades.Precio;
 import entidades.Producto;
+import entidades.Usuario;
 import excepciones.RespuestaServidor;
 
 public class ControladorABM 
 {
-	public static void agregarProducto(char tipo, char subTipo, String descripcion, int estado, float precio) throws RespuestaServidor
-	{
-		String idNuevoCompleto = obtenerIdCompleto(tipo, subTipo);
-		Calendar today = Calendar.getInstance();
-		today.set(Calendar.HOUR_OF_DAY, 0);
-		Producto pr = new Producto(descripcion,estado,idNuevoCompleto,new Precio(today.getTime(), precio));
-		CatalogoProductos.agregarProducto(pr);
+	public static void guardarProducto(String idProducto, String descripcion, int estado, float valor) throws RespuestaServidor
+	{		
+		Calendar hoy = Calendar.getInstance();
+		hoy.set(Calendar.HOUR_OF_DAY, 0);
 		
-	}
-	
-	//si no existe me da el primero para ese tipo y para ese subtipo.
-	public static String obtenerIdCompleto(char tipo, char subTipo) 
-	{
-		final int cantidadDigitos = 7;
-		String id = CatalogoProductos.ultimoIdProducto(tipo, subTipo);
-		String idNuevo;
-		if(id != null)
-			idNuevo = Integer.toString(Integer.parseInt(id.substring(2, cantidadDigitos))+1);
-		else
-			idNuevo = "1";
-		int a = cantidadDigitos-2-idNuevo.length(); //-2 porque le saco los 2 primeros digitos que son letras
-		for(int i = 1; i<=a; i++)
+		Precio precio = new Precio();
+		
+		precio.setFecha(hoy.getTime());
+		precio.setPrecio(valor);
+		
+		Producto producto = new Producto();
+		
+		producto.setDescripcion(descripcion);
+		producto.setId(idProducto);
+		producto.setEstado(estado);
+		
+		//Busco el producto, si no existe le agrego el precio, si existe y el precio es distinto al actual se lo agrego.
+		Producto dbProducto = CatalogoProductos.buscarProducto(idProducto);
+		if (dbProducto == null || (dbProducto != null && dbProducto.getPrecio().getPrecio() != valor))
 		{
-			idNuevo = "0"+idNuevo;
+			producto.addPrecio(precio);	
+			producto.setPrecio(precio);
 		}
-			
-		return Character.toString(tipo).concat(Character.toString(subTipo)).concat(idNuevo);
-	}
 
-	public static void modificarCargarProducto(String id, char tipo, char subTipo, String newDescripcion,int estado, float newPrecio) throws RespuestaServidor
-	{
-		Producto pr = CatalogoProductos.buscarProducto(id);
-		Calendar today = Calendar.getInstance();
-		today.set(Calendar.HOUR_OF_DAY, 0);
-		if(pr!=null)
-		{
-			CatalogoProductos.modificarProducto(new Producto(newDescripcion,estado, id,new Precio(today.getTime(), newPrecio)));
-		}
-		else
-		{
-			String idNuevoCompleto = obtenerIdCompleto(tipo, subTipo);
-			pr = new Producto(newDescripcion,estado,idNuevoCompleto,new Precio(today.getTime(), newPrecio));
-			CatalogoProductos.agregarProducto(pr);
-		}
+		CatalogoProductos.guardarProducto(producto);
 	}
 	
-	public static ArrayList<Cliente> buscarClientes()
+	public static ArrayList<Cliente> buscarTodosClientes()
 	{
-		return CatalogoClientes.buscarClientes();
+		return CatalogoClientes.buscarTodosClientes();
 	}
 	
-	public static void agregarCliente(Cliente cl) throws RespuestaServidor
+	public static void guardarCliente(int id, String nombreApellido, String direccion, String telefono) throws RespuestaServidor
 	{
-		Cliente cli;
-		try
-		{
-			cli = CatalogoClientes.buscarCliente(cl.getId());
-		}
-		catch (RespuestaServidor sr)
-		{
-			cli = null;
-		}
-			if(cli != null && cl.getId() != 0)
-			{
-				CatalogoClientes.modificarCliente(cl);
-			}
-			else if(cli == null && cl.getId() == 0)
-			{
-				CatalogoClientes.agregarCliente(cl);
-			}
-			else
-			{
-				//ESTO SOLO PASA SI YO PUDIERA EDITAR EL ID Y PONGO UNO POSITIVO PERO DISTINTO A LOS EXISTENTES
-				RespuestaServidor sr = new RespuestaServidor();
-				sr.addError("No se encontró el cliente!");
-				throw sr;
-			}
+		Cliente cliente = new Cliente();
+		cliente.setId(id);
+		cliente.setNombreApellido(nombreApellido);
+		cliente.setTelefono(telefono);
+		cliente.setDireccion(direccion);
+		CatalogoClientes.guardarCliente(cliente);
 	}
 	
 	public static String buscarUltimoIdProducto(char tipo, char subTipo)
 	{
-		return CatalogoProductos.ultimoIdProducto(tipo, subTipo);
+		return CatalogoProductos.buscarUltimoIdProducto(tipo, subTipo);
 	}
 
-	public static ArrayList<Producto> buscarProductos()
+	public static ArrayList<Producto> buscarTodosProductos()
 	{
-		//en realidad quiero todos. Hay que hacer métodos en el catálogo
-		return CatalogoProductos.buscarProductosDisponibles();
+		return CatalogoProductos.buscarTodosProductos();
 	}
 	
 	public static Cliente buscarCliente(int idCliente) throws RespuestaServidor
 	{
 		return CatalogoClientes.buscarCliente(idCliente);
 	}
+	
+	public static Usuario validarUsuario(String nombreUsuario, String password)
+	{
+		Usuario usuario = CatalogoUsuarios.buscarUsuario(nombreUsuario);
+		if(usuario != null)
+		{
+			if(usuario.getPassword().equals(password))
+					return usuario;
+		}
+		return null;
+	}
+	
+	//si no existe me da el primero para ese tipo y para ese subtipo.
+		public static String obtenerIdCompleto(char tipo, char subTipo) 
+		{
+			final int cantidadDigitos = 7;
+			String id = CatalogoProductos.buscarUltimoIdProducto(tipo, subTipo);
+			String idNuevo;
+			if(id != null)
+				idNuevo = Integer.toString(Integer.parseInt(id.substring(2, cantidadDigitos))+1);
+			else
+				idNuevo = "1";
+			int a = cantidadDigitos-2-idNuevo.length(); //-2 porque le saco los 2 primeros digitos que son letras
+			for(int i = 1; i<=a; i++)
+			{
+				idNuevo = "0"+idNuevo;
+			}
+				
+			return Character.toString(tipo).concat(Character.toString(subTipo)).concat(idNuevo);
+		}
 }

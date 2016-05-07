@@ -1,47 +1,48 @@
 package datos;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
 
-import conexion.DataConnection;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 import entidades.Usuario;
-import excepciones.RespuestaServidor;
 
 public class CatalogoUsuarios 
 {
+	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("ServicioRopa");
+	private static EntityManager em = emf.createEntityManager();
 	
-	public static Usuario buscarUsuario(String id, String pass)
+	public static Usuario buscarUsuario(String nombreUsuario)
 	{
-		Usuario usu = null;
-		String sql="select * from usuario where usuario=? and password=?";
-		PreparedStatement sentencia = null;
-		Connection con = DataConnection.getInstancia().getConn();
-		try
-		{
-			sentencia =con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			sentencia.setString(1, id);
-			sentencia.setString(2, pass);
-			ResultSet rs =sentencia.executeQuery();
-			if(rs.next())
-			{
-				usu = new Usuario();
-				usu.setEmail(rs.getString("mail"));
-				usu.setUsuario(rs.getString("usuario"));
-				usu.setNombreYApellido(rs.getString("nombreyApellido"));
-				usu.setPassword(rs.getString("password"));
-				usu.setTipoUsuario(rs.getInt("tipoUsuario"));
-			}
-		}
-		catch(SQLException e)
-		{
-			e.printStackTrace();
-		}
-		return usu;
-		
-		
+		return em.find(Usuario.class, nombreUsuario);
 	}
 	
+	public static void guardarUsuario(Usuario usuario)
+	{
+		Usuario dbUsuario = em.find(Usuario.class, usuario.getUsuario());
+		if(dbUsuario == null)
+		{
+			em.getTransaction().begin();
+			em.persist(usuario);
+			em.getTransaction().commit();
+		}
+		else
+		{
+			em.getTransaction().begin();
+
+			dbUsuario.setEmail(usuario.getEmail());
+			dbUsuario.setNombreYApellido(usuario.getNombreYApellido());
+			dbUsuario.setPassword(usuario.getPassword());
+			dbUsuario.setTipoUsuario(usuario.getTipoUsuario());
+			
+			em.getTransaction().commit();
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static ArrayList<Usuario> buscarTodosUsuarios()
+	{
+		return (ArrayList<Usuario>)em.createQuery("SELECT u FROM Usuario u").getResultList();
+	}
 }
