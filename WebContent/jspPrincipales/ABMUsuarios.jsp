@@ -41,7 +41,8 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 	<h3 id="nuevoEditar">Nuevo Usuario:</h3>
 	<div>
 		<button id="btnRestaurar">x</button>
-		<input type="text" id="txtUsuario" placeholder="Usuario">		
+		<input type="text" id="txtUsuario" placeholder="Usuario">
+		<input type="password" id="txtPassword" placeholder="Contraseña">		
 		<input type="text" id="txtNombreYApellido" placeholder="Nombre y Apellido">
 		<input type="text" id="txtEmail" placeholder="Email">
 		<select id="cbTipo">

@@ -3,13 +3,15 @@ $(document).ready(function()
 	$("#btnAceptar").click(function()
 	{
 		$.postData('/NegocioRopa/ABMUsuarios', { "usuario": $("#txtUsuario").val(), "nombreApellido": $("#txtNombreYApellido").val(), 
-			"email": $("#txtEmail").val(), "tipo": $("#cbTipo").val(), "action": "guardarUsuario" });
-		sleep(400);
-		recargarTabla();
-		$("#accordion #mostrar").click();
-		limpiarCampos();
-		$("#nuevoEditar").empty();
-		$("#nuevoEditar").append("Nuevo Usuario:");
+			"email": $("#txtEmail").val(), "password": $("#txtPassword").val(), "tipo": $("#cbTipo").val(), "action": "guardarUsuario" }, 
+			function()
+			{
+				recargarTabla();
+				$("#accordion #mostrar").click();
+				limpiarCampos();
+				$("#nuevoEditar").empty();
+				$("#nuevoEditar").append("Nuevo Usuario:");
+			});
 	});
 	
 	$(document).on('click', "#btnCerrarMensaje", function()
@@ -39,16 +41,19 @@ $(document).ready(function()
 function recargarTabla()
 {
 	$.post('/NegocioRopa/ABMUsuarios', { "action": "recargarTabla" }, function(resultado){
-		$("#tabaUsuarios tr").remove();
+		$("#tablaUsuarios tr").remove();
 		agregarEncabezado();
 		agregarFilas(resultado);
-	});
+	}),
+	function(){
+		alert("Oops...");
+	};
 }
 
 function agregarEncabezado()
 {
 	var trEncabezado = $("<tr />");
-	$("#tabaUsuarios").append(trEncabezado);
+	$("#tablaUsuarios").append(trEncabezado);
 	trEncabezado.append($('<td width="10%">Usuario</td>'));
 	trEncabezado.append($('<td width="40%">Nombre y Apellido</td>'));
 	trEncabezado.append($('<td width="20%">Email</td>'));
@@ -61,13 +66,12 @@ function agregarFilas(resultado)
 	for (var i = 0; i < resultado.usuarios.length; i++)
 	{
 		var trFilas = $("<tr />");
-		$("#tabaUsuarios").append(trFilas);
+		$("#tablaUsuarios").append(trFilas);
 		trFilas.append($('<td align="center" class="usuarioTabla">'+ resultado.usuarios[i].usuario +'</td>'));
 		trFilas.append($('<td class="nyaTabla">'+ resultado.usuarios[i].nombreApellido +'</td>'));
 		trFilas.append($('<td class="emailTabla">'+ resultado.usuarios[i].email +'</td>'));
 		trFilas.append($('<td class="tipoTabla">'+ resultado.usuarios[i].tipo +'</td>'));
 		trFilas.append($('<td align="center"><input type="button" class="botones btnEditar" value="Editar"></td>'));
-
 	}
 }
 
@@ -84,5 +88,6 @@ function limpiarCampos()
 	$("#txtUsuario").val("");
 	$("#txtNombreYApellido").val("");
 	$("#txtEmail").val("");
+	$("#txtPassword").val("");
 	$("#cbTipo").val("");
 }

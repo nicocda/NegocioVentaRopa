@@ -31,12 +31,11 @@ public class ABMUsuarios extends HttpServlet
 		String action = request.getParameter("action");
 		if (action.equals("guardarUsuario"))
 		{
-			int id;
-
 			String usuario = request.getParameter("usuario");			
 			String nombreApellido = request.getParameter("nombreApellido");
 			String email = request.getParameter("email");
-			String tipoUsuariostr = request.getParameter("tipoUsuario");
+			String tipoUsuariostr = request.getParameter("tipo");
+			String password = request.getParameter("password");
 			
 			int tipoUsuario;
 			try
@@ -51,7 +50,7 @@ public class ABMUsuarios extends HttpServlet
 			RespuestaServidor sr = new RespuestaServidor();
 			try
 			{
-				ControladorABM.guardarUsuario(usuario, nombreApellido, email, tipoUsuario);
+				ControladorABM.guardarUsuario(usuario, password, nombreApellido, email, tipoUsuario);
 			}
 			catch(RespuestaServidor res)
 			{

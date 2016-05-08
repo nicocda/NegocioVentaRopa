@@ -22,9 +22,9 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 <H4>Productos</H4>
 <div id="divError"></div>
 <div id="accordion">
-	<h3>Lista de Productos</h3>
+	<h3 id="mostrar">Lista de Productos</h3>
 	<div style="max-height: 320px">
-		<table class="CSSTableGenerator">
+		<table class="CSSTableGenerator" id="tablaProductos">
 			<tr>
 				<td width="20%">ID</td>
 				<td width="40%">Descripción</td>
@@ -37,12 +37,9 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 			<tr>
 				<td class="idTabla"><%=p.getId() %></td>
 				<td class="descripcionTabla"><%=p.getDescripcion() %></td>
-				<td><%=estado.values()[p.getEstado()].toString() %></td>
+				<td class="estadoTabla"><%=estado.values()[p.getEstado()].toString() %></td>
 				<td class="precioTabla"><%=p.getPrecio().getPrecio() %></td>
-				<td><input type="button" class="botones btnEditar" value="Editar"> 
-<!-- El boton codigo podria ir en cualquier lado, lo que tiene que hacer es mostrar el barcode 
-intente hacer un popup pero no se usar javascript, gracias-->
-				<input type="button" id="agregar" class="botones barcode" value="Código"></td>
+				<td><input type="button" class="botones btnEditar" value="Editar"> <input type="button" id="agregar" class="botones barcode" value="Código"></td>
 			</tr>
 			<%} %>
 		</table>

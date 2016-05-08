@@ -107,8 +107,16 @@ public class ControladorABM
 		return Character.toString(tipo).concat(Character.toString(subTipo)).concat(idNuevo);
 	}
 
-	public static void guardarUsuario(String usuario, String nombreApellido, String email, int tipoUsuario) throws RespuestaServidor
+	public static void guardarUsuario(String nombreUsuario, String password, String nombreApellido, String email, int tipoUsuario) throws RespuestaServidor
 	{
+		Usuario usuario = new Usuario();
 		
+		usuario.setNombreYApellido(nombreApellido);
+		usuario.setEmail(email);
+		usuario.setTipoUsuario(tipoUsuario);
+		usuario.setUsuario(nombreUsuario);
+		usuario.setPassword(password);
+		
+		CatalogoUsuarios.guardarUsuario(usuario);
 	}
 }

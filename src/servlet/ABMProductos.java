@@ -70,6 +70,12 @@ public class ABMProductos extends HttpServlet {
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write("{\"id\": \"" + ID + "\"}"); 
 		}
+		else if (action.equals("recargarTabla"))
+		{
+			response.setContentType("json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(JsonResponses.arrayTodosProductos(ControladorABM.buscarTodosProductos()));
+		}
 	}
 
 }

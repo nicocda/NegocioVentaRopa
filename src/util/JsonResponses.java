@@ -6,6 +6,8 @@ import entidades.Cliente;
 import entidades.Producto;
 import entidades.Usuario;
 import entidades.Venta;
+import entidades.Producto.estado;
+import entidades.Usuario.tipoUsuario;
 import excepciones.RespuestaServidor;
 
 public class JsonResponses 
@@ -54,9 +56,20 @@ public class JsonResponses
 		String rsp = "{\"importe\": \" "+ venta.getImporte() +" \", \"productos\": [";
 	    for(int i=0;i<productos.size()-1;i++)
 	    {
-	    	rsp= rsp + "{\"id\": \"" + productos.get(i).getId()+"\", \"descripcion\": \"" + productos.get(i).getDescripcion() + "\", \"precio\": \"" + productos.get(i).getPrecio().getPrecio() +"\"},";
+	    	rsp= rsp + "{\"id\": \"" + productos.get(i).getId()+"\", \"descripcion\": \"" + productos.get(i).getDescripcion() + "\", \"precio\": \"" + productos.get(i).getPrecio().getPrecio() +"\", \"estado\": \"" + estado.values()[productos.get(i).getEstado()].name() + "\"},";
 	    }
-	    rsp= rsp + "{\"id\": \"" + productos.get(productos.size()-1).getId()+"\", \"descripcion\": \"" + productos.get(productos.size()-1).getDescripcion() + "\", \"precio\": \"" + productos.get(productos.size()-1).getPrecio().getPrecio() +"\"}]}";
+	    rsp= rsp + "{\"id\": \"" + productos.get(productos.size()-1).getId()+"\", \"descripcion\": \"" + productos.get(productos.size()-1).getDescripcion() + "\", \"precio\": \"" + productos.get(productos.size()-1).getPrecio().getPrecio() +"\", \"estado\": \"" + estado.values()[productos.get(productos.size()-1).getEstado()].name() +"\"}]}";
+	    return rsp;
+	}
+	
+	public static String arrayTodosProductos(ArrayList<Producto> productos)
+	{
+		String rsp = "{\"productos\": [";
+	    for(int i=0;i<productos.size()-1;i++)
+	    {
+	    	rsp= rsp + "{\"id\": \"" + productos.get(i).getId()+"\", \"descripcion\": \"" + productos.get(i).getDescripcion() + "\", \"precio\": \"" + productos.get(i).getPrecio().getPrecio() +"\", \"estado\": \"" + estado.values()[productos.get(i).getEstado()].name() + "\"},";
+	    }
+	    rsp= rsp + "{\"id\": \"" + productos.get(productos.size()-1).getId()+"\", \"descripcion\": \"" + productos.get(productos.size()-1).getDescripcion() + "\", \"precio\": \"" + productos.get(productos.size()-1).getPrecio().getPrecio() +"\", \"estado\": \"" + estado.values()[productos.get(productos.size()-1).getEstado()].name() +"\"}]}";
 	    return rsp;
 	}
 	
@@ -76,8 +89,14 @@ public class JsonResponses
 			return "{\"ventas\": []}";
 	}
 
-	public static String arrayTodosUsuarios(ArrayList<Usuario> buscarTodosUsuarios) 
+	public static String arrayTodosUsuarios(ArrayList<Usuario> usuarios) 
 	{
-		return null;
+		String rsp = "{\"usuarios\": [";
+	    for(int i=0;i<usuarios.size()-1;i++)
+	    {
+	    	rsp= rsp + "{\"usuario\": \"" + usuarios.get(i).getUsuario()+"\", \"nombreApellido\": \"" + usuarios.get(i).getNombreYApellido() + "\", \"email\": \"" + usuarios.get(i).getEmail() +"\", \"tipo\": \"" + tipoUsuario.values()[usuarios.get(i).getTipoUsuario()].name() + "\"},";
+	    }
+	    rsp= rsp + "{\"usuario\": \"" + usuarios.get(usuarios.size()-1).getUsuario()+"\", \"nombreApellido\": \"" + usuarios.get(usuarios.size()-1).getNombreYApellido() + "\", \"email\": \"" + usuarios.get(usuarios.size()-1).getEmail() +"\", \"tipo\": \"" + tipoUsuario.values()[usuarios.get(usuarios.size()-1).getTipoUsuario()].name() + "\"}]}";
+	    return rsp;
 	}
 }
