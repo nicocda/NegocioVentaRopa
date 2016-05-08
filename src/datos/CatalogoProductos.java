@@ -2,10 +2,12 @@ package datos;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import entidades.Precio;
 import entidades.Producto;
@@ -85,7 +87,13 @@ public class CatalogoProductos extends CatalogoBase
 		try
 		{
 			String parametro = Character.toString(tipo) + Character.toString(subtipo) + "%";
-			String resultado = (String)getEm().createQuery("SELECT p.id FROM Producto p WHERE p.id like (:tiposubtipo) ORDER BY p.id DESC").setMaxResults(1).setParameter("tiposubtipo", parametro).getSingleResult();
+			
+			List query = getEm().createQuery("SELECT p.id FROM Producto p WHERE p.id like (:tiposubtipo) ORDER BY p.id DESC").setMaxResults(1).setParameter("tiposubtipo", parametro).getResultList();
+			
+			String resultado = null;
+			if(!query.isEmpty())
+				resultado = (String)query.get(0);
+
 			return resultado;
 		}
 		finally
