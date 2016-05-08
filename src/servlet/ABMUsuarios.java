@@ -7,17 +7,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import entidades.Cliente;
 import excepciones.RespuestaServidor;
 import negocio.ControladorABM;
 import util.JsonResponses;
 
-@WebServlet("/ABMClientes")
-public class ABMClientes extends HttpServlet 
+@WebServlet("/ABMUsuarios")
+public class ABMUsuarios extends HttpServlet 
 {
 	private static final long serialVersionUID = 1L;
 
-    public ABMClientes() 
+    public ABMUsuarios() 
     {
         super();
     }
@@ -30,24 +29,29 @@ public class ABMClientes extends HttpServlet
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		String action = request.getParameter("action");
-		if (action.equals("agregarCliente"))
+		if (action.equals("guardarUsuario"))
 		{
 			int id;
 
-			String idString = request.getParameter("id");
-			if(idString == null || idString.isEmpty())  
-				id=0; 
-			else
-				id = Integer.parseInt(idString);
-			
+			String usuario = request.getParameter("usuario");			
 			String nombreApellido = request.getParameter("nombreApellido");
-			String direccion = request.getParameter("direccion");
-			String telefono = request.getParameter("telefono");
+			String email = request.getParameter("email");
+			String tipoUsuariostr = request.getParameter("tipoUsuario");
+			
+			int tipoUsuario;
+			try
+			{
+				tipoUsuario = Integer.parseInt(tipoUsuariostr);
+			}
+			catch(NumberFormatException e)
+			{
+				tipoUsuario = -1;
+			}
 			
 			RespuestaServidor sr = new RespuestaServidor();
 			try
 			{
-				ControladorABM.guardarCliente(id, nombreApellido, direccion, telefono);
+				ControladorABM.guardarUsuario(usuario, nombreApellido, email, tipoUsuario);
 			}
 			catch(RespuestaServidor res)
 			{
@@ -62,9 +66,8 @@ public class ABMClientes extends HttpServlet
 		{
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
-		    response.getWriter().write(JsonResponses.arrayTodosClientes(ControladorABM.buscarTodosClientes()));
+		    response.getWriter().write(JsonResponses.arrayTodosUsuarios(ControladorABM.buscarTodosUsuarios()));
 		}
 	}
 
 }
-

@@ -65,5 +65,10 @@ public class Usuario
 		this.tipoUsuario = tipoUsuario;
 	}
 	
-	
+	public static enum tipoUsuario
+	{
+		SUPERUSER,
+		ADMIN,
+		MANAGER
+	}
 }

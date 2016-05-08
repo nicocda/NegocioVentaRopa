@@ -81,7 +81,7 @@
 	<%}
 	else
 	{%>
-		<script>window.location.href='/NegocioRopa/Index?link=ABMCliente';</script>
+		<script>window.location.href='/NegocioRopa/Index?link=ABMClientes';</script>
 	<%}%>
 	</body>
 </html>

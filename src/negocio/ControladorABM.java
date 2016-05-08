@@ -83,22 +83,32 @@ public class ControladorABM
 		return null;
 	}
 	
+	public static ArrayList<Usuario> buscarTodosUsuarios()
+	{
+		return CatalogoUsuarios.buscarTodosUsuarios();
+	}
+	
 	//si no existe me da el primero para ese tipo y para ese subtipo.
-		public static String obtenerIdCompleto(char tipo, char subTipo) 
+	public static String obtenerIdCompleto(char tipo, char subTipo) 
+	{
+		final int cantidadDigitos = 7;
+		String id = CatalogoProductos.buscarUltimoIdProducto(tipo, subTipo);
+		String idNuevo;
+		if(id != null)
+			idNuevo = Integer.toString(Integer.parseInt(id.substring(2, cantidadDigitos))+1);
+		else
+			idNuevo = "1";
+		int a = cantidadDigitos-2-idNuevo.length(); //-2 porque le saco los 2 primeros digitos que son letras
+		for(int i = 1; i<=a; i++)
 		{
-			final int cantidadDigitos = 7;
-			String id = CatalogoProductos.buscarUltimoIdProducto(tipo, subTipo);
-			String idNuevo;
-			if(id != null)
-				idNuevo = Integer.toString(Integer.parseInt(id.substring(2, cantidadDigitos))+1);
-			else
-				idNuevo = "1";
-			int a = cantidadDigitos-2-idNuevo.length(); //-2 porque le saco los 2 primeros digitos que son letras
-			for(int i = 1; i<=a; i++)
-			{
-				idNuevo = "0"+idNuevo;
-			}
-				
-			return Character.toString(tipo).concat(Character.toString(subTipo)).concat(idNuevo);
+			idNuevo = "0"+idNuevo;
 		}
+			
+		return Character.toString(tipo).concat(Character.toString(subTipo)).concat(idNuevo);
+	}
+
+	public static void guardarUsuario(String usuario, String nombreApellido, String email, int tipoUsuario) throws RespuestaServidor
+	{
+		
+	}
 }

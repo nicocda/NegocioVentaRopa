@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import entidades.Cliente;
 import entidades.Producto;
+import entidades.Usuario;
 import entidades.Venta;
 import excepciones.RespuestaServidor;
 
@@ -73,5 +74,10 @@ public class JsonResponses
 		}
 		else 
 			return "{\"ventas\": []}";
+	}
+
+	public static String arrayTodosUsuarios(ArrayList<Usuario> buscarTodosUsuarios) 
+	{
+		return null;
 	}
 }

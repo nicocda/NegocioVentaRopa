@@ -1,18 +1,22 @@
 $(document).ready(function()
 {	
+	eventosRelacionados()
+});
+
+function eventosRelacionados()
+{
 	$("#btnAceptar").click(function()
-	{
-		$.postData('/NegocioRopa/ABMClientes', { "id": $("#txtID").val(), "nombreApellido": $("#txtNombreYApellido").val(), 
-			"direccion": $("#txtDireccion").val(), "telefono": $("#txtTelefono").val(), "action": "agregarCliente" });
-		sleep(400);
-		recargarTabla();
-		$("#accordion #mostrar").click();
-		limpiarCampos();
-		$("#nuevoEditar").empty();
-		$("#nuevoEditar").append("Nuevo Cliente:");
-		$("#txtID").css("display", "none");
-	});
-	
+			{
+				$.postData('/NegocioRopa/ABMClientes', { "id": $("#txtID").val(), "nombreApellido": $("#txtNombreYApellido").val(), 
+					"direccion": $("#txtDireccion").val(), "telefono": $("#txtTelefono").val(), "action": "agregarCliente" }, function(){recargarTabla()});
+				
+				$("#accordion #mostrar").click();
+				limpiarCampos();
+				$("#nuevoEditar").empty();
+				$("#nuevoEditar").append("Nuevo Cliente:");
+				$("#txtID").css("display", "none");
+			});
+			
 	$(document).on('click', "#btnCerrarMensaje", function()
 	{
 		$("#mensaje").hide("slow");
@@ -36,10 +40,10 @@ $(document).ready(function()
 		$("#nuevoEditar").append("Nuevo Cliente:");
 		$("#txtID").css("display", "none");
 	});
-});
+}
 
 function recargarTabla()
-{
+{	
 	$.post('/NegocioRopa/ABMClientes', { "action": "recargarTabla" }, function(resultado){
 		$("#tablaClientes tr").remove();
 		agregarEncabezado();
@@ -87,4 +91,31 @@ function limpiarCampos()
 	$("#txtNombreYApellido").val("");
 	$("#txtDireccion").val("");
 	$("#txtTelefono").val("");
+}
+
+function correrPost(url, data, funcion)
+{
+	$.post(url, data, funcion);
+}
+
+function exitoAjax(result)
+{
+	if(result.tipoMensaje == "error")
+	{
+		$("#divError").load("./jspCompartido/MensajeError.jsp", function(){
+			$("#mensaje ul").empty();
+			jQuery.each(result.mensajes, function()
+			{
+				$("#mensaje ul").append("<li>" + this.mensaje + "</li>");
+				$("#mensaje").show("slow");
+			});
+		});					
+	}
+	else
+	{
+		$("#divError").load("./jspCompartido/MensajeExito.jsp", function(){
+		$("#mensaje strong").append(result.tipoMensaje);
+		$("#mensaje").show("slow");
+		});
+	}
 }

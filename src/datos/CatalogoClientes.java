@@ -32,15 +32,14 @@ public class CatalogoClientes extends CatalogoBase
 		RespuestaServidor rs = validarCliente(cliente);
 		if (!rs.getStatus())
 		throw rs;
+		
 		abrirEntityManager();
 		try
 		{
 			getEm().getTransaction().begin();
 			
 			if(cliente.getId() == 0)
-			{
 				getEm().persist(cliente);
-			}
 			else
 			{
 				Cliente dbCliente = getEm().find(Cliente.class, cliente.getId());

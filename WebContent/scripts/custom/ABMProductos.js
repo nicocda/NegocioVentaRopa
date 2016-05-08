@@ -1,8 +1,6 @@
 $(document).ready(function()
 {	
 	eventosRelacionados();
-	
-	
 });
 
 function eventosRelacionados()
@@ -12,8 +10,7 @@ function eventosRelacionados()
 	{
 		$.postData('/NegocioRopa/ABMProductos', { "id": $("#txtID").val(), "descripcion": $("#txtDescripcion").val(), 
 			"precio": $("#txtPrecio").val(), "action": "alta" , "tipo": $("#cbTipo").val(), 
-			"subTipo": $("#cbSubTipo").val()});
-		buscarId();
+			"subTipo": $("#cbSubTipo").val()}, function(){ buscarId(); });
 		$("#txtDescripcion").val("");
 		$("#txtPrecio").val("");
 	});

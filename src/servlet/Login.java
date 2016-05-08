@@ -12,7 +12,6 @@ import javax.servlet.http.HttpSession;
 import entidades.Usuario;
 import entidades.Venta;
 import negocio.ControladorABM;
-import negocio.ControladorTransaccion;
 
 @WebServlet("/Login")
 public class Login extends HttpServlet 

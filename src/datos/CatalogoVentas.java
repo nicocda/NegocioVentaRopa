@@ -26,10 +26,8 @@ public class CatalogoVentas  extends CatalogoBase
 		{
 			cerrarEntityManager();
 		}
-		
-
-		
 	}
+	
 	@SuppressWarnings("unchecked")
 	public static ArrayList<Venta> buscarVentasPorDia(Date fechaMin,
 			Date fechaMax, int idCliente, int formaPago) 
@@ -46,7 +44,6 @@ public class CatalogoVentas  extends CatalogoBase
 		{
 			cerrarEntityManager();
 		}
-		
 	}
 	
 	public static Venta buscarVenta(int idVenta)
@@ -81,6 +78,4 @@ public class CatalogoVentas  extends CatalogoBase
 		}
 		return sr;
 	}
-
-	
 }

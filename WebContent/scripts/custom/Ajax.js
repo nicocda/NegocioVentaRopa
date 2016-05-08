@@ -1,4 +1,4 @@
-$.postData = function(url, data)
+$.postData = function(url, data, complete)
 {
 	$.ajax(
 	{
@@ -29,7 +29,11 @@ $.postData = function(url, data)
 		},
 		error:function()
 		{
-			alert("JSON INCORRECTO");
+			alert("error");
+		},
+		complete:function()
+		{
+			complete();
 		}
 	});
 }
