@@ -52,7 +52,7 @@ public class JsonResponses
 
 	public static String arrayTodosProductosVenta(Venta venta)
 	{
-		ArrayList<Producto> productos = (ArrayList<Producto>)venta.getProductos();
+		ArrayList<Producto> productos = venta.getProductosArrayList();
 		String rsp = "{\"importe\": \" "+ venta.getImporte() +" \", \"productos\": [";
 	    for(int i=0;i<productos.size()-1;i++)
 	    {
@@ -80,9 +80,9 @@ public class JsonResponses
 			String rsp = "{\"ventas\": [";
 		    for(int i=0;i<ventas.size()-1;i++)
 		    {
-		    	rsp= rsp + "{\"nombreApellido\": \"" + ventas.get(i).getCliente().getNombreApellido()+"\", \"fecha\": \"" + ventas.get(i).getFechaVenta().toString() +"\"},";
+		    	rsp= rsp + "{\"nombreApellido\": \"" + ventas.get(i).getCliente().getNombreApellido()+"\", \"fecha\": \"" + ventas.get(i).getFechaVenta().toString() +"\", \"idVenta\": \""+ ventas.get(i).getId()+"\"},";
 		    }
-		    rsp= rsp + "{\"nombreApellido\": \"" + ventas.get(ventas.size()-1).getCliente().getNombreApellido()+"\", \"fecha\": \"" +  ventas.get(ventas.size()-1).getFechaVenta().toString() +"\"}]}";
+		    rsp= rsp + "{\"nombreApellido\": \"" + ventas.get(ventas.size()-1).getCliente().getNombreApellido()+"\", \"fecha\": \"" +  ventas.get(ventas.size()-1).getFechaVenta().toString()+"\", \"idVenta\": \""+ ventas.get(ventas.size()-1).getId()+"\"}]}";
 		    return rsp;
 		}
 		else 

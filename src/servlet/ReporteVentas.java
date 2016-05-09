@@ -108,6 +108,12 @@ public class ReporteVentas extends HttpServlet
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(jsonVentas);
 		}
+		else if (action.equals("detalleVenta"))
+		{
+			System.out.println("puto");
+			request.setAttribute("idVenta", request.getParameter("idVenta"));
+			request.getRequestDispatcher("jspPrincipales/DetalleVenta.jsp").forward(request, response);
+		}
 	}
 
 }
