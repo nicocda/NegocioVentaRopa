@@ -1,6 +1,6 @@
 <%@page import="entidades.Usuario"
 		import="entidades.Producto"
-		import="java.util.ArrayList"
+		import="java.util.List"
 		import="entidades.Venta"%>
 <%
 if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttribute("usuario")).getTipoUsuario() == 1) 
@@ -15,7 +15,6 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 	<select id="comboClientes" style="width: 100%" class="js-example-basic-single">
 	    <option value="" disabled selected>Seleccione un cliente</option>
 	</select>
-
 	<table class="CSSTableGenerator" id="tablaProductos">
 		<tr>
 			<td width="10%">Código</td>
@@ -25,14 +24,16 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 			<%Venta venta = (Venta) session.getAttribute("venta");
 				if(venta != null)
 				{
-					for(Producto p: venta.getProductos())
-							{ %>
-								<tr id="trTablaProducto">
-								<td><%= p.getId() %></td>
-								<td><%= p.getDescripcion()%></td>
-								<td><%= p.getPrecio().getPrecio()%></td>
-								</tr>
-							<% }
+					
+						for(Producto p: venta.getProductosArrayList())
+								{ %>
+									<tr id="trTablaProducto">
+									<td><%= p.getId() %></td>
+									<td><%= p.getDescripcion()%></td>
+									<td><%= p.getPrecio().getPrecio()%></td>
+									</tr>
+								<% }
+					
 				}
 				%>
 		<tr>

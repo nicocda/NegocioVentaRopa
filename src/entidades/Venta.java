@@ -37,7 +37,7 @@ public class Venta
 	private List<Devolucion> devoluciones;
 	
 	@OneToMany(mappedBy="venta")
-	private List<Producto> productos;
+	private List<Producto> productos = new ArrayList<Producto>();
 	
 	public List<Producto> getProductos() 
 	{
