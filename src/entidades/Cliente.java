@@ -20,8 +20,11 @@ public class Cliente
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
-	@Column(name = "nombreApellido")
-	private String nombreApellido;
+	@Column(name = "nombre")
+	private String nombre;
+	
+	@Column(name = "apellido")
+	private String apellido;
 	
 	@Column(name = "direccion")
 	private String direccion;
@@ -40,14 +43,20 @@ public class Cliente
 	{
 		this.id = id;
 	}
-	public String getNombreApellido() 
-	{
-		return nombreApellido;
+	
+	public String getNombre() {
+		return nombre;
 	}
-	public void setNombreApellido(String nombreApellido) 
-	{
-		this.nombreApellido = nombreApellido;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
+	public String getApellido() {
+		return apellido;
+	}
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+	
 	public String getDireccion() 
 	{
 		return direccion;

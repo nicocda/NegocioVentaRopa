@@ -3,6 +3,8 @@ package datos;
 import java.util.ArrayList;
 import java.util.Date;
 
+import entidades.Producto;
+import entidades.Producto.estado;
 import entidades.Venta;
 import excepciones.RespuestaServidor;
 
@@ -20,6 +22,12 @@ public class CatalogoVentas  extends CatalogoBase
 		{
 			getEm().getTransaction().begin();
 			getEm().persist(vta);
+			
+			for(Producto p : vta.getProductosArrayList())
+			{
+				p.setEstado(estado.VENDIDO.ordinal());
+			}
+			
 			getEm().getTransaction().commit();	
 		}
 		finally

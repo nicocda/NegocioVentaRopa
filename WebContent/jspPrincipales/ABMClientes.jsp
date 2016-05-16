@@ -29,7 +29,7 @@ import="negocio.ControladorABM" %>
 			{%>
 			<tr>
 				<td align="center" class="idTabla"><%=cl.getId() %></td>
-				<td class="nyaTabla"><%=cl.getNombreApellido() %></td>
+				<td class="nyaTabla"><%=cl.getNombre() %></td>
 				<td class="direTabla"><%=cl.getDireccion() %></td>
 				<td class="telTabla"><%=cl.getTelefono() %></td>
 				<td align="center"><input type="button" class="botones btnEditar" value="Editar"></td>

@@ -33,9 +33,9 @@ public class JsonResponses
 		String rsp = "{\"array\": [\"";
 	    for(int i=0;i<clientes.size()-1;i++)
 	    {
-	    	rsp=rsp.concat(clientes.get(i).getNombreApellido()+"\", \"");
+	    	rsp=rsp.concat(clientes.get(i).getNombre()+"\", \"");
 	    }
-	    rsp=rsp.concat(clientes.get(clientes.size()-1).getNombreApellido()+"\"]}");
+	    rsp=rsp.concat(clientes.get(clientes.size()-1).getNombre()+"\"]}");
 	    return rsp;
 	}
 	
@@ -44,9 +44,9 @@ public class JsonResponses
 		String rsp = "{\"clientes\": [";
 	    for(int i=0;i<clientes.size()-1;i++)
 	    {
-	    	rsp= rsp + "{\"nombreApellido\": \"" + clientes.get(i).getNombreApellido()+"\", \"direccion\": \"" + clientes.get(i).getDireccion() + "\", \"id\": \"" + clientes.get(i).getId() + "\", \"telefono\": \"" + clientes.get(i).getTelefono() + "\"},";
+	    	rsp= rsp + "{\"nombreApellido\": \"" + clientes.get(i).getNombre()+"\", \"direccion\": \"" + clientes.get(i).getDireccion() + "\", \"id\": \"" + clientes.get(i).getId() + "\", \"telefono\": \"" + clientes.get(i).getTelefono() + "\"},";
 	    }
-	    rsp= rsp + "{\"nombreApellido\": \"" + clientes.get(clientes.size()-1).getNombreApellido()+"\", \"direccion\": \"" + clientes.get(clientes.size()-1).getDireccion() + "\", \"id\": \"" + clientes.get(clientes.size()-1).getId() + "\", \"telefono\": \"" + clientes.get(clientes.size()-1).getTelefono() +"\"}]}";
+	    rsp= rsp + "{\"nombreApellido\": \"" + clientes.get(clientes.size()-1).getNombre()+"\", \"direccion\": \"" + clientes.get(clientes.size()-1).getDireccion() + "\", \"id\": \"" + clientes.get(clientes.size()-1).getId() + "\", \"telefono\": \"" + clientes.get(clientes.size()-1).getTelefono() +"\"}]}";
 	    return rsp;
 	}
 
@@ -80,9 +80,9 @@ public class JsonResponses
 			String rsp = "{\"ventas\": [";
 		    for(int i=0;i<ventas.size()-1;i++)
 		    {
-		    	rsp= rsp + "{\"nombreApellido\": \"" + ventas.get(i).getCliente().getNombreApellido()+"\", \"fecha\": \"" + ventas.get(i).getFechaVenta().toString() +"\"},";
+		    	rsp= rsp + "{\"nombreApellido\": \"" + ventas.get(i).getCliente().getNombre()+"\", \"fecha\": \"" + ventas.get(i).getFechaVenta().toString() +"\"},";
 		    }
-		    rsp= rsp + "{\"nombreApellido\": \"" + ventas.get(ventas.size()-1).getCliente().getNombreApellido()+"\", \"fecha\": \"" +  ventas.get(ventas.size()-1).getFechaVenta().toString() +"\"}]}";
+		    rsp= rsp + "{\"nombreApellido\": \"" + ventas.get(ventas.size()-1).getCliente().getNombre()+"\", \"fecha\": \"" +  ventas.get(ventas.size()-1).getFechaVenta().toString() +"\"}]}";
 		    return rsp;
 		}
 		else 

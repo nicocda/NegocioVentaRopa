@@ -47,7 +47,7 @@ public class CatalogoClientes extends CatalogoBase
 				if (dbCliente != null)
 				{
 					dbCliente.setDireccion(cliente.getDireccion());
-					dbCliente.setNombreApellido(cliente.getNombreApellido());
+					dbCliente.setNombre(cliente.getNombre());
 					dbCliente.setTelefono(cliente.getTelefono());		
 				}
 			}
@@ -81,7 +81,7 @@ public class CatalogoClientes extends CatalogoBase
 		if((cl.getId() < 0))
 			sr.addError("Ocurrió un error interno. El id es obligatorio.");
 		
-		if(!(cl.getNombreApellido() != null && !cl.getNombreApellido().isEmpty()))
+		if(!(cl.getNombre() != null && !cl.getNombre().isEmpty()))
 			sr.addError("El producto debe tener una descripción.");
 		
 		return sr;

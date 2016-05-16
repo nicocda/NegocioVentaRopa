@@ -5,9 +5,13 @@ import java.util.Calendar;
 import java.util.List;
 
 import datos.CatalogoClientes;
+import datos.CatalogoConfiguracion;
+import datos.CatalogoEventLog;
 import datos.CatalogoProductos;
 import datos.CatalogoUsuarios;
 import entidades.Cliente;
+import entidades.Configuracion;
+import entidades.EventLog;
 import entidades.Precio;
 import entidades.Producto;
 import entidades.Usuario;
@@ -51,7 +55,7 @@ public class ControladorABM
 	{
 		Cliente cliente = new Cliente();
 		cliente.setId(id);
-		cliente.setNombreApellido(nombreApellido);
+		cliente.setNombre(nombreApellido);
 		cliente.setTelefono(telefono);
 		cliente.setDireccion(direccion);
 		CatalogoClientes.guardarCliente(cliente);
@@ -86,6 +90,16 @@ public class ControladorABM
 	public static ArrayList<Usuario> buscarTodosUsuarios()
 	{
 		return CatalogoUsuarios.buscarTodosUsuarios();
+	}
+	
+	public static ArrayList<EventLog> buscarTodosEventLog()
+	{
+		return CatalogoEventLog.buscarTodosEventLog();
+	}
+	
+	public static Configuracion buscarConfiguracion()
+	{
+		return CatalogoConfiguracion.buscarConfiguracion();
 	}
 	
 	//si no existe me da el primero para ese tipo y para ese subtipo.
