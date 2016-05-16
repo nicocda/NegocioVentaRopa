@@ -19,6 +19,12 @@ function agregarEventos()
 		});
 	});	
 	
+	$(document).on("click", "#detalleVenta", function()
+			{
+		$.post('/NegocioRopa/ReporteVentas', {"action": "detalleVenta", "idVenta": $("idVenta").val()})
+	});
+	
+	
 	$("#cbFecha").change(function()
 	{
 		var date = new Date();
@@ -112,8 +118,9 @@ function agregarEncabezado()
 {
 	var trEncabezado = $("<tr />");
 	$("#tablaTransacciones").append(trEncabezado);
-	trEncabezado.append($('<td width="45%">Nombre y Apellido</td>'));
-	trEncabezado.append($('<td width="45%">Fecha de Transacci&oacute;n</td>'));
+	trEncabezado.append($('<td width="10%">ID</td>'));
+	trEncabezado.append($('<td width="45%">Cliente</td>'));
+	trEncabezado.append($('<td width="35%">Fecha de Transacci&oacute;n</td>'));
 	trEncabezado.append($('<td width="10%"></td>'));
 }
 
@@ -132,9 +139,10 @@ function agregarFilas(resultado)
 		{
 			var trFilas = $("<tr />");
 			$("#tablaTransacciones").append(trFilas);
+			trFilas.append($('<td id="idVenta">'+ resultado.ventas[i].idVenta +'</td>'));
 			trFilas.append($('<td>'+ resultado.ventas[i].nombreApellido +'</td>'));
 			trFilas.append($('<td>'+ resultado.ventas[i].fecha +'</td>'));
-			trFilas.append($('<td align="center"><input type="button" class="botones" value="Ver"></td>'));
+			trFilas.append($('<td align="center"><input id="detalleVenta" type="button" class="botones" value="Ver"></td>'));
 		}
 	}
 }

@@ -44,7 +44,7 @@ public class CatalogoVentas  extends CatalogoBase
 		try
 		{
 			ArrayList<Venta> ventas = new ArrayList<Venta>();
-			 ventas = (ArrayList<Venta>) getEm().createQuery("FROM v Ventas v where fechaVenta >= :fmin and fechaVenta <= :fmax")
+			 ventas = (ArrayList<Venta>) getEm().createQuery("FROM Venta v where fechaVenta >= :fmin and fechaVenta <= :fmax")
 			.setParameter("fmin", fechaMin).setParameter("fmax", fechaMax).getResultList();
 			return ventas;	
 		}
@@ -60,7 +60,7 @@ public class CatalogoVentas  extends CatalogoBase
 		Venta vta = null;
 		try
 		{
-			vta = (Venta)getEm().createQuery("FROM v Venta v where id = :id").setParameter("id", idVenta).getSingleResult();
+			vta = (Venta)getEm().createQuery("FROM Venta v where id = :id").setParameter("id", idVenta).getSingleResult();
 		}
 		finally
 		{
