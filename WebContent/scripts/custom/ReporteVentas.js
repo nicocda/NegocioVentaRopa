@@ -21,7 +21,7 @@ function agregarEventos()
 	
 	$(document).on("click", "#detalleVenta", function()
 			{
-		$.post('/NegocioRopa/ReporteVentas', {"action": "detalleVenta", "idVenta": $("idVenta").val()})
+		$.post('/NegocioRopa/ReporteVentas', {"action": "detalleVenta", "idVenta": $("#idVenta").val()})
 	});
 	
 	

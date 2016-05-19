@@ -52,9 +52,9 @@
 			</div>
 			<form action="Login" method="POST">
 			<label for="userId">Usuario:</label>
-			<input type="text" autofocus="autofocus" id="txtLogin"/>
+			<input type="text" class="textInputs" autofocus="autofocus" id="txtLogin"/>
 			<label for="userPassword">Contraseña:</label>
-			<input type="password" id="txtPass"/><br>
+			<input type="password" class="textInputs" id="txtPass"/><br>
 			<div style="text-align:center;">
 				<input class="botones" id="btnIngresar" type="button" value="Ingresar"/><br>
 				<a href=#>No puedo ingresar</a>

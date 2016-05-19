@@ -16,11 +16,11 @@ function agregarEventos()
 	
 	$("#realizarVenta").click(function()
 	{
-		if($("#radio1").prop("checked"))
+		if($("#radioEfectivo").prop("checked"))
 			var formaPago = 1;
-		else if($("#radio2").prop("checked"))
+		else if($("#radioCtaCte").prop("checked"))
 			var formaPago = 2;
-		else if($("#radio3").prop("checked"))
+		else if($("#radioTarjeta").prop("checked"))
 			var formaPago = 3;
 		else 
 			var formaPago = 0;
@@ -37,6 +37,24 @@ function agregarEventos()
 		$("#mensaje").hide("slow");
 	});
 	
+	$("#radioEfectivo").click(function()
+	{
+		$("#divPaga").show();
+		$('#lblVueltoDebe').empty();
+		$('#lblVueltoDebe').append('Vuelto: ')
+	});
+	
+	$("#radioCtaCte").click(function()
+	{
+		$("#divPaga").show();
+		$('#lblVueltoDebe').empty();
+		$('#lblVueltoDebe').append('Debe: ')
+	});
+	
+	$("#radioTarjeta").click(function()
+	{
+		$("#divPaga").hide();
+	});
 }
 
 function recargarTabla()

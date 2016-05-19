@@ -54,7 +54,7 @@ h4
 }
 
 /*Mi textbox*/
-input[type="text"], input[type="password"] 
+.textInputs
 {
   display: block;
   margin: 0;
@@ -68,8 +68,8 @@ input[type="text"], input[type="password"]
   border: solid 5px #c9c9c9;
   transition: border 0.3s;
 }
-input[type="text"]:focus, 
-input[type="text"].focus 
+.textInputs:focus, 
+.textInputs.focus 
 {
   outline: none;
   border: solid 5px #969696;

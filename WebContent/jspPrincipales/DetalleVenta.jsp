@@ -9,7 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="themes/componentes.css">
 	<link rel="stylesheet" type="text/css" href="themes/select2.css">
 	
-	<%Venta vta = CatalogoVentas.buscarVenta(10);
+	<%Venta vta = CatalogoVentas.buscarVenta(1);
 	if(vta != null)
 	{
 	%>
@@ -24,7 +24,7 @@
 			<tr>
 				<td><%=vta.getId() %></td>
 				<td><%=vta.getFechaVenta() %></td>
-				<td><%=vta.getCliente().getNombreApellido() %></td>
+				<td><%=vta.getCliente().getNombre() %></td>
 				<td><%=vta.getImporte() %></td>
 				<td><%=vta.getFormaPago() %></td>
 			</tr>

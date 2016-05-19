@@ -99,4 +99,19 @@ public class JsonResponses
 	    rsp= rsp + "{\"usuario\": \"" + usuarios.get(usuarios.size()-1).getUsuario()+"\", \"nombreApellido\": \"" + usuarios.get(usuarios.size()-1).getNombreYApellido() + "\", \"email\": \"" + usuarios.get(usuarios.size()-1).getEmail() +"\", \"tipo\": \"" + tipoUsuario.values()[usuarios.get(usuarios.size()-1).getTipoUsuario()].name() + "\"}]}";
 	    return rsp;
 	}
+
+	public static String arrayVentasMorosas(ArrayList<Venta> ventasMorosas) {
+		if(ventasMorosas.isEmpty())
+			return "{ }";		
+		else
+		{
+			String rsp = "{\"cliente\": \""+ventasMorosas.get(0).getCliente().getNombre()+" "+ventasMorosas.get(0).getCliente().getApellido()+"\", \"ventas\": [";
+		    for(int i=0;i<ventasMorosas.size()-1;i++)
+		    {
+		    	rsp= rsp + "{\"Id\": \"" + ventasMorosas.get(i).getId()+"\", \"fechaVenta\": \"" + ventasMorosas.get(i).getFechaVenta() + "\", \"importeTotal\": \"" + ventasMorosas.get(i).getImporte() +"\", \"deuda\": \"" + ventasMorosas.get(i).getDeudaPendiente() + "\"},";
+		    }
+		    rsp= rsp + "{\"Id\": \"" + ventasMorosas.get(ventasMorosas.size()-1).getId()+"\", \"fechaVenta\": \"" + ventasMorosas.get(ventasMorosas.size()-1).getFechaVenta() + "\", \"importeTotal\": \"" + ventasMorosas.get(ventasMorosas.size()-1).getImporte() +"\", \"deuda\": \"" + ventasMorosas.get(ventasMorosas.size()-1).getDeudaPendiente() + "\"}]}";
+			return rsp;
+		}
+	}
 }

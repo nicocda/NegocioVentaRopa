@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="venta")
@@ -28,6 +29,12 @@ public class Venta
 	private boolean isPrestamo;
 	private float seña;
 	private Date fechaCaducidad;
+	private int formaPago;
+	private float importe;
+	
+	@Transient
+	private float deudaPendiente;
+	
 	
 	@ManyToOne(optional=true)
 	@JoinColumn(name="idCliente")
@@ -35,6 +42,9 @@ public class Venta
 	
 	@OneToMany(mappedBy="venta")
 	private List<Devolucion> devoluciones;
+	
+	@OneToMany(mappedBy="venta_cuota")
+	private List<Cuota> cuotas = new ArrayList<Cuota>();
 	
 	@OneToMany(mappedBy="venta")
 	private List<Producto> productos = new ArrayList<Producto>();
@@ -140,9 +150,21 @@ public class Venta
 	{
 		this.importe = importe;
 	}
-	int formaPago;
-	float importe;
-	
+	public List<Cuota> getCuotas() {
+		return cuotas;
+	}
+	public void setCuotas(List<Cuota> cuotas) {
+		this.cuotas = cuotas;
+	}
+	public float getDeudaPendiente() {
+		return deudaPendiente;
+	}
+	public void setDeudaPendiente(float deudaPendiente) {
+		this.deudaPendiente = deudaPendiente;
+	}
+
+
+
 	//Enum
 	public static enum formaPago
 	{

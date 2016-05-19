@@ -39,7 +39,7 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 				<td class="descripcionTabla"><%=p.getDescripcion() %></td>
 				<td class="estadoTabla"><%=estado.values()[p.getEstado()].toString() %></td>
 				<td class="precioTabla"><%=p.getPrecio().getPrecio() %></td>
-				<td><input type="button" class="botones btnEditar" value="Editar"> <input type="button" id="agregar" class="botones barcode" value="Código"></td>
+				<td><input type="button" class="botones btnEditar" value="Editar"></td>
 			</tr>
 			<%} %>
 		</table>
@@ -62,9 +62,9 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 			</optgroup>
 		</select>
 		<button id="btnRestaurar">x</button>
-		<input type="text" id="txtID" placeholder="ID" disabled="disabled" value = <%=ControladorABM.obtenerIdCompleto('R', 'H')%>>
-		<input type="text" id="txtDescripcion" placeholder="Descripción">
-		<input type="text" id="txtPrecio" placeholder="Precio">
+		<input type="text" id="txtID" placeholder="ID" class="textInputs" disabled="disabled" value = <%=ControladorABM.obtenerIdCompleto('R', 'H')%>>
+		<input type="text" id="txtDescripcion" class="textInputs" placeholder="Descripción">
+		<input type="text" id="txtPrecio" class="textInputs" placeholder="Precio">
 		<input type="submit" id="btnAceptar" class="botones" value="Guardar Producto">
 	</div>
 </div>

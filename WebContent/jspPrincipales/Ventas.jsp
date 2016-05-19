@@ -38,19 +38,28 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 				%>
 		<tr>
 			<td style="background-color: #C0C0C0;"><input id="agregar" class="botones" type="button" value="Agregar +"></td>
-			<td style="background-color: #C0C0C0;"><input id="txtID" type="text" placeholder="Codigo Producto"></td>
-			<td align="right" style="background-color: #C0C0C0;"><b id="total">Total: <%if(venta != null){%><%=venta.getImporte() %><%} else { %><label>0</label><%} %></b></td>
+			<td style="background-color: #C0C0C0;"><input id="txtID" class="textInputs" type="text" placeholder="Codigo Producto"></td>
+			<td align="right" style="background-color: #C0C0C0;"><b id="total">Total: <%if(venta != null){%><%=venta.getImporte() %><%} else { %><label>0</label><%} %></b>
+				<br>
+				<div id="divPaga" style="text-align: right" hidden = "hidden">
+					<label>Paga: </label>
+					<input type="text" id="txtPago"/>
+					<br>
+					<label id="lblVueltoDebe"></label>
+					<input type="text" id="txtVuelto"/>
+				</div>
+			</td>
 		<tr>
 	</table>
 
 	<div style="text-align: center">
 		<br><br>
-		<input type="radio" name="radio" id="radio1" class="css-checkbox"/>
-		<label class="css-label radGroup1" for="radio1">Efectivo</label>
-		<input type="radio" name="radio" id="radio2" class="css-checkbox"/>
-		<label class="css-label radGroup1" for="radio2">Cuenta Corriente</label>
-		<input type="radio" name="radio" id="radio3" class="css-checkbox"/>
-		<label class="css-label radGroup1" for="radio3">Tarjeta</label>
+		<input type="radio" name="radio" id="radioEfectivo" class="css-checkbox"/>
+		<label class="css-label radGroup1" for="radioEfectivo">Efectivo</label>
+		<input type="radio" name="radio" id="radioCtaCte" class="css-checkbox"/>
+		<label class="css-label radGroup1" for="radioCtaCte">Cuenta Corriente</label>
+		<input type="radio" name="radio" id="radioTarjeta" class="css-checkbox"/>
+		<label class="css-label radGroup1" for="radioTarjeta">Tarjeta</label>
 		<br><br>
 		<input class="botones" type="button" id="realizarVenta" value="Realizar Venta">
 	</div>

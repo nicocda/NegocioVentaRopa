@@ -1,4 +1,6 @@
 <%@page import="entidades.Usuario"%>
+<%@page import="entidades.Venta"%>
+<%@page import="java.util.ArrayList"%>
 <%
 if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttribute("usuario")).getTipoUsuario() == 1) 
 {%>
@@ -10,7 +12,7 @@ import="negocio.ControladorABM" %>
 <script type="text/javascript" src="../scripts/custom/popup.js"></script>
 <script type="text/javascript" src="./scripts/custom/popup.js"></script>
 
-<H4>Clientes</H4>
+<H4 id="h4Cliente">Clientes</H4>
 <div id="divError"></div>
 <div id="accordion">
 	<h3 id="mostrar">Lista de Clientes</h3>
@@ -18,9 +20,10 @@ import="negocio.ControladorABM" %>
 		<table class="CSSTableGenerator" id="tablaClientes">
 			<tr>
 				<td width="10%">ID</td>
-				<td width="40%">Nombre y Apellido</td>
+				<td width="30%">Nombre y Apellido</td>
 				<td width="20%">Dirección</td>
 				<td width="20%">Teléfono</td>
+				<td width="10%">Deuda</td>
 				<td width="10%"></td>
 			</tr>
 			<%
@@ -28,10 +31,11 @@ import="negocio.ControladorABM" %>
 			for(Cliente cl : clientes)
 			{%>
 			<tr>
-				<td align="center" class="idTabla"><%=cl.getId() %></td>
+				<td id="idCliente" align="center" class="idTabla"><%=cl.getId() %></td>
 				<td class="nyaTabla"><%=cl.getNombre() %></td>
 				<td class="direTabla"><%=cl.getDireccion() %></td>
 				<td class="telTabla"><%=cl.getTelefono() %></td>
+				<td align="center"><input type="button" class="botones btnDeuda" value="Ver Deuda"></td>
 				<td align="center"><input type="button" class="botones btnEditar" value="Editar"></td>
 			</tr>
 			<%} %>
@@ -40,11 +44,20 @@ import="negocio.ControladorABM" %>
 	<h3 id="nuevoEditar">Nuevo Cliente:</h3>
 	<div>
 		<button id="btnRestaurar">x</button>
-		<input type="text" id="txtID" placeholder="ID" disabled="disabled" style="display: none">		
-		<input type="text" id="txtNombreYApellido" placeholder="Nombre y Apellido">
-		<input type="text" id="txtDireccion" placeholder="Dirección">
-		<input type="text" id="txtTelefono" placeholder="Teléfono">
+		<input type="text" class="textInputs" id="txtID" placeholder="ID" disabled="disabled" style="display: none">		
+		<input type="text" class="textInputs" id="txtNombreYApellido" placeholder="Nombre y Apellido">
+		<input type="text" class="textInputs" id="txtDireccion" placeholder="Dirección">
+		<input type="text" class="textInputs" id="txtTelefono" placeholder="Teléfono">
 		<input type="submit" id="btnAceptar" class="botones" value="Guardar Cliente">
+	</div>
+
+</div>
+
+<div id="divDeudas"  hidden="hidden">
+	<table id="tablaVentasMorosas" class="CSSTableGenerator"></table>
+	<div style="text-align: right">
+		<br>
+		<button class="botones" id="btnVolverDeDeudas">Volver</button>
 	</div>
 </div>
 <%}

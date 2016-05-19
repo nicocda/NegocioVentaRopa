@@ -43,7 +43,79 @@ function eventosRelacionados()
 		$("#nuevoEditar").append("Nuevo Cliente:");
 		$("#txtID").css("display", "none");
 	});
+	
+	$(document).on('click', ".btnDeuda", function()
+	{
+		var row = $(this).closest("tr");
+		var id= row.find(".idTabla").text();
+		$("#accordion").hide();
+		$("#divDeudas").show();
+		recargarTablaVenta(id);
+	
+	});
+	
+	$("#btnVolverDeDeudas").click(function()
+	{
+		$('#h4Cliente').empty();
+		$('#h4Cliente').append("Clientes");
+		$("#divDeudas").hide();
+		$("#accordion").show();
+	});
 }
+
+function recargarTablaVenta(id)
+{
+	$.post('/NegocioRopa/Deudas', {"action": "detalleDeuda", "idCliente": id},
+			function(result){
+		$('#h4Cliente').empty();
+		$('#h4Cliente').append("Clientes/Deudas de: " + result.cliente);
+		$("#tablaVentasMorosas tr").remove();
+		agregarEncabezadoVenta();
+		agregarFilasVenta(result);
+	});
+}
+
+function agregarEncabezadoVenta()
+{
+	var trEncabezado = $("<tr />");
+	$("#tablaVentasMorosas").append(trEncabezado);
+	trEncabezado.append($('<td width="20%">ID</td>'));
+	trEncabezado.append($('<td width="40%">Fecha de Venta</td>'));
+	trEncabezado.append($('<td width="20%">Importe de Venta</td>'));
+	trEncabezado.append($('<td width="10%">Deuda Pendiente</td>'));
+
+}
+
+function agregarFilasVenta(resultado)
+{
+	var total=0;
+	if(jQuery.isEmptyObject(resultado))
+	{
+		var trUsche = $("<tr />");
+		$("#tablaVentasMorosas").append(trUsche);
+		trUsche.append($('<td style="color: red;" colspan="4" align="center"> Este cliente no tiene deudas. </td>'));
+	}
+	else
+	{
+		for (var i = 0; i < resultado.ventas.length; i++)
+		{
+			total+=parseFloat(resultado.ventas[i].deuda);
+			var trFilas = $("<tr />");
+			$("#tablaVentasMorosas").append(trFilas);
+			trFilas.append($('<td class="idVenta">'+ resultado.ventas[i].Id +'</td>'));
+			trFilas.append($('<td class="fechaVenta">'+ resultado.ventas[i].fechaVenta +'</td>'));
+			trFilas.append($('<td class="importeVenta">'+ resultado.ventas[i].importeTotal +'</td>'));
+			trFilas.append($('<td class="deudaVenta">'+ resultado.ventas[i].deuda +'</td>'));
+		}
+		var trFooter = $("<tr />");
+		$("#tablaVentasMorosas").append(trFooter);
+		trFooter.append($('<td style="background-color: #252932; color: white;" colspan="4" align="right"> Deuda total: '+total.toFixed(1)+'</td>'));
+	}
+}
+
+
+
+
 
 function recargarTabla()
 {	
@@ -71,7 +143,7 @@ function agregarFilas(resultado)
 	{
 		var trFilas = $("<tr />");
 		$("#tablaClientes").append(trFilas);
-		trFilas.append($('<td align="center" class="idTabla">'+ resultado.clientes[i].id +'</td>'));
+		trFilas.append($('<td  id="idCliente" align="center" class="idTabla">'+ resultado.clientes[i].id +'</td>'));
 		trFilas.append($('<td class="nyaTabla">'+ resultado.clientes[i].nombreApellido +'</td>'));
 		trFilas.append($('<td class="direTabla">'+ resultado.clientes[i].direccion +'</td>'));
 		trFilas.append($('<td class="telTabla">'+ resultado.clientes[i].telefono +'</td>'));

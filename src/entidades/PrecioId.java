@@ -15,14 +15,21 @@ public class PrecioId implements Serializable
 		if (!(other instanceof PrecioId))
 			return false;
 		PrecioId castOther = (PrecioId) other;
-		return this.producto.getId().equals(castOther.getProducto().getId()) && fecha.equals(castOther.getFecha());
+		if(this.producto.equals(castOther.getProducto()) && fecha.equals(castOther.getFecha()))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	
 	public int hashCode()
 	{
 		final int prime = 31;
 	    int hash = 17;
-	    hash = hash * prime + this.producto.getId().hashCode();
+	    hash = hash * prime + ((this.producto == null) ? 0 : this.producto.hashCode());
 	    hash = hash * prime + this.fecha.hashCode();
 	    return hash;
 	}

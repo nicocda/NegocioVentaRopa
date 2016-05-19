@@ -41,10 +41,10 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 	<h3 id="nuevoEditar">Nuevo Usuario:</h3>
 	<div>
 		<button id="btnRestaurar">x</button>
-		<input type="text" id="txtUsuario" placeholder="Usuario">
-		<input type="password" id="txtPassword" placeholder="Contraseña">		
-		<input type="text" id="txtNombreYApellido" placeholder="Nombre y Apellido">
-		<input type="text" id="txtEmail" placeholder="Email">
+		<input type="text" id="txtUsuario" class="textInputs" placeholder="Usuario">
+		<input type="password" id="txtPassword" class="textInputs" placeholder="Contraseña">		
+		<input type="text" id="txtNombreYApellido" class="textInputs" placeholder="Nombre y Apellido">
+		<input type="text" id="txtEmail" class="textInputs" placeholder="Email">
 		<select id="cbTipo">
 			<%for(tipoUsuario tu: tipoUsuario.values()) 
 			{%>

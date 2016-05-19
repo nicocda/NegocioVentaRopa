@@ -25,7 +25,8 @@ public class CatalogoVentas  extends CatalogoBase
 			
 			for(Producto p : vta.getProductosArrayList())
 			{
-				p.setEstado(estado.VENDIDO.ordinal());
+				Producto dbProducto = getEm().find(Producto.class, p.getId());
+				dbProducto.setEstado(estado.VENDIDO.ordinal());
 			}
 			
 			getEm().getTransaction().commit();	
@@ -60,7 +61,7 @@ public class CatalogoVentas  extends CatalogoBase
 		Venta vta = null;
 		try
 		{
-			vta = (Venta)getEm().createQuery("FROM Venta v where id = :id").setParameter("id", idVenta).getSingleResult();
+			vta = getEm().find(Venta.class,idVenta);
 		}
 		finally
 		{
@@ -68,6 +69,24 @@ public class CatalogoVentas  extends CatalogoBase
 		}
 		return vta;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public static ArrayList<Venta> buscarVentasCliente(int idCliente) 
+	{
+		abrirEntityManager();
+		try
+		{
+			ArrayList<Venta> ventas = new ArrayList<Venta>();
+			 ventas = (ArrayList<Venta>) getEm().createQuery("FROM Venta v where idCliente = :idCli").setParameter("idCli", idCliente).getResultList();
+			return ventas;	
+		}
+		finally
+		{
+			cerrarEntityManager();
+		}
+	}
+	
+	
 	
 	private static RespuestaServidor validarVenta(Venta vta)
 	{
