@@ -64,6 +64,10 @@ public class JsonResponses
 	
 	public static String arrayTodosProductos(ArrayList<Producto> productos)
 	{
+		if(productos.isEmpty())
+			return "{ }";
+		else
+		{
 		String rsp = "{\"productos\": [";
 	    for(int i=0;i<productos.size()-1;i++)
 	    {
@@ -71,6 +75,7 @@ public class JsonResponses
 	    }
 	    rsp= rsp + "{\"id\": \"" + productos.get(productos.size()-1).getId()+"\", \"descripcion\": \"" + productos.get(productos.size()-1).getDescripcion() + "\", \"precio\": \"" + productos.get(productos.size()-1).getPrecio().getPrecio() +"\", \"estado\": \"" + estado.values()[productos.get(productos.size()-1).getEstado()].name() +"\"}]}";
 	    return rsp;
+		}
 	}
 	
 	public static String jsonVentas(ArrayList<Venta> ventas)
@@ -102,6 +107,7 @@ public class JsonResponses
 
 	public static String arrayVentasMorosas(ArrayList<Venta> ventasMorosas) {
 		if(ventasMorosas.isEmpty())
+
 			return "{ }";		
 		else
 		{

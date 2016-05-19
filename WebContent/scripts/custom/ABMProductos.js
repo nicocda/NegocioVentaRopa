@@ -5,6 +5,24 @@ $(document).ready(function()
 
 function eventosRelacionados()
 {
+	$("#inputDescripcion").keyup(function(){
+		$.post('/NegocioRopa/ABMProductos', { "action" : "buscar" , "valor": $("#inputDescripcion").val()}, function(resultado){
+			$("#tablaProductos tr").remove();
+			if(jQuery.isEmptyObject(resultado))
+				{
+				var trUsche = $("<tr />");
+				$("#tablaProductos").append(trUsche);
+				trUsche.append($('<td style="color: red;" colspan="4" align="center"> No existen productos. </td>'));
+				}
+			else
+				{
+				agregarEncabezado();
+				agregarFilas(resultado);
+				}
+		
+			
+		});
+	});
 	//a postData (método del js custom que se llama Ajax) le paso url y data para que muestre el mensaje.
 	$("#btnAceptar").click(function()
 	{

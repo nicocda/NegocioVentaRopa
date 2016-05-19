@@ -20,6 +20,8 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
   </style>
 
 <H4>Productos</H4>
+<label>Filtro por nombre de producto:</label>
+<input type="text" id="inputDescripcion">
 <div id="divError"></div>
 <div id="accordion">
 	<h3 id="mostrar">Lista de Productos</h3>

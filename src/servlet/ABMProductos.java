@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import entidades.Producto;
 import excepciones.RespuestaServidor;
 import negocio.ControladorABM;
+import negocio.ControladorTransaccion;
 import util.JsonResponses;
 
 @WebServlet("/ABMProductos")
@@ -29,6 +31,8 @@ public class ABMProductos extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		String action = request.getParameter("action");
+		
+		
 		
 		if (action.equals("alta"))
 		{
@@ -75,6 +79,15 @@ public class ABMProductos extends HttpServlet {
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(JsonResponses.arrayTodosProductos(ControladorABM.buscarTodosProductos()));
+		}
+		else if (action.equals("buscar"))
+		{
+			String cadena = request.getParameter("valor");
+			ArrayList<Producto> productos = ControladorTransaccion.buscarProductosDescripcion(cadena);
+			String mensajeJson = JsonResponses.arrayTodosProductos(productos);
+			response.setContentType("json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(mensajeJson);
 		}
 	}
 

@@ -76,4 +76,9 @@ public class ControladorTransaccion {
 		}
 		return ventasMorosas;
 	}
+
+	public static ArrayList<Producto> buscarProductosDescripcion(String cadena) {
+		
+		return CatalogoProductos.buscarProductoDescripcion(cadena);
+	}
 }

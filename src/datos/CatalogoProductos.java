@@ -127,5 +127,25 @@ public class CatalogoProductos extends CatalogoBase
 		
 		return sr;
 	}
+	@SuppressWarnings("unchecked")
+	public static ArrayList<Producto> buscarProductoDescripcion(String cadena) {
+		
+		
+		abrirEntityManager();
+		try
+		{
+			ArrayList<Producto> productos = new ArrayList<Producto>();
+			productos = (ArrayList<Producto>)getEm().createQuery("FROM Producto p WHERE p.descripcion like (:cade)").setParameter("cade", "%"+cadena+"%").getResultList();
+			
+			for(Producto p : productos)
+				buscarUltimoPrecio(p);
+	
+			return productos;
+		}
+		finally
+		{
+			cerrarEntityManager();
+		}
+	}
 	
 }
