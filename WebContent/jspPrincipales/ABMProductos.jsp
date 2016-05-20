@@ -12,62 +12,75 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 <style type="text/css">
   @font-face {
     font-family: PF;
-    src: url("fonts/PF.ttf") format("truetype"); 
+    src: url("./fonts/PF.ttf") format("truetype"); 
   }
   .barcode {
-    font-family: "PF";  
+    font-family: "PF";
+    font-size:110px;
   }
   </style>
 
-<H4>Productos</H4>
-<label>Filtro por nombre de producto:</label>
-<input type="text" id="inputDescripcion">
+<H4 id="h4Productos">Productos</H4>
 <div id="divError"></div>
-<div id="accordion">
-	<h3 id="mostrar">Lista de Productos</h3>
-	<div style="max-height: 320px">
-		<table class="CSSTableGenerator" id="tablaProductos">
-			<tr>
-				<td width="20%">ID</td>
-				<td width="40%">Descripción</td>
-				<td width="20%">Estado</td>
-				<td width="10%">Precio</td>
-				<td width="10%"></td>
-			</tr>
-			<%for(Producto p : ControladorABM.buscarTodosProductos())
-			{%>
-			<tr>
-				<td class="idTabla"><%=p.getId() %></td>
-				<td class="descripcionTabla"><%=p.getDescripcion() %></td>
-				<td class="estadoTabla"><%=estado.values()[p.getEstado()].toString() %></td>
-				<td class="precioTabla"><%=p.getPrecio().getPrecio() %></td>
-				<td><input type="button" class="botones btnEditar" value="Editar"></td>
-			</tr>
-			<%} %>
-		</table>
+<div id="divProductos">
+	<input type="text" id="inputDescripcion" PlaceHolder="Filtrar Productos">
+	<div id="accordion">
+		<h3 id="mostrar">Lista de Productos</h3>
+		<div style="max-height: 320px">
+			<table class="CSSTableGenerator" id="tablaProductos">
+				<tr>
+					<td width="20%">ID</td>
+					<td width="40%">Descripción</td>
+					<td width="20%">Estado</td>
+					<td width="10%">Precio</td>
+					<td width="10%"></td>
+				</tr>
+				<%for(Producto p : ControladorABM.buscarTodosProductos())
+				{%>
+				<tr>
+					<td class="idTabla"><%=p.getId() %></td>
+					<td class="descripcionTabla"><%=p.getDescripcion() %></td>
+					<td class="estadoTabla"><%=estado.values()[p.getEstado()].toString() %></td>
+					<td class="precioTabla"><%=p.getPrecio().getPrecio() %></td>
+					<td><input type="button" class="botones btnEditar" value="Editar">
+						<br>
+						<input type="button" class="botones btnBarcode" value="Barcode"></td>
+				</tr>
+				<%} %>
+			</table>
+		</div>
+		<h3 id="nuevoEditar">Nuevo/Editar Producto:</h3>
+		<div>
+			<select id="cbTipo">
+				<optgroup label="Tipo">
+					<option value="R">Ropa</option>
+					<option value="M">Marroquineria</option>
+					<option value="B">Bijouterie</option>
+					<option value="Z">Zapatos</option>
+				</optgroup>
+			</select>
+			<select id="cbSubTipo" >
+				<optgroup label="Subtipo">
+					<option value="H">Hombre</option>
+					<option value="M">Mujer</option>
+					<option value="N">Niño</option>
+				</optgroup>
+			</select>
+			<button id="btnRestaurar">x</button>
+			<input type="text" id="txtID" placeholder="ID" class="textInputs" disabled="disabled" value = <%=ControladorABM.obtenerIdCompleto('R', 'H')%>>
+			<input type="text" id="txtDescripcion" class="textInputs" placeholder="Descripción">
+			<input type="text" id="txtPrecio" class="textInputs" placeholder="Precio">
+			<input type="submit" id="btnAceptar" class="botones" value="Guardar Producto">
+		</div>
 	</div>
-	<h3 id="nuevoEditar">Nuevo/Editar Producto:</h3>
-	<div>
-		<select id="cbTipo">
-			<optgroup label="Tipo">
-				<option value="R">Ropa</option>
-				<option value="M">Marroquineria</option>
-				<option value="B">Bijouterie</option>
-				<option value="Z">Zapatos</option>
-			</optgroup>
-		</select>
-		<select id="cbSubTipo" >
-			<optgroup label="Subtipo">
-				<option value="H">Hombre</option>
-				<option value="M">Mujer</option>
-				<option value="N">Niño</option>
-			</optgroup>
-		</select>
-		<button id="btnRestaurar">x</button>
-		<input type="text" id="txtID" placeholder="ID" class="textInputs" disabled="disabled" value = <%=ControladorABM.obtenerIdCompleto('R', 'H')%>>
-		<input type="text" id="txtDescripcion" class="textInputs" placeholder="Descripción">
-		<input type="text" id="txtPrecio" class="textInputs" placeholder="Precio">
-		<input type="submit" id="btnAceptar" class="botones" value="Guardar Producto">
+</div>
+<div id="divBarcode"  hidden="hidden" >
+	<div id="idBarcode" class="barcode"></div>
+	<label id="codNoBarcode"></label><br>
+	<label id="descBarcode">Aqui iria una descripcion</label>
+	<div style="text-align: right">
+			<br>
+			<button class="botones" id="btnVolverDeBarcode">Volver</button>
 	</div>
 </div>
 <%}

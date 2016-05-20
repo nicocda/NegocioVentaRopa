@@ -66,6 +66,33 @@ function eventosRelacionados()
 		$("#accordion #nuevoEditar").click();
 	});
 	
+
+	$(document).on("click", ".btnBarcode", function()
+	{
+		
+		var row = $(this).closest("tr");
+		$('#h4Productos').empty();
+		$('#h4Productos').append("Codigo de barra");
+		$("#divProductos").hide();
+		$("#divBarcode").show();
+		$("#idBarcode").empty();
+		$("#idBarcode").append("<label  id=\"dialog\" class=\"barcode\">"+row.find(".idTabla").text()+"</label>");
+		$("#codNoBarcode").empty();
+		$("#codNoBarcode").append(row.find(".idTabla").text());
+		$("#descBarcode").empty();
+		$("#descBarcode").append(row.find(".descripcionTabla").text());
+	});
+	
+	$(document).on("click", "#btnVolverDeBarcode", function()
+	{
+		$('#h4Productos').empty();
+		$('#h4Productos').append("Productos");
+		$("#divDeudas").hide();
+		$("#divProductos").show();
+	});
+
+	
+	
 	$("#btnRestaurar").click(function()
 	{
 		buscarId();
