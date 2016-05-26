@@ -12,24 +12,30 @@ import="negocio.ControladorABM" %>
 <script type="text/javascript" src="../scripts/custom/popup.js"></script>
 <script type="text/javascript" src="./scripts/custom/popup.js"></script>
 
-<H4 id="h4Cliente">Clientes</H4>
 <div id="divError"></div>
-<div id="accordion">
-	<h3 id="mostrar">Lista de Clientes</h3>
-	<div style="max-height: 320px">
-		<table class="CSSTableGenerator" id="tablaClientes">
+<div id="divPrincipal">
+	<div class="row">
+		<div class="col-lg-12">
+		    <h1 class="page-header">Clientes</h1>
+		</div>
+	</div>
+	<table id="tablaClientes" class="display">
+		<thead>
 			<tr>
-				<td width="10%">ID</td>
-				<td width="30%">Nombre y Apellido</td>
-				<td width="20%">Dirección</td>
-				<td width="20%">Teléfono</td>
-				<td width="10%">Deuda</td>
-				<td width="10%"></td>
+				<th width="10%">ID</td>
+				<th width="30%">Nombre y Apellido</td>
+				<th width="20%">Dirección</td>
+				<th width="20%">Teléfono</td>
+				<th width="10%">Deuda</td>
+				<th width="10%"></td>
 			</tr>
+		</thead>
+		<tbody>
 			<%
 			ArrayList<Cliente> clientes = ControladorABM.buscarTodosClientes();
 			for(Cliente cl : clientes)
 			{%>
+			
 			<tr>
 				<td id="idCliente" align="center" class="idTabla"><%=cl.getId() %></td>
 				<td class="nyaTabla"><%=cl.getNombre() %></td>
@@ -39,18 +45,55 @@ import="negocio.ControladorABM" %>
 				<td align="center"><input type="button" class="botones btnEditar" value="Editar"></td>
 			</tr>
 			<%} %>
-		</table>
-	</div>
-	<h3 id="nuevoEditar">Nuevo Cliente:</h3>
-	<div>
-		<button id="btnRestaurar">x</button>
-		<input type="text" class="textInputs" id="txtID" placeholder="ID" disabled="disabled" style="display: none">		
-		<input type="text" class="textInputs" id="txtNombreYApellido" placeholder="Nombre y Apellido">
-		<input type="text" class="textInputs" id="txtDireccion" placeholder="Dirección">
-		<input type="text" class="textInputs" id="txtTelefono" placeholder="Teléfono">
-		<input type="submit" id="btnAceptar" class="botones" value="Guardar Cliente">
-	</div>
+		</tbody>
+	</table>
+	<hr>
+	<button id="btnMostrarCreate" class="btn btn-primary">Nuevo Cliente</button>
+</div>
 
+<div id="divCrearCliente" hidden="hidden">
+
+	<div class="row">
+		<div class="col-lg-12">
+		    <h1 class="page-header">Nuevo Cliente</h1>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					Ingrese los datos del cliente
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-lg-6">
+								<input type="hidden" id="txtID">
+								<div class="form-group">
+									<label>Nombre</label>
+									<input id="txtNombre" class="form-control">
+								</div>
+								<div class="form-group">
+									<label>Apellido</label>
+									<input id="txtApellido" class="form-control">
+								</div>
+								<div class="form-group">
+									<label>Dirección</label>
+									<input id="txtDireccion" class="form-control">
+								</div>
+								<div class="form-group">
+									<label>Teléfono</label>
+									<input id="txtTelefono" class="form-control">
+								</div>
+								<button type="submit" id="btnGuardarCreate" class="btn btn-primary">Guardar</button>
+                                <button type="reset" id="btnCancelarCreate" class="btn btn-default">Cancelar</button>
+						
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div id="divDeudas"  hidden="hidden">

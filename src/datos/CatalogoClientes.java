@@ -82,7 +82,7 @@ public class CatalogoClientes extends CatalogoBase
 			sr.addError("Ocurrió un error interno. El id es obligatorio.");
 		
 		if(!(cl.getNombre() != null && !cl.getNombre().isEmpty()))
-			sr.addError("El producto debe tener una descripción.");
+			sr.addError("El nombre del cliente es obligatorio.");
 		
 		return sr;
 	}

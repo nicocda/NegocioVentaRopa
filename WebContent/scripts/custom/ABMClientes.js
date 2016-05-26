@@ -1,24 +1,36 @@
 $(document).ready(function()
 {	
-	eventosRelacionados()
+	eventosRelacionados();
+	cargarTabla();
+	nuevosEventos();
 });
+
+function nuevosEventos()
+{
+	$("#btnMostrarCreate").click(function(){
+		$("#divPrincipal").hide();
+		$("#divCrearCliente").show();
+	});
+	
+	$("#btnCancelarCreate").click(function(){
+		limpiarCampos();
+		$("#divPrincipal").show();
+		$("#divCrearCliente").hide();
+	});
+}
 
 function eventosRelacionados()
 {
-	$("#btnAceptar").click(function()
+	$(document).on('click', "#btnGuardarCreate", function()
+	{
+		$.postData('/NegocioRopa/ABMClientes', { "id": $("#txtID").val(), "nombreApellido": $("#txtNombre").val(), 
+			"direccion": $("#txtDireccion").val(), "telefono": $("#txtTelefono").val(), "action": "agregarCliente" }, 
+			function()
 			{
-				$.postData('/NegocioRopa/ABMClientes', { "id": $("#txtID").val(), "nombreApellido": $("#txtNombreYApellido").val(), 
-					"direccion": $("#txtDireccion").val(), "telefono": $("#txtTelefono").val(), "action": "agregarCliente" }, 
-					function()
-					{
-						recargarTabla();
-						$("#accordion #mostrar").click();
-						limpiarCampos();
-						$("#nuevoEditar").empty();
-						$("#nuevoEditar").append("Nuevo Cliente:");
-						$("#txtID").css("display", "none");
-					});
+				$("#divPrincipal").show();
+				$("#divCrearCliente").hide();
 			});
+	});
 			
 	$(document).on('click', "#btnCerrarMensaje", function()
 	{
@@ -166,4 +178,28 @@ function limpiarCampos()
 	$("#txtNombreYApellido").val("");
 	$("#txtDireccion").val("");
 	$("#txtTelefono").val("");
+}
+
+function cargarTabla()
+{
+	$("#tablaClientes").DataTable(
+			{
+				responsive: true,
+				"language": {
+		            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+		            "zeroRecords": "No se encontraron resultados",
+		            "info": "Mostrando paginas _PAGE_ de _PAGES_",
+		            "infoEmpty": "No records available",
+		            "infoFiltered": "(filtered from _MAX_ total records)",
+		            "search": "Buscar:",
+		            "loadingRecords": "Cargando...",
+		            "processing": "Procesando...",
+		            "paginate": {
+		                "first":      "Primero",
+		                "last":       "Ultimo",
+		                "next":       "Siguiente",
+		                "previous":   "Anterior"
+		            }
+		        }
+			});
 }

@@ -51,7 +51,7 @@ public class Index extends HttpServlet
 			else
 			{
 				request.setAttribute("url","../jspPrincipales/" +link.trim()+".jsp");
-				request.getRequestDispatcher("jspCompartido/MainLayout.jsp").forward(request, response);
+				request.getRequestDispatcher("jspCompartido/newMainLayout.jsp").forward(request, response);
 			}
 		}
 		else
