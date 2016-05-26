@@ -41,7 +41,7 @@ public class JsonResponses
 	
 	public static String arrayTodosClientes(ArrayList<Cliente> clientes)
 	{
-		String rsp = "{\"clientes\": [";
+		String rsp = "{\"data\": [";
 	    for(int i=0;i<clientes.size()-1;i++)
 	    {
 	    	rsp= rsp + "{\"nombreApellido\": \"" + clientes.get(i).getNombre()+"\", \"direccion\": \"" + clientes.get(i).getDireccion() + "\", \"id\": \"" + clientes.get(i).getId() + "\", \"telefono\": \"" + clientes.get(i).getTelefono() + "\"},";

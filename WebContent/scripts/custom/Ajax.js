@@ -1,5 +1,6 @@
 $.postData = function(url, data, complete)
 {
+	var exito = true;
 	$.ajax(
 	{
 		type: "POST",
@@ -17,13 +18,14 @@ $.postData = function(url, data, complete)
 						$("#mensaje ul").append("<li>" + this.mensaje + "</li>");
 						$("#mensaje").show("slow");
 					});
-				});					
+				});
+				exito = false;
 			}
 			else
 			{
 				$("#divError").load("./jspCompartido/MensajeExito.jsp", function(){
-				$("#mensaje strong").append(result.tipoMensaje);
-				$("#mensaje").show("slow");
+					$("#mensaje strong").append(result.tipoMensaje);
+					$("#mensaje").show("slow");
 				});
 			}
 		},
@@ -33,7 +35,8 @@ $.postData = function(url, data, complete)
 		},
 		complete:function()
 		{
-			complete();
+			if (exito)
+				complete();
 		}
 	});
 }

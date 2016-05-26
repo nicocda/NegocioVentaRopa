@@ -29,26 +29,11 @@ import="negocio.ControladorABM" %>
 				<th width="30%">Nombre y Apellido</td>
 				<th width="20%">Dirección</td>
 				<th width="20%">Teléfono</td>
-				<th width="10%">Deuda</td>
+				<th width="10%"></td>
 				<th width="10%"></td>
 			</tr>
 		</thead>
-		<tbody>
-			<%
-			ArrayList<Cliente> clientes = ControladorABM.buscarTodosClientes();
-			for(Cliente cl : clientes)
-			{%>
-			
-			<tr>
-				<td id="idCliente" align="center" class="idTabla"><%=cl.getId() %></td>
-				<td class="nyaTabla"><%=cl.getNombre() %></td>
-				<td class="direTabla"><%=cl.getDireccion() %></td>
-				<td class="telTabla"><%=cl.getTelefono() %></td>
-				<td align="center"><input type="button" class="botones btnDeuda" value="Ver Deuda"></td>
-				<td align="center"><input type="button" class="botones btnEditar" value="Editar"></td>
-			</tr>
-			<%} %>
-		</tbody>
+		
 	</table>
 	<hr>
 </div>
@@ -99,11 +84,16 @@ import="negocio.ControladorABM" %>
 </div>
 
 <div id="divDeudas"  hidden="hidden">
-	<table id="tablaVentasMorosas" class="CSSTableGenerator"></table>
-	<div style="text-align: right">
-		<br>
-		<button class="botones" id="btnVolverDeDeudas">Volver</button>
+	<div class="row">
+		<div class="col-lg-12">
+		    <h1 class="page-header">
+		    	Deudas de: <br><small id="nombreDeuda">Juan Cruz Grasso</small>
+			</h1>
+		</div>
 	</div>
+	<table id="tablaVentasMorosas" class="display"></table>
+	<br>
+	<button class="btn btn-default pull-right" id="btnVolverDeDeudas">Volver</button>
 </div>
 <%}
 else

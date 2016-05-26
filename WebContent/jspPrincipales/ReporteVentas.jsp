@@ -52,6 +52,6 @@
 </div>
 <br>
 
-<table class="CSSTableGenerator" id="tablaTransacciones">
+<table class="display" id="tablaTransacciones">
 </table>
 	

@@ -16,11 +16,12 @@ function agregarEventos()
 			$("#tablaTransacciones tr").remove();
 			agregarEncabezado();
 			agregarFilas(resultado);
+			$("#tablaTransacciones").DataTable();
 		});
 	});	
 	
 	$(document).on("click", "#detalleVenta", function()
-			{
+	{
 		$.post('/NegocioRopa/ReporteVentas', {"action": "detalleVenta", "idVenta": $("#idVenta").val()})
 	});
 	
@@ -116,29 +117,26 @@ function setearFormatosDatePicker()
 
 function agregarEncabezado()
 {
+	var theadEncabezado = $("<thead />");
 	var trEncabezado = $("<tr />");
-	$("#tablaTransacciones").append(trEncabezado);
-	trEncabezado.append($('<td width="10%">ID</td>'));
-	trEncabezado.append($('<td width="45%">Cliente</td>'));
-	trEncabezado.append($('<td width="35%">Fecha de Transacci&oacute;n</td>'));
-	trEncabezado.append($('<td width="10%"></td>'));
+	$("#tablaTransacciones").append(theadEncabezado);
+	theadEncabezado.append(trEncabezado);
+	trEncabezado.append($('<th width="10%">ID</th>'));
+	trEncabezado.append($('<th width="45%">Cliente</th>'));
+	trEncabezado.append($('<th width="35%">Fecha de Transacci&oacute;n</th>'));
+	trEncabezado.append($('<th width="10%"></th>'));
 }
 
 function agregarFilas(resultado)
 {
-	if (!resultado.ventas.length > 0)
-	{
-		var trFilas = $("<tr />");
-		$("#tablaTransacciones").append(trFilas);
-		trFilas.append($('<td align="center" colspan="3" style="color: red;">No se encontraron resultados...</td>'));
-
-	}
-	else
+	var tbody = $("<tbody />");
+	$("#tablaTransacciones").append(tbody);
+	if (resultado.ventas.length > 0)
 	{	
 		for (var i = 0; i < resultado.ventas.length; i++)
 		{
 			var trFilas = $("<tr />");
-			$("#tablaTransacciones").append(trFilas);
+			tbody.append(trFilas);
 			trFilas.append($('<td id="idVenta">'+ resultado.ventas[i].idVenta +'</td>'));
 			trFilas.append($('<td>'+ resultado.ventas[i].nombreApellido +'</td>'));
 			trFilas.append($('<td>'+ resultado.ventas[i].fecha +'</td>'));

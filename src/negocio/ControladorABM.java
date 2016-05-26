@@ -51,11 +51,12 @@ public class ControladorABM
 		return CatalogoClientes.buscarTodosClientes();
 	}
 	
-	public static void guardarCliente(int id, String nombreApellido, String direccion, String telefono) throws RespuestaServidor
+	public static void guardarCliente(int id, String nombre, String apellido, String direccion, String telefono) throws RespuestaServidor
 	{
 		Cliente cliente = new Cliente();
 		cliente.setId(id);
-		cliente.setNombre(nombreApellido);
+		cliente.setNombre(nombre);
+		cliente.setApellido(apellido);
 		cliente.setTelefono(telefono);
 		cliente.setDireccion(direccion);
 		CatalogoClientes.guardarCliente(cliente);

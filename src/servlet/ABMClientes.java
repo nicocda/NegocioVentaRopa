@@ -40,14 +40,15 @@ public class ABMClientes extends HttpServlet
 			else
 				id = Integer.parseInt(idString);
 			
-			String nombreApellido = request.getParameter("nombreApellido");
+			String nombre = request.getParameter("nombre");
+			String apellido = request.getParameter("apellido");
 			String direccion = request.getParameter("direccion");
 			String telefono = request.getParameter("telefono");
 			
 			RespuestaServidor sr = new RespuestaServidor();
 			try
 			{
-				ControladorABM.guardarCliente(id, nombreApellido, direccion, telefono);
+				ControladorABM.guardarCliente(id, nombre, apellido, direccion, telefono);
 			}
 			catch(RespuestaServidor res)
 			{
