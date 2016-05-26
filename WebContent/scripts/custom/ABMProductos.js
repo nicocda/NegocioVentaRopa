@@ -7,11 +7,6 @@ $(document).ready(function()
 
 function nuevosEventos()
 {
-	$(document).on('click', ".btnBarcode", function()
-	{
-		$("#divPrincipal").hide();
-		$("#divBarcode").show();
-	});
 	
 	$(document).on('click', "#btnVolverDeBarcode", function()
 			{
@@ -20,6 +15,7 @@ function nuevosEventos()
 				$("#tablaProductos").DataTable().ajax.reload();
 			});
 }
+
 
 function eventosRelacionados()
 {
@@ -85,21 +81,7 @@ function eventosRelacionados()
 	});
 	
 
-	$(document).on("click", ".btnBarcode", function()
-	{
-		
-		var row = $(this).closest("tr");
-		$('#h4Productos').empty();
-		$('#h4Productos').append("Codigo de barra");
-		$("#divProductos").hide();
-		$("#divBarcode").show();
-		$("#idBarcode").empty();
-		$("#idBarcode").append("<label  id=\"dialog\" class=\"barcodeFP\">"+row.find(".idTabla").text()+"</label>");
-		$("#codNoBarcode").empty();
-		$("#codNoBarcode").append(row.find(".idTabla").text());
-		$("#descBarcode").empty();
-		$("#descBarcode").append(row.find(".descripcionTabla").text());
-	});
+
 	
 	$(document).on("click", "#btnVolverDeBarcode", function()
 	{
@@ -166,7 +148,7 @@ function agregarFilas(resultado)
 
 function cargarTabla()
 {
-	$("#tablaProductos").DataTable(
+	var tablaProd = $("#tablaProductos").DataTable(
 	{
 		responsive: true,
 		"language": {
@@ -204,4 +186,13 @@ function cargarTabla()
          {"data": null, "targets": -1, "defaultContent": "<button class='btn btn-info btnBarcode'>Barcode</button>"}
         ]
 	});
+	
+	$('#tablaProductos tbody').on( 'click', '.btnBarcode', function () {
+	      var data = tablaProd.row($(this).parents('tr')).data();
+	      var id = data[0];
+		
+	    $("#divPrincipal").hide();
+		$("#divBarcode").show();
+		$("#descBarcode").text();
+	    } );
 }

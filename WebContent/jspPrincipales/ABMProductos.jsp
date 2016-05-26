@@ -39,9 +39,6 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 		<div class="col-lg-9">
 		    <h1 class="page-header">Productos</h1>
 		</div>
-		<div class="col-lg-3"">
-			<button id="btnMostrarCreate" class="btn btn-primary page-header pull-right" >Nuevo Cliente</button>
-		</div>
 	</div>
 	<table id="tablaProductos" class="display">
 		<thead>
@@ -83,7 +80,7 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 	<div id="divBarcode" hidden="hidden" >
 		<div id="idBarcode" class="barcodeFP"></div>
 		<label id="codNoBarcode"></label><br>
-		<label id="descBarcode">Aqui habria una descripcion</label>
+		<label id="descBarcode"></label>
 		<div style="text-align: right">
 				<br>
 				<button class="btn btn-default" id="btnVolverDeBarcode">Volver</button>
