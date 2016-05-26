@@ -1,7 +1,25 @@
 $(document).ready(function()
 {	
 	eventosRelacionados();
+	cargarTabla();
+	nuevosEventos();
 });
+
+function nuevosEventos()
+{
+	$(document).on('click', ".btnBarcode", function()
+	{
+		$("#divPrincipal").hide();
+		$("#divBarcode").show();
+	});
+	
+	$(document).on('click', "#btnVolverDeBarcode", function()
+			{
+				$("#divBarcode").hide();
+				$("#divPrincipal").show();
+				$("#tablaProductos").DataTable().ajax.reload();
+			});
+}
 
 function eventosRelacionados()
 {
@@ -76,7 +94,7 @@ function eventosRelacionados()
 		$("#divProductos").hide();
 		$("#divBarcode").show();
 		$("#idBarcode").empty();
-		$("#idBarcode").append("<label  id=\"dialog\" class=\"barcode\">"+row.find(".idTabla").text()+"</label>");
+		$("#idBarcode").append("<label  id=\"dialog\" class=\"barcodeFP\">"+row.find(".idTabla").text()+"</label>");
 		$("#codNoBarcode").empty();
 		$("#codNoBarcode").append(row.find(".idTabla").text());
 		$("#descBarcode").empty();
@@ -87,7 +105,7 @@ function eventosRelacionados()
 	{
 		$('#h4Productos').empty();
 		$('#h4Productos').append("Productos");
-		$("#divDeudas").hide();
+		$("#divBarcode").hide();
 		$("#divProductos").show();
 	});
 
@@ -144,4 +162,46 @@ function agregarFilas(resultado)
 		trFilas.append($('<td><input type="button" class="botones btnEditar" value="Editar"> <input type="button" id="agregar" class="botones barcode" value="C&#243;digo"></td>'));
 
 	}
+}
+
+function cargarTabla()
+{
+	$("#tablaProductos").DataTable(
+	{
+		responsive: true,
+		"language": {
+            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+            "zeroRecords": "No se encontraron resultados",
+            "info": "Mostrando paginas _PAGE_ de _PAGES_",
+            "infoEmpty": "No records available",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+            "search": "Buscar:",
+            "loadingRecords": "Cargando...",
+            "processing": "Procesando...",
+            "paginate": {
+                "first":      "Primero",
+                "last":       "Ultimo",
+                "next":       "Siguiente",
+                "previous":   "Anterior"
+            }
+        },
+        aoColumnDefs: [ { 'bSortable': false, 'aTargets': [4, 5] } ],
+        columnDefs: [{ defaultContent: '<input type="button" class="botones btnEditar" value="Editar">' }],
+        bLengthChange: false,
+        ajax: 
+    	{
+        	type: "POST",
+        	url: "/NegocioRopa/ABMProductos",
+        	data: { "action": "recargarTabla" }
+    	},
+    	columns: 
+		[
+         {"data": "id"},
+         {"data": "descripcion"},
+         {"data": "precio"},
+         {"data": "estado"},
+         {"data": null, "targets": -1, "defaultContent": "<button class='btn btn-info btnEditar'>Editar</button>"},
+         {"data": null, "targets": -1, "defaultContent": "<button class='btn btn-info btnBarcode'>Barcode</button>"}
+        ]
+	});
 }

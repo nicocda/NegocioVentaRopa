@@ -9,16 +9,21 @@
 	<link rel="stylesheet" type="text/css" href="./themes/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="./themes/metisMenu.min.css">
 	<link rel="stylesheet" type="text/css" href="./themes/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="./themes/select2.css">
 	<link rel="stylesheet" type="text/css" href="./themes/sb-admin-2.css">
 	<link rel="stylesheet" type="text/css" href="./themes/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="./themes/jquery.dataTables.min.css">
+	
 	<script type="text/javascript" src="./scripts/lib/jquery-1.12.3.js"></script>
 	<script type="text/javascript" src="./scripts/lib/jquery-ui.js"></script>
+	<script type="text/javascript" src="./scripts/custom/Ajax.js"></script>	
+	<script type="text/javascript" src="./scripts/lib/select2.js"></script>
 	<script type="text/javascript" src="./scripts/lib/bootstrap.min.js"></script>
 	<script type="text/javascript" src="./scripts/lib/metisMenu.min.js"></script>
 	<script type="text/javascript" src="./scripts/lib/sb-admin-2.js"></script>
 	<script type="text/javascript" src="./scripts/lib/jquery.dataTables.min.js"></script>
-	<script type="text/javascript" src="./scripts/custom/Ajax.js"></script>	
+	
+
 	
 	
 	

@@ -150,7 +150,7 @@ function cargarComboClientes()
 	$.post('/NegocioRopa/ABMClientes', { "action": "recargarTabla" }, function(resultado)
 	{
 		var clientes = [];
-		jQuery.each(resultado.clientes, function()
+		jQuery.each(resultado.data, function()
 		{
 			clientes.push({id: this.id, text: this.nombreApellido});
 		});

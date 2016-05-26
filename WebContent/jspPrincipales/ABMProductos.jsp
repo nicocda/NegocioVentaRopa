@@ -14,43 +14,51 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
     font-family: PF;
     src: url("./fonts/PF.ttf") format("truetype"); 
   }
-  .barcode {
+  .barcodeFP {
     font-family: "PF";
-    font-size:110px;
+    font-size: 110px;
+    font-stretch :normal;
+    font-style : normal;
+    font-variant : normal;
+    font-weight: 100;
+    
+    text-decoration: none;
+    text-align: left;
+    text-shadow : none;
+    text-transform: none;
+    
+    line-height: 1.0;
+    word-spacing: 10px;
+  
   }
   </style>
 
-<H4 id="h4Productos">Productos</H4>
 <div id="divError"></div>
-<div id="divProductos">
-	<input type="text" id="inputDescripcion" PlaceHolder="Filtrar Productos">
-	<div id="accordion">
-		<h3 id="mostrar">Lista de Productos</h3>
-		<div style="max-height: 320px">
-			<table class="CSSTableGenerator" id="tablaProductos">
-				<tr>
-					<td width="20%">ID</td>
-					<td width="40%">Descripción</td>
-					<td width="20%">Estado</td>
-					<td width="10%">Precio</td>
-					<td width="10%"></td>
-				</tr>
-				<%for(Producto p : ControladorABM.buscarTodosProductos())
-				{%>
-				<tr>
-					<td class="idTabla"><%=p.getId() %></td>
-					<td class="descripcionTabla"><%=p.getDescripcion() %></td>
-					<td class="estadoTabla"><%=estado.values()[p.getEstado()].toString() %></td>
-					<td class="precioTabla"><%=p.getPrecio().getPrecio() %></td>
-					<td><input type="button" class="botones btnEditar" value="Editar">
-						<br>
-						<input type="button" class="botones btnBarcode" value="Barcode"></td>
-				</tr>
-				<%} %>
-			</table>
+<div id="divPrincipal">
+	<div class="row">
+		<div class="col-lg-9">
+		    <h1 class="page-header">Productos</h1>
 		</div>
-		<h3 id="nuevoEditar">Nuevo/Editar Producto:</h3>
-		<div>
+		<div class="col-lg-3"">
+			<button id="btnMostrarCreate" class="btn btn-primary page-header pull-right" >Nuevo Cliente</button>
+		</div>
+	</div>
+	<table id="tablaProductos" class="display">
+		<thead>
+			<tr>
+				<th width="10%">ID</td>
+				<th width="30%">Descripcion</td>
+				<th width="20%">Precio</td>
+				<th width="20%">Estado</td>
+				<th width="10%"></td>
+				<th width="10%"></td>
+			</tr>
+		</thead>
+		
+	</table>
+	<hr>
+</div>
+<div>
 			<select id="cbTipo">
 				<optgroup label="Tipo">
 					<option value="R">Ropa</option>
@@ -72,31 +80,17 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 			<input type="text" id="txtPrecio" class="textInputs" placeholder="Precio">
 			<input type="submit" id="btnAceptar" class="botones" value="Guardar Producto">
 		</div>
+	<div id="divBarcode" hidden="hidden" >
+		<div id="idBarcode" class="barcodeFP"></div>
+		<label id="codNoBarcode"></label><br>
+		<label id="descBarcode">Aqui habria una descripcion</label>
+		<div style="text-align: right">
+				<br>
+				<button class="btn btn-default" id="btnVolverDeBarcode">Volver</button>
+		</div>
 	</div>
-</div>
-<div id="divBarcode"  hidden="hidden" >
-	<div id="idBarcode" class="barcode"></div>
-	<label id="codNoBarcode"></label><br>
-	<label id="descBarcode">Aqui iria una descripcion</label>
-	<div style="text-align: right">
-			<br>
-			<button class="botones" id="btnVolverDeBarcode">Volver</button>
-	</div>
-</div>
 <%}
 else
 {%>
 <script>window.location.href='/NegocioRopa/Index?link=Error';</script>
 <%}%>
-
-		<!-- HTML para el popup -->
-	<div  id="dialog" >
-	<%if(request.getAttribute("codigo") != null && request.getAttribute("desc")  != null) 
-	{%>
-	<h2>CODIGO DE BARRAS</h2> <br>
-	<div class="barcode"><%=request.getAttribute("codigo") %></div>
-	<div><%=request.getAttribute("codigo") %></div>
-	<br>
-	<label><%=request.getAttribute("desc") %></label>
-	<%} %>
-	</div>

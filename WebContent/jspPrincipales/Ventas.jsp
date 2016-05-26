@@ -13,7 +13,6 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 <form action="Ventas" method="POST">
 
 	<select id="comboClientes" style="width: 100%" class="js-example-basic-single">
-	    <option value="" disabled selected>Seleccione un cliente</option>
 	</select>
 	<table class="CSSTableGenerator" id="tablaProductos">
 		<tr>

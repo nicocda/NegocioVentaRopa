@@ -4,8 +4,8 @@ $(document).ready(function()
 	cargarComboClientes();
 });
 
-function agregarEventos()
-{
+function agregarEventos() 
+{   
 	$(document).on("click", "#agregar", function()
 	{
 		$.postDataSinExito('/NegocioRopa/Ventas', { "action": "agregarProducto" , "id": $("#txtID").val()}, function()
@@ -58,6 +58,7 @@ function agregarEventos()
 
 function recargarTabla()
 {
+	
 	$.post('/NegocioRopa/Ventas', { "action": "recargarTabla" }, function(resultado)
 	{
 		$("#tablaProductos tr").remove();
@@ -102,13 +103,14 @@ function cargarComboClientes()
 	$.post('/NegocioRopa/ABMClientes', { "action": "recargarTabla" }, function(resultado)
 	{
 		var clientes = [];
-		jQuery.each(resultado.clientes, function()
+		jQuery.each(resultado.data, function()
 		{
 			clientes.push({id: this.id, text: this.nombreApellido});
 		});
-		$("#comboClientes").select2(
+		$('#comboClientes').select2(
 		{
-		  data: clientes
+			placeholder: 'Seleccione una opcion',
+			data: clientes
 		});
 	});
 }
