@@ -94,7 +94,7 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                        	<a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        	<a href="Index?link=LogOut"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
