@@ -15,8 +15,11 @@ import="negocio.ControladorABM" %>
 <div id="divError"></div>
 <div id="divPrincipal">
 	<div class="row">
-		<div class="col-lg-12">
+		<div class="col-lg-9">
 		    <h1 class="page-header">Clientes</h1>
+		</div>
+		<div class="col-lg-3"">
+			<button id="btnMostrarCreate" class="btn btn-primary page-header pull-right" >Nuevo Cliente</button>
 		</div>
 	</div>
 	<table id="tablaClientes" class="display">
@@ -48,7 +51,6 @@ import="negocio.ControladorABM" %>
 		</tbody>
 	</table>
 	<hr>
-	<button id="btnMostrarCreate" class="btn btn-primary">Nuevo Cliente</button>
 </div>
 
 <div id="divCrearCliente" hidden="hidden">
