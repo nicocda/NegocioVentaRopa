@@ -14,6 +14,18 @@ function nuevosEventos()
 				$("#divPrincipal").show();
 				$("#tablaProductos").DataTable().ajax.reload();
 			});
+	
+	$("#btnMostrarCreate").click(function(){
+		$("#divPrincipal").hide();
+		$("#divCrearProducto").show();
+	});
+	
+	$("#btnCancelarCreate").click(function(){
+		limpiarCampos();
+		$("#divPrincipal").show();
+		$("#divCrearProducto").hide();
+		$("#tablaProductos").DataTable().ajax.reload();
+	});
 }
 
 
@@ -71,13 +83,19 @@ function eventosRelacionados()
 	
 	$(document).on("click", ".btnEditar", function()
 	{
+		$("#divPrincipal").hide();
+		$("#divCrearProducto").show();
 		var row = $(this).closest("tr");
 		$("#nuevoEditar").empty();
 		$("#nuevoEditar").append("Editar Producto:");
-		$("#txtID").val(row.find(".idTabla").text());
-		$("#txtDescripcion").val(row.find(".descripcionTabla").text());
-		$("#txtPrecio").val(row.find(".precioTabla").text());
-		$("#accordion #nuevoEditar").click();
+		$("#txtID").empty();
+		$("#txtID").append(row.find(".idTabla").text());
+		$("#txtDescripcion").empty();
+		$("#txtDescripcion").append(row.find(".descripcionTabla").text());
+		$("#txtPrecio").empty();
+		$("#txtPrecio").append(row.find(".precioTabla").text());
+		
+		
 	});
 	
 
@@ -124,24 +142,29 @@ function agregarEncabezado()
 {
 	var trEncabezado = $("<tr />");
 	$("#tablaProductos").append(trEncabezado);
-	trEncabezado.append($('<td width="20%">ID</td>'));
+	trEncabezado.append($('<td width="15%">ID</td>'));
 	trEncabezado.append($('<td width="40%">Descripci&#243;n</td>'));
-	trEncabezado.append($('<td width="20%">Estado</td>'));
+	trEncabezado.append($('<td width="15%">Estado</td>'));
 	trEncabezado.append($('<td width="10%">Precio</td>'));
+	trEncabezado.append($('<td width="10%"></td>'));
 	trEncabezado.append($('<td width="10%"></td>'));
 }
 
 function agregarFilas(resultado)
 {
+	var tbody = $("<tbody />");
+	$("#tablaProductos").append(tbody);
 	for (var i = 0; i < resultado.productos.length; i++)
 	{
 		var trFilas = $("<tr />");
-		$("#tablaProductos").append(trFilas);
+		tbody.append(trFilas);
 		trFilas.append($('<td align="center" class="idTabla">'+ resultado.productos[i].id +'</td>'));
 		trFilas.append($('<td class="descripcionTabla">'+ resultado.productos[i].descripcion +'</td>'));
 		trFilas.append($('<td class="estadoTabla">'+ resultado.productos[i].estado +'</td>'));
 		trFilas.append($('<td class="precioTabla">'+ resultado.productos[i].precio +'</td>'));
-		trFilas.append($('<td><input type="button" class="botones btnEditar" value="Editar"> <input type="button" id="agregar" class="botones barcode" value="C&#243;digo"></td>'));
+		trFilas.append($('<td><input type="button" class="btn btn-info btnEditar" value="Editar"></td>'));
+		trFilas.append($('<td><input type="button" id="barcode" class="btn btn-info barcode" value="C&#243;digo"></td>'));
+		 
 
 	}
 }
@@ -168,7 +191,7 @@ function cargarTabla()
             }
         },
         aoColumnDefs: [ { 'bSortable': false, 'aTargets': [4, 5] } ],
-        columnDefs: [{ defaultContent: '<input type="button" class="botones btnEditar" value="Editar">' }],
+        columnDefs: [{ defaultContent: "<button class='btn btn-info btnEditar'>Editar</button>" }],
         bLengthChange: false,
         ajax: 
     	{
@@ -193,6 +216,11 @@ function cargarTabla()
 		
 	    $("#divPrincipal").hide();
 		$("#divBarcode").show();
-		$("#descBarcode").text();
+		$("#descBarcode").empty();
+		$("#descBarcode").append('<label id="descBarcode">'+data[1]+'</label>');
+		$("#codNoBarcode").empty();
+		$("#codNoBarcode").append('	<label id="codNoBarcode">'+data[0]+'</label><br>');
+		$("#idBarcode").empty();
+		$("#idBarcode").append('<div id="idBarcode" class="barcodeFP">'+data[0]+'</div>');
 	    } );
 }

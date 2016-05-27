@@ -10,6 +10,7 @@ function nuevosEventos()
 	$("#btnMostrarCreate").click(function(){
 		$("#divPrincipal").hide();
 		$("#divCrearCliente").show();
+		$("#txtID").hide();
 	});
 	
 	$("#btnCancelarCreate").click(function(){
@@ -30,32 +31,39 @@ function nuevosEventos()
 			});
 	});
 	
-	$(document).on('click', ".btnDeuda", function()
+	$("#tablaClientes tbody").on('click', ".btnDeuda", function()
 	{
-		var row = $(this).closest("tr");
-		var id= row.find(".idTabla").text();
+		var data = $("#tablaClientes").DataTable().row($(this).closest('tr').index()).data();
 		$("#divPrincipal").hide();
 		$("#divDeudas").show();
-		recargarTablaVenta(id);
+		recargarTablaVenta(data.id);
 		$("#tablaVentasMorosas").DataTable();
 		$("#nombreDeuda").empty();
-		$("#nombreDeuda").append(row.find(".nyaTabla").text());
+		$("#nombreDeuda").append(data.nombreApellido);
 	});
 			
 }
 
 function eventosRelacionados()
 {
-	$(document).on('click', ".btnEditar", function(){
-		var row = $(this).closest("tr");
+	$("#tablaClientes tbody").on('click', ".btnEditar", function()
+	{
+		var data = $("#tablaClientes").DataTable().row($(this).closest('tr').index()).data();
+		$("#divCrearCliente").hide();
+		$("#divPrincipal").show();
 		$("#nuevoEditar").empty();
 		$("#nuevoEditar").append("Editar Cliente:");
-		$("#txtID").css("display", "inline");
-		$("#txtID").val(row.find(".idTabla").text());
-		$("#txtNombreYApellido").val(row.find(".nyaTabla").text());
-		$("#txtDireccion").val(row.find(".direTabla").text());
-		$("#txtTelefono").val(row.find(".telTabla").text());
-		$("#accordion #nuevoEditar").click();
+		$("#txtID").show();
+		$("#txtID").empty();
+		$("#txtID").append(data.id);
+		$("#txtNombre").empty();
+		$("#txtNombre").append(data.nombreApellido);
+		$("#txtApellido").empty();
+		$("#txtDireccion").empty();
+		$("#txtDireccion").append(data.direccion);
+		$("#txtTelefono").empty();
+		$("#txtTelefono").append(data.telefono);
+	
 	});
 
 
@@ -152,7 +160,7 @@ function cargarTabla()
             }
         },
         aoColumnDefs: [ { 'bSortable': false, 'aTargets': [4, 5] } ],
-        columnDefs: [{ defaultContent: '<input type="button" class="botones btnEditar" value="Editar">' }],
+        columnDefs: [{ defaultContent: '<input type="button" class="btn btn-info btnEditar" value="Editar">' }],
         bLengthChange: false,
         ajax: 
     	{

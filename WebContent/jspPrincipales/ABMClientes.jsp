@@ -18,7 +18,7 @@ import="negocio.ControladorABM" %>
 		<div class="col-lg-9">
 		    <h1 class="page-header">Clientes</h1>
 		</div>
-		<div class="col-lg-3"">
+		<div class="col-lg-3">
 			<button id="btnMostrarCreate" class="btn btn-primary page-header pull-right" >Nuevo Cliente</button>
 		</div>
 	</div>
@@ -42,7 +42,7 @@ import="negocio.ControladorABM" %>
 
 	<div class="row">
 		<div class="col-lg-12">
-		    <h1 class="page-header">Nuevo Cliente</h1>
+		    <h1 id="nuevoEditar"class="page-header">Nuevo Cliente</h1>
 		</div>
 	</div>
 	
@@ -55,7 +55,10 @@ import="negocio.ControladorABM" %>
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-lg-6">
-								<input type="hidden" id="txtID">
+								<div class="form-group" hidden="hidden">
+									<label>ID</label>
+									<input id="txtID" class="form-control">
+								</div>
 								<div class="form-group">
 									<label>Nombre</label>
 									<input id="txtNombre" class="form-control">

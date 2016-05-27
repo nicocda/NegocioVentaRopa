@@ -39,13 +39,16 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 		<div class="col-lg-9">
 		    <h1 class="page-header">Productos</h1>
 		</div>
+		<div class="col-lg-3">
+			<button id="btnMostrarCreate" class="btn btn-primary page-header pull-right" >Nuevo Producto</button>
+		</div>
 	</div>
 	<table id="tablaProductos" class="display">
 		<thead>
 			<tr>
-				<th width="10%">ID</td>
+				<th width="15%">ID</td>
 				<th width="30%">Descripcion</td>
-				<th width="20%">Precio</td>
+				<th width="15%">Precio</td>
 				<th width="20%">Estado</td>
 				<th width="10%"></td>
 				<th width="10%"></td>
@@ -55,7 +58,7 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 	</table>
 	<hr>
 </div>
-<div>
+		<div id="divCrearProducto" hidden="hidden">
 			<select id="cbTipo">
 				<optgroup label="Tipo">
 					<option value="R">Ropa</option>
@@ -75,8 +78,13 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 			<input type="text" id="txtID" placeholder="ID" class="textInputs" disabled="disabled" value = <%=ControladorABM.obtenerIdCompleto('R', 'H')%>>
 			<input type="text" id="txtDescripcion" class="textInputs" placeholder="Descripción">
 			<input type="text" id="txtPrecio" class="textInputs" placeholder="Precio">
-			<input type="submit" id="btnAceptar" class="botones" value="Guardar Producto">
+			<button type="submit" id="btnAceptar" class="btn btn-primary">Guardar</button>
+			 <button type="reset" id="btnCancelarCreate" class="btn btn-default">Cancelar</button>
+
+			
 		</div>
+		
+		
 	<div id="divBarcode" hidden="hidden" >
 		<div id="idBarcode" class="barcodeFP"></div>
 		<label id="codNoBarcode"></label><br>
@@ -85,6 +93,8 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 				<br>
 				<button class="btn btn-default" id="btnVolverDeBarcode">Volver</button>
 		</div>
+		
+		
 	</div>
 <%}
 else
