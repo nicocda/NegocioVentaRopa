@@ -45,12 +45,20 @@ public class Deudas extends HttpServlet {
 			int idClie = Integer.parseInt(request.getParameter("idCliente"));
 			ArrayList<Venta> ventasMorosas = new ArrayList<Venta>();
 			
-				ventasMorosas = ControladorTransaccion.buscarVentasCliente(idClie);			
-
+			ventasMorosas = ControladorTransaccion.buscarVentasCliente(idClie);		
+			
+			response.setContentType("json");
+		    response.setCharacterEncoding("UTF-8");
+		    
+			if (ventasMorosas != null)
+			{
 				String mensaje = JsonResponses.arrayVentasMorosas(ventasMorosas);
-				response.setContentType("json");
-			    response.setCharacterEncoding("UTF-8");
 			    response.getWriter().write(mensaje);
+			}
+			else
+			
+				response.getWriter().write("{\"data\": []}");
+			
 			
 		}
 

@@ -38,7 +38,12 @@ public class Ventas extends HttpServlet {
 		Venta vta = (Venta) session.getAttribute("venta");
 		String action = request.getParameter("action");	
 		
-		if (action.equals("agregarProducto"))
+		if (action == null)
+		{
+			request.setAttribute("url","../jspPrincipales/Ventas.jsp");
+			request.getRequestDispatcher("jspCompartido/newMainLayout.jsp").forward(request, response);
+		}	
+		else if (action.equals("agregarProducto"))
 		{	
 			//Primero intento buscar y validar el producto
 			String id = request.getParameter("id");

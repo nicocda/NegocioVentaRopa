@@ -2,12 +2,9 @@
 import="negocio.ControladorABM"
 import="entidades.EventLog"
 import="entidades.Configuracion"%>
-<script type="text/javascript" src="../scripts/lib/jquery.simplePagination.js"></script>
-<script type="text/javascript" src="./scripts/lib/jquery.simplePagination.js"></script>
-<script type="text/javascript" src="../scripts/custom/Consola.js"></script>	
-<script type="text/javascript" src="./scripts/custom/Consola.js"></script>	
-<link rel="stylesheet" type="text/css" href="../themes/simplePagination.css"/>
-<link rel="stylesheet" type="text/css" href="./themes/simplePagination.css"/>
+<script type="text/javascript" src="scripts/lib/jquery.simplePagination.js"></script>
+<script type="text/javascript" src="scripts/custom/Consola.js"></script>	
+<link rel="stylesheet" type="text/css" href="themes/simplePagination.css"/>
 
 <%java.net.InetAddress host = java.net.InetAddress.getLocalHost(); %>
 <H4>Consola (<%=host.getHostName()%>)</H4>

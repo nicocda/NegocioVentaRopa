@@ -43,16 +43,17 @@ public class Index extends HttpServlet
 				    session.invalidate();
 				request.getRequestDispatcher("jspPrincipales/LogIn.jsp").forward(request, response);
 			}
-			/*else if(link.equals("Ventas"))
-			{
-				request.setAttribute("index", true);
-				request.getRequestDispatcher("Ventas").forward(request, response);
-			}*/
-			else
+			if (link.equals("Error"))
 			{
 				request.setAttribute("url","../jspPrincipales/" +link.trim()+".jsp");
 				request.getRequestDispatcher("jspCompartido/newMainLayout.jsp").forward(request, response);
 			}
+			/*
+			else
+			{
+				request.setAttribute("url","../jspPrincipales/" +link.trim()+".jsp");
+				request.getRequestDispatcher("jspCompartido/newMainLayout.jsp").forward(request, response);
+			}*/
 		}
 		else
 			request.getRequestDispatcher("jspPrincipales/LogIn.jsp").forward(request, response);

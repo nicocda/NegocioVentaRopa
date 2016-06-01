@@ -6,10 +6,8 @@ import="negocio.ControladorABM" %>
 if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttribute("usuario")).getTipoUsuario() == 1) 
 {%>
 
-<script type="text/javascript" src="../scripts/custom/ABMUsuarios.js"></script>	
-<script type="text/javascript" src="./scripts/custom/ABMUsuarios.js"></script>	
-<script type="text/javascript" src="../scripts/custom/popup.js"></script>
-<script type="text/javascript" src="./scripts/custom/popup.js"></script>
+<script type="text/javascript" src="scripts/custom/ABMUsuarios.js"></script>	
+<script type="text/javascript" src="scripts/custom/popup.js"></script>
 
 <H4>Usuarios</H4>
 <div id="divError"></div>

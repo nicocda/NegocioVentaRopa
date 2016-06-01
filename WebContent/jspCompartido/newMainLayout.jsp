@@ -4,33 +4,24 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-
+	<link rel="stylesheet" type="text/css" href="themes/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="themes/metisMenu.min.css">
+	<link rel="stylesheet" type="text/css" href="themes/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="themes/select2.css">
+	<link rel="stylesheet" type="text/css" href="themes/sb-admin-2.css">
+	<link rel="stylesheet" type="text/css" href="themes/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="themes/jquery.dataTables.min.css">
 	
-	<link rel="stylesheet" type="text/css" href="./themes/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="./themes/metisMenu.min.css">
-	<link rel="stylesheet" type="text/css" href="./themes/jquery-ui.css">
-	<link rel="stylesheet" type="text/css" href="./themes/select2.css">
-	<link rel="stylesheet" type="text/css" href="./themes/sb-admin-2.css">
-	<link rel="stylesheet" type="text/css" href="./themes/font-awesome/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="./themes/jquery.dataTables.min.css">
-	
-	<script type="text/javascript" src="./scripts/lib/jquery-1.12.3.js"></script>
-	<script type="text/javascript" src="./scripts/lib/jquery-ui.js"></script>
-	<script type="text/javascript" src="./scripts/custom/Ajax.js"></script>	
-	<script type="text/javascript" src="./scripts/lib/select2.js"></script>
-	<script type="text/javascript" src="./scripts/lib/bootstrap.min.js"></script>
-	<script type="text/javascript" src="./scripts/lib/metisMenu.min.js"></script>
-	<script type="text/javascript" src="./scripts/lib/sb-admin-2.js"></script>
-	<script type="text/javascript" src="./scripts/lib/jquery.dataTables.min.js"></script>
-	
-
-	
-	
-	
-	
-
+	<script type="text/javascript" src="scripts/lib/jquery-1.12.3.js"></script>
+	<script type="text/javascript" src="scripts/lib/jquery-ui.js"></script>
+	<script type="text/javascript" src="scripts/custom/Ajax.js"></script>	
+	<script type="text/javascript" src="scripts/lib/select2.js"></script>
+	<script type="text/javascript" src="scripts/lib/bootstrap.min.js"></script>
+	<script type="text/javascript" src="scripts/lib/metisMenu.min.js"></script>
+	<script type="text/javascript" src="scripts/lib/sb-admin-2.js"></script>
+	<script type="text/javascript" src="scripts/lib/jquery.dataTables.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>LinternaLacoste</title>
 </head>
 <body>
 
@@ -116,16 +107,16 @@
                             <a href="/NegocioRopa"><i class="fa fa-home fa-fw"></i> Inicio</a>
                         </li>
                         <li>
-                            <a href="Index?link=ABMClientes"><i class="fa fa-male fa-fw"></i> Clientes</a>
+                            <a href="ABMClientes"><i class="fa fa-male fa-fw"></i> Clientes</a>
                         </li>
                         <li>
-                            <a href="Index?link=ABMProductos"><i class="fa fa-list-ul fa-fw"></i> Productos</a>
+                            <a href="ABMProductos"><i class="fa fa-list-ul fa-fw"></i> Productos</a>
                         </li>
                         <li>
-                            <a href="Index?link=Ventas"><i class="fa fa-star fa-fw"></i> Venta</a>
+                            <a href="Ventas"><i class="fa fa-star fa-fw"></i> Venta</a>
                         </li>
                         <li>
-                            <a href="Index?link=ReporteVentas"><i class="fa fa-folder-open fa-fw"></i> Reportes</a>
+                            <a href="ReporteVentas"><i class="fa fa-folder-open fa-fw"></i> Reportes</a>
                         </li>
                         
                         <li>

@@ -39,7 +39,12 @@ public class ReporteVentas extends HttpServlet
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		String action = request.getParameter("action");
-		if (action.equals("mostrarVenta"))
+		if (action == null)
+		{
+			request.setAttribute("url","../jspPrincipales/ReporteVentas.jsp");
+			request.getRequestDispatcher("jspCompartido/newMainLayout.jsp").forward(request, response);
+		}	
+		else if (action.equals("mostrarVenta"))
 		{
 			String fechaMinimastr = request.getParameter("fechaMinima");
 			String fechaMaximastr = request.getParameter("fechaMaxima");

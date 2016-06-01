@@ -30,7 +30,13 @@ public class ABMClientes extends HttpServlet
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		String action = request.getParameter("action");
-		if (action.equals("agregarCliente"))
+		
+		if (action == null)
+		{
+			request.setAttribute("url","../jspPrincipales/ABMClientes/Index.jsp");
+			request.getRequestDispatcher("jspCompartido/newMainLayout.jsp").forward(request, response);
+		}
+		else if (action.equals("agregarCliente"))
 		{
 			int id;
 

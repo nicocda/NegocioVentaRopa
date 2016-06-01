@@ -32,9 +32,12 @@ public class ABMProductos extends HttpServlet {
 	{
 		String action = request.getParameter("action");
 		
-		
-		
-		if (action.equals("alta"))
+		if (action == null)
+		{
+			request.setAttribute("url","../jspPrincipales/ABMProductos/Index.jsp");
+			request.getRequestDispatcher("jspCompartido/newMainLayout.jsp").forward(request, response);
+		}	
+		else if (action.equals("alta"))
 		{
 			String descripcion = request.getParameter("descripcion"), 
 					precio=request.getParameter("precio"),

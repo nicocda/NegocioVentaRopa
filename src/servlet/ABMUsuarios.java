@@ -29,7 +29,12 @@ public class ABMUsuarios extends HttpServlet
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		String action = request.getParameter("action");
-		if (action.equals("guardarUsuario"))
+		if (action == null)
+		{
+			request.setAttribute("url","../jspPrincipales/ABMUsuarios.jsp");
+			request.getRequestDispatcher("jspCompartido/newMainLayout.jsp").forward(request, response);
+		}	
+		else if (action.equals("guardarUsuario"))
 		{
 			String usuario = request.getParameter("usuario");			
 			String nombreApellido = request.getParameter("nombreApellido");

@@ -48,10 +48,10 @@ public class CatalogoClientes extends CatalogoBase
 				{
 					dbCliente.setDireccion(cliente.getDireccion());
 					dbCliente.setNombre(cliente.getNombre());
+					dbCliente.setApellido(cliente.getApellido());
 					dbCliente.setTelefono(cliente.getTelefono());		
 				}
 			}
-			
 			getEm().getTransaction().commit();
 		}
 		finally

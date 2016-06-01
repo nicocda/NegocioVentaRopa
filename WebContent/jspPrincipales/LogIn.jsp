@@ -4,29 +4,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-		<%if ((String)request.getAttribute("servlet")!=null) 
-		{%>
-		<link rel="stylesheet" type="text/css" href="./themes/header.css">
-		<link rel="stylesheet" type="text/css" href="./themes/jquery-ui.css">
-		<link rel="stylesheet" type="text/css" href="./themes/componentes.css">
-		<script type="text/javascript" src="./scripts/lib/jquery-1.12.3.js"></script>
-		<script type="text/javascript" src="./scripts/lib/jquery-ui.js"></script>
-		<script type="text/javascript" src="./scripts/custom/Ajax.js"></script>	
-		<script type="text/javascript" src="./scripts/custom/popup.js"></script>
-		<script type="text/javascript" src="./scripts/custom/login.js"></script>		
-		<%}
-		else
-		{%>
-		<link rel="stylesheet" type="text/css" href="../themes/header.css">
-		<link rel="stylesheet" type="text/css" href="../themes/jquery-ui.css">
-		<link rel="stylesheet" type="text/css" href="../themes/componentes.css">
-		<script type="text/javascript" src="../scripts/lib/jquery-1.12.3.js"></script>
-		<script type="text/javascript" src="../scripts/lib/jquery-ui.js"></script>
-		<script type="text/javascript" src="../scripts/custom/Ajax.js"></script>	
-		<script type="text/javascript" src="../scripts/custom/popup.js"></script>
-		<script type="text/javascript" src="../scripts/custom/login.js"></script>	
-		<%} %>
-	
+
+		<link rel="stylesheet" type="text/css" href="themes/header.css">
+		<link rel="stylesheet" type="text/css" href="themes/jquery-ui.css">
+		<link rel="stylesheet" type="text/css" href="themes/componentes.css">
+		<script type="text/javascript" src="scripts/lib/jquery-1.12.3.js"></script>
+		<script type="text/javascript" src="scripts/lib/jquery-ui.js"></script>
+		<script type="text/javascript" src="scripts/custom/Ajax.js"></script>	
+		<script type="text/javascript" src="scripts/custom/popup.js"></script>
+		<script type="text/javascript" src="scripts/custom/login.js"></script>	
 	
 		<title>Iniciar sesión</title>
 	</head>
@@ -81,7 +67,7 @@
 	<%}
 	else
 	{%>
-		<script>window.location.href='/NegocioRopa/Index?link=ABMClientes';</script>
+		<script>window.location.href='/NegocioRopa/ABMClientes';</script>
 	<%}%>
 	</body>
 </html>

@@ -6,8 +6,8 @@
 if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttribute("usuario")).getTipoUsuario() == 1) 
 {%>
 
-<script type="text/javascript" src="./scripts/custom/Ventas.js"></script>	
-<script type="text/javascript" src="../scripts/custom/Ventas.js"></script>
+<script type="text/javascript" src="scripts/custom/Ventas.js"></script>	
+
 <H4>Venta</H4> <p align="right"><%if(request.getParameter("time") != null)%><%=request.getParameter("time") %></p>
 <div id="divError"></div>
 <form action="Ventas" method="POST">

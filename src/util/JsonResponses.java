@@ -44,9 +44,9 @@ public class JsonResponses
 		String rsp = "{\"data\": [";
 	    for(int i=0;i<clientes.size()-1;i++)
 	    {
-	    	rsp= rsp + "{\"nombreApellido\": \"" + clientes.get(i).getNombre()+"\", \"direccion\": \"" + clientes.get(i).getDireccion() + "\", \"id\": \"" + clientes.get(i).getId() + "\", \"telefono\": \"" + clientes.get(i).getTelefono() + "\"},";
+	    	rsp= rsp + "{\"nombre\": \"" + clientes.get(i).getNombre()+"\", \"apellido\": \"" + clientes.get(i).getApellido()+"\", \"direccion\": \"" + clientes.get(i).getDireccion() + "\", \"id\": \"" + clientes.get(i).getId() + "\", \"telefono\": \"" + clientes.get(i).getTelefono() + "\"},";
 	    }
-	    rsp= rsp + "{\"nombreApellido\": \"" + clientes.get(clientes.size()-1).getNombre()+"\", \"direccion\": \"" + clientes.get(clientes.size()-1).getDireccion() + "\", \"id\": \"" + clientes.get(clientes.size()-1).getId() + "\", \"telefono\": \"" + clientes.get(clientes.size()-1).getTelefono() +"\"}]}";
+	    rsp= rsp + "{\"nombre\": \"" + clientes.get(clientes.size()-1).getNombre()+"\", \"apellido\": \"" + clientes.get(clientes.size()-1).getApellido()+"\", \"direccion\": \"" + clientes.get(clientes.size()-1).getDireccion() + "\", \"id\": \"" + clientes.get(clientes.size()-1).getId() + "\", \"telefono\": \"" + clientes.get(clientes.size()-1).getTelefono() +"\"}]}";
 	    return rsp;
 	}
 
@@ -107,11 +107,10 @@ public class JsonResponses
 
 	public static String arrayVentasMorosas(ArrayList<Venta> ventasMorosas) {
 		if(ventasMorosas.isEmpty())
-
-			return "{ }";		
+			return "{\"data\": []}";	
 		else
 		{
-			String rsp = "{\"cliente\": \""+ventasMorosas.get(0).getCliente().getNombre()+" "+ventasMorosas.get(0).getCliente().getApellido()+"\", \"ventas\": [";
+			String rsp = "{\"cliente\": \""+ventasMorosas.get(0).getCliente().getNombre()+" "+ventasMorosas.get(0).getCliente().getApellido()+"\", \"data\": [";
 		    for(int i=0;i<ventasMorosas.size()-1;i++)
 		    {
 		    	rsp= rsp + "{\"Id\": \"" + ventasMorosas.get(i).getId()+"\", \"fechaVenta\": \"" + ventasMorosas.get(i).getFechaVenta() + "\", \"importeTotal\": \"" + ventasMorosas.get(i).getImporte() +"\", \"deuda\": \"" + ventasMorosas.get(i).getDeudaPendiente() + "\"},";
