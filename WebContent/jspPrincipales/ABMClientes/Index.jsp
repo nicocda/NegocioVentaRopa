@@ -34,7 +34,6 @@ import="negocio.ControladorABM" %>
 		</thead>
 		
 	</table>
-	<hr>
 </div>
 
 <div id="divCrearCliente" hidden="hidden">

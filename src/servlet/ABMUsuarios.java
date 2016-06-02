@@ -31,7 +31,7 @@ public class ABMUsuarios extends HttpServlet
 		String action = request.getParameter("action");
 		if (action == null)
 		{
-			request.setAttribute("url","../jspPrincipales/ABMUsuarios.jsp");
+			request.setAttribute("url","../jspPrincipales/ABMUsuarios/Index.jsp");
 			request.getRequestDispatcher("jspCompartido/newMainLayout.jsp").forward(request, response);
 		}	
 		else if (action.equals("guardarUsuario"))
