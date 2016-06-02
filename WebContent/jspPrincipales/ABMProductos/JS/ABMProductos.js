@@ -3,17 +3,16 @@ $(document).ready(function()
 	eventosRelacionados();
 	cargarTabla();
 	nuevosEventos();
+	$("#divBarcode").dialog({autoOpen: false});
 });
 
 function nuevosEventos()
 {
 	
 	$(document).on('click', "#btnVolverDeBarcode", function()
-			{
-				$("#divBarcode").hide();
-				$("#divPrincipal").show();
-				$("#tablaProductos").DataTable().ajax.reload();
-			});
+	{
+		$("#divBarcode").dialog("close");
+	});
 	
 	$("#btnMostrarCreate").click(function(){
 		$("#divPrincipal").hide();
@@ -43,10 +42,10 @@ function eventosRelacionados()
 				trUsche.append($('<td style="color: red;" colspan="4" align="center"> No existen productos. </td>'));
 				}
 			else
-				{
+			{
 				agregarEncabezado();
 				agregarFilas(resultado);
-				}
+			}
 		
 			
 		});
@@ -105,8 +104,6 @@ function eventosRelacionados()
 		$("#divProductos").show();
 	});
 
-	
-	
 	$("#btnRestaurar").click(function()
 	{
 		buscarId();
@@ -125,47 +122,6 @@ function buscarId()
 		"subTipo": $("#cbSubTipo").val()}, function(result){
 			$("#txtID").val(result.id);
 		});	
-}
-
-function recargarTabla()
-{	
-	$.post('/NegocioRopa/ABMProductos', { "action": "recargarTabla" }, function(resultado){
-		$("#tablaProductos tr").remove();
-		agregarEncabezado();
-		agregarFilas(resultado);
-	});
-}
-
-function agregarEncabezado()
-{
-	var trEncabezado = $("<tr />");
-	$("#tablaProductos").append(trEncabezado);
-	trEncabezado.append($('<td width="15%">ID</td>'));
-	trEncabezado.append($('<td width="40%">Descripci&#243;n</td>'));
-	trEncabezado.append($('<td width="15%">Estado</td>'));
-	trEncabezado.append($('<td width="10%">Precio</td>'));
-	trEncabezado.append($('<td width="10%"></td>'));
-	trEncabezado.append($('<td width="10%"></td>'));
-}
-
-function agregarFilas(resultado)
-{
-	var tbody = $("<tbody />");
-	$("#tablaProductos").append(tbody);
-	for (var i = 0; i < resultado.productos.length; i++)
-	{
-		var trFilas = $("<tr />");
-		tbody.append(trFilas);
-		trFilas.append($('<td align="center" class="idTabla">'+ resultado.productos[i].id +'</td>'));
-		trFilas.append($('<td class="descripcionTabla">'+ resultado.productos[i].descripcion +'</td>'));
-		trFilas.append($('<td class="estadoTabla">'+ resultado.productos[i].estado +'</td>'));
-		trFilas.append($('<td class="precioTabla">'+ resultado.productos[i].precio +'</td>'));
-		trFilas.append($('<td><input type="button" id="barcode" class="btn btn-info barcode" value="C&#243;digo"></td>'));
-		trFilas.append($('<td><input type="button" class="btn btn-info btnEditar" value="Editar"></td>'));
-		
-		 
-
-	}
 }
 
 function cargarTabla()
@@ -189,7 +145,6 @@ function cargarTabla()
                 "previous":   "Anterior"
             }
         },
-        aoColumnDefs: [ { 'bSortable': false, 'aTargets': [4, 5] } ],
         columnDefs: [{ defaultContent: "<button class='btn btn-info btnEditar'>Editar</button>" }],
         bLengthChange: false,
         ajax: 
@@ -204,21 +159,18 @@ function cargarTabla()
          {"data": "descripcion"},
          {"data": "precio"},
          {"data": "estado"},
-         {"data": null, "targets": -1, "defaultContent": "<button class='btn btn-info btnBarcode'>Barcode</button>"},
-         {"data": null, "targets": -1, "defaultContent": "<button class='btn btn-info btnEditar'>Editar</button>"}
+         {"data": null, "targets": -1, "defaultContent": "<button class='btn btn-info btnBarcode'>Barcode</button>", "sortable": false},
+         {"data": null, "targets": -1, "defaultContent": "<button class='btn btn-info btnEditar'>Editar</button>", "sortable": false}
         ]
 	});
 	
 	$('#tablaProductos tbody').on( 'click', '.btnBarcode', function () 
-			{
+	{
 		var data = $("#tablaProductos").DataTable().row($(this).closest('tr').index()).data();
-	    $("#divPrincipal").hide();
-		$("#divBarcode").show();
-		$("#descBarcode").empty();
-		$("#descBarcode").append('<label id="descBarcode">'+data.descripcion+'</label>');
-		$("#codNoBarcode").empty();
-		$("#codNoBarcode").append('	<label id="codNoBarcode">'+data.id+'</label><br>');
-		$("#idBarcode").empty();
-		$("#idBarcode").append('<div id="idBarcode" class="barcodeFP">'+data.id+'</div>');
-	    } );
+		$("#divBarcode").dialog("open");
+		
+		$("#idBarcode").text(data.id);
+		$("#codNoBarcode").text(data.id);
+		$("#descBarcode").text(data.descripcion);
+    });
 }

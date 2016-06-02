@@ -21,7 +21,7 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
     font-weight: 100;
     
     text-decoration: none;
-    text-align: left;
+    text-align: center;
     text-shadow : none;
     text-transform: none;
     

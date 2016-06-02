@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import excepciones.RespuestaServidor;
 import negocio.ControladorABM;
 import util.JsonResponses;
@@ -70,7 +72,11 @@ public class ABMUsuarios extends HttpServlet
 		{
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
-		    response.getWriter().write(JsonResponses.arrayTodosUsuarios(ControladorABM.buscarTodosUsuarios()));
+		    
+		    Gson g = new Gson();
+		    response.getWriter().write(g.toJson(ControladorABM.buscarTodosUsuarios()));		    
+		    
+		    //response.getWriter().write(JsonResponses.arrayTodosUsuarios(ControladorABM.buscarTodosUsuarios()));
 		}
 	}
 

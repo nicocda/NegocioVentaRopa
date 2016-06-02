@@ -96,7 +96,7 @@ public class JsonResponses
 
 	public static String arrayTodosUsuarios(ArrayList<Usuario> usuarios) 
 	{
-		String rsp = "{\"data\": [";
+		String rsp = "{\"usuarios\": [";
 	    for(int i=0;i<usuarios.size()-1;i++)
 	    {
 	    	rsp= rsp + "{\"usuario\": \"" + usuarios.get(i).getUsuario()+"\", \"nombreApellido\": \"" + usuarios.get(i).getNombreYApellido() + "\", \"email\": \"" + usuarios.get(i).getEmail() +"\", \"tipo\": \"" + tipoUsuario.values()[usuarios.get(i).getTipoUsuario()].name() + "\"},";

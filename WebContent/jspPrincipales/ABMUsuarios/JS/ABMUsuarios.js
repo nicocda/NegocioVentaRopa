@@ -38,9 +38,10 @@ function eventosRelacionados()
 		$("#nuevoEditar").append("Editar Usuario");
 		
 		$("#txtUsuario").val(data.usuario);
-		$("#txtNombreYApellido").val(data.nombreApellido);
-		$("#txtEmail").val(data.email);
-		$("#cbTipo option:contains(" + data.tipo + ")").prop('selected', 'selected');
+		$("#txtNombreYApellido").val(data.nombreYApellido);
+		$("#txtEmail").val(data.mail);
+		$("#cbTipo").val(data.tipoUsuario);
+		$("#txtPassword").val(data.password);
 		$("#txtPassword").prop("disabled", true);
 	});
 	
@@ -68,15 +69,17 @@ function cargarTabla()
     	{
         	type: "POST",
         	url: "/NegocioRopa/ABMUsuarios",
-        	data: { "action": "recargarTabla" }
+        	data: { "action": "recargarTabla" },
+        	dataSrc: ""
     	},
 		columns: 
 		[
 			 {"data": "usuario"},
-			 {"data": "nombreApellido"},
-			 {"data": "email"},
-			 {"data": "tipo"},
-			 {"data": null, "targets": -1, "defaultContent": "<button class='btn btn-info btnEditar'>Editar</button>"}
-        ]
+			 {"data": "nombreYApellido"},
+			 {"data": "mail"},
+			 {"data": "tipoUsuario"},
+			 {"data": null, "targets": -1, "defaultContent": "<button class='btn btn-info btnEditar'>Editar</button>"},
+	         {"data": "password", "visible": false}
+	    ]
 	});
 }
