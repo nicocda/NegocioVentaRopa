@@ -2,7 +2,7 @@
 import="entidades.Producto"
 import="entidades.Usuario"%>
 <%
-if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttribute("usuario")).getTipoUsuario() == 1) 
+if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttribute("usuario")).getTipoUsuario() <= 1) 
 {%>
 
 <script type="text/javascript" src="jspPrincipales/ABMProductos/JS/ABMProductos.js"></script>	

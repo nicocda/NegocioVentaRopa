@@ -20,6 +20,9 @@
 	<script type="text/javascript" src="scripts/lib/metisMenu.min.js"></script>
 	<script type="text/javascript" src="scripts/lib/sb-admin-2.js"></script>
 	<script type="text/javascript" src="scripts/lib/jquery.dataTables.min.js"></script>
+	
+	<link rel="icon" type="image/png" href="themes/images/favicon.ico" />
+	
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>LinternaLacoste</title>
 </head>
@@ -111,6 +114,11 @@
                         </li>
                         <li>
                             <a href="ABMProductos"><i class="fa fa-list-ul fa-fw"></i> Productos</a>
+                        </li>
+                        <li>
+                       		<%if (((Usuario)session.getAttribute("usuario")).getTipoUsuario() == 0){ %>
+                          	  <a href="ABMUsuarios"  ><i class="fa fa-user fa-fw"></i> Usuarios</a>
+                            <%} %>
                         </li>
                         <li>
                             <a href="Ventas"><i class="fa fa-star fa-fw"></i> Venta</a>

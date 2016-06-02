@@ -30,6 +30,34 @@ function agregarEventos()
 		});
 	});
 	
+	$(document).on('click', '#addCli',function()
+	{
+		$("#addCliente").show();
+		$("#txtID").empty();
+		$("#txtNombre").empty();
+		$("#txtApellido").empty();
+		$("#txtDireccion").empty();
+		$("#txtTelefono").empty();
+	});
+	
+	$(document).on('click', '#btnCancelarCreate',function()
+	{
+		$("#addCliente").hide();
+	});
+	
+	$(document).on('click', "#btnGuardarCreate", function()
+			{
+				$.postData('/NegocioRopa/ABMClientes', { "id": $("#txtID").val(), "nombre": $("#txtNombre").val(), "apellido": $("#txtApellido").val(), 
+					"direccion": $("#txtDireccion").val(), "telefono": $("#txtTelefono").val(), "action": "agregarCliente" }, 
+					function()
+					{
+						cargarComboClientes();
+						$("#addCliente").hide();
+					});
+			});
+	
+	
+	
 	$(document).on('click', "#btnCerrarMensaje", function()
 	{
 		$("#mensaje").hide("slow");

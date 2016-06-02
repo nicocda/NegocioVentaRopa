@@ -2,7 +2,7 @@
 <%@page import="entidades.Venta"%>
 <%@page import="java.util.ArrayList"%>
 <%
-if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttribute("usuario")).getTipoUsuario() == 1) 
+if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttribute("usuario")).getTipoUsuario() <= 1) 
 {%>
 <%@ page import="entidades.Cliente"
 import="java.util.ArrayList"

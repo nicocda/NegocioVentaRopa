@@ -3,10 +3,10 @@
 		import="java.util.List"
 		import="entidades.Venta"%>
 <%
-if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttribute("usuario")).getTipoUsuario() == 1) 
+if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttribute("usuario")).getTipoUsuario() <= 1) 
 {%>
 
-<script type="text/javascript" src="scripts/custom/Ventas.js"></script>	
+<script type="text/javascript" src="jspPrincipales/Ventas/JS/Ventas.js"></script>	
 
 <div id="divError"></div>
 <div id="principal">
@@ -14,9 +14,11 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 		    <h1 class="page-header">Venta</h1>
 	</div>
 	<form action="Ventas" method="POST">
+		<div class="row">
 		<select id="comboClientes" style="width: 80%" class="js-example-basic-single">
 		</select>
-		
+		<a id="addCli"><i class="fa fa-plus-circle fa-fw"></i>¿Nuevo Cliente?</a>
+		</div>
 		<table class="display" id="tablaProductos">
 			<thead>
 				<tr>
@@ -41,7 +43,7 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 					%>
 			<tfoot>
 				<tr>
-					<td style="background-color: #C0C0C0;"><input id="agregar" class="botones" type="button" value="Agregar +" /></td>
+					<td style="background-color: #C0C0C0;"><a id="agregar"><i class="fa glyphicon-plus"></i></a></td>
 					<td style="background-color: #C0C0C0;"><input id="txtID" class="textInputs" type="text" placeholder="Codigo Producto"></td>
 					<td align="right" style="background-color: #C0C0C0;"><b id="total">Total: <%if(venta != null){%><%=venta.getImporte() %><%} else { %><label>0</label><%} %></b>
 						<br>
@@ -60,11 +62,11 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 		<div style="text-align: center">
 			<br><br>
 			<input type="radio" name="radio" id="radioEfectivo" class="css-checkbox"/>
-			<label class="css-label radGroup1" for="radioEfectivo">Efectivo</label>
+			<label class="css-label radGroup1" for="radioEfectivo"><i class="fa fa-dollar"></i> Efectivo</label>
 			<input type="radio" name="radio" id="radioCtaCte" class="css-checkbox"/>
-			<label class="css-label radGroup1" for="radioCtaCte">Cuenta Corriente</label>
+			<label class="css-label radGroup1" for="radioCtaCte"><i class="fa fa-floppy-o"></i> Cuenta Corriente</label>
 			<input type="radio" name="radio" id="radioTarjeta" class="css-checkbox"/>
-			<label class="css-label radGroup1" for="radioTarjeta">Tarjeta</label>
+			<label class="css-label radGroup1" for="radioTarjeta"><i class=" fa fa-credit-card"></i> Tarjeta</label>
 			<br><br>
 			<input class="botones" type="button" id="realizarVenta" value="Realizar Venta">
 		</div>
@@ -72,18 +74,8 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 </div>
 
 <!-- HTML para el popup -->
-<div id="dialog" title="Agregar Producto" style="display:none;">
-	<table>
-		<tr>
-			<th>Ingrese codigo de producto</th>
-		</tr>
-		<tr>
-			<td><input type="text" name="idProducto"></td>
-		</tr>
-		<tr>
-			<td><input class="botones" type="button" id="addProducto" value="Ok"> </td>
-		</tr>
-	</table>
+<div id="addCliente" hidden="hidden">
+	<jsp:include page="DetalleCliente.jsp"></jsp:include>
 </div>
 <%}
 else

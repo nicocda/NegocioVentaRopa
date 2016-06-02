@@ -40,7 +40,7 @@ public class Ventas extends HttpServlet {
 		
 		if (action == null)
 		{
-			request.setAttribute("url","../jspPrincipales/Ventas.jsp");
+			request.setAttribute("url","../jspPrincipales/Ventas/Index.jsp");
 			request.getRequestDispatcher("jspCompartido/newMainLayout.jsp").forward(request, response);
 		}	
 		else if (action.equals("agregarProducto"))
