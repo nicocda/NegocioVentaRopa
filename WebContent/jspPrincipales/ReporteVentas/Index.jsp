@@ -7,11 +7,13 @@
 <%@page import="negocio.ControladorTransaccion"%>
 <%@page import="entidades.Venta.formaPago"%>
 
-<script type="text/javascript" src="scripts/custom/ReporteVentas.js"></script>
+<script type="text/javascript" src="jspPrincipales/ReporteVentas/JS/ReporteVentas.js"></script>
 
+<div id="divError"></div>
+<div id="divPrincipal">
 <H4>Reporte de Ventas</H4>
 <div class="filtros">
-	<label style="color: #6F6F6F">Clientes</label>
+	<label style="color: #6F6F6F">Reporte Ventas</label>
 	<div style="padding: 20px">
 		Cliente:
 		<select id="comboClientes" style="width: 200px">
@@ -50,7 +52,24 @@
 	</div>
 </div>
 <br>
+<div id="divTabla" hidden="hidden">
+<table id="tablaVentas" class="display">
+		<thead>
+			<tr>
+				<th width="30%">ID</td>
+				<th width="40%">fechaVenta</td>
+				<th width="30%">Comprador</td>
+			</tr>
+		</thead>
+	</table>
+</div>
+</div>
 
-<table class="display" id="tablaTransacciones">
-</table>
+<div id="devDetalleVenta" hidden="hidden">
+	<jsp:include page="DetalleVenta.jsp"></jsp:include>
+</div>
+
+<div id="divDevolucion" hidden="hidden">
+	<jsp:include page="Devolucion.jsp"></jsp:include>
+</div>
 	

@@ -87,7 +87,7 @@ public class JsonResponses
 		    {
 		    	rsp= rsp + "{\"nombreApellido\": \"" + ventas.get(i).getCliente().getNombre()+" "+ventas.get(i).getCliente().getApellido()+"\", \"fecha\": \"" + ventas.get(i).getFechaVenta().toString() +"\", \"idVenta\": \""+ ventas.get(i).getId()+"\"},";
 		    }
-		    rsp= rsp + "{\"nombreApellido\": \"" + ventas.get(ventas.size()-1).getCliente().getNombre()+"\", \"fecha\": \"" +  ventas.get(ventas.size()-1).getFechaVenta().toString()+"\", \"idVenta\": \""+ ventas.get(ventas.size()-1).getId()+"\"}]}";
+		    rsp= rsp + "{\"nombreApellido\": \"" + ventas.get(ventas.size()-1).getCliente().getNombre()+" "+ventas.get(ventas.size()-1).getCliente().getApellido()+"\", \"fecha\": \"" +  ventas.get(ventas.size()-1).getFechaVenta().toString()+"\", \"idVenta\": \""+ ventas.get(ventas.size()-1).getId()+"\"}]}";
 		    return rsp;
 		}
 		else 

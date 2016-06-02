@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import excepciones.RespuestaServidor;
 import negocio.ControladorABM;
 import negocio.ControladorTransaccion;
@@ -41,7 +43,7 @@ public class ReporteVentas extends HttpServlet
 		String action = request.getParameter("action");
 		if (action == null)
 		{
-			request.setAttribute("url","../jspPrincipales/ReporteVentas.jsp");
+			request.setAttribute("url","../jspPrincipales/ReporteVentas/Index.jsp");
 			request.getRequestDispatcher("jspCompartido/newMainLayout.jsp").forward(request, response);
 		}	
 		else if (action.equals("mostrarVenta"))
@@ -97,21 +99,19 @@ public class ReporteVentas extends HttpServlet
 			catch (ParseException e) 
 			{
 				e.printStackTrace();
-			}  
-			
-			String jsonVentas = null;
-			
-			try
-			{
-				jsonVentas = JsonResponses.jsonVentas(ControladorTransaccion.buscarVentasDia(fechaMinima, fechaMaxima, idCliente, tipoPago));
 			}
-			catch (RespuestaServidor sr)
-			{	
-			}
-			
+		
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
-		    response.getWriter().write(jsonVentas);
+		    Gson g = new Gson();
+		    try
+		    {
+				response.getWriter().write(JsonResponses.jsonVentas(ControladorTransaccion.buscarVentasDia(fechaMinima, fechaMaxima, idCliente, tipoPago)));
+			}
+		    catch (RespuestaServidor e)
+		    {
+				e.printStackTrace();
+			}
 		}
 		else if (action.equals("detalleVenta"))
 		{
