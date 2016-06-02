@@ -18,10 +18,12 @@ function nuevosEventos()
 	$("#btnMostrarCreate").click(function(){
 		$("#divPrincipal").hide();
 		$("#divCrearProducto").show();
+		$("#cbTipo").show();
+		$("#cbSubTipo").show();
 	});
 	
-	$("#btnCancelarCreate").click(function(){
-		limpiarCampos();
+	$(document).on('click', "#btnCancelarCreate", function()
+	{
 		$("#divPrincipal").show();
 		$("#divCrearProducto").hide();
 		$("#tablaProductos").DataTable().ajax.reload();
@@ -83,23 +85,17 @@ function eventosRelacionados()
 	
 	$(document).on("click", ".btnEditar", function()
 	{
+		var data = $("#tablaProductos").DataTable().row($(this).closest('tr').index()).data();
 		$("#divPrincipal").hide();
 		$("#divCrearProducto").show();
-		var row = $(this).closest("tr");
-		$("#nuevoEditar").empty();
-		$("#nuevoEditar").append("Editar Producto:");
-		$("#txtID").empty();
-		$("#txtID").append(row.find(".idTabla").text());
-		$("#txtDescripcion").empty();
-		$("#txtDescripcion").append(row.find(".descripcionTabla").text());
-		$("#txtPrecio").empty();
-		$("#txtPrecio").append(row.find(".precioTabla").text());
-		
-		
+		$("#nuevoEditar").val("Editar Producto:");
+		$("#cbTipo").hide();
+		$("#cbSubTipo").hide();
+		$("#txtID").val(data.id);
+		$("#txtDescripcion").val(data.descripcion);
+		$("#txtPrecio").val(data.precio);
 	});
 	
-
-
 	
 	$(document).on("click", "#btnVolverDeBarcode", function()
 	{
@@ -114,6 +110,8 @@ function eventosRelacionados()
 	$("#btnRestaurar").click(function()
 	{
 		buscarId();
+		$("#cbTipo").show();
+		$("#cbSubTipo").show();
 		$("#nuevoEditar").empty();
 		$("#nuevoEditar").append("Nuevo Producto:");
 		$("#txtDescripcion").val("");
@@ -162,8 +160,9 @@ function agregarFilas(resultado)
 		trFilas.append($('<td class="descripcionTabla">'+ resultado.productos[i].descripcion +'</td>'));
 		trFilas.append($('<td class="estadoTabla">'+ resultado.productos[i].estado +'</td>'));
 		trFilas.append($('<td class="precioTabla">'+ resultado.productos[i].precio +'</td>'));
-		trFilas.append($('<td><input type="button" class="btn btn-info btnEditar" value="Editar"></td>'));
 		trFilas.append($('<td><input type="button" id="barcode" class="btn btn-info barcode" value="C&#243;digo"></td>'));
+		trFilas.append($('<td><input type="button" class="btn btn-info btnEditar" value="Editar"></td>'));
+		
 		 
 
 	}
@@ -205,22 +204,21 @@ function cargarTabla()
          {"data": "descripcion"},
          {"data": "precio"},
          {"data": "estado"},
-         {"data": null, "targets": -1, "defaultContent": "<button class='btn btn-info btnEditar'>Editar</button>"},
-         {"data": null, "targets": -1, "defaultContent": "<button class='btn btn-info btnBarcode'>Barcode</button>"}
+         {"data": null, "targets": -1, "defaultContent": "<button class='btn btn-info btnBarcode'>Barcode</button>"},
+         {"data": null, "targets": -1, "defaultContent": "<button class='btn btn-info btnEditar'>Editar</button>"}
         ]
 	});
 	
-	$('#tablaProductos tbody').on( 'click', '.btnBarcode', function () {
-	      var data = tablaProd.row($(this).parents('tr')).data();
-	      var id = data[0];
-		
+	$('#tablaProductos tbody').on( 'click', '.btnBarcode', function () 
+			{
+		var data = $("#tablaProductos").DataTable().row($(this).closest('tr').index()).data();
 	    $("#divPrincipal").hide();
 		$("#divBarcode").show();
 		$("#descBarcode").empty();
-		$("#descBarcode").append('<label id="descBarcode">'+data[1]+'</label>');
+		$("#descBarcode").append('<label id="descBarcode">'+data.descripcion+'</label>');
 		$("#codNoBarcode").empty();
-		$("#codNoBarcode").append('	<label id="codNoBarcode">'+data[0]+'</label><br>');
+		$("#codNoBarcode").append('	<label id="codNoBarcode">'+data.id+'</label><br>');
 		$("#idBarcode").empty();
-		$("#idBarcode").append('<div id="idBarcode" class="barcodeFP">'+data[0]+'</div>');
+		$("#idBarcode").append('<div id="idBarcode" class="barcodeFP">'+data.id+'</div>');
 	    } );
 }

@@ -1,22 +1,59 @@
 <%@page import="negocio.ControladorABM"%>
-<select id="cbTipo">
-	<optgroup label="Tipo">
-		<option value="R">Ropa</option>
-		<option value="M">Marroquineria</option>
-		<option value="B">Bijouterie</option>
-		<option value="Z">Zapatos</option>
-	</optgroup>
-</select>
-<select id="cbSubTipo" >
-	<optgroup label="Subtipo">
-		<option value="H">Hombre</option>
-		<option value="M">Mujer</option>
-		<option value="N">Niño</option>
-	</optgroup>
-</select>
-<button id="btnRestaurar">x</button>
-<input type="text" id="txtID" placeholder="ID" class="textInputs" disabled="disabled" value = <%=ControladorABM.obtenerIdCompleto('R', 'H')%>>
-<input type="text" id="txtDescripcion" class="textInputs" placeholder="Descripción">
-<input type="text" id="txtPrecio" class="textInputs" placeholder="Precio">
-<button type="submit" id="btnAceptar" class="btn btn-primary">Guardar</button>
-<button type="reset" id="btnCancelarCreate" class="btn btn-default">Cancelar</button>
+
+<div class="row">
+	<div class="col-lg-12">
+	    <h1 id="nuevoEditar"class="page-header">Nuevo Producto</h1>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				Ingrese los datos del producto
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="form-group" >
+							<select id="cbTipo" class="form-control">
+								<optgroup label="Tipo">
+									<option value="R">Ropa</option>
+									<option value="M">Marroquineria</option>
+									<option value="B">Bijouterie</option>
+									<option value="Z">Zapatos</option>
+								</optgroup>
+							</select>
+							<select id="cbSubTipo" class="form-control">
+								<optgroup label="Subtipo">
+									<option value="H">Hombre</option>
+									<option value="M">Mujer</option>
+									<option value="N">Niño</option>
+								</optgroup>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>ID</label>
+							<input type="text" id="txtID" placeholder="ID" class="form-control" disabled="disabled" value = <%=ControladorABM.obtenerIdCompleto('R', 'H')%>>
+						</div>
+						<div class="form-group">	
+							<label>Descripcion</label>
+							<input type="text" id="txtDescripcion" class="form-control" placeholder="Descripción">
+						</div>
+						<div class="form-group">
+							<label>Precio</label>
+							<input type="text" id="txtPrecio" class="form-control" placeholder="Precio">
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="pull-right">
+			<hr />
+				<button type="submit" id="btnAceptar" class="btn btn-primary">Guardar</button>
+				<button type="reset" id="btnRestaurar" class="btn btn-default">Limpiar Campos</button>
+				<button id="btnCancelarCreate" class="btn btn-default">Volver</button>
+			</div>
+		</div>
+	</div>
+</div>

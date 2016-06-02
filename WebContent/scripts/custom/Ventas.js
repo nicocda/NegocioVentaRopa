@@ -26,7 +26,6 @@ function agregarEventos()
 			var formaPago = 0;
 		$.postData('/NegocioRopa/Ventas', {"action":"realizarVenta", "idCliente": $("#comboClientes").val(), "formaPago": formaPago }, function(result)
 		{
-			
 			setTimeout(recargarTabla(), 3000);
 		});
 	});
@@ -105,7 +104,7 @@ function cargarComboClientes()
 		var clientes = [];
 		jQuery.each(resultado.data, function()
 		{
-			clientes.push({id: this.id, text: this.nombreApellido});
+			clientes.push({id: this.id, text: this.nombre+" "+this.apellido});
 		});
 		$('#comboClientes').select2(
 		{

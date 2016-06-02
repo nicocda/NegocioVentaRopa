@@ -10,7 +10,7 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 <style type="text/css">
   @font-face {
     font-family: PF;
-    src: url("./fonts/PF.ttf") format("truetype"); 
+    src: url("jspPrincipales/ABMProductos/fonts/PF.ttf") format("truetype"); 
   }
   .barcodeFP {
     font-family: "PF";
