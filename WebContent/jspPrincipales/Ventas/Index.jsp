@@ -19,14 +19,7 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 		</select>
 		<a id="addCli"><i class="fa fa-plus-circle fa-fw"></i>¿Nuevo Cliente?</a>
 		</div>
-		<table class="display" id="tablaProductos">
-			<thead>
-				<tr>
-					<th width="10%">Código</th>
-					<th width="50%">Descripción</th>
-					<th width="30%">Precio</th>
-				</tr>
-			</thead>
+		
 				<%Venta venta = (Venta) session.getAttribute("venta");
 					if(venta != null)
 					{
@@ -41,24 +34,6 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 									<% }
 					}
 					%>
-		<tfoot>
-				<tr>
-					<td style="background-color: #C0C0C0;"><a id="agregar"><i class="fa glyphicon-plus"></i></a></td>
-					<td style="background-color: #C0C0C0;"><input id="txtID" class="textInputs" type="text" placeholder="Codigo Producto"></td>
-					<td align="right" style="background-color: #C0C0C0;"><b id="total">Total: <%if(venta != null){%><%=venta.getImporte() %><%} else { %><label>0</label><%} %></b>
-						<br>
-						<div id="divPaga" style="text-align: right" hidden = "hidden">
-							<label>Paga: </label>
-							<input type="text" id="txtPago"/>
-							<br>
-							<label id="lblVueltoDebe"></label>
-							<input type="text" id="txtVuelto"/>
-						</div>
-					</td>
-				<tr>
-			</tfoot>
-		</table>
-		
 		<div id="divTabla">
 		<table id="tablaVentas" class="display">
 				<thead>
@@ -68,10 +43,10 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 						<th width="30%">Precio</th>
 					</tr>
 				</thead>
-				
-				<tfoot>
+			</table>
+			<table style="width: 100%">
 				<tr>
-					<td style="background-color: #C0C0C0;"><a id="agregar"><i class="fa glyphicon-plus"></i></a></td>
+					<td style="background-color: #C0C0C0;" align="center"> <button id="agregar" class="btn btn-info">Agregar</button></td>
 					<td style="background-color: #C0C0C0;"><input id="txtID" class="textInputs" type="text" placeholder="Codigo Producto"></td>
 					<td align="right" style="background-color: #C0C0C0;"><b id="total">Total: <%if(venta != null){%><%=venta.getImporte() %><%} else { %><label>0</label><%} %></b>
 						<br>
@@ -84,8 +59,6 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 						</div>
 					</td>
 				<tr>
-			</tfoot>
-				
 			</table>
 		</div>
 	
