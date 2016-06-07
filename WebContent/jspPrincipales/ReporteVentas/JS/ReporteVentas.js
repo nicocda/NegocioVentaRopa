@@ -16,11 +16,11 @@ function agregarEventos()
 	});
 		
 	
-	$(document).on("click", "#detalleVenta", function()
+	$(document).on("click", ".detalleVenta", function()
 	{
-		$.post('/NegocioRopa/ReporteVentas', {"action": "detalleVenta", "idVenta": $("#idVenta").val()})
+		$('#divPrincipal').hide();
+		$('#divDetalleVenta').show();
 	});
-	
 	
 	$("#cbFecha").change(function()
 	{
@@ -156,7 +156,8 @@ function cargarTabla()
 		[
 			 {"data": "idVenta"},
 			 {"data": "fecha"},
-			 {"data": "nombreApellido"}
+			 {"data": "nombreApellido"},
+	         {"data": null, "targets": -1, "defaultContent": "<button class='btn btn-info detalleVenta'>Ver Detalle</button>", "sortable": false}
 	    ]
 	});
 }

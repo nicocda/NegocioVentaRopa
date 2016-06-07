@@ -41,7 +41,7 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 									<% }
 					}
 					%>
-			<tfoot>
+		<tfoot>
 				<tr>
 					<td style="background-color: #C0C0C0;"><a id="agregar"><i class="fa glyphicon-plus"></i></a></td>
 					<td style="background-color: #C0C0C0;"><input id="txtID" class="textInputs" type="text" placeholder="Codigo Producto"></td>
@@ -58,6 +58,36 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 				<tr>
 			</tfoot>
 		</table>
+		
+		<div id="divTabla">
+		<table id="tablaVentas" class="display">
+				<thead>
+					<tr>
+						<th width="10%">Código</th>
+						<th width="50%">Descripción</th>
+						<th width="30%">Precio</th>
+					</tr>
+				</thead>
+				
+				<tfoot>
+				<tr>
+					<td style="background-color: #C0C0C0;"><a id="agregar"><i class="fa glyphicon-plus"></i></a></td>
+					<td style="background-color: #C0C0C0;"><input id="txtID" class="textInputs" type="text" placeholder="Codigo Producto"></td>
+					<td align="right" style="background-color: #C0C0C0;"><b id="total">Total: <%if(venta != null){%><%=venta.getImporte() %><%} else { %><label>0</label><%} %></b>
+						<br>
+						<div id="divPaga" style="text-align: right" hidden = "hidden">
+							<label>Paga: </label>
+							<input type="text" id="txtPago"/>
+							<br>
+							<label id="lblVueltoDebe"></label>
+							<input type="text" id="txtVuelto"/>
+						</div>
+					</td>
+				<tr>
+			</tfoot>
+				
+			</table>
+		</div>
 	
 		<div style="text-align: center">
 			<br><br>

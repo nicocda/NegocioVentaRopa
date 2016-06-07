@@ -103,7 +103,6 @@ public class ReporteVentas extends HttpServlet
 		
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
-		    Gson g = new Gson();
 		    try
 		    {
 				response.getWriter().write(JsonResponses.jsonVentas(ControladorTransaccion.buscarVentasDia(fechaMinima, fechaMaxima, idCliente, tipoPago)));
@@ -115,7 +114,6 @@ public class ReporteVentas extends HttpServlet
 		}
 		else if (action.equals("detalleVenta"))
 		{
-			System.out.println("puto");
 			request.setAttribute("idVenta", request.getParameter("idVenta"));
 			request.getRequestDispatcher("jspPrincipales/DetalleVenta.jsp").forward(request, response);
 		}

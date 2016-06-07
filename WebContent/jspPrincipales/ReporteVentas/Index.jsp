@@ -59,13 +59,14 @@
 				<th width="30%">ID</td>
 				<th width="40%">fechaVenta</td>
 				<th width="30%">Comprador</td>
+				<th width="20%"></th>
 			</tr>
 		</thead>
 	</table>
 </div>
 </div>
 
-<div id="devDetalleVenta" hidden="hidden">
+<div id="divDetalleVenta" hidden="hidden">
 	<jsp:include page="DetalleVenta.jsp"></jsp:include>
 </div>
 
