@@ -24,7 +24,7 @@
 	<link rel="icon" type="image/png" href="themes/images/favicon.ico" />
 	
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>LinternaLacoste</title>
+<title>Te vendo hasta a tu vieja</title>
 </head>
 <body>
 
@@ -116,7 +116,7 @@
                             <a href="ABMProductos"><i class="fa fa-list-ul fa-fw"></i> Productos</a>
                         </li>
                         <li>
-                       		<%if (((Usuario)session.getAttribute("usuario")).getTipoUsuario() == 0){ %>
+                       		<%if (((Usuario)session.getAttribute("usuario")).getTipoUsuario() >1){ %>
                           	  <a href="ABMUsuarios"  ><i class="fa fa-user fa-fw"></i> Usuarios</a>
                             <%} %>
                         </li>

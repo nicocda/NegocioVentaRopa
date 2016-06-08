@@ -3,10 +3,14 @@
 <%@page import="entidades.Venta"%>
 <%@page import="entidades.Cliente"%>
 <%@page import="entidades.Producto"%>
+<%@page import="entidades.Usuario"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="negocio.ControladorTransaccion"%>
 <%@page import="entidades.Venta.formaPago"%>
 
+<%
+if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttribute("usuario")).getTipoUsuario() > 1) 
+{%>
 <script type="text/javascript" src="jspPrincipales/ReporteVentas/JS/ReporteVentas.js"></script>
 
 <div id="divError"></div>
@@ -53,10 +57,10 @@
 </div>
 <br>
 <div id="divTabla" hidden="hidden">
-<table id="tablaVentas" class="display">
+<table id="tablaVentas" class="display" style="width: 100%">
 		<thead>
 			<tr>
-				<th width="30%">ID</td>
+				<th width="10%">ID</td>
 				<th width="40%">fechaVenta</td>
 				<th width="30%">Comprador</td>
 				<th width="20%"></th>
@@ -73,4 +77,8 @@
 <div id="divDevolucion" hidden="hidden">
 	<jsp:include page="Devolucion.jsp"></jsp:include>
 </div>
-	
+<%}
+else
+{%>
+<script>window.location.href='/NegocioRopa/Index?link=Error';</script>
+<%}%>	

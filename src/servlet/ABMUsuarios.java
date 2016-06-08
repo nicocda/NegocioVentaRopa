@@ -1,14 +1,17 @@
 package servlet;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
+import entidades.Usuario;
 import excepciones.RespuestaServidor;
 import negocio.ControladorABM;
 import util.JsonResponses;
@@ -31,6 +34,7 @@ public class ABMUsuarios extends HttpServlet
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		String action = request.getParameter("action");
+		HttpSession session = request.getSession(false);
 		if (action == null)
 		{
 			request.setAttribute("url","../jspPrincipales/ABMUsuarios/Index.jsp");
@@ -55,18 +59,34 @@ public class ABMUsuarios extends HttpServlet
 			}
 			
 			RespuestaServidor sr = new RespuestaServidor();
+			 String mensaje="";
 			try
 			{
-				ControladorABM.guardarUsuario(usuario, password, nombreApellido, email, tipoUsuario);
+				
+				 Usuario user = (Usuario) session.getAttribute("usuario");
+				 if(validaUsuario(sr,usuario,password, tipoUsuario,user))
+				 {
+					 ControladorABM.guardarUsuario(usuario, password, nombreApellido, email, tipoUsuario);
+					 mensaje="Se guardo correctamente el usuario";
+				 }
+				 else
+				 {
+					 sr.addError("No tiene permisos para crear este tipo de usuario.");
+				 }
 			}
 			catch(RespuestaServidor res)
 			{
 				sr = res;
 			}
-			String mensajesJson = JsonResponses.devolverMensaje(sr, "Se guardo correctamente el cliente");
+			String mensajesJson = JsonResponses.devolverMensaje(sr, mensaje);
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(mensajesJson);
+		}
+		else if (action.equals("eliminarUsuario"))
+		{
+			String usuario = request.getParameter("usuario");
+			ControladorABM.eliminarUsuario(usuario);
 		}
 		else if (action.equals("recargarTabla"))
 		{
@@ -78,6 +98,27 @@ public class ABMUsuarios extends HttpServlet
 		    
 		    //response.getWriter().write(JsonResponses.arrayTodosUsuarios(ControladorABM.buscarTodosUsuarios()));
 		}
+	}
+
+	private boolean validaUsuario(RespuestaServidor sr, String usuario, String password, int tipoUsuario, Usuario user) 
+	{
+		boolean validaUsuario=true;
+		if(usuario=="" || usuario== null)
+		{
+			 sr.addError("Ingrese un usuario");
+			 validaUsuario=false;
+		}
+		if(password=="" || password == null)
+		{
+			 sr.addError("Ingrese un password");
+			 validaUsuario=false;
+		}
+		if(user.getTipoUsuario()<=tipoUsuario)
+		{
+			sr.addError("No tiene permisos para crear este tipo de usuario.");
+			validaUsuario=false;
+		}
+		return validaUsuario;
 	}
 
 }

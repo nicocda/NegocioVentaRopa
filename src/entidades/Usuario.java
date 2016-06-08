@@ -67,8 +67,9 @@ public class Usuario
 	
 	public static enum tipoUsuario
 	{
-		SUPERUSER,
+		INACTIVO,
+		USUARIO,
 		ADMIN,
-		MANAGER
+		SUPERUSER
 	}
 }

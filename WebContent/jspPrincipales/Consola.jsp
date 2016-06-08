@@ -7,7 +7,7 @@ import="entidades.Usuario"%>
 <script type="text/javascript" src="scripts/custom/Consola.js"></script>	
 <link rel="stylesheet" type="text/css" href="themes/simplePagination.css"/>
 <%
-if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttribute("usuario")).getTipoUsuario() == 0) 
+if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttribute("usuario")).getTipoUsuario() > 2) 
 {%>
 <%java.net.InetAddress host = java.net.InetAddress.getLocalHost(); %>
 <H4>Consola (<%=host.getHostName()%>)</H4>

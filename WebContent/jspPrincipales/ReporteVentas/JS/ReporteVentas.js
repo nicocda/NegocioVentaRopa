@@ -136,6 +136,25 @@ function cargarTabla()
 {
 	$("#tablaVentas").DataTable(
 	{
+		responsive: true,
+        columnDefs: [{ defaultContent: "idVenta" }],
+        "language": 
+    	{
+        	"lengthMenu": "Mostrar _MENU_ registros por pagina",
+            "zeroRecords": "No se encontraron resultados",
+            "info": "Mostrando paginas _PAGE_ de _PAGES_",
+            "infoEmpty": "No hay registros disponibles",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+            "search": "Buscar:",
+            "loadingRecords": "Cargando...",
+            "processing": "Procesando...",
+            "paginate": {
+                "first":      "Primero",
+                "last":       "Ultimo",
+                "next":       "Siguiente",
+                "previous":   "Anterior"
+            			}
+    	},
 		"ajax": 
     	{
         	"type": "POST",

@@ -2,6 +2,8 @@ package datos;
 
 import java.util.ArrayList;
 
+import org.hibernate.Session;
+
 import entidades.Usuario;
 
 public class CatalogoUsuarios extends CatalogoBase
@@ -15,6 +17,22 @@ public class CatalogoUsuarios extends CatalogoBase
 		}
 		finally
 		{
+			cerrarEntityManager();
+		}
+	}
+	public static void eliminarUsuario(String usuario)
+	{
+		abrirEntityManager();
+		getEm().getTransaction().begin();
+		try
+		{
+			Usuario us = getEm().find(Usuario.class, usuario);
+			us.setTipoUsuario(0);
+			getEm().getTransaction().commit();
+		}
+		finally
+		{
+			//getEm().getTransaction().rollback();
 			cerrarEntityManager();
 		}
 	}
@@ -50,7 +68,7 @@ public class CatalogoUsuarios extends CatalogoBase
 		abrirEntityManager();
 		try
 		{
-			return (ArrayList<Usuario>)getEm().createQuery("SELECT u FROM Usuario u").getResultList();
+			return (ArrayList<Usuario>)getEm().createQuery("SELECT u FROM Usuario u where u.tipoUsuario > 0").getResultList();
 		}
 		finally
 		{

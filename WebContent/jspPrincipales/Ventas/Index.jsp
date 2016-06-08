@@ -3,7 +3,7 @@
 		import="java.util.List"
 		import="entidades.Venta"%>
 <%
-if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttribute("usuario")).getTipoUsuario() <= 1) 
+if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttribute("usuario")).getTipoUsuario() >= 1) 
 {%>
 
 <script type="text/javascript" src="jspPrincipales/Ventas/JS/Ventas.js"></script>	
@@ -21,26 +21,15 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 		</div>
 		
 				<%Venta venta = (Venta) session.getAttribute("venta");
-					if(venta != null)
-					{
-						
-							for(Producto p: venta.getProductosArrayList())
-									{ %>
-										<tr id="trTablaProducto">
-										<td><%= p.getId() %></td>
-										<td><%= p.getDescripcion()%></td>
-										<td><%= p.getPrecio().getPrecio()%></td>
-										</tr>
-									<% }
-					}
+				
 					%>
 		<div id="divTabla">
 		<table id="tablaVentas" class="display">
 				<thead>
 					<tr>
-						<th width="10%">Código</th>
+						<th width="15%">Código</th>
 						<th width="50%">Descripción</th>
-						<th width="30%">Precio</th>
+						<th width="35%">Precio</th>
 					</tr>
 				</thead>
 			</table>

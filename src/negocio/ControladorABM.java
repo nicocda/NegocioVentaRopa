@@ -134,4 +134,9 @@ public class ControladorABM
 		
 		CatalogoUsuarios.guardarUsuario(usuario);
 	}
+
+	public static void eliminarUsuario(String usuario)
+	{
+		CatalogoUsuarios.eliminarUsuario(usuario);
+	}
 }

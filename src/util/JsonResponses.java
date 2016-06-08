@@ -53,7 +53,7 @@ public class JsonResponses
 	public static String arrayTodosProductosVenta(Venta venta)
 	{
 		ArrayList<Producto> productos = venta.getProductosArrayList();
-		String rsp = "{\"importe\": \" "+ venta.getImporte() +" \", \"productos\": [";
+		String rsp = "{\"productos\": [";
 	    for(int i=0;i<productos.size()-1;i++)
 	    {
 	    	rsp= rsp + "{\"id\": \"" + productos.get(i).getId()+"\", \"descripcion\": \"" + productos.get(i).getDescripcion() + "\", \"precio\": \"" + productos.get(i).getPrecio().getPrecio() +"\", \"estado\": \"" + estado.values()[productos.get(i).getEstado()].name() + "\"},";

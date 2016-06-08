@@ -63,8 +63,7 @@ function eventosRelacionados()
 				$("#txtDescripcion").val("");
 				$("#txtPrecio").val("");
 				$("#accordion #mostrar").click();
-				$("#nuevoEditar").empty();
-				$("#nuevoEditar").append("Nuevo Producto:");
+				$("#nuevoEditar").val("Nuevo Producto:");
 			});
 	});
 	
@@ -133,7 +132,7 @@ function cargarTabla()
             "lengthMenu": "Mostrar _MENU_ registros por pagina",
             "zeroRecords": "No se encontraron resultados",
             "info": "Mostrando paginas _PAGE_ de _PAGES_",
-            "infoEmpty": "No records available",
+            "infoEmpty": "No hay registros disponibles",
             "infoFiltered": "(filtered from _MAX_ total records)",
             "search": "Buscar:",
             "loadingRecords": "Cargando...",
@@ -143,7 +142,7 @@ function cargarTabla()
                 "last":       "Ultimo",
                 "next":       "Siguiente",
                 "previous":   "Anterior"
-            }
+            			}
         },
         columnDefs: [{ defaultContent: "<button class='btn btn-info btnEditar'>Editar</button>" }],
         bLengthChange: false,

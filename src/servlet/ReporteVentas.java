@@ -54,8 +54,9 @@ public class ReporteVentas extends HttpServlet
 			String tipoPagostr = request.getParameter("tipoPago");
 				
 			//Busco las fechas y parseo a Date
-			DateFormat df = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss", Locale.US);
-			Date fechaMinima = null, fechaMaxima = null;
+			
+				DateFormat df = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss", Locale.US);
+				Date fechaMinima = null, fechaMaxima = null;
 			
 			int tipoPago;
 			int idCliente;
@@ -93,8 +94,11 @@ public class ReporteVentas extends HttpServlet
 			
 			try 
 			{
-				fechaMinima = df.parse(fechaMinimastr);
-				fechaMaxima =  df.parse(fechaMaximastr);  
+				if(fechaMinimastr != null && fechaMaximastr != null)
+				{
+					fechaMinima = df.parse(fechaMinimastr);
+					fechaMaxima =  df.parse(fechaMaximastr);  
+				}
 			} 
 			catch (ParseException e) 
 			{

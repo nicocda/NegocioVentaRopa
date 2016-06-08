@@ -3,7 +3,7 @@ import="entidades.Usuario"
 import="java.util.ArrayList"
 import="negocio.ControladorABM" %>
 <%
-if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttribute("usuario")).getTipoUsuario() == 0) 
+if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttribute("usuario")).getTipoUsuario() > 1) 
 {%>
 <script type="text/javascript" src="jspPrincipales/ABMUsuarios/JS/ABMUsuarios.js"></script>	
 <script type="text/javascript" src="scripts/custom/popup.js"></script>
@@ -24,7 +24,8 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 				<th width="10%">Usuario</th>
 				<th width="40%">Nombre y Apellido</th>
 				<th width="20%">Email</th>
-				<th width="20%">Tipo</th>
+				<th width="10%">Tipo</th>
+				<th width="10%"></th>
 				<th width="10%"></th>
 			</tr>
 		</thead>
