@@ -31,8 +31,7 @@ import="negocio.ControladorABM" %>
 				<th width="10%"></td>
 				<th width="10%"></td>
 			</tr>
-		</thead>
-		
+		</thead>		
 	</table>
 </div>
 

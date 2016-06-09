@@ -52,6 +52,9 @@ public class JsonResponses
 
 	public static String arrayTodosProductosVenta(Venta venta)
 	{
+		if(venta.getProductosArrayList().isEmpty())
+			return "{\"productos\": []}";
+		
 		ArrayList<Producto> productos = venta.getProductosArrayList();
 		String rsp = "{\"productos\": [";
 	    for(int i=0;i<productos.size()-1;i++)

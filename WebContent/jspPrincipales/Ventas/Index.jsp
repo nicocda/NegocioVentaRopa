@@ -23,7 +23,9 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 				<%Venta venta = (Venta) session.getAttribute("venta");
 				
 					%>
+		
 		<div id="divTabla">
+		<hr>
 		<table id="tablaVentas" class="display">
 				<thead>
 					<tr>
@@ -51,6 +53,7 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 			</table>
 		</div>
 	
+		<hr>
 		<div style="text-align: center">
 			<br><br>
 			<input type="radio" name="radio" id="radioEfectivo" class="css-checkbox"/>

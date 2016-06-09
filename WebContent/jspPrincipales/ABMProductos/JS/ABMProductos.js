@@ -127,39 +127,16 @@ function cargarTabla()
 {
 	var tablaProd = $("#tablaProductos").DataTable(
 	{
-		responsive: true,
-		"language": {
-            "lengthMenu": "Mostrar _MENU_ registros por pagina",
-            "zeroRecords": "No se encontraron resultados",
-            "info": "Mostrando paginas _PAGE_ de _PAGES_",
-            "infoEmpty": "No hay registros disponibles",
-            "infoFiltered": "(filtered from _MAX_ total records)",
-            "search": "Buscar:",
-            "loadingRecords": "Cargando...",
-            "processing": "Procesando...",
-            "paginate": {
-                "first":      "Primero",
-                "last":       "Ultimo",
-                "next":       "Siguiente",
-                "previous":   "Anterior"
-            			}
-        },
-        columnDefs: [{ defaultContent: "<button class='btn btn-info btnEditar'>Editar</button>" }],
-        bLengthChange: false,
-        ajax: 
-    	{
-        	type: "POST",
-        	url: "/NegocioRopa/ABMProductos",
-        	data: { "action": "recargarTabla" }
-    	},
+    	url: "/NegocioRopa/ABMProductos",
+    	params: { "action": "recargarTabla" },
     	columns: 
 		[
-         {"data": "id"},
-         {"data": "descripcion"},
-         {"data": "precio"},
-         {"data": "estado"},
-         {"data": null, "targets": -1, "defaultContent": "<button class='btn btn-info btnBarcode'>Barcode</button>", "sortable": false},
-         {"data": null, "targets": -1, "defaultContent": "<button class='btn btn-info btnEditar'>Editar</button>", "sortable": false}
+	        {data: "id"},
+	        {data: "descripcion"},
+	        {data: "precio"},
+	        {data: "estado"},
+	        {data: null, "targets": -1, defaultContent: "<button class='btn btn-info btnBarcode'>Barcode</button>", sortable: false},
+	        {data: null, "targets": -1, defaultContent: "<button class='btn btn-info btnEditar'>Editar</button>", sortable: false}
         ]
 	});
 	

@@ -1,42 +1,48 @@
 $(document).ready(function()
 {	
-	cargarTabla();
+	cargarTablaDeClientes();
+	cargarTablaDeVentas();
 	eventosRelacionados();
+	eventosDeTabla();
 });
 
 function eventosRelacionados()
 {
-	$("#btnMostrarCreate").click(function(){
+	$("#btnMostrarCreate").click(function()
+	{
 		$("#divPrincipal").hide();
 		$("#divCrearCliente").show();
 		$("#txtID").hide();
+		eventosDeDetalle();
+	});
+}
+
+function eventosDeDetalle()
+{
+	$("#btnGuardarCreate").click(function()
+	{
+		guardar();
 	});
 	
-	$("#btnCancelarCreate").click(function(){
+	$("#btnCancelarCreate").click(function()
+	{
 		$("#divPrincipal").show();
 		$("#divCrearCliente").hide();
 		limpiarCampos();
 	});
-	
-	$(document).on('click', "#btnGuardarCreate", function()
-	{
-		$.postData('/NegocioRopa/ABMClientes', { "id": $("#txtID").val(), "nombre": $("#txtNombre").val(), "apellido": $("#txtApellido").val(), 
-			"direccion": $("#txtDireccion").val(), "telefono": $("#txtTelefono").val(), "action": "agregarCliente" }, 
-			function()
-			{
-				$("#divPrincipal").show();
-				$("#divCrearCliente").hide();
-				$("#tablaClientes").DataTable().ajax.reload();		
-				limpiarCampos();
-			});
-	});
-	
+}
+
+function eventosDeDeuda()
+{
 	$("#btnVolverDeDeudas").click(function()
 	{
 		$("#divDeudas").hide();
 		$("#divPrincipal").show();
 	});
-	
+}
+
+function eventosDeTabla()
+{
 	$("#tablaClientes tbody").on('click', ".btnDeuda", function()
 	{
 		var data = $("#tablaClientes").DataTable().row($(this).closest('tr').index()).data();
@@ -46,8 +52,9 @@ function eventosRelacionados()
 		$("#divDeudas").show();
 		$("#tablaVentasId").val(data.id);
 		$("#tablaVentasMorosas").DataTable().ajax.reload();
+		eventosDeDeuda();
 	});
-	
+			
 	$("#tablaClientes tbody").on('click', ".btnEditar", function()
 	{
 		var data = $("#tablaClientes").DataTable().row($(this).closest('tr').index()).data();
@@ -61,6 +68,7 @@ function eventosRelacionados()
 		$("#txtApellido").val(data.apellido);
 		$("#txtDireccion").val(data.direccion);
 		$("#txtTelefono").val(data.telefono);
+		eventosDeDetalle();
 	});
 }
 
@@ -73,58 +81,32 @@ function limpiarCampos()
 	$("#txtTelefono").val("");
 }
 
-function cargarTabla()
+function cargarTablaDeClientes()
 {
 	$("#tablaClientes").DataTable(
 	{
-		responsive: true,
-		"language": {
-            "lengthMenu": "Mostrar _MENU_ registros por pagina",
-            "zeroRecords": "No se encontraron resultados",
-            "info": "Mostrando paginas _PAGE_ de _PAGES_",
-            "infoEmpty": "No records available",
-            "infoFiltered": "(filtered from _MAX_ total records)",
-            "search": "Buscar:",
-            "loadingRecords": "Cargando...",
-            "processing": "Procesando...",
-            "paginate": {
-                "first":      "Primero",
-                "last":       "Ultimo",
-                "next":       "Siguiente",
-                "previous":   "Anterior"
-            }
-        },
-        aoColumnDefs: [ { 'bSortable': false, 'aTargets': [4, 5] } ],
-        bLengthChange: false,
-        ajax: 
-    	{
-        	type: "POST",
-        	url: "/NegocioRopa/ABMClientes",
-        	data: { "action": "recargarTabla" }
-    	},
-    	columns: 
-		[
-         {"data": "id"},
-         {"data": "nombre"},
-         {"data": "apellido"},
-         {"data": "direccion"},
-         {"data": "telefono"},
-         {"data": null, "targets": -1, "defaultContent": "<button class='btn btn-info btnDeuda'>Ver deuda</button>"},
-         {"data": null, "targets": -1, "defaultContent": "<button class='btn btn-info btnEditar'>Editar</button>"}
-        ]
+        columns: 
+    		[
+             {data: "id"},
+             {data: "nombre"},
+             {data: "apellido"},
+             {data: "direccion"},
+             {data: "telefono"},
+             {data: null, targets: -1, defaultContent: "<button class='btn btn-info btnDeuda'>Ver deuda</button>", bSortable: false},
+             {data: null, targets: -1, defaultContent: "<button class='btn btn-info btnEditar'>Editar</button>", bSortable: false}
+            ],
+    	url: "/NegocioRopa/ABMClientes",
+    	params: { "action": "recargarTabla" },
 	});
+}
 
+function cargarTablaDeVentas()
+{
 	$("#tablaVentasMorosas").DataTable(
 	{
-		ajax: 
-		{       	
-	    	url: "/NegocioRopa/Deudas",
-	    	type: "POST",
-	    	data: function(d)
-	    	{ 
-	    		d.idCliente = $("#tablaVentasId").val();
-	    	}
-		},
+    	url: "/NegocioRopa/Deudas",
+    	params: { "idCliente": $("#tablaVentasId").val() },
+    	width: 100,
 		columns: 
 		[
          {"data": "Id"},
@@ -132,5 +114,25 @@ function cargarTabla()
          {"data": "importeTotal"},
          {"data": "deuda"}
         ]
+	});
+}
+
+function guardar()
+{
+	$.postData('/NegocioRopa/ABMClientes', 
+	{ 
+		"id": $("#txtID").val(), 
+		"nombre": $("#txtNombre").val(), 
+		"apellido": $("#txtApellido").val(), 
+		"direccion": $("#txtDireccion").val(), 
+		"telefono": $("#txtTelefono").val(), 
+		"action": "agregarCliente"
+	}, 
+	function()
+	{
+		$("#divPrincipal").show();
+		$("#divCrearCliente").hide();
+		$("#tablaClientes").DataTable().ajax.reload();		
+		limpiarCampos();
 	});
 }

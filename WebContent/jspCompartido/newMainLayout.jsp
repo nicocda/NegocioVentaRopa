@@ -1,3 +1,5 @@
+<%@page import="entidades.Producto"%>
+<%@page import="entidades.Venta"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	import="entidades.Usuario"
     pageEncoding="ISO-8859-1"%>
@@ -20,6 +22,7 @@
 	<script type="text/javascript" src="scripts/lib/metisMenu.min.js"></script>
 	<script type="text/javascript" src="scripts/lib/sb-admin-2.js"></script>
 	<script type="text/javascript" src="scripts/lib/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="scripts/custom/DataTables.js"></script>
 	
 	<link rel="icon" type="image/png" href="themes/images/favicon.ico" />
 	
@@ -49,17 +52,23 @@
                         <i class="fa fa-shopping-cart fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-messages">
-                        <li>
-                            <a href="#">
-                            <div class="row">
-									<div class="col-lg-3">	<img src="http://www.gylenterprise.com.ar/images/productos/1379605178.jpg" width="50" height="50" alt="Alternate Text" /> </div>
-									<div class="col-lg-9">
-										<p>Remera Roja de la muerte</p>
-										<p>$200</p>
+                        <%if((Venta)session.getAttribute("venta") != null) 
+                        {%>
+                        	<%for(Producto p : ((Venta)session.getAttribute("venta")).getProductosArrayList())
+                       		{%>
+		                        <li>
+		                            <a href="#">
+		                            <div class="row">
+											<div class="col-lg-3">	<img src="http://www.gylenterprise.com.ar/images/productos/1379605178.jpg" width="50" height="50" alt="Alternate Text" /> </div>
+											<div class="col-lg-9">
+												<p><%=p.getDescripcion()%></p>
+												<p>$<%=p.getPrecio().getPrecio()%></p>
+											</div>
 									</div>
-							</div>
-                            </a>
-                        </li>
+		                            </a>
+		                        </li>
+		                        <%}%>
+                        <%}%>
                         <li class="divider"></li>
                         <li>
                             <a class="text-center" href="#">

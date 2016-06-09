@@ -7,13 +7,12 @@ $(document).ready(function()
 
 function agregarEventos() 
 {   
-	$(document).on("click", "#agregar", function()
+	$(document).on("click", "#agregar", function(e)
 	{
+		e.preventDefault();
 		$.postDataSinExito('/NegocioRopa/Ventas', { "action": "agregarProducto" , "id": $("#txtID").val()}, function()
 		{
-			cargarTabla();
 			$("#tablaVentas").DataTable().ajax.reload();
-			
 		});
 	});
 	
@@ -107,47 +106,20 @@ function cargarTabla()
 {
 	$("#tablaVentas").DataTable(
 	{
-		responsive: true,
-        bLengthChange: false,
         info: false,
         paginate: false,
-        search: false,
-        columnDefs: [{ defaultContent: "estado" }],
-        "language": 
-    	{
-        	"lengthMenu": "Mostrar _MENU_ registros por pagina",
-            "zeroRecords": "No hay productos cargados",
-            "info": "Mostrando paginas _PAGE_ de _PAGES_",
-            "infoEmpty": "No hay registros disponibles",
-            "infoFiltered": "(filtered from _MAX_ total records)",
-            "search": "Buscar:",
-            "loadingRecords": "Cargando...",
-            "processing": "Procesando...",
-            "paginate": {
-                "first":      "Primero",
-                "last":       "Ultimo",
-                "next":       "Siguiente",
-                "previous":   "Anterior"
-            			}
-    	},
-		"ajax": 
-    	{
-        	"type": "POST",
-        	"url": "/NegocioRopa/Ventas",
-        	"data": function ( d ) {
-        	      return $.extend( {}, d, 
-        	{
-	        	"action" : "recargarTabla" 
-        	});
-        	      },
-        	"dataSrc": "productos"
-    	},
+        searching: false,
+        
+    	url: "/NegocioRopa/Ventas",
+    	params: {"action" : "recargarTabla" },
+    	dataSrc: "productos",
+    	
 		columns: 
 		[
-			 {"data": "id"},
-			 {"data": "descripcion"},
-			 {"data": "precio"},
-			 {"data": "estado", "visible": false}
+			 {data: "id"},
+			 {data: "descripcion", bSortable: false},
+			 {data: "precio", bSortable: false},
+			 {data: "estado", visible: false}
 		]
         
     } );

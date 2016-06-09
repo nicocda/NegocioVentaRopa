@@ -49,7 +49,7 @@ $.postDataSinExito = function(url, data, exito)
 		url: url,
 		dataType: 'json',
 		data: data,
-		success:function(result) 
+		success: function(result) 
 		{
 			if(result.tipoMensaje == "error")
 			{
@@ -67,7 +67,7 @@ $.postDataSinExito = function(url, data, exito)
 				exito();
 			}
 		},
-		error:function()
+		error: function(d)
 		{
 			alert("error");
 		}
