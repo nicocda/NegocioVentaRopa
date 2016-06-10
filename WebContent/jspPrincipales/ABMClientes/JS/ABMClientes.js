@@ -86,15 +86,15 @@ function cargarTablaDeClientes()
 	$("#tablaClientes").DataTable(
 	{
         columns: 
-    		[
-             {data: "id"},
-             {data: "nombre"},
-             {data: "apellido"},
-             {data: "direccion"},
-             {data: "telefono"},
-             {data: null, targets: -1, defaultContent: "<button class='btn btn-info btnDeuda'>Ver deuda</button>", bSortable: false},
-             {data: null, targets: -1, defaultContent: "<button class='btn btn-info btnEditar'>Editar</button>", bSortable: false}
-            ],
+		[
+	        {data: "id"},
+	        {data: "nombre"},
+	        {data: "apellido"},
+	        {data: "direccion"},
+	        {data: "telefono"},
+	        {data: null, targets: -1, defaultContent: "<button class='btn btn-info btnDeuda'>Ver deuda</button>", bSortable: false},
+	        {data: null, targets: -1, defaultContent: "<button class='btn btn-info btnEditar'>Editar</button>", bSortable: false}
+        ],
     	url: "/NegocioRopa/ABMClientes",
     	params: { "action": "recargarTabla" },
 	});
@@ -104,15 +104,18 @@ function cargarTablaDeVentas()
 {
 	$("#tablaVentasMorosas").DataTable(
 	{
+		info: false,
+        paginate: false,
+        searching: false,
     	url: "/NegocioRopa/Deudas",
     	params: { "idCliente": $("#tablaVentasId").val() },
     	width: 100,
 		columns: 
 		[
-         {"data": "Id"},
-         {"data": "fechaVenta"},
-         {"data": "importeTotal"},
-         {"data": "deuda"}
+	        {"data": "Id"},
+	        {"data": "fechaVenta"},
+	        {"data": "importeTotal", bSortable: false},
+	        {"data": "deuda", bSortable: false}
         ]
 	});
 }

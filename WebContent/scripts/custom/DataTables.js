@@ -4,19 +4,20 @@ $.extend( $.fn.dataTable.defaults,
 	//Español
 	language: 
 	{
-        "zeroRecords": "No se encontraron resultados",
-        "info": "Mostrando p&aacute;ginas _PAGE_ de _PAGES_",
-        "infoEmpty": "No hay registros disponibles",
-        "infoFiltered": "(Filtrados de _MAX_ registros totales)",
-        "search": "Buscar:",
-        "loadingRecords": "Cargando...",
-        "processing": "Procesando...",
-        "paginate": 
+        info: "Mostrando p&aacute;ginas _PAGE_ de _PAGES_",
+        infoEmpty: "Mostrando de 0 a 0 en 0 registros",
+        infoFiltered: "(Filtrados de _MAX_ registros totales)",
+        loadingRecords: "Cargando...",
+        processing: "Procesando...",
+        search: "Buscar:",
+        emptyTable: "No hay registros disponibles",
+        zeroRecords: "No se encontraron resultados",
+        paginate: 
         {
-            "first":      "Primero",
-            "last":       "&Uacute;ltimo",
-            "next":       "Siguiente",
-            "previous":   "Anterior"
+            first: "Primero",
+            last: "&Uacute;ltimo",
+            next: "Siguiente",
+            previous: "Anterior"
         }
     },
     //CSS responsivo

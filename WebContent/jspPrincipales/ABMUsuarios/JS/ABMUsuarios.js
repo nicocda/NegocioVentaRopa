@@ -4,7 +4,6 @@ $(document).ready(function()
 	eventosRelacionados();	
 });
 
-
 function limpiarCampos()
 {
 	$("#txtUsuario").val("");
@@ -17,7 +16,8 @@ function limpiarCampos()
 
 function eventosRelacionados()
 {
-	$("#btnMostrarCreate").click(function(){
+	$("#btnMostrarCreate").click(function()
+	{
 		$("#divPrincipal").hide();
 		$("#divCrearUsuario").show();
 		$("#txtID").hide();
@@ -58,17 +58,23 @@ function eventosRelacionados()
 	
 	$("#btnGuardarCreate").click(function()
 	{
-		$.postData('/NegocioRopa/ABMUsuarios', { "usuario": $("#txtUsuario").val(), "nombreApellido": $("#txtNombreYApellido").val(), 
-			"email": $("#txtEmail").val(), "password": $("#txtPassword").val(), "tipo": $("#cbTipo").val(), "action": "guardarUsuario" }, 
-			function()
-			{
-				limpiarCampos();
-				$("#tablaUsuarios").DataTable().ajax.reload();
-				$("#nuevoEditar").empty();
-				$("#nuevoEditar").append("Nuevo Usuario:");
-				$("#divCrearUsuario").hide();
-				$("#divPrincipal").show();
-			});
+		$.postData('/NegocioRopa/ABMUsuarios',
+		{
+			"usuario": $("#txtUsuario").val(),
+			"nombreApellido": $("#txtNombreYApellido").val(),
+			"email": $("#txtEmail").val(), "password": $("#txtPassword").val(),
+			"tipo": $("#cbTipo").val(),
+			"action": "guardarUsuario"
+		}, 
+		function()
+		{
+			limpiarCampos();
+			$("#tablaUsuarios").DataTable().ajax.reload();
+			$("#nuevoEditar").empty();
+			$("#nuevoEditar").append("Nuevo Usuario:");
+			$("#divCrearUsuario").hide();
+			$("#divPrincipal").show();
+		});
 	});
 }
 
@@ -76,26 +82,7 @@ function cargarTabla()
 {
 	$("#tablaUsuarios").DataTable(
 	{
-		responsive: true,
-        bLengthChange: false,
         info: false,
-        "language": 
-        {
-        	"lengthMenu": "Mostrar _MENU_ registros por pagina",
-            "zeroRecords": "No se encontraron resultados",
-            "info": "Mostrando paginas _PAGE_ de _PAGES_",
-            "infoEmpty": "No hay registros disponibles",
-            "infoFiltered": "(filtered from _MAX_ total records)",
-            "search": "Buscar:",
-            "loadingRecords": "Cargando...",
-            "processing": "Procesando...",
-            "paginate": {
-                "first":      "Primero",
-                "last":       "Ultimo",
-                "next":       "Siguiente",
-                "previous":   "Anterior"
-            			}
-        },
 		ajax: 
     	{
         	type: "POST",

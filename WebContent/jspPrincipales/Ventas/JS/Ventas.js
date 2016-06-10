@@ -7,10 +7,17 @@ $(document).ready(function()
 
 function agregarEventos() 
 {   
-	$(document).on("click", "#agregar", function(e)
+	$("#agregar").click(function(e)
 	{
+		//Evito que se ejecute el post del form.
 		e.preventDefault();
-		$.postDataSinExito('/NegocioRopa/Ventas', { "action": "agregarProducto" , "id": $("#txtID").val()}, function()
+		
+		$.postDataSinExito('/NegocioRopa/Ventas',
+		{
+			"action": "agregarProducto",
+			"id": $("#txtID").val()
+		},
+		function()
 		{
 			$("#tablaVentas").DataTable().ajax.reload();
 		});
@@ -18,21 +25,19 @@ function agregarEventos()
 	
 	$("#realizarVenta").click(function()
 	{
-		if($("#radioEfectivo").prop("checked"))
-			var formaPago = 1;
-		else if($("#radioCtaCte").prop("checked"))
-			var formaPago = 2;
-		else if($("#radioTarjeta").prop("checked"))
-			var formaPago = 3;
-		else 
-			var formaPago = 0;
-		$.postData('/NegocioRopa/Ventas', {"action":"realizarVenta", "idCliente": $("#comboClientes").val(), "formaPago": formaPago }, function(result)
+		$.postData('/NegocioRopa/Ventas', 
+		{
+			"action":"realizarVenta", 
+			"idCliente": $("#comboClientes").val(), 
+			"formaPago": $("#rdbtnTipoPago").val() 
+		}, 
+		function(result)
 		{
 			setTimeout(cargarTabla(), 3000);
 		});
 	});
 	
-	$(document).on('click', '#addCli',function()
+	$("#addCli").click(function()
 	{
 		$("#addCliente").show();
 		$("#txtID").empty();
@@ -42,23 +47,29 @@ function agregarEventos()
 		$("#txtTelefono").empty();
 	});
 	
+	
 	$(document).on('click', '#btnCancelarCreate',function()
 	{
 		$("#addCliente").hide();
 	});
 	
 	$(document).on('click', "#btnGuardarCreate", function()
-			{
-				$.postData('/NegocioRopa/ABMClientes', { "id": $("#txtID").val(), "nombre": $("#txtNombre").val(), "apellido": $("#txtApellido").val(), 
-					"direccion": $("#txtDireccion").val(), "telefono": $("#txtTelefono").val(), "action": "agregarCliente" }, 
-					function()
-					{
-						cargarComboClientes();
-						$("#addCliente").hide();
-					});
-			});
-	
-	
+	{
+		$.postData('/NegocioRopa/ABMClientes',
+		{
+			"id": $("#txtID").val(),
+			"nombre": $("#txtNombre").val(),
+			"apellido": $("#txtApellido").val(), 
+			"direccion": $("#txtDireccion").val(),
+			"telefono": $("#txtTelefono").val(),
+			"action": "agregarCliente"
+		}, 
+		function()
+		{
+			cargarComboClientes();
+			$("#addCliente").hide();
+		});
+	});
 	
 	$(document).on('click', "#btnCerrarMensaje", function()
 	{
@@ -109,7 +120,7 @@ function cargarTabla()
         info: false,
         paginate: false,
         searching: false,
-        
+
     	url: "/NegocioRopa/Ventas",
     	params: {"action" : "recargarTabla" },
     	dataSrc: "productos",

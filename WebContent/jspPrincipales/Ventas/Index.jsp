@@ -5,28 +5,25 @@
 <%
 if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttribute("usuario")).getTipoUsuario() >= 1) 
 {%>
-
 <script type="text/javascript" src="jspPrincipales/Ventas/JS/Ventas.js"></script>	
 
 <div id="divError"></div>
 <div id="principal">
+
 	<div class="col-lg-9">
 		    <h1 class="page-header">Venta</h1>
 	</div>
+	
 	<form action="Ventas" method="POST">
+	
 		<div class="row">
-		<select id="comboClientes" style="width: 80%" class="js-example-basic-single">
-		</select>
-		<a id="addCli"><i class="fa fa-plus-circle fa-fw"></i>¿Nuevo Cliente?</a>
+			<select id="comboClientes" style="width: 80%" class="js-example-basic-single"></select>
+			<a id="addCli"><i class="fa fa-plus-circle fa-fw"></i>¿Nuevo Cliente?</a>
 		</div>
-		
-				<%Venta venta = (Venta) session.getAttribute("venta");
-				
-					%>
-		
+		<%Venta venta = (Venta) session.getAttribute("venta");%>
 		<div id="divTabla">
-		<hr>
-		<table id="tablaVentas" class="display">
+			<hr>
+			<table id="tablaVentas" class="display">
 				<thead>
 					<tr>
 						<th width="15%">Código</th>
@@ -35,6 +32,7 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 					</tr>
 				</thead>
 			</table>
+			
 			<table style="width: 100%">
 				<tr>
 					<td style="background-color: #C0C0C0;" align="center"> <button id="agregar" class="btn btn-info">Agregar</button></td>
@@ -56,12 +54,25 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 		<hr>
 		<div style="text-align: center">
 			<br><br>
-			<input type="radio" name="radio" id="radioEfectivo" class="css-checkbox"/>
-			<label class="css-label radGroup1" for="radioEfectivo"><i class="fa fa-dollar"></i> Efectivo</label>
-			<input type="radio" name="radio" id="radioCtaCte" class="css-checkbox"/>
-			<label class="css-label radGroup1" for="radioCtaCte"><i class="fa fa-floppy-o"></i> Cuenta Corriente</label>
-			<input type="radio" name="radio" id="radioTarjeta" class="css-checkbox"/>
-			<label class="css-label radGroup1" for="radioTarjeta"><i class=" fa fa-credit-card"></i> Tarjeta</label>
+			
+			<label class="css-label radGroup1" for="radioEfectivo">
+				<input type="radio" name="tipoPago" id="rdbtnTipoPago" class="css-checkbox" value="1"/>
+				<i class="fa fa-dollar"></i> 
+				Efectivo
+			</label>
+			
+			<label class="css-label radGroup1" for="radioCtaCte">
+				<input type="radio" name="tipoPago" id="rdbtnTipoPago" class="css-checkbox" value="2"/>
+				<i class="fa fa-floppy-o"></i> 
+				Cuenta Corriente
+			</label>
+			
+			<label class="css-label radGroup1" for="radioTarjeta">
+				<input type="radio" name="tipoPago" id="rdbtnTipoPago" class="css-checkbox" value="3"/>
+				<i class=" fa fa-credit-card"></i> 
+				Tarjeta
+			</label>
+			
 			<br><br>
 			<input class="botones" type="button" id="realizarVenta" value="Realizar Venta">
 		</div>
