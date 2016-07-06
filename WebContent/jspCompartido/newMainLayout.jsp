@@ -125,9 +125,13 @@
                             <a href="ABMProductos"><i class="fa fa-list-ul fa-fw"></i> Productos</a>
                         </li>
                         <li>
-                       		<%if (((Usuario)session.getAttribute("usuario")).getTipoUsuario() >1){ %>
+                        <%if (((Usuario)session.getAttribute("usuario")) != null) 
+						{
+                       		if (((Usuario)session.getAttribute("usuario")).getTipoUsuario() >1)
+                       		{%>
                           	  <a href="ABMUsuarios"  ><i class="fa fa-user fa-fw"></i> Usuarios</a>
-                            <%} %>
+                            <%} 
+                        }%>
                         </li>
                         <li>
                             <a href="Ventas"><i class="fa fa-star fa-fw"></i> Venta</a>

@@ -41,7 +41,7 @@ public class Index extends HttpServlet
 				HttpSession session = request.getSession(false);
 				if (session != null)
 				    session.invalidate();
-				request.getRequestDispatcher("jspPrincipales/LogIn.jsp").forward(request, response);
+				request.getRequestDispatcher("jspPrincipales/Login/LogIn.jsp").forward(request, response);
 			}
 			if (link.equals("Error"))
 			{
@@ -56,7 +56,7 @@ public class Index extends HttpServlet
 			}*/
 		}
 		else
-			request.getRequestDispatcher("jspPrincipales/LogIn.jsp").forward(request, response);
+			request.getRequestDispatcher("jspPrincipales/Login/LogIn.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException

@@ -30,7 +30,7 @@ public class Login extends HttpServlet
 		if (action == null)
 		{
 			request.setAttribute("servlet", "");
-			request.getRequestDispatcher("jspPrincipales/LogIn.jsp").forward(request, response);
+			request.getRequestDispatcher("jspPrincipales/Login/LogIn.jsp").forward(request, response);
 		}
 		else if (action.equals("login"))
 		{
