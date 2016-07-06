@@ -80,6 +80,25 @@ public class CatalogoProductos extends CatalogoBase
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
+	public static ArrayList<Producto> buscarTodosProductosEnStock()
+	{
+		abrirEntityManager();
+		try
+		{
+			ArrayList<Producto> todosProductos = (ArrayList<Producto>)getEm().createQuery("SELECT p FROM Producto p WHERE p.estado = 1").getResultList();
+			
+			for(Producto p : todosProductos)
+				buscarUltimoPrecio(p);
+	
+			return todosProductos;
+		}
+		finally
+		{
+			cerrarEntityManager();
+		}
+	}
+	
 	public static String buscarUltimoIdProducto(char tipo, char subtipo)
 	{
 		abrirEntityManager();

@@ -83,6 +83,12 @@ public class ABMProductos extends HttpServlet {
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(JsonResponses.arrayTodosProductos(ControladorABM.buscarTodosProductos()));
 		}
+		else if (action.equals("recargarCombo"))
+		{
+			response.setContentType("json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(JsonResponses.arrayTodosProductos(ControladorABM.buscarTodosProductosEnStock()));
+		}
 		else if (action.equals("buscar"))
 		{
 			String cadena = request.getParameter("valor");

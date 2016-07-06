@@ -2,6 +2,7 @@ $(document).ready(function()
 {
 	agregarEventos();
 	cargarComboClientes();
+	cargarComboProductos();
 	cargarTabla();
 });
 
@@ -15,7 +16,7 @@ function agregarEventos()
 		$.postDataSinExito('/NegocioRopa/Ventas',
 		{
 			"action": "agregarProducto",
-			"id": $("#txtID").val()
+			"id": $("#comboProductos").val()
 		},
 		function()
 		{
@@ -109,6 +110,23 @@ function cargarComboClientes()
 		{
 			placeholder: 'Seleccione una opcion',
 			data: clientes
+		});
+	});
+}
+
+function cargarComboProductos()
+{
+	$.post('/NegocioRopa/ABMProductos', { "action": "recargarCombo" }, function(resultado)
+	{
+		var productos = [];
+		jQuery.each(resultado.data, function()
+		{
+			productos.push({id: this.id, text: this.descripcion});
+		});
+		$('#comboProductos').select2(
+		{
+			placeholder: 'Seleccione una opcion',
+			data: productos
 		});
 	});
 }

@@ -72,6 +72,11 @@ public class ControladorABM
 		return CatalogoProductos.buscarTodosProductos();
 	}
 	
+	public static ArrayList<Producto> buscarTodosProductosEnStock()
+	{
+		return CatalogoProductos.buscarTodosProductosEnStock();
+	}
+	
 	public static Cliente buscarCliente(int idCliente) throws RespuestaServidor
 	{
 		return CatalogoClientes.buscarCliente(idCliente);
@@ -106,7 +111,7 @@ public class ControladorABM
 	//si no existe me da el primero para ese tipo y para ese subtipo.
 	public static String obtenerIdCompleto(char tipo, char subTipo) 
 	{
-		final int cantidadDigitos = 7;
+		final int cantidadDigitos = 3;
 		String id = CatalogoProductos.buscarUltimoIdProducto(tipo, subTipo);
 		String idNuevo;
 		if(id != null)
