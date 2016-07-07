@@ -1,6 +1,8 @@
 //Configuración por defecto
 $.extend( $.fn.dataTable.defaults, 
 {
+	 scrollY:"600px",
+	 pageLength: 50,
 	//Español
 	language: 
 	{
