@@ -41,9 +41,12 @@ public class ABMProductos extends HttpServlet {
 		{
 			String descripcion = request.getParameter("descripcion"), 
 					precio=request.getParameter("precio"),
-					id = request.getParameter("id");
+					id = request.getParameter("id"),
+					descripcion2 = request.getParameter("descripcion2"), 
+					precio2 =request.getParameter("precio2"),
+					id2 = request.getParameter("id2");
 
-			float precioFloat;
+			float precioFloat, precioFloat2;
 			try
 			{
 				precioFloat = Float.parseFloat(precio);
@@ -52,11 +55,20 @@ public class ABMProductos extends HttpServlet {
 			{
 				precioFloat = -1;
 			}		
-			
+			try
+			{
+				precioFloat2 = Float.parseFloat(precio2);
+			}
+			catch(NumberFormatException e)
+			{
+				precioFloat2 = -1;
+			}
 			RespuestaServidor sr = new RespuestaServidor();
 			try
 			{
 				ControladorABM.guardarProducto(id, descripcion, Producto.estado.STOCK.ordinal(), precioFloat);
+				if(!descripcion2.isEmpty() || descripcion2 != null)
+					ControladorABM.guardarProducto(id2, descripcion2, Producto.estado.STOCK.ordinal(), precioFloat2);
 			}
 			catch (RespuestaServidor e)
 			{
@@ -71,11 +83,13 @@ public class ABMProductos extends HttpServlet {
 		else if (action.equals("buscarId"))
 		{
 			String tipo = request.getParameter("tipo"), 
-					subTipo=request.getParameter("subTipo");
+					subTipo=request.getParameter("subTipo"),tipo2 = request.getParameter("tipo2"), 
+							subTipo2=request.getParameter("subTipo2");
 			String ID = ControladorABM.obtenerIdCompleto(tipo.charAt(0), subTipo.charAt(0));
+			String ID2 = ControladorABM.obtenerIdCompleto2(tipo.charAt(0), subTipo.charAt(0),tipo2.charAt(0),subTipo2.charAt(0));
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
-		    response.getWriter().write("{\"id\": \"" + ID + "\"}"); 
+		    response.getWriter().write("{\"id\": \"" + ID + "\", \"id2\": \""+ ID2 +"\" }"); 
 		}
 		else if (action.equals("recargarTabla"))
 		{

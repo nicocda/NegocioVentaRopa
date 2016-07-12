@@ -111,11 +111,11 @@ public class ControladorABM
 	//si no existe me da el primero para ese tipo y para ese subtipo.
 	public static String obtenerIdCompleto(char tipo, char subTipo) 
 	{
-		final int cantidadDigitos = 3;
+		final int cantidadDigitos = 11;
 		String id = CatalogoProductos.buscarUltimoIdProducto(tipo, subTipo);
 		String idNuevo;
 		if(id != null)
-			idNuevo = Integer.toString(Integer.parseInt(id.substring(2, cantidadDigitos))+1);
+			idNuevo = Integer.toString(Integer.parseInt(id.substring(2, id.length()))+1);
 		else
 			idNuevo = "1";
 		int a = cantidadDigitos-2-idNuevo.length(); //-2 porque le saco los 2 primeros digitos que son letras
@@ -127,6 +127,28 @@ public class ControladorABM
 		return Character.toString(tipo).concat(Character.toString(subTipo)).concat(idNuevo);
 	}
 
+	public static String obtenerIdCompleto2(char tipo, char subTipo,char tipo2, char subTipo2) 
+	{
+		final int cantidadDigitos = 11;
+		String id = CatalogoProductos.buscarUltimoIdProducto(tipo2, subTipo2);
+		String idNuevo;
+		if(id != null)
+		{
+			if((tipo == tipo2) && (subTipo == subTipo2))
+				idNuevo = Integer.toString(Integer.parseInt(id.substring(2, id.length()))+2);
+			else
+				idNuevo = Integer.toString(Integer.parseInt(id.substring(2, id.length()))+1);
+		}
+		else
+			idNuevo = "1";
+		int a = cantidadDigitos-2-idNuevo.length(); //-2 porque le saco los 2 primeros digitos que son letras
+		for(int i = 1; i<=a; i++)
+		{
+			idNuevo = "0"+idNuevo;
+		}
+			
+		return Character.toString(tipo2).concat(Character.toString(subTipo2)).concat(idNuevo);
+	}
 	public static void guardarUsuario(String nombreUsuario, String password, String nombreApellido, String email, int tipoUsuario) throws RespuestaServidor
 	{
 		Usuario usuario = new Usuario();

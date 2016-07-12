@@ -18,8 +18,9 @@ function eventosRelacionados()
 	{
 		$("#divPrincipal").hide();
 		$("#divCrearProducto").show();
-		$("#cbTipo").show();
-		$("#cbSubTipo").show();
+		$("#tipos").show();
+		$("#divProducto2").show();
+		$("#txtDescripcion").focus();
 		eventosDelDetalle();
 	});
 	
@@ -29,6 +30,16 @@ function eventosRelacionados()
 	});
 	
 	$("#cbSubTipo").change(function()
+	{
+		buscarId();
+	});
+	
+	$("#cbTipo2").change(function()
+	{
+		buscarId();
+	});
+			
+	$("#cbSubTipo2").change(function()
 	{
 		buscarId();
 	});
@@ -46,12 +57,19 @@ function eventosDelDetalle()
 	$("#btnRestaurar").click(function()
 	{
 		buscarId();
-		$("#cbTipo").show();
-		$("#cbSubTipo").show();
+		$("#tipos").show();
 		$("#nuevoEditar").empty();
 		$("#nuevoEditar").append("Nuevo Producto:");
 		$("#txtDescripcion").val("");
 		$("#txtPrecio").val("");
+		$("#txtDescripcion2").val("");
+		$("#txtPrecio2").val("");
+		$("#divProducto2").show();
+	});
+	
+	$("#solo1").click(function()
+	{
+		$("#divProducto2").hide();
 	});
 	
 	$("#btnAceptar").click(function()
@@ -63,18 +81,22 @@ function eventosDelDetalle()
 			"precio": $("#txtPrecio").val(),
 			"action": "alta",
 			"tipo": $("#cbTipo").val(),
-			"subTipo": $("#cbSubTipo").val()
+			"subTipo": $("#cbSubTipo").val(),
+			"id2": $("#txtID2").val(),
+			"descripcion2": $("#txtDescripcion2").val(),
+			"precio2": $("#txtPrecio2").val(),
 		},
 		function()
 		{ 
 			buscarId();
 			$("#txtDescripcion").val("");
 			$("#txtPrecio").val("");
+			$("#txtDescripcion2").val("");
+			$("#txtPrecio2").val("");
+			$("#divProducto2").show();
 			$("#accordion #mostrar").click();
 			$("#nuevoEditar").val("Nuevo Producto:");
-			
-			$("#divPrincipal").show();
-			$("#divCrearProducto").hide();
+			$("#txtDescripcion").focus();
 			$("#tablaProductos").DataTable().ajax.reload();
 		});
 	});
@@ -86,10 +108,10 @@ function eventosDeTabla()
 	{
 		var data = $("#tablaProductos").DataTable().row($(this).closest('tr').index()).data();
 		$("#divPrincipal").hide();
+		$("#divProducto2").hide();
 		$("#divCrearProducto").show();
 		$("#nuevoEditar").val("Editar Producto:");
-		$("#cbTipo").hide();
-		$("#cbSubTipo").hide();
+		$("#tipos").hide();
 		$("#txtID").val(data.id);
 		$("#txtDescripcion").val(data.descripcion);
 		$("#txtPrecio").val(data.precio);
@@ -113,11 +135,14 @@ function buscarId()
 	{
 		"action": "buscarId",
 		"tipo": $("#cbTipo").val(),
-		"subTipo": $("#cbSubTipo").val()
+		"subTipo": $("#cbSubTipo").val(),
+		"tipo2": $("#cbTipo2").val(),
+		"subTipo2": $("#cbSubTipo2").val()
 	}, 
 	function(result)
 	{
 		$("#txtID").val(result.id);
+		$("#txtID2").val(result.id2);
 	});	
 }
 
