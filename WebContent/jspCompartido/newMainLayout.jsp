@@ -6,22 +6,54 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="themes/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="themes/metisMenu.min.css">
-	<link rel="stylesheet" type="text/css" href="themes/jquery-ui.css">
-	<link rel="stylesheet" type="text/css" href="themes/select2.css">
-	<link rel="stylesheet" type="text/css" href="themes/sb-admin-2.css">
-	<link rel="stylesheet" type="text/css" href="themes/font-awesome/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="themes/jquery.dataTables.min.css">
+
+	<%
+	//Carga de css de forma dinámica
+	String themes = "/themes/";
+	String[] stylesheets = 
+		{
+			themes.concat("bootstrap.css"), 
+			themes.concat("metisMenu.css"),
+			themes.concat("jQueryUi.css"), 
+			themes.concat("select2.css"), 
+			themes.concat("SBAdmin.css"), 
+			themes.concat("font-awesome/css/font-awesome.min.css"), 
+			themes.concat("dataTable.css"),
+			themes.concat("componentes.css")
+		};
 	
-	<script type="text/javascript" src="scripts/lib/jquery-1.12.3.js"></script>
-	<script type="text/javascript" src="scripts/lib/jquery-ui.js"></script>
-	<script type="text/javascript" src="scripts/custom/Ajax.js"></script>	
-	<script type="text/javascript" src="scripts/lib/select2.js"></script>
-	<script type="text/javascript" src="scripts/lib/bootstrap.min.js"></script>
-	<script type="text/javascript" src="scripts/lib/metisMenu.min.js"></script>
-	<script type="text/javascript" src="scripts/lib/sb-admin-2.js"></script>
-	<script type="text/javascript" src="scripts/lib/jquery.dataTables.min.js"></script>
+	for (String css : stylesheets)
+	{
+	%>
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}<%=css%>">
+	<%
+	}
+	%>
+	
+	<%
+	//Carga de script de fomra dinámica
+	String lib = "/scripts/lib/";
+	String[] scripts = 
+		{
+			lib.concat("jQuery.js"), 
+			lib.concat("jQueryUi.js"),
+			lib.concat("dataTable.js"), 
+			lib.concat("bootstrap.js"), 
+			lib.concat("simplePagination.js"), 
+			lib.concat("metisMenu.js"), 
+			lib.concat("SBAdmin.js"),
+			lib.concat("select2.js")
+		};
+	
+	for (String script : scripts)
+	{
+	%>
+		<script type="text/javascript" src="${pageContext.request.contextPath}<%=script%>"></script>
+	<%
+	}
+	%>
+	
+	<script type="text/javascript" src="scripts/custom/Ajax.js"></script>
 	<script type="text/javascript" src="scripts/custom/DataTables.js"></script>
 	
 	<link rel="icon" type="image/png" href="themes/images/favicon.ico" />

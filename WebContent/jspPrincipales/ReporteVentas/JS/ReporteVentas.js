@@ -11,8 +11,7 @@ function agregarEventos()
 {
 	$(document).on("click", "#btnBuscar", function()
 	{
-			$("#divTabla").show();
-			$("#tablaVentas").DataTable().ajax.reload();
+		$("#tablaVentas").DataTable().ajax.reload();
 	});
 		
 	
@@ -79,6 +78,7 @@ function agregarEventos()
 			$("#fechaMinima").datepicker("setDate", fechaAuxiliar);
 		}
 		$("#fechaMaxima").datepicker("setDate", new Date());
+		
 	});
 }
 
@@ -136,47 +136,26 @@ function cargarTabla()
 {
 	$("#tablaVentas").DataTable(
 	{
-		responsive: true,
-        columnDefs: [{ defaultContent: "idVenta" }],
-        "language": 
+		params: 
     	{
-        	"lengthMenu": "Mostrar _MENU_ registros por pagina",
-            "zeroRecords": "No se encontraron resultados",
-            "info": "Mostrando paginas _PAGE_ de _PAGES_",
-            "infoEmpty": "No hay registros disponibles",
-            "infoFiltered": "(filtered from _MAX_ total records)",
-            "search": "Buscar:",
-            "loadingRecords": "Cargando...",
-            "processing": "Procesando...",
-            "paginate": {
-                "first":      "Primero",
-                "last":       "Ultimo",
-                "next":       "Siguiente",
-                "previous":   "Anterior"
-            			}
+	    	"action" : "mostrarVenta",
+	    	"fechaMinima" : $("#fechaMinima").datepicker("getDate"),
+	    	"fechaMaxima" : $("#fechaMaxima").datepicker("getDate"),
+	    	"idCliente" :  $("#comboClientes").val(),
+	    	"tipoPago" : $("#cbTipoPago").val()
     	},
-		"ajax": 
-    	{
-        	"type": "POST",
-        	"url": "/NegocioRopa/ReporteVentas",
-        	"data": function ( d ) {
-        	      return $.extend( {}, d, 
-        	{
-	        	"action" : "mostrarVenta",
-	        	"fechaMinima" : $("#fechaMinima").datepicker( "getDate" ),
-	        	"fechaMaxima" : $("#fechaMaxima").datepicker( "getDate" ),
-	        	"idCliente" :  $("#comboClientes").val(),
-	        	"tipoPago" : $("#cbTipoPago").val()
-        	});
-        	      },
-        	"dataSrc": "ventas"
-    	},
+		info: false,
+        paginate: false,
+        searching: false,
+    	dataSrc: "ventas",
 		columns: 
 		[
-			 {"data": "idVenta"},
-			 {"data": "fecha"},
-			 {"data": "nombreApellido"},
-	         {"data": null, "targets": -1, "defaultContent": "<button class='btn btn-info detalleVenta'>Ver Detalle</button>", "sortable": false}
-	    ]
+			 {data: "idVenta"},
+			 {data: "fecha"},
+			 {data: "nombreApellido"},
+	         {data: null, "targets": -1, "defaultContent": "<button class='btn btn-info detalleVenta'>Ver Detalle</button>", "sortable": false}
+	    ],
+    	url: "/NegocioRopa/ReporteVentas",
+    	
 	});
 }

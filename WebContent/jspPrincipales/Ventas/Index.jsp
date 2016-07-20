@@ -8,7 +8,7 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 <script type="text/javascript" src="jspPrincipales/Ventas/JS/Ventas.js"></script>	
 
 <div id="divError"></div>
-<div id="principal">
+<div id="divPrincipal">
 
 	<div class="col-lg-9">
 		    <h1 class="page-header">Venta</h1>

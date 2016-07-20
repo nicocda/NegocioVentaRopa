@@ -5,14 +5,29 @@
 <html>
 	<head>
 
-		<link rel="stylesheet" type="text/css" href="/NegocioRopa/themes/jquery-ui.css">
+		<link rel="stylesheet" type="text/css" href="/NegocioRopa/themes/jQueryUi.css">
 		<link rel="stylesheet" type="text/css" href="/NegocioRopa/jspPrincipales/Login/login.css">
+				
+		<%
+		String lib = "/scripts/lib/";
+		String custom = "/scripts/custom/";
+		String[] scripts = 
+			{
+				lib.concat("jQuery.js"), 
+				lib.concat("jQueryUi.js"),
+				custom.concat("Ajax.js"),
+			};
 		
-		<script type="text/javascript" src="/NegocioRopa/scripts/lib/jquery-1.12.3.js"></script>
-		<script type="text/javascript" src="/NegocioRopa/scripts/lib/jquery-ui.js"></script>
-		<script type="text/javascript" src="/NegocioRopa/scripts/custom/Ajax.js"></script>	
-		<script type="text/javascript" src="/NegocioRopa/jspPrincipales/Login/JS/login.js"></script>	
-	
+		for (String script : scripts)
+		{
+		%>
+			<script type="text/javascript" src="${pageContext.request.contextPath}<%=script%>"></script>
+		<%
+		}
+		%>
+		
+		<script type="text/javascript" src="${pageContext.request.contextPath}/jspPrincipales/Login/JS/Login2.js"></script>
+			
 		<title>Iniciá Sesión</title>
 	</head>
 	
