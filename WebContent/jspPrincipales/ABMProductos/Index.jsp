@@ -14,20 +14,7 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
   }
   .barcodeFP {
     font-family: "PF";
-    font-size: 110px;
-    font-stretch :normal;
-    font-style : normal;
-    font-variant : normal;
-    font-weight: 100;
-    
-    text-decoration: none;
-    text-align: center;
-    text-shadow : none;
-    text-transform: none;
-    
-    line-height: 1.0;
-    word-spacing: 10px;
-  
+    font-size: 33px;
   }
   </style>
 

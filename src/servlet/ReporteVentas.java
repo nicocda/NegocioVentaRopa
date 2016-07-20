@@ -13,9 +13,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
+import entidades.Venta;
 import excepciones.RespuestaServidor;
 import negocio.ControladorABM;
 import negocio.ControladorTransaccion;
@@ -41,6 +43,7 @@ public class ReporteVentas extends HttpServlet
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		String action = request.getParameter("action");
+		HttpSession session = request.getSession(false);
 		if (action == null)
 		{
 			request.setAttribute("url","../jspPrincipales/ReporteVentas/Index.jsp");
@@ -48,6 +51,7 @@ public class ReporteVentas extends HttpServlet
 		}	
 		else if (action.equals("mostrarVenta"))
 		{
+			
 			String fechaMinimastr = request.getParameter("fechaMinima");
 			String fechaMaximastr = request.getParameter("fechaMaxima");
 			String idClientestr = request.getParameter("idCliente");
@@ -119,8 +123,21 @@ public class ReporteVentas extends HttpServlet
 		}
 		else if (action.equals("detalleVenta"))
 		{
-			request.setAttribute("idVenta", request.getParameter("idVenta"));
-			request.getRequestDispatcher("jspPrincipales/DetalleVenta.jsp").forward(request, response);
+			int idVenta = Integer.parseInt(request.getParameter("idVenta"));
+			System.out.println(idVenta);
+			Venta vta = ControladorTransaccion.buscarVenta(idVenta);
+			session.setAttribute("venta", vta);
+			response.sendRedirect("../jspPrincipales/Ventas/Index.jsp");
+			
+			/*response.setContentType("json");
+		    response.setCharacterEncoding("UTF-8");
+		    
+			if (vta != null)
+			{
+				String mensaje = JsonResponses.arrayTodosProductosVenta(vta);
+			    response.getWriter().write(mensaje);
+			}*/
+		
 		}
 	}
 

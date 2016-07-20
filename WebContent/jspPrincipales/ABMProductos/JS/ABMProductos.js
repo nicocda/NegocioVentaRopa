@@ -67,11 +67,6 @@ function eventosDelDetalle()
 		$("#divProducto2").show();
 	});
 	
-	$("#solo1").click(function()
-	{
-		$("#divProducto2").hide();
-	});
-	
 	$("#btnAceptar").click(function()
 	{
 		$.postData('/NegocioRopa/ABMProductos', 
@@ -106,7 +101,9 @@ function eventosDeTabla()
 {
 	$("#tablaProductos tbody").on("click", ".btnEditar", function()
 	{
-		var data = $("#tablaProductos").DataTable().row($(this).closest('tr').index()).data();
+		$("#divBarcode").dialog("close");
+		$("#solo1").hide();
+		var data = $("#tablaProductos").DataTable().row($(this).closest('tr')).data();
 		$("#divPrincipal").hide();
 		$("#divProducto2").hide();
 		$("#divCrearProducto").show();
@@ -118,14 +115,34 @@ function eventosDeTabla()
 		eventosDelDetalle();
 	});
 	
+	//LO HIZO LEO IUJUUUUUUUUUUUUUU ACA AGREGO EVENTOS PARA MOSTRAR EL BOTON DE ELEGIR SI AGREGAR UN PRODUCTO O 2 A LA VEZ
+	$("#btnMostrarCreate").click(function(){
+		$("#solo1").show();
+	});
+	
+	$("#solo1").click(function()
+	{
+		if($("#solo1").html() == "Agregar solo 1 producto")
+		{
+			$("#divProducto2").hide();
+			$("#solo1").html('Agregar 2 productos');
+		}
+		else if($("#solo1").html() == "Agregar 2 productos")
+		{
+			$("#divProducto2").show();
+			$("#solo1").html('Agregar solo 1 producto');
+		}
+	});
+	//FIN AGREGAR UN PRODUCTO O DOS A LA VEZ XDXDXDXDXDXDXDXDXD ODIO A NICOLAS
+	
 	$('#tablaProductos tbody').on( 'click', '.btnBarcode', function() 
 	{
-		var data = $("#tablaProductos").DataTable().row($(this).closest('tr').index()).data();
+		var data = $("#tablaProductos").DataTable().row($(this).closest('tr')).data();
 		$("#divBarcode").dialog("open");
 		
 		$("#idBarcode").text(data.id);
 		$("#codNoBarcode").text(data.id);
-		$("#descBarcode").text(data.descripcion);
+		$("#precio").text(data.precio);
     });
 }
 

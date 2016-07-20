@@ -59,7 +59,7 @@
 	<link rel="icon" type="image/png" href="themes/images/favicon.ico" />
 	
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Te vendo hasta a tu vieja</title>
+<title>Software Kairós</title>
 </head>
 <body>
 
