@@ -31,7 +31,7 @@ function eventosRelacionados()
 	
 	$("#tablaUsuarios tbody").on('click', ".btnEditar", function()
 	{
-		var data = $("#tablaUsuarios").DataTable().row($(this).closest('tr').index()).data();
+		var data = $("#tablaUsuarios").DataTable().row($(this).closest('tr')).data();
 		$("#divCrearUsuario").show();
 		$("#divPrincipal").hide();
 		$("#nuevoEditar").empty();
@@ -47,7 +47,7 @@ function eventosRelacionados()
 	
 	$("#tablaUsuarios tbody").on('click', ".btnEliminar", function()
 	{
-		var data = $("#tablaUsuarios").DataTable().row($(this).closest('tr').index()).data();
+		var data = $("#tablaUsuarios").DataTable().row($(this).closest('tr')).data();
 		var usuario = data.usuario;
 		$.post('/NegocioRopa/ABMUsuarios', {"action": "eliminarUsuario", "usuario": usuario},
 				function()

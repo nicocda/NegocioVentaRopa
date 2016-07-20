@@ -45,7 +45,7 @@ function eventosDeTabla()
 {
 	$("#tablaClientes tbody").on('click', ".btnDeuda", function()
 	{
-		var data = $("#tablaClientes").DataTable().row($(this).closest('tr').index()).data();
+		var data = $("#tablaClientes").DataTable().row($(this).closest('tr')).data();
 		$("#nombreDeuda").empty();
 		$("#nombreDeuda").append(data.nombre + " " + data.apellido);
 		$("#divPrincipal").hide();
@@ -57,7 +57,7 @@ function eventosDeTabla()
 			
 	$("#tablaClientes tbody").on('click', ".btnEditar", function()
 	{
-		var data = $("#tablaClientes").DataTable().row($(this).closest('tr').index()).data();
+		var data = $("#tablaClientes").DataTable().row($(this).closest('tr')).data();
 		$("#divCrearCliente").show();
 		$("#divPrincipal").hide();
 		$("#nuevoEditar").empty();

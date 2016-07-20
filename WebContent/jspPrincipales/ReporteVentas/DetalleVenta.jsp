@@ -1,23 +1,21 @@
-<%@page import="datos.CatalogoVentas"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="entidades.Venta"%>
-<%@page import="entidades.Producto"%>
-<%@page import="negocio.ControladorTransaccion"%>
-
-	<link rel="stylesheet" type="text/css" href="themes/header.css">
-	<link rel="stylesheet" type="text/css" href="themes/jquery-ui.css">
-	<link rel="stylesheet" type="text/css" href="themes/componentes.css">
-	<link rel="stylesheet" type="text/css" href="themes/select2.css">
-	
-<div id="divTabla" hidden="hidden">
-<table id="tablaVentas" class="display">
-		<thead>
-			<tr>
-				<th width="30%">ID</td>
-				<th width="40%">fechaVenta</td>
-				<th width="30%">Comprador</td>
-				<th width="20%"></th>
-			</tr>
-		</thead>
-	</table>
+<input type="hidden" id="idVenta" value="0">
+<div class="row">
+	<div class="col-lg-12">
+	    <h1 class="page-header">
+	    	Compra de: <br><small id="nombreComprador"></small>
+		</h1>
+	</div>
+</div>
+<div id="divTabla">
+			<hr>
+			<table id="tablaDetalleVenta" class="display">
+				<thead>
+					<tr>
+						<th width="15%">Código</th>
+						<th width="50%">Descripción</th>
+						<th width="30%">Precio</th>
+						<th width="5%">Estado</th>
+					</tr>
+				</thead>
+			</table>
 </div>
