@@ -2,7 +2,7 @@ $(document).ready(function()
 {
 	agregarEventos();
 	cargarComboClientes();
-	cargarComboProductos();
+	//cargarComboProductos();
 	cargarTabla();
 });
 
@@ -111,6 +111,8 @@ function cargarComboClientes()
 			placeholder: 'Seleccione una opcion',
 			data: clientes
 		});
+		
+		cargarComboProductos();
 	});
 }
 
@@ -128,6 +130,7 @@ function cargarComboProductos()
 			placeholder: 'Seleccione una opcion',
 			data: productos
 		});
+		
 	});
 }
 
@@ -138,9 +141,10 @@ function cargarTabla()
         info: false,
         paginate: false,
         searching: false,
+   	 	scrollY:"200px",
 
     	url: "/NegocioRopa/Ventas",
-    	params: {"action" : "recargarTabla" },
+    	params: function () { return {"action" : "recargarTabla" } },
     	dataSrc: "productos",
     	
 		columns: 

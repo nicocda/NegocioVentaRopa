@@ -3,7 +3,7 @@ $(document).ready(function()
 	setearFormatosDatePicker();
 	agregarEventos();
 	cargarComboClientes();
-	cargarOtrosCombos();
+	//cargarOtrosCombos();
 	cargarTabla();
 	eventosDeTabla();
 });
@@ -145,6 +145,8 @@ function cargarComboClientes()
 		{
 		  data: clientes
 		});
+		
+		cargarOtrosCombos();
 	});
 }
 
@@ -154,46 +156,28 @@ function cargarOtrosCombos()
 	$("#cbTipoPago").select2({minimumResultsForSearch: -1});
 }
 
+
 function cargarTabla()
 {
 	$("#tablaVentas").DataTable(
 	{
-		responsive: true,
-        columnDefs: [{ defaultContent: "idVenta" }],
-        "language": 
+		info: false,
+        paginate: false,
+        searching: false,
+    	url: "/NegocioRopa/ReporteVentas",
+    	dataSrc: "ventas",
+    	params: function () 
     	{
-        	"lengthMenu": "Mostrar _MENU_ registros por pagina",
-            "zeroRecords": "No se encontraron resultados",
-            "info": "Mostrando paginas _PAGE_ de _PAGES_",
-            "infoEmpty": "No hay registros disponibles",
-            "infoFiltered": "(filtered from _MAX_ total records)",
-            "search": "Buscar:",
-            "loadingRecords": "Cargando...",
-            "processing": "Procesando...",
-            "paginate": {
-                "first":      "Primero",
-                "last":       "Ultimo",
-                "next":       "Siguiente",
-                "previous":   "Anterior"
-            			}
-    	},
-		"ajax": 
-    	{
-        	"type": "POST",
-        	"url": "/NegocioRopa/ReporteVentas",
-        	"data": function ( d ) {
-        	      return $.extend( {}, d, 
-        	{
+    		return {
 	        	"action" : "mostrarVenta",
 	        	"fechaMinima" : $("#fechaMinima").datepicker( "getDate" ),
 	        	"fechaMaxima" : $("#fechaMaxima").datepicker( "getDate" ),
 	        	"idCliente" :  $("#comboClientes").val(),
 	        	"tipoPago" : $("#cbTipoPago").val()
-        	});
-        	      },
-        	"dataSrc": "ventas"
+	    	};
     	},
-		columns: 
+    	width: 100,
+    	columns: 
 		[
 			 {"data": "idVenta"},
 			 {"data": "fecha"},
@@ -202,6 +186,5 @@ function cargarTabla()
 	    ]
 	});
 }
-
 
 

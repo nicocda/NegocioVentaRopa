@@ -29,7 +29,7 @@ $.extend( $.fn.dataTable.defaults,
 	ajax: function (data, callback, settings)
 	{
 		//Hay una función params en cada DataTable que recibe los parámetros
-		var postData = settings.oInit.params;
+		var postData = settings.oInit.params();
 		
 		$.ajax({
 			type: "POST",

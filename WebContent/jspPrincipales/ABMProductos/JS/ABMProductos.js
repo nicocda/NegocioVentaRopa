@@ -168,7 +168,7 @@ function cargarTabla()
 	$("#tablaProductos").DataTable(
 	{
     	url: "/NegocioRopa/ABMProductos",
-    	params: { "action": "recargarTabla" },
+    	params: function () { return { "action": "recargarTabla" } },
     	columns: 
 		[
 	        {data: "id"},

@@ -1,7 +1,7 @@
 $(document).ready(function()
 {	
 	cargarTablaDeClientes();
-	cargarTablaDeVentas();
+	//cargarTablaDeVentas();
 	eventosRelacionados();
 	eventosDeTabla();
 });
@@ -45,6 +45,10 @@ function eventosDeTabla()
 {
 	$("#tablaClientes tbody").on('click', ".btnDeuda", function()
 	{
+		if (! $.fn.DataTable.isDataTable("#tablaVentasMorosas"))
+		{
+			cargarTablaDeVentas();
+		}
 		var data = $("#tablaClientes").DataTable().row($(this).closest('tr')).data();
 		$("#nombreDeuda").empty();
 		$("#nombreDeuda").append(data.nombre + " " + data.apellido);
@@ -96,7 +100,7 @@ function cargarTablaDeClientes()
 	        {data: null, targets: -1, defaultContent: "<button class='btn btn-info btnEditar'>Editar</button>", bSortable: false}
         ],
     	url: "/NegocioRopa/ABMClientes",
-    	params: { "action": "recargarTabla" },
+    	params: function () { return { "action": "recargarTabla" } },
 	});
 }
 
@@ -108,7 +112,7 @@ function cargarTablaDeVentas()
         paginate: false,
         searching: false,
     	url: "/NegocioRopa/Deudas",
-    	params: { "idCliente": $("#tablaVentasId").val() },
+    	params: function () { return { "idCliente": $("#tablaVentasId").val() } },
     	width: 100,
 		columns: 
 		[

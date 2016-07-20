@@ -36,7 +36,7 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 			<table style="width: 100%">
 				<tr>
 					
-					<td style=align="center"> <button style= "width:60%" id="agregar" class="btn btn-info">Agregar</button></td>
+					<td style="text-align: center"> <button style= "width:60%" id="agregar" class="btn btn-info">Agregar</button></td>
 					<td><select id="comboProductos" style="width: 80%" class="js-example-basic-single"></select></td>
 					<td><b id="total">Total: <%if(venta != null){%><%=venta.getImporte() %><%} else { %><label>0</label><%} %></b>
 						<br>
