@@ -1,47 +1,79 @@
 package datos;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
 
-import conexion.DataConnection;
+import org.hibernate.Session;
+
 import entidades.Usuario;
-import excepciones.RespuestaServidor;
 
-public class CatalogoUsuarios 
+public class CatalogoUsuarios extends CatalogoBase
 {
-	
-	public static Usuario buscarUsuario(String id, String pass)
+	public static Usuario buscarUsuario(String nombreUsuario)
 	{
-		Usuario usu = null;
-		String sql="select * from usuario where usuario=? and password=?";
-		PreparedStatement sentencia = null;
-		Connection con = DataConnection.getInstancia().getConn();
+		abrirEntityManager();
 		try
 		{
-			sentencia =con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			sentencia.setString(1, id);
-			sentencia.setString(2, pass);
-			ResultSet rs =sentencia.executeQuery();
-			if(rs.next())
-			{
-				usu = new Usuario();
-				usu.setEmail(rs.getString("mail"));
-				usu.setUsuario(rs.getString("usuario"));
-				usu.setNombreYApellido(rs.getString("nombreyApellido"));
-				usu.setPassword(rs.getString("password"));
-				usu.setTipoUsuario(rs.getInt("tipoUsuario"));
-			}
+			return getEm().find(Usuario.class, nombreUsuario);
 		}
-		catch(SQLException e)
+		finally
 		{
-			e.printStackTrace();
+			cerrarEntityManager();
 		}
-		return usu;
-		
-		
+	}
+	public static void eliminarUsuario(String usuario)
+	{
+		abrirEntityManager();
+		getEm().getTransaction().begin();
+		try
+		{
+			Usuario us = getEm().find(Usuario.class, usuario);
+			us.setTipoUsuario(0);
+			getEm().getTransaction().commit();
+		}
+		finally
+		{
+			//getEm().getTransaction().rollback();
+			cerrarEntityManager();
+		}
 	}
 	
+	public static void guardarUsuario(Usuario usuario)
+	{
+		abrirEntityManager();
+		try
+		{
+			getEm().getTransaction().begin();
+			Usuario dbUsuario = getEm().find(Usuario.class, usuario.getUsuario());
+			
+			if(dbUsuario == null)
+				getEm().persist(usuario);
+			else
+			{
+				dbUsuario.setEmail(usuario.getEmail());
+				dbUsuario.setNombreYApellido(usuario.getNombreYApellido());
+				dbUsuario.setPassword(usuario.getPassword());
+				dbUsuario.setTipoUsuario(usuario.getTipoUsuario());
+			}
+			getEm().getTransaction().commit();
+		}
+		finally
+		{
+			cerrarEntityManager();
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static ArrayList<Usuario> buscarTodosUsuarios()
+	{
+		abrirEntityManager();
+		try
+		{
+			return (ArrayList<Usuario>)getEm().createQuery("SELECT u FROM Usuario u where u.tipoUsuario > 0").getResultList();
+		}
+		finally
+		{
+			cerrarEntityManager();
+		}
+	}
 }
+

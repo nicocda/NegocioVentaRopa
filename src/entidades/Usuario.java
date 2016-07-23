@@ -1,40 +1,75 @@
 package entidades;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "usuario")
 public class Usuario 
 {
-	String nombreYApellido, usuario, password, email;
-	public String getUsuario() {
+	@Id
+	@Column(name = "usuario")
+	String usuario;
+	
+	@Column(name = "nombreYApellido")
+	String nombreYApellido;
+	
+	@Column(name = "password")
+	String password;
+	
+	@Column(name = "mail")
+	String mail;
+	
+	public String getUsuario() 
+	{
 		return usuario;
 	}
-	public void setUsuario(String usuario) {
+	public void setUsuario(String usuario) 
+	{
 		this.usuario = usuario;
 	}
 	int tipoUsuario;
-	public String getNombreYApellido() {
+	public String getNombreYApellido() 
+	{
 		return nombreYApellido;
 	}
-	public void setNombreYApellido(String nombreYApellido) {
+	public void setNombreYApellido(String nombreYApellido) 
+	{
 		this.nombreYApellido = nombreYApellido;
 	}
 	
-	public String getPassword() {
+	public String getPassword() 
+	{
 		return password;
 	}
-	public void setPassword(String password) {
+	public void setPassword(String password) 
+	{
 		this.password = password;
 	}
-	public String getEmail() {
-		return email;
+	public String getEmail() 
+	{
+		return mail;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEmail(String email) 
+	{
+		this.mail = email;
 	}
-	public int getTipoUsuario() {
+	public int getTipoUsuario() 
+	{
 		return tipoUsuario;
 	}
-	public void setTipoUsuario(int tipoUsuario) {
+	public void setTipoUsuario(int tipoUsuario)
+	{
 		this.tipoUsuario = tipoUsuario;
 	}
 	
-	
+	public static enum tipoUsuario
+	{
+		INACTIVO,
+		USUARIO,
+		ADMIN,
+		SUPERUSER
+	}
 }

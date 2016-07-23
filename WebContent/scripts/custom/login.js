@@ -42,7 +42,7 @@ function ingresar()
 		}
 		else
 		{
-			window.location.href = "/NegocioRopa/Index?link=AbmClientes"
+			window.location.href = "/NegocioRopa/ABMClientes"
 		}
 	});
 }

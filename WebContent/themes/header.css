@@ -7,14 +7,6 @@ header
 	height: 100px;
 }
 
-.wrapper 
-{
-	width:90%; /* Establecemos que el ancho sera del 90% */
-	max-width:1000px; /* Aqui le decimos que el ancho máximo sera de 1000px */
-	margin:auto; /* Centramos los elementos */
-	overflow:hidden; /* Eliminamos errores de float */
-}
-
 .contenedor
 {
 	width:90%;

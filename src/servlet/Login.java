@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import entidades.Usuario;
 import entidades.Venta;
-import negocio.ControladorTransaccion;
+import negocio.ControladorABM;
 
 @WebServlet("/Login")
 public class Login extends HttpServlet 
@@ -30,14 +30,13 @@ public class Login extends HttpServlet
 		if (action == null)
 		{
 			request.setAttribute("servlet", "");
-			request.getRequestDispatcher("jspPrincipales/LogIn.jsp").forward(request, response);
+			request.getRequestDispatcher("jspPrincipales/Login/LogIn.jsp").forward(request, response);
 		}
 		else if (action.equals("login"))
 		{
 			String usuario = (String) request.getParameter("usuario");
 			String pass = (String) request.getParameter("password");
-			ControladorTransaccion ct = new ControladorTransaccion();
-			Usuario usu = ct.buscarUsuario(usuario, pass);
+			Usuario usu = ControladorABM.validarUsuario(usuario, pass);
 			if (usu != null)
 			{
 				HttpSession session = request.getSession();

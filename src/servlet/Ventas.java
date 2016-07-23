@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+
 import util.JsonResponses;
 import entidades.Cliente;
 import entidades.Producto;
@@ -38,7 +40,12 @@ public class Ventas extends HttpServlet {
 		Venta vta = (Venta) session.getAttribute("venta");
 		String action = request.getParameter("action");	
 		
-		if (action.equals("agregarProducto"))
+		if (action == null)
+		{
+			request.setAttribute("url","../jspPrincipales/Ventas/Index.jsp");
+			request.getRequestDispatcher("jspCompartido/newMainLayout.jsp").forward(request, response);
+		}	
+		else if (action.equals("agregarProducto"))
 		{	
 			//Primero intento buscar y validar el producto
 			String id = request.getParameter("id");
@@ -86,7 +93,10 @@ public class Ventas extends HttpServlet {
 		{
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
-		    response.getWriter().write(JsonResponses.arrayTodosProductosVenta(vta));
+				//Gson g = new Gson();
+			   // response.getWriter().write(g.toJson(vta.getProductosArrayList()));
+			    response.getWriter().write(JsonResponses.arrayTodosProductosVenta(vta));
+			
 		}
 		else if(action.equals("realizarVenta"))
 		{

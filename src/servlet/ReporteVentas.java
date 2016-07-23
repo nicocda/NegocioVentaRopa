@@ -13,7 +13,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+
+import entidades.Venta;
 import excepciones.RespuestaServidor;
 import negocio.ControladorABM;
 import negocio.ControladorTransaccion;
@@ -39,14 +43,22 @@ public class ReporteVentas extends HttpServlet
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		String action = request.getParameter("action");
-		if (action.equals("mostrarVenta"))
+		HttpSession session = request.getSession(false);
+		if (action == null)
 		{
+			request.setAttribute("url","../jspPrincipales/ReporteVentas/Index.jsp");
+			request.getRequestDispatcher("jspCompartido/newMainLayout.jsp").forward(request, response);
+		}	
+		else if (action.equals("mostrarVenta"))
+		{
+			
 			String fechaMinimastr = request.getParameter("fechaMinima");
 			String fechaMaximastr = request.getParameter("fechaMaxima");
 			String idClientestr = request.getParameter("idCliente");
 			String tipoPagostr = request.getParameter("tipoPago");
 				
 			//Busco las fechas y parseo a Date
+			
 			DateFormat df = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss", Locale.US);
 			Date fechaMinima = null, fechaMaxima = null;
 			
@@ -60,12 +72,12 @@ public class ReporteVentas extends HttpServlet
 				}
 				catch(NumberFormatException e)
 				{
-					idCliente = -2;
+					idCliente = 0;
 				}
 			}
 			else
 			{
-				idCliente = -1;
+				idCliente = 0;
 			}
 			
 			if(!tipoPagostr.isEmpty() && tipoPagostr!= null)
@@ -76,7 +88,7 @@ public class ReporteVentas extends HttpServlet
 				}
 				catch(NumberFormatException e)
 				{
-					tipoPago = -2;
+					tipoPago = -1;
 				}
 			}
 			else
@@ -86,27 +98,46 @@ public class ReporteVentas extends HttpServlet
 			
 			try 
 			{
-				fechaMinima = df.parse(fechaMinimastr);
-				fechaMaxima =  df.parse(fechaMaximastr);  
+				if(fechaMinimastr != null && fechaMaximastr != null)
+				{
+					fechaMinima = df.parse(fechaMinimastr);
+					fechaMaxima =  df.parse(fechaMaximastr);  
+				}
 			} 
 			catch (ParseException e) 
 			{
-				e.printStackTrace();
-			}  
-			
-			String jsonVentas = null;
-			
-			try
-			{
-				jsonVentas = JsonResponses.jsonVentas(ControladorTransaccion.buscarVentasDia(fechaMinima, fechaMaxima, idCliente, tipoPago));
+				fechaMinima = new Date(1);
+				fechaMaxima = new Date();
 			}
-			catch (RespuestaServidor sr)
-			{	
-			}
-			
+		
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
-		    response.getWriter().write(jsonVentas);
+		    try
+		    {
+				response.getWriter().write(JsonResponses.jsonVentas(ControladorTransaccion.buscarVentasDia(fechaMinima, fechaMaxima, idCliente, tipoPago)));
+			}
+		    catch (RespuestaServidor e)
+		    {
+				e.printStackTrace();
+			}
+		}
+		else if (action.equals("detalleVenta"))
+		{
+			int idVenta = Integer.parseInt(request.getParameter("idVenta"));
+			System.out.println(idVenta);
+			Venta vta = ControladorTransaccion.buscarVenta(idVenta);
+			session.setAttribute("venta", vta);
+			response.sendRedirect("../jspPrincipales/Ventas/Index.jsp");
+			
+			/*response.setContentType("json");
+		    response.setCharacterEncoding("UTF-8");
+		    
+			if (vta != null)
+			{
+				String mensaje = JsonResponses.arrayTodosProductosVenta(vta);
+			    response.getWriter().write(mensaje);
+			}*/
+		
 		}
 	}
 
