@@ -72,12 +72,12 @@ public class ReporteVentas extends HttpServlet
 				}
 				catch(NumberFormatException e)
 				{
-					idCliente = -2;
+					idCliente = 0;
 				}
 			}
 			else
 			{
-				idCliente = -1;
+				idCliente = 0;
 			}
 			
 			if(!tipoPagostr.isEmpty() && tipoPagostr!= null)
@@ -88,7 +88,7 @@ public class ReporteVentas extends HttpServlet
 				}
 				catch(NumberFormatException e)
 				{
-					tipoPago = -2;
+					tipoPago = -1;
 				}
 			}
 			else

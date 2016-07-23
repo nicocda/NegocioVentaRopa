@@ -27,7 +27,7 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 		<div style="padding: 20px">
 			Cliente:
 			<select id="comboClientes" style="width: 200px">
-		    	<option value="" selected>TODOS</option>
+		    	<option value="0" selected>TODOS</option>
 			</select>
 			Tipo de Pago:
 			<select id="cbTipoPago" style="width: 200px">
@@ -68,10 +68,11 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 	<table id="tablaVentas" class="display" style="width: 100%">
 		<thead>
 			<tr>
-				<th width="10%">ID</td>
-				<th width="40%">fechaVenta</td>
-				<th width="30%">Comprador</td>
-				<th width="20%"></th>
+				<th width="15%">Fecha</th>
+				<th width="30%">Comprador</th>
+				<th width="20%">Importe</th>
+				<th width="20%">Forma Pago</th>
+				<th width="15%"></th>
 			</tr>
 		</thead>
 	</table>

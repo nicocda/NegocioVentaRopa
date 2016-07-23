@@ -38,15 +38,14 @@ public class CatalogoVentas  extends CatalogoBase
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static ArrayList<Venta> buscarVentasPorDia(Date fechaMin,
-			Date fechaMax, int idCliente, int formaPago) 
+	public static ArrayList<Venta> buscarVentasPorDia(Date fechaMin, Date fechaMax, int idCliente, int formaPago) 
 	{
 		abrirEntityManager();
 		try
 		{
 			ArrayList<Venta> ventas = new ArrayList<Venta>();
-			 ventas = (ArrayList<Venta>) getEm().createQuery("FROM Venta v where fechaVenta >= :fmin and fechaVenta <= :fmax")
-			.setParameter("fmin", fechaMin).setParameter("fmax", fechaMax).getResultList();
+			 ventas = (ArrayList<Venta>) getEm().createQuery("FROM Venta v WHERE (fechaVenta >= :fmin AND fechaVenta <= :fmax) AND (:idCliente = 0 OR (idCliente = :idCliente)) AND (:formaPago < 0 OR (formaPago = :formaPago))")
+			.setParameter("fmin", fechaMin).setParameter("fmax", fechaMax).setParameter("idCliente", idCliente).setParameter("formaPago", formaPago).getResultList();
 			return ventas;	
 		}
 		finally

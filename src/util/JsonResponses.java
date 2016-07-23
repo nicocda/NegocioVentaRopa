@@ -1,6 +1,9 @@
 package util;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import entidades.Cliente;
 import entidades.Producto;
@@ -8,6 +11,7 @@ import entidades.Usuario;
 import entidades.Venta;
 import entidades.Producto.estado;
 import entidades.Usuario.tipoUsuario;
+import entidades.Venta.formaPago;
 import excepciones.RespuestaServidor;
 
 public class JsonResponses 
@@ -85,12 +89,13 @@ public class JsonResponses
 	{
 		if (!ventas.isEmpty())
 		{
+			SimpleDateFormat form = new SimpleDateFormat("dd MMM yyyy", new Locale("es", "ES"));
 			String rsp = "{\"ventas\": [";
 		    for(int i=0;i<ventas.size()-1;i++)
 		    {
-		    	rsp= rsp + "{\"nombreApellido\": \"" + ventas.get(i).getCliente().getNombre()+" "+ventas.get(i).getCliente().getApellido()+"\", \"fecha\": \"" + ventas.get(i).getFechaVenta().toString() +"\", \"idVenta\": \""+ ventas.get(i).getId()+"\"},";
+		    	rsp= rsp + "{\"nombreApellido\": \"" + ventas.get(i).getCliente().getNombre()+" "+ventas.get(i).getCliente().getApellido()+"\", \"fecha\": \"" + form.format(ventas.get(i).getFechaVenta()) +"\", \"importe\": \"" + ventas.get(i).getImporte() +"\", \"formaPago\": \"" + formaPago.values()[ventas.get(i).getFormaPago()].name() +"\", \"idVenta\": \""+ ventas.get(i).getId()+"\"},";
 		    }
-		    rsp= rsp + "{\"nombreApellido\": \"" + ventas.get(ventas.size()-1).getCliente().getNombre()+" "+ventas.get(ventas.size()-1).getCliente().getApellido()+"\", \"fecha\": \"" +  ventas.get(ventas.size()-1).getFechaVenta().toString()+"\", \"idVenta\": \""+ ventas.get(ventas.size()-1).getId()+"\"}]}";
+		    rsp= rsp + "{\"nombreApellido\": \"" + ventas.get(ventas.size()-1).getCliente().getNombre()+" "+ventas.get(ventas.size()-1).getCliente().getApellido()+"\", \"fecha\": \"" +  form.format(ventas.get(ventas.size()-1).getFechaVenta()) +"\", \"importe\": \"" + ventas.get(ventas.size()-1).getImporte() +"\", \"formaPago\": \"" + formaPago.values()[ventas.get(ventas.size()-1).getFormaPago()].name() +"\", \"idVenta\": \""+ ventas.get(ventas.size()-1).getId()+"\"}]}";
 		    return rsp;
 		}
 		else 

@@ -179,9 +179,10 @@ function cargarTabla()
     	width: 100,
     	columns: 
 		[
-			 {"data": "idVenta"},
 			 {"data": "fecha"},
 			 {"data": "nombreApellido"},
+			 {"data": "importe"},
+			 {"data": "formaPago"},
 	         {"data": null, "targets": -1, "defaultContent": "<button class='btn btn-info detalleVenta'>Ver Detalle</button>", "bSortable": false}
 	    ]
 	});
