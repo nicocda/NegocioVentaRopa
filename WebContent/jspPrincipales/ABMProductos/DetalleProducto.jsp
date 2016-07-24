@@ -31,6 +31,7 @@
 									<option value="H">Hombre</option>
 									<option value="M">Mujer</option>
 									<option value="N">Niño</option>
+									<option value="0" hidden="true"></option>
 								</optgroup>
 							</select>
 						</div>

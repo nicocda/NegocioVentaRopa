@@ -26,7 +26,20 @@ function eventosRelacionados()
 	
 	$("#cbTipo").change(function()
 	{
+		
+		var val = $("#cbTipo").val();
+		if(val == "M" || val == "B")
+		{
+			$("#cbSubTipo").val("0");
+			$("#cbSubTipo").hide();
+		}
+		else
+		{
+			$("#cbSubTipo").show();
+			$("#cbSubTipo").val("H");
+		}
 		buscarId();
+		
 	});
 	
 	$("#cbSubTipo").change(function()
@@ -36,6 +49,17 @@ function eventosRelacionados()
 	
 	$("#cbTipo2").change(function()
 	{
+		var val = $("#cbTipo2").val();
+		if(val == "M" || val == "B")
+		{
+			$("#cbSubTipo2").val("0");
+			$("#cbSubTipo2").hide();
+		}
+		else
+		{
+			$("#cbSubTipo2").show();
+			$("#cbSubTipo2").val("H");
+		}
 		buscarId();
 	});
 			
