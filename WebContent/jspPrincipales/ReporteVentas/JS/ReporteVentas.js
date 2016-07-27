@@ -1,11 +1,12 @@
 $(document).ready(function()
-{	
+{
 	setearFormatosDatePicker();
 	agregarEventos();
 	cargarComboClientes();
 	//cargarOtrosCombos();
 	cargarTabla();
 	eventosDeTabla();
+	eventosVolver();
 });
 
 function agregarEventos()
@@ -13,7 +14,7 @@ function agregarEventos()
 	$(document).on("click", "#btnBuscar", function()
 	{
 			$("#divTabla").show();
-			$("#tablaVentas").DataTable().ajax.reload();
+			$("#tablaVenta").DataTable().ajax.reload();
 	});
 	
 	$("#cbFecha").change(function()
@@ -78,29 +79,32 @@ function agregarEventos()
 
 function eventosDeTabla()
 {
-	$("#tablaVentas tbody").on('click', ".detalleVenta", function()
+	$("#tablaVenta tbody").on('click', ".detalleVenta", function()
 	{
-		var data = $("#tablaVentas").DataTable().row($(this).closest('tr')).data();
-		$("#divPrincipal").hide();
-		$("#idVenta").val(data.id);
-		$("#tablaDetalleVenta").DataTable(
+		if (! $.fn.DataTable.isDataTable("#tablaVentasMorosas"))
 		{
-	        info: false,
-	        paginate: false,
-	        searching: false,
-	    	url: "/NegocioRopa/ReporteVentas",
-	    	params: {"action" : "detalleVenta", "idVenta" : $('#tablaVentasId').val()},
-	    	dataSrc: "productos",
-			columns: 
-			[
-				 {data: "id"},
-				 {data: "descripcion", bSortable: false},
-				 {data: "precio", bSortable: false},
-				 {data: "estado", visible: true}
-			]
-	        
-	    });
+			cargarTablaDetalle();
+		}
+		var data = $("#tablaVenta").DataTable().row($(this).closest('tr')).data();
+		$("#divPrincipal").hide();
+		$("#idVenta").val(data.idVenta);
 		$("#divDetalleVenta").show();
+		$("#nombreComprador").html(data.nombreApellido);
+		$("#fechaVta").html(data.fecha);
+		$("#formaPago").html(data.formaPago);
+		$.fn.dataTable.ext.errMode = 'none';
+		$("#tablaDetalleVenta").DataTable().ajax.reload();
+		
+	});
+}
+
+function eventosVolver()
+{
+	$("#btnVolver").click(function(){
+		
+		$("#divDetalleVenta").hide();
+		$("#divPrincipal").show();
+		
 	});
 }
 
@@ -159,11 +163,12 @@ function cargarOtrosCombos()
 
 function cargarTabla()
 {
-	$("#tablaVentas").DataTable(
+	$("#tablaVenta").DataTable(
 	{
 		info: false,
         paginate: false,
         searching: false,
+        cache: false,
     	url: "/NegocioRopa/ReporteVentas",
     	dataSrc: "ventas",
     	params: function () 
@@ -186,6 +191,27 @@ function cargarTabla()
 	         {"data": null, "targets": -1, "defaultContent": "<button class='btn btn-info detalleVenta'>Ver Detalle</button>", "bSortable": false}
 	    ]
 	});
+}
+function cargarTablaDetalle()
+{
+	$("#tablaDetalleVenta").DataTable(
+			{
+		        info: false,
+		        paginate: false,
+		        searching: false,
+		        cache: false,
+		    	url: "/NegocioRopa/ReporteVentas",
+		    	params: function () { return { "action" : "detalleVenta", "idVenta": $("#idVenta").val() } },
+		    	dataSrc: "venta",
+				columns: 
+				[
+					 {data: "id"},
+					 {data: "descripcion", bSortable: true},
+					 {data: "precio", bSortable: true},
+					 {data: "estado", visible: true}
+				]
+		        
+		    });
 }
 
 

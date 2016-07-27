@@ -124,19 +124,14 @@ public class ReporteVentas extends HttpServlet
 		else if (action.equals("detalleVenta"))
 		{
 			int idVenta = Integer.parseInt(request.getParameter("idVenta"));
-			System.out.println(idVenta);
 			Venta vta = ControladorTransaccion.buscarVenta(idVenta);
-			session.setAttribute("venta", vta);
-			response.sendRedirect("../jspPrincipales/Ventas/Index.jsp");
-			
-			/*response.setContentType("json");
+			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
-		    
 			if (vta != null)
 			{
-				String mensaje = JsonResponses.arrayTodosProductosVenta(vta);
+				String mensaje = JsonResponses.ventaEntera(vta);
 			    response.getWriter().write(mensaje);
-			}*/
+			}
 		
 		}
 	}

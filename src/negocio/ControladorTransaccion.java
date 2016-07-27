@@ -82,8 +82,8 @@ public class ControladorTransaccion {
 		return CatalogoProductos.buscarProductoDescripcion(cadena);
 	}
 
-	public static Venta buscarVenta(int idVenta) {
-		
+	public static Venta buscarVenta(int idVenta)
+	{
 		return CatalogoVentas.buscarVenta(idVenta);
 	}
 }

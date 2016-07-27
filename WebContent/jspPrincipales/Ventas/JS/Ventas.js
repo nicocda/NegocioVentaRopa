@@ -8,6 +8,7 @@ $(document).ready(function()
 
 function agregarEventos() 
 {   
+	$.fn.dataTable.ext.errMode = 'none';
 	$("#agregar").click(function(e)
 	{
 		//Evito que se ejecute el post del form.

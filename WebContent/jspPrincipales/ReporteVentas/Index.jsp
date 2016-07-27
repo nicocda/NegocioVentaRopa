@@ -65,7 +65,7 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 	</div>
 	<br>
 	
-	<table id="tablaVentas" class="display" style="width: 100%">
+	<table id="tablaVenta" class="display" style="width: 100%">
 		<thead>
 			<tr>
 				<th width="15%">Fecha</th>
