@@ -80,9 +80,16 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 	</form>
 </div>
 
+		
 <!-- HTML para el popup -->
 <div id="addCliente" hidden="hidden">
 	<jsp:include page="DetalleCliente.jsp"></jsp:include>
+</div>
+
+<div id="divConfirmacion" hidden="hidden" >
+	<div style="text-align: center;">
+	<p>Desea realizar la venta?</p>
+	</div>
 </div>
 <%}
 else

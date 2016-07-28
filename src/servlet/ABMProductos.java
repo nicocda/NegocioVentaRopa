@@ -67,7 +67,7 @@ public class ABMProductos extends HttpServlet {
 			try
 			{
 				ControladorABM.guardarProducto(id, descripcion, Producto.estado.STOCK.ordinal(), precioFloat);
-				if(!descripcion2.isEmpty() || descripcion2 != null)
+				if(!descripcion2.isEmpty())
 					ControladorABM.guardarProducto(id2, descripcion2, Producto.estado.STOCK.ordinal(), precioFloat2);
 			}
 			catch (RespuestaServidor e)

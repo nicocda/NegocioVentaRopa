@@ -130,7 +130,15 @@ public class ControladorABM
 	public static String obtenerIdCompleto2(char tipo, char subTipo,char tipo2, char subTipo2) 
 	{
 		final int cantidadDigitos = 11;
-		String id = CatalogoProductos.buscarUltimoIdProducto(tipo2, subTipo2);
+		String id =  Character.toString(tipo2) + Character.toString(subTipo2);
+		for(int i=1; i<cantidadDigitos-2; i++)
+		{
+			id = id + "0";
+		}
+		if(CatalogoProductos.buscarUltimoIdProducto(tipo2, subTipo2) != null)
+			{
+			id = CatalogoProductos.buscarUltimoIdProducto(tipo2, subTipo2);
+			}
 		String idNuevo;
 		if(id != null)
 		{
