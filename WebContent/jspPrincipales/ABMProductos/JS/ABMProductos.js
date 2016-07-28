@@ -41,7 +41,7 @@ function eventosRelacionados()
 		buscarId();
 		
 	});
-			
+	
 	$("#cbSubTipo").change(function()
 	{
 		buscarId();
