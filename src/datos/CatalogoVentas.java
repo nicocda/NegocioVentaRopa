@@ -3,6 +3,7 @@ package datos;
 import java.util.ArrayList;
 import java.util.Date;
 
+import entidades.Precio;
 import entidades.Producto;
 import entidades.Producto.estado;
 import entidades.Venta;
@@ -27,6 +28,7 @@ public class CatalogoVentas  extends CatalogoBase
 			{
 				Producto dbProducto = getEm().find(Producto.class, p.getId());
 				dbProducto.setEstado(estado.VENDIDO.ordinal());
+				dbProducto.setVenta(vta);
 			}
 			
 			getEm().getTransaction().commit();	
@@ -61,6 +63,11 @@ public class CatalogoVentas  extends CatalogoBase
 		try
 		{
 			vta = getEm().find(Venta.class,idVenta);
+			ArrayList<Producto> productos = vta.getProductosArrayList();
+			for(Producto p : productos)
+			{
+				buscarUltimoPrecio(p);
+			}
 		}
 		finally
 		{
@@ -103,5 +110,15 @@ public class CatalogoVentas  extends CatalogoBase
 			sr.addError("Seleccione una forma de pago.");
 		}
 		return sr;
+	}
+	
+	private static void buscarUltimoPrecio(Producto producto)
+	{
+		producto.setPrecio(producto.getPrecios().get(0));
+		for(Precio pr : producto.getPrecios())
+		{
+			if(producto.getPrecio().getFecha().before(pr.getFecha()))
+				producto.setPrecio(pr);
+		}
 	}
 }

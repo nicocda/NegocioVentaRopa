@@ -3,6 +3,7 @@ package util;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import entidades.Cliente;
@@ -125,6 +126,23 @@ public class JsonResponses
 		    }
 		    rsp= rsp + "{\"Id\": \"" + ventasMorosas.get(ventasMorosas.size()-1).getId()+"\", \"fechaVenta\": \"" + ventasMorosas.get(ventasMorosas.size()-1).getFechaVenta() + "\", \"importeTotal\": \"" + ventasMorosas.get(ventasMorosas.size()-1).getImporte() +"\", \"deuda\": \"" + ventasMorosas.get(ventasMorosas.size()-1).getDeudaPendiente() + "\"}]}";
 			return rsp;
+		}
+	}
+	
+	public static String ventaEntera(Venta venta)
+	{
+		if(venta == null)
+			return "{\"venta\": []}";
+		else
+		{
+			ArrayList<Producto> productos = venta.getProductosArrayList();
+			String rsp = "{\"cliente\": \""+venta.getCliente().getNombre()+" "+venta.getCliente().getApellido()+"\", \"venta\": [";
+		    for(int i=0;i<productos.size()-1;i++)
+		    {
+		    	rsp= rsp + "{\"id\": \"" + productos.get(i).getId()+"\", \"descripcion\": \"" + productos.get(i).getDescripcion() + "\", \"precio\": \"" + productos.get(i).getPrecio().getPrecio() +"\", \"estado\": \"" + estado.values()[productos.get(i).getEstado()].name() + "\"},";
+		    }
+		    rsp= rsp + "{\"id\": \"" + productos.get(productos.size()-1).getId()+"\", \"descripcion\": \"" + productos.get(productos.size()-1).getDescripcion() + "\", \"precio\": \"" + productos.get(productos.size()-1).getPrecio().getPrecio() +"\", \"estado\": \"" + estado.values()[productos.get(productos.size()-1).getEstado()].name() +"\"}]}";
+		    return rsp;
 		}
 	}
 }

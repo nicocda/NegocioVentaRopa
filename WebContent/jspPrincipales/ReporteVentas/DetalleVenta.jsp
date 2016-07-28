@@ -1,9 +1,15 @@
 <input type="hidden" id="idVenta" value="0">
 <div class="row">
-	<div class="col-lg-12">
-	    <h1 class="page-header">
-	    	Compra de: <br><small id="nombreComprador"></small>
-		</h1>
+	<div  class="col-lg-12" >
+	    <small style="font-size:20px" class="page-header">
+	    	<u>Compra de:</u> <small style="font-size:22px" id="nombreComprador"></small>
+		</small>
+		<small style="padding-left: 100px; font-size:20px">
+		<u>Fecha de Venta:</u> <small style="font-size:22px" id="fechaVta"></small>
+		</small>
+		<small style="padding-left: 100px; font-size:20px">
+		<u>Forma de pago:</u> <small style="font-size:22px" id="formaPago"></small>
+		</small>
 	</div>
 </div>
 <div id="divTabla">
@@ -19,3 +25,4 @@
 				</thead>
 			</table>
 </div>
+<button style= "width:20%; float:right" id="btnVolver" class="btn btn-info">Volver</button>

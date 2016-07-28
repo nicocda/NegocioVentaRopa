@@ -129,12 +129,13 @@ public class Ventas extends HttpServlet {
 			try
 			{
 				ControladorTransaccion.registrarVenta(vta);
-				session.setAttribute("venta", new Venta());
+			
 			}
 			catch(RespuestaServidor e)
 			{
 				sr = e;
-			}
+			}	
+			session.setAttribute("venta", new Venta());
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(JsonResponses.devolverMensaje(sr, "La venta se registró con éxito"));
