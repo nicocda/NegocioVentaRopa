@@ -16,6 +16,16 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
     font-family: "PF";
     font-size: 33px;
   }
+  .barcode1
+  {
+  	float:left;
+  	widht: 40%;
+  }
+  .barcode2
+  {
+  	float : right;
+  	width : 40%;
+  }
   </style>
 
 <div id="divError"></div>
@@ -50,6 +60,9 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 	<jsp:include page="BarCode.jsp"></jsp:include>
 </div>
 
+<div id="divPrintBarCode" hidden="hidden">
+	<jsp:include page="PrintBarCode.jsp"></jsp:include>
+</div>
 <%}
 else
 {%>

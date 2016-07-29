@@ -90,6 +90,8 @@ function eventosDelDetalle()
 		$("#txtPrecio2").val("");
 		$("#divProducto2").show();
 	});
+
+	
 	
 	$("#btnAceptar").click(function()
 	{
@@ -107,6 +109,15 @@ function eventosDelDetalle()
 		},
 		function()
 		{ 
+			
+			$("#divPrintBarCode").dialog("open");
+			$("#idBarcode").text($("#txtID").val());
+			$("#codNoBarcode").text($("#txtID").val());
+			$("#precio").text($("#txtPrecio").val());
+			$("#idBarcode2").text($("#txtID2").val());
+			$("#codNoBarcode2").text($("#txtID2").val());
+			$("#precio2").text($("#txtPrecio2").val());
+			
 			buscarId();
 			$("#txtDescripcion").val("");
 			$("#txtPrecio").val("");
@@ -139,7 +150,7 @@ function eventosDeTabla()
 		eventosDelDetalle();
 	});
 	
-	//LO HIZO LEO IUJUUUUUUUUUUUUUU ACA AGREGO EVENTOS PARA MOSTRAR EL BOTON DE ELEGIR SI AGREGAR UN PRODUCTO O 2 A LA VEZ
+	
 	$("#btnMostrarCreate").click(function(){
 		$("#solo1").show();
 	});
@@ -157,7 +168,7 @@ function eventosDeTabla()
 			$("#solo1").html('Agregar solo 1 producto');
 		}
 	});
-	//FIN AGREGAR UN PRODUCTO O DOS A LA VEZ XDXDXDXDXDXDXDXDXD ODIO A NICOLAS
+	
 	
 	$('#tablaProductos tbody').on( 'click', '.btnBarcode', function() 
 	{
@@ -211,4 +222,9 @@ function inicializarPopUp()
 	{
 		autoOpen: false
 	});
+	
+	$("#divPrintBarCode").dialog(
+			{
+				autoOpen: false
+			});
 }
