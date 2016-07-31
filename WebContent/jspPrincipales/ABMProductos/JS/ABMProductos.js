@@ -1,7 +1,7 @@
 $(document).ready(function()
 {	
-	cargarTabla();
 	eventosRelacionados();
+	cargarTabla();
 	eventosDeTabla();
 	inicializarPopUp();
 });
@@ -90,10 +90,8 @@ function eventosDelDetalle()
 		$("#txtPrecio2").val("");
 		$("#divProducto2").show();
 	});
+	
 
-///TODO TESTEAR ESTO
-	
-	
 	$("#btnAceptar").click(function()
 	{
 		$.postData('/NegocioRopa/ABMProductos', 
@@ -106,12 +104,13 @@ function eventosDelDetalle()
 			"subTipo": $("#cbSubTipo").val(),
 			"id2": $("#txtID2").val(),
 			"descripcion2": $("#txtDescripcion2").val(),
-			"precio2": $("#txtPrecio2").val(),
+			"precio2": $("#txtPrecio2").val()
 		},
 		function()
 		{ 
 			$("#divPrintBarCode").show();
 			$("#divCrearProducto").hide();
+			$("#divError").hide();
 			$("#idBarcode1").text($("#txtID").val());
 			$("#codNoBarcode1").text($("#txtID").val());
 			$("#precio1").text($("#txtPrecio").val());
@@ -120,6 +119,7 @@ function eventosDelDetalle()
 			$("#codNoBarcode2").text($("#txtID2").val());
 			$("#precio2").text($("#txtPrecio2").val());
 			window.print();
+			
 			buscarId();
 			$("#txtDescripcion").val("");
 			$("#txtPrecio").val("");
@@ -130,6 +130,9 @@ function eventosDelDetalle()
 			$("#nuevoEditar").val("Nuevo Producto:");
 			$("#txtDescripcion").focus();
 			$("#tablaProductos").DataTable().ajax.reload();
+			$("#divPrintBarCode").hide();
+			$("#divCrearProducto").show();
+			
 		});
 	});
 }
@@ -225,7 +228,4 @@ function inicializarPopUp()
 		autoOpen: false
 	});
 
-			
-	
-	
 }
