@@ -135,7 +135,7 @@ function eventosDeTabla()
 		$("#tipos").hide();
 		$("#txtID").val(data.id);
 		$("#txtDescripcion").val(data.descripcion);
-		$("#txtPrecio").val(data.precio);
+		$("#txtPrecio").val(data.precio.precio);
 		eventosDelDetalle();
 	});
 	
@@ -166,7 +166,7 @@ function eventosDeTabla()
 		
 		$("#idBarcode").text(data.id);
 		$("#codNoBarcode").text(data.id);
-		$("#precio").text(data.precio);
+		$("#precio").text(data.precio.precio);
     });
 }
 
@@ -197,7 +197,7 @@ function cargarTabla()
 		[
 	        {data: "id"},
 	        {data: "descripcion"},
-	        {data: "precio"},
+	        {data: "precio.precio"},
 	        {data: "estado"},
 	        {data: null, "targets": -1, defaultContent: "<button class='btn btn-info btnBarcode'>Barcode</button>", sortable: false},
 	        {data: null, "targets": -1, defaultContent: "<button class='btn btn-info btnEditar'>Editar</button>", sortable: false}

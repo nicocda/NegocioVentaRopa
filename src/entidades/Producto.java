@@ -16,17 +16,22 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.google.gson.annotations.Expose;
+
 @Entity 
 @Table(name = "producto")
 public class Producto 
 {
 	@Id
 	@Column(name = "id")
+	@Expose
 	private String id;
 	
+	@Expose
 	@Column(name = "descripcion")
 	private String descripcion;
 	
+	@Expose
 	@Column(name = "estado")
 	private int estado;
 	
@@ -41,6 +46,7 @@ public class Producto
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="producto")
 	private List<Precio> precios = new ArrayList<Precio>();
 
+	@Expose
 	@Transient
 	private Precio precio;
 	

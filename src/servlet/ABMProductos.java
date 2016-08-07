@@ -14,6 +14,7 @@ import excepciones.RespuestaServidor;
 import negocio.ControladorABM;
 import negocio.ControladorTransaccion;
 import util.JsonResponses;
+import util.JsonUtil;
 
 @WebServlet("/ABMProductos")
 public class ABMProductos extends HttpServlet {
@@ -95,19 +96,22 @@ public class ABMProductos extends HttpServlet {
 		{
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
-		    response.getWriter().write(JsonResponses.arrayTodosProductos(ControladorABM.buscarTodosProductos()));
+		    //response.getWriter().write(JsonResponses.arrayTodosProductos(ControladorABM.buscarTodosProductos()));
+		    response.getWriter().write(JsonUtil.toJson(ControladorABM.buscarTodosProductos()));
 		}
 		else if (action.equals("recargarCombo"))
 		{
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
-		    response.getWriter().write(JsonResponses.arrayTodosProductos(ControladorABM.buscarTodosProductosEnStock()));
+		    //response.getWriter().write(JsonResponses.arrayTodosProductos(ControladorABM.buscarTodosProductosEnStock()));
+		    response.getWriter().write(JsonUtil.toJson(ControladorABM.buscarTodosProductosEnStock()));
 		}
 		else if (action.equals("buscar"))
 		{
 			String cadena = request.getParameter("valor");
 			ArrayList<Producto> productos = ControladorTransaccion.buscarProductosDescripcion(cadena);
-			String mensajeJson = JsonResponses.arrayTodosProductos(productos);
+			//String mensajeJson = JsonResponses.arrayTodosProductos(productos);
+			String mensajeJson = JsonUtil.toJson(productos);
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(mensajeJson);
