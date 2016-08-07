@@ -111,7 +111,7 @@ public class ControladorABM
 	//si no existe me da el primero para ese tipo y para ese subtipo.
 	public static String obtenerIdCompleto(char tipo, char subTipo) 
 	{
-		final int cantidadDigitos = 11;
+		final int cantidadDigitos = 7;
 		String id = CatalogoProductos.buscarUltimoIdProducto(tipo, subTipo);
 		String idNuevo;
 		if(id != null)
@@ -129,7 +129,7 @@ public class ControladorABM
 
 	public static String obtenerIdCompleto2(char tipo, char subTipo,char tipo2, char subTipo2) 
 	{
-		final int cantidadDigitos = 11;
+		final int cantidadDigitos = 7;
 		String id =  Character.toString(tipo2) + Character.toString(subTipo2);
 		for(int i=1; i<cantidadDigitos-2; i++)
 		{

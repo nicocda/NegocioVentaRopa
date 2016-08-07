@@ -7,6 +7,7 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 
 <script type="text/javascript" src="jspPrincipales/ABMProductos/JS/ABMProductos.js"></script>	
 <script type="text/javascript" src="scripts/custom/popup.js"></script>
+<link rel="stylesheet" type="text/css" href="jspPrincipales/ABMProductos/CSS/printBarCode.css"></link>
 <style type="text/css">
   @font-face {
     font-family: PF;
@@ -14,7 +15,6 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
   }
   .barcodeFP {
     font-family: "PF";
-    font-size: 33px;
   }
   </style>
 
@@ -31,12 +31,12 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 	<table id="tablaProductos" class="display">
 		<thead>
 			<tr>
-				<th width="15%">ID</td>
-				<th width="30%">Descripcion</td>
-				<th width="15%">Precio</td>
-				<th width="20%">Estado</td>
-				<th width="10%"></td>
-				<th width="10%"></td>
+				<th width="15%">ID</th>
+				<th width="30%">Descripcion</th>
+				<th width="15%">Precio</th>
+				<th width="20%">Estado</th>
+				<th width="10%"></th>
+				<th width="10%"></th>
 			</tr>
 		</thead>
 	</table>
@@ -48,6 +48,10 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 		
 <div id="divBarcode" hidden="hidden" >
 	<jsp:include page="BarCode.jsp"></jsp:include>
+</div>
+
+<div id="divPrintBarCode" hidden="hidden">
+	<jsp:include page="PrintBarCode.html"></jsp:include>
 </div>
 
 <%}

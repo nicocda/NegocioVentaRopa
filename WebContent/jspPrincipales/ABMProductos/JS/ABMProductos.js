@@ -1,7 +1,7 @@
 $(document).ready(function()
 {	
-	cargarTabla();
 	eventosRelacionados();
+	cargarTabla();
 	eventosDeTabla();
 	inicializarPopUp();
 });
@@ -91,6 +91,7 @@ function eventosDelDetalle()
 		$("#divProducto2").show();
 	});
 	
+
 	$("#btnAceptar").click(function()
 	{
 		$.postData('/NegocioRopa/ABMProductos', 
@@ -103,10 +104,22 @@ function eventosDelDetalle()
 			"subTipo": $("#cbSubTipo").val(),
 			"id2": $("#txtID2").val(),
 			"descripcion2": $("#txtDescripcion2").val(),
-			"precio2": $("#txtPrecio2").val(),
+			"precio2": $("#txtPrecio2").val()
 		},
 		function()
 		{ 
+			$("#divPrintBarCode").show();
+			$("#divCrearProducto").hide();
+			$("#divError").hide();
+			$("#idBarcode1").text($("#txtID").val());
+			$("#codNoBarcode1").text($("#txtID").val());
+			$("#precio1").text($("#txtPrecio").val());
+			
+			$("#idBarcode2").text($("#txtID2").val());
+			$("#codNoBarcode2").text($("#txtID2").val());
+			$("#precio2").text($("#txtPrecio2").val());
+			window.print();
+			
 			buscarId();
 			$("#txtDescripcion").val("");
 			$("#txtPrecio").val("");
@@ -117,6 +130,9 @@ function eventosDelDetalle()
 			$("#nuevoEditar").val("Nuevo Producto:");
 			$("#txtDescripcion").focus();
 			$("#tablaProductos").DataTable().ajax.reload();
+			$("#divPrintBarCode").hide();
+			$("#divCrearProducto").show();
+			
 		});
 	});
 }
@@ -139,7 +155,7 @@ function eventosDeTabla()
 		eventosDelDetalle();
 	});
 	
-	//LO HIZO LEO IUJUUUUUUUUUUUUUU ACA AGREGO EVENTOS PARA MOSTRAR EL BOTON DE ELEGIR SI AGREGAR UN PRODUCTO O 2 A LA VEZ
+	
 	$("#btnMostrarCreate").click(function(){
 		$("#solo1").show();
 	});
@@ -157,7 +173,7 @@ function eventosDeTabla()
 			$("#solo1").html('Agregar solo 1 producto');
 		}
 	});
-	//FIN AGREGAR UN PRODUCTO O DOS A LA VEZ XDXDXDXDXDXDXDXDXD ODIO A NICOLAS
+	
 	
 	$('#tablaProductos tbody').on( 'click', '.btnBarcode', function() 
 	{
@@ -211,4 +227,5 @@ function inicializarPopUp()
 	{
 		autoOpen: false
 	});
+
 }
