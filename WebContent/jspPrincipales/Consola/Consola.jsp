@@ -4,10 +4,10 @@ import="entidades.EventLog"
 import="entidades.Configuracion"
 import="entidades.Usuario"%>
 <script type="text/javascript" src="scripts/lib/jquery.simplePagination.js"></script>
-<script type="text/javascript" src="scripts/custom/Consola.js"></script>	
+<script type="text/javascript" src="/NegocioRopa/jspPrincipales/Consola/JS/Consola.js"></script>	
 <link rel="stylesheet" type="text/css" href="themes/simplePagination.css"/>
 <%
-if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttribute("usuario")).getTipoUsuario() > 2) 
+if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttribute("usuario")).getTipoUsuario() >= 1) 
 {%>
 <%java.net.InetAddress host = java.net.InetAddress.getLocalHost(); %>
 <H4>Consola (<%=host.getHostName()%>)</H4>
