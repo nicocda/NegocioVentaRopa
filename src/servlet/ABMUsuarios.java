@@ -47,6 +47,17 @@ public class ABMUsuarios extends HttpServlet
 			String email = request.getParameter("email");
 			String tipoUsuariostr = request.getParameter("tipo");
 			String password = request.getParameter("password");
+			String sucursalstr = request.getParameter("sucursal");
+			
+			int idSucursal;
+			try
+			{
+				idSucursal = Integer.parseInt(sucursalstr);
+			}
+			catch(NumberFormatException e)
+			{
+				idSucursal = -1;
+			}
 			
 			int tipoUsuario;
 			try
@@ -66,7 +77,7 @@ public class ABMUsuarios extends HttpServlet
 				 Usuario user = (Usuario) session.getAttribute("usuario");
 				 if(validaUsuario(sr,usuario,password, tipoUsuario,user))
 				 {
-					 ControladorABM.guardarUsuario(usuario, password, nombreApellido, email, tipoUsuario);
+					 ControladorABM.guardarUsuario(usuario, password, nombreApellido, email, tipoUsuario,idSucursal);
 					 mensaje="Se guardo correctamente el usuario";
 				 }
 				 else

@@ -1,4 +1,6 @@
+<%@page import="negocio.ControladorABM"%>
 <%@page import="entidades.Usuario.tipoUsuario"%>
+<%@page import="entidades.Sucursal" %>
 <div class="row">
 	<div class="col-lg-12">
 	    <h1 id="nuevoEditar"class="page-header">Nuevo Usuario</h1>
@@ -30,6 +32,16 @@
 							<label>Email</label>
 							<input id="txtEmail" class="form-control">
 						</div>
+						<div class="form-group">
+							<label>Sucursal:</label>
+							<select id="cbSucursal" class="form-control">
+								<%for(Sucursal su : ControladorABM.buscarSucursales()) 
+								{%>
+									<option value="<%=su.getId()%>"><%=su.toString()%></option>
+								<%}%>
+							</select>
+						</div>
+						
 						<div class="form-group">
 							<label>Tipo</label>
 							<select id="cbTipo" class="form-control">

@@ -16,6 +16,8 @@ function limpiarCampos()
 
 function eventosRelacionados()
 {
+	$("#cbTipo").val(1);
+	
 	$("#btnMostrarCreate").click(function()
 	{
 		$("#divPrincipal").hide();
@@ -64,6 +66,7 @@ function eventosRelacionados()
 			"nombreApellido": $("#txtNombreYApellido").val(),
 			"email": $("#txtEmail").val(), "password": $("#txtPassword").val(),
 			"tipo": $("#cbTipo").val(),
+			"sucursal": $("#cbSucursal").val(),
 			"action": "guardarUsuario"
 		}, 
 		function()
