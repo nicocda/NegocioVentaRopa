@@ -11,6 +11,7 @@ import entidades.Cliente;
 import excepciones.RespuestaServidor;
 import negocio.ControladorABM;
 import util.JsonResponses;
+import util.JsonUtil;
 
 @WebServlet("/ABMClientes")
 public class ABMClientes extends HttpServlet 
@@ -69,7 +70,7 @@ public class ABMClientes extends HttpServlet
 		{
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
-		    response.getWriter().write(JsonResponses.arrayTodosClientes(ControladorABM.buscarTodosClientes()));
+		    response.getWriter().write(JsonUtil.toJson(ControladorABM.buscarTodosClientes()));
 		}
 	}
 

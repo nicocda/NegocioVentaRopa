@@ -15,6 +15,7 @@ import entidades.Usuario;
 import excepciones.RespuestaServidor;
 import negocio.ControladorABM;
 import util.JsonResponses;
+import util.JsonUtil;
 
 @WebServlet("/ABMUsuarios")
 public class ABMUsuarios extends HttpServlet 
@@ -104,8 +105,7 @@ public class ABMUsuarios extends HttpServlet
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
 		    
-		    Gson g = new Gson();
-		    response.getWriter().write(g.toJson(ControladorABM.buscarTodosUsuarios()));		    
+		    response.getWriter().write(JsonUtil.toJson(ControladorABM.buscarTodosUsuarios()));		    
 		    
 		    //response.getWriter().write(JsonResponses.arrayTodosUsuarios(ControladorABM.buscarTodosUsuarios()));
 		}

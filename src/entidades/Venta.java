@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 @Table(name="venta")
 public class Venta 
@@ -24,20 +26,34 @@ public class Venta
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Expose
 	private int id;
 		
+	@Expose
 	private Date fechaVenta;
+	
+	@Expose
 	private boolean isReserva;
+	
+	@Expose
 	private boolean isPrestamo;
+	
+	@Expose
 	private float seña;
+	
+	@Expose
 	private Date fechaCaducidad;
+	
+	@Expose
 	private int formaPago;
+	
+	@Expose
 	private float importe;
 	
 	@Transient
 	private float deudaPendiente;
 	
-	
+	@Expose
 	@ManyToOne(optional=true)
 	@JoinColumn(name="idCliente")
 	private Cliente cliente;
@@ -48,6 +64,7 @@ public class Venta
 	@OneToMany(mappedBy="venta_cuota")
 	private List<Cuota> cuotas = new ArrayList<Cuota>();
 	
+	@Expose
 	@OneToMany(fetch=FetchType.EAGER, mappedBy="venta")
 	private List<Producto> productos = new ArrayList<Producto>();
 	
