@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 @Table(name="cliente")
 public class Cliente 
@@ -19,18 +21,23 @@ public class Cliente
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Expose
 	private int id;
 	
 	@Column(name = "nombre")
+	@Expose
 	private String nombre;
 	
 	@Column(name = "apellido")
+	@Expose
 	private String apellido;
 	
 	@Column(name = "direccion")
+	@Expose
 	private String direccion;
 	
 	@Column(name = "telefono")
+	@Expose
 	private String telefono;
 	
 	@OneToMany(fetch=FetchType.EAGER, mappedBy="cliente")

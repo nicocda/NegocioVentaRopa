@@ -1,33 +1,22 @@
 package consola;
 
-import java.util.Date;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import datos.CatalogoClientes;
-import datos.CatalogoConfiguracion;
-import datos.CatalogoEventLog;
 import datos.CatalogoProductos;
-import entidades.EventLog;
-import entidades.Precio;
-import entidades.Producto;
+import datos.CatalogoVentas;
 import excepciones.RespuestaServidor;
 
 public class PruebaConsola 
 {
 	public static void main(String[] args) throws RespuestaServidor 
 	{
+		Gson gson = new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .create();
 		
-			for(int i = 0; i<=100; i++)
-			{
-				Producto p = new Producto();
-				p.setDescripcion("descrip:"+i);
-				p.setId("RH"+i);
-				p.setEstado(1);
-				Precio precio = new Precio();
-				precio.setFecha(new Date());
-				precio.setPrecio(222);
-				precio.setProducto(p);
-				p.addPrecio(precio);
-				CatalogoProductos.guardarProducto(p);
-			}
+		System.out.println(gson.toJson(CatalogoVentas.buscarVenta(2)));
+		
 	}
 }

@@ -3,6 +3,8 @@ package entidades;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,6 +24,16 @@ public class Usuario
 	@Column(name = "mail")
 	String mail;
 	
+	@ManyToOne(optional=true)
+	@JoinColumn(name="idSucursal")
+	private Sucursal sucursal;
+	
+	public Sucursal getSucursal() {
+		return sucursal;
+	}
+	public void setSucursal(Sucursal sucursal) {
+		this.sucursal = sucursal;
+	}
 	public String getUsuario() 
 	{
 		return usuario;

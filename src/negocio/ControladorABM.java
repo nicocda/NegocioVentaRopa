@@ -2,19 +2,8 @@ package negocio;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
-
-import datos.CatalogoClientes;
-import datos.CatalogoConfiguracion;
-import datos.CatalogoEventLog;
-import datos.CatalogoProductos;
-import datos.CatalogoUsuarios;
-import entidades.Cliente;
-import entidades.Configuracion;
-import entidades.EventLog;
-import entidades.Precio;
-import entidades.Producto;
-import entidades.Usuario;
+import datos.*;
+import entidades.*;
 import excepciones.RespuestaServidor;
 
 public class ControladorABM 
@@ -111,7 +100,7 @@ public class ControladorABM
 	//si no existe me da el primero para ese tipo y para ese subtipo.
 	public static String obtenerIdCompleto(char tipo, char subTipo) 
 	{
-		final int cantidadDigitos = 11;
+		final int cantidadDigitos = 7;
 		String id = CatalogoProductos.buscarUltimoIdProducto(tipo, subTipo);
 		String idNuevo;
 		if(id != null)
@@ -129,7 +118,7 @@ public class ControladorABM
 
 	public static String obtenerIdCompleto2(char tipo, char subTipo,char tipo2, char subTipo2) 
 	{
-		final int cantidadDigitos = 11;
+		final int cantidadDigitos = 7;
 		String id =  Character.toString(tipo2) + Character.toString(subTipo2);
 		for(int i=1; i<cantidadDigitos-2; i++)
 		{
@@ -157,7 +146,7 @@ public class ControladorABM
 			
 		return Character.toString(tipo2).concat(Character.toString(subTipo2)).concat(idNuevo);
 	}
-	public static void guardarUsuario(String nombreUsuario, String password, String nombreApellido, String email, int tipoUsuario) throws RespuestaServidor
+	public static void guardarUsuario(String nombreUsuario, String password, String nombreApellido, String email, int tipoUsuario, int idSucursal) throws RespuestaServidor
 	{
 		Usuario usuario = new Usuario();
 		
@@ -167,11 +156,18 @@ public class ControladorABM
 		usuario.setUsuario(nombreUsuario);
 		usuario.setPassword(password);
 		
+		usuario.setSucursal(CatalogoSucursales.buscarSucursal(idSucursal));
+		
 		CatalogoUsuarios.guardarUsuario(usuario);
 	}
 
 	public static void eliminarUsuario(String usuario)
 	{
 		CatalogoUsuarios.eliminarUsuario(usuario);
+	}
+	
+	public static ArrayList<Sucursal> buscarSucursales()
+	{
+		return CatalogoSucursales.buscarTodasSucursales();
 	}
 }

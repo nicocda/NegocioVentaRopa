@@ -1,0 +1,63 @@
+body, #zonaDeImpresion
+{
+	widht:110mm;
+	height:35mm;
+}
+#etiqueta1
+{
+	
+	height: 25mm;
+	width: 50mm; 
+	margin: 3mm 1,5mm 3mm 3mm;
+	float:left;
+}
+
+#etiqueta2
+{
+	
+	height: 25mm;
+	width: 50mm;
+	margin: 3mm 3mm 3mm 1,5mm;
+	float:right;
+}
+
+.titulo
+{
+	font-family: Brush Script MT;
+	font-size: 4mm;
+	padding: 8px 1px;
+}
+.idBarCode
+{
+	font-size: 32px;		
+}
+
+.superior
+{
+width: 80%;
+height: 40px;
+padding: 10px 10px 10px 10px;
+}
+
+.inferior
+{
+width: 80%;
+height: 32px;
+padding-left: 20px;
+padding-top: 5px;
+}
+
+#codNoBarcode1, #codNoBarcode2
+{
+	font-size: 4mm;
+	height: 16px;
+}
+.precio
+{
+	font-weight: bold;
+	font-size: 15px;
+	float:right;
+	padding-top: 14px;
+	height: 20px;
+}
+

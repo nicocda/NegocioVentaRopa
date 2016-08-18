@@ -4,6 +4,7 @@ $(document).ready(function()
 	cargarComboClientes();
 	cargarTabla();
 	inicioPopUsche();
+	inicializarPopUp
 });
 
 function inicioPopUsche()
@@ -68,7 +69,7 @@ function agregarEventos()
 	
 	$("#addCli").click(function()
 	{
-		$("#addCliente").show();
+		$("#addCliente").dialog();
 		$("#txtID").empty();
 		$("#txtNombre").empty();
 		$("#txtApellido").empty();
@@ -79,7 +80,7 @@ function agregarEventos()
 	
 	$(document).on('click', '#btnCancelarCreate',function()
 	{
-		$("#addCliente").hide();
+		$("#addCliente").dialog("close");
 	});
 	
 	$(document).on('click', "#btnGuardarCreate", function()
@@ -185,3 +186,11 @@ function cargarTabla()
         
     } );
 } 
+
+function inicializarPopUp()
+{
+	$("#addCliente").dialog(
+	{
+		autoOpen: false
+	});
+}

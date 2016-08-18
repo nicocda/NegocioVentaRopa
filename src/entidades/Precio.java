@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.google.gson.annotations.Expose;
+
 @Entity 
 @Table(name = "precio")
 @IdClass(PrecioId.class)
@@ -19,9 +21,11 @@ public class Precio
 	//Fields
 	@Id
 	@Column(name = "fecha")
+	@Expose
 	private Date fecha;
 	
 	@Column(name = "precio")
+	@Expose
 	private float precio;
 	
 	@Id
