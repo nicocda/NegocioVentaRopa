@@ -1,4 +1,4 @@
-body, #zonaDeImpresion
+#zonaDeImpresion
 {
 	widht:110mm;
 	height:35mm;
@@ -29,7 +29,7 @@ body, #zonaDeImpresion
 }
 .idBarCode
 {
-	font-size: 32px;		
+	font-size: 31px;		
 }
 
 .superior

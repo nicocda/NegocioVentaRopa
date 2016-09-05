@@ -3,11 +3,10 @@ $(document).ready(function()
 	agregarEventos();
 	cargarComboClientes();
 	cargarTabla();
-	inicioPopUsche();
-	inicializarPopUp
+	inicioPopUps();
 });
 
-function inicioPopUsche()
+function inicioPopUps()
 {
 		$("#divConfirmacion").dialog({
 			autoOpen: false,
@@ -33,6 +32,11 @@ function inicioPopUsche()
 					}
 			}
 		});
+		
+		$("#addCliente").dialog(
+				{
+					autoOpen: false
+				});
 }
 
 function agregarEventos() 
@@ -48,8 +52,14 @@ function agregarEventos()
 			"action": "agregarProducto",
 			"id": $("#comboProductos").val()
 		},
-		function()
+		function(result)
 		{
+			/*$("#total").html("22");
+			if(result.estado === 0)
+			{
+				//TODO ALERTA Y ROW ROJO
+				//$nRow.css({"background-color":"red"})
+			}*/
 			$("#tablaVentas").DataTable().ajax.reload();
 		});
 	});
@@ -131,13 +141,13 @@ function cargarComboClientes()
 	$.post('/NegocioRopa/ABMClientes', { "action": "recargarTabla" }, function(resultado)
 	{
 		var clientes = [];
-		jQuery.each(resultado.data, function()
+		jQuery.each(resultado, function()
 		{
 			clientes.push({id: this.id, text: this.nombre+" "+this.apellido});
 		});
 		$('#comboClientes').select2(
 		{
-			placeholder: 'Seleccione una opcion',
+			placeholder: 'Seleccione un cliente',
 			data: clientes
 		});
 		
@@ -150,13 +160,13 @@ function cargarComboProductos()
 	$.post('/NegocioRopa/ABMProductos', { "action": "recargarCombo" }, function(resultado)
 	{
 		var productos = [];
-		jQuery.each(resultado.data, function()
+		jQuery.each(resultado, function()
 		{
 			productos.push({id: this.id, text: this.descripcion});
 		});
 		$('#comboProductos').select2(
 		{
-			placeholder: 'Seleccione una opcion',
+			placeholder: 'Seleccione un producto',
 			data: productos
 		});
 		
@@ -187,10 +197,4 @@ function cargarTabla()
     } );
 } 
 
-function inicializarPopUp()
-{
-	$("#addCliente").dialog(
-	{
-		autoOpen: false
-	});
-}
+

@@ -88,7 +88,7 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 
 <div id="divConfirmacion" hidden="hidden" >
 	<div style="text-align: center;">
-	<p>Desea realizar la venta?</p>
+	<p id="txtConfirmacion">¿Desea realizar la venta?</p>
 	</div>
 </div>
 <%}

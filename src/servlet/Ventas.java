@@ -78,15 +78,18 @@ public class Ventas extends HttpServlet {
 				float importe= 0;
 				for(Producto p : vta.getProductos())
 				{
-					importe= importe + p.getPrecio().getPrecio();
+					if(p.getEstado() == Producto.estado.STOCK.ordinal())
+						importe= importe + p.getPrecio().getPrecio();
+					else if(p.getEstado() == Producto.estado.VENDIDO.ordinal())
+						importe = importe - p.getPrecio().getPrecio();
 				}
 				vta.setImporte(importe);
-				
 				session.setAttribute("venta", vta);
 				
 				response.setContentType("json");
 			    response.setCharacterEncoding("UTF-8");
-			    response.getWriter().write(JsonResponses.devolverMensaje(sr, ""));
+			    //SobreCarga
+			    response.getWriter().write(JsonResponses.devolverMensaje(sr, "",importe, pro.getEstado()));
 			}
 		}
 		else if (action.equals("recargarTabla"))
@@ -94,7 +97,7 @@ public class Ventas extends HttpServlet {
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
 				//Gson g = new Gson();
-			   // response.getWriter().write(g.toJson(vta.getProductosArrayList()));
+			    //response.getWriter().write(g.toJson(vta.getProductosArrayList()));
 			    response.getWriter().write(JsonResponses.arrayTodosProductosVenta(vta));
 			
 		}
@@ -151,8 +154,7 @@ public class Ventas extends HttpServlet {
 		
 		if (pro != null)
 		{
-			if(pro.getEstado() == estado.VENDIDO.ordinal())
-				sr.addError("El producto ingresado ya fue vendido.");
+			
 			
 			if(pro.getEstado() == estado.SEÑADO.ordinal())
 				sr.addError("El producto ingresado está señado.");

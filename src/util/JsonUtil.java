@@ -20,6 +20,8 @@ public class JsonUtil
 	
 	public static String toJson(Object entidad)
 	{
+		System.out.println(gson.toJson(entidad));
+		
 		return gson.toJson(entidad);
 	}
 
