@@ -52,16 +52,12 @@ function agregarEventos()
 			"action": "agregarProducto",
 			"id": $("#comboProductos").val()
 		},
-		function(result)
+		function()
 		{
-			/*$("#total").html("22");
-			if(result.estado === 0)
-			{
-				//TODO ALERTA Y ROW ROJO
-				//$nRow.css({"background-color":"red"})
-			}*/
 			$("#tablaVentas").DataTable().ajax.reload();
+			
 		});
+		
 	});
 	
 	$("#realizarVenta").click(function(){
@@ -183,15 +179,14 @@ function cargarTabla()
    	 	scrollY:"200px",
 
     	url: "/NegocioRopa/Ventas",
-    	params: function () { return {"action" : "recargarTabla" } },
+    	params:  {"action" : "recargarTabla" },
     	dataSrc: "productos",
-    	
 		columns: 
 		[
 			 {data: "id"},
 			 {data: "descripcion", bSortable: false},
 			 {data: "precio", bSortable: false},
-			 {data: "estado", visible: false}
+			 {data: "estado"}
 		]
         
     } );
