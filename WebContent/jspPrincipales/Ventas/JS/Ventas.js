@@ -4,6 +4,7 @@ $(document).ready(function()
 	cargarComboClientes();
 	cargarTabla();
 	inicioPopUps();
+	//validarRows();
 });
 
 function inicioPopUps()
@@ -55,7 +56,7 @@ function agregarEventos()
 		function()
 		{
 			$("#tablaVentas").DataTable().ajax.reload();
-			
+			actualizarTotal();
 		});
 		
 	});
@@ -169,27 +170,46 @@ function cargarComboProductos()
 	});
 }
 
-function cargarTabla()
-{
+function actualizarTotal(){
+	$.post('/NegocioRopa/Ventas', { "action": "actualizarTotal" }, function(resultado)
+			{
+				$("#total").text("Total: $"+resultado.tot)
+				if(resultado.tot < 0)
+					{
+						$("#realizarVenta").attr("disabled", true);
+					} else {
+						$("#realizarCambio").attr("enabled", true);
+					}
+			});
+}
+
+function cargarTabla(){
 	$("#tablaVentas").DataTable(
 	{
         info: false,
         paginate: false,
         searching: false,
    	 	scrollY:"200px",
-
     	url: "/NegocioRopa/Ventas",
-    	params:  {"action" : "recargarTabla" },
-    	dataSrc: "productos",
+    	params: function () { return { "action": "recargarTabla" } },
 		columns: 
 		[
 			 {data: "id"},
 			 {data: "descripcion", bSortable: false},
 			 {data: "precio", bSortable: false},
-			 {data: "estado"}
+			 {data: "estado", visible:false}
 		]
         
     } );
 } 
 
+/*function validarRows()
+{
+
+	var table=$("#tablaVentas").DataTable();
+	table.rows().iterator( 'row', function ( context, index ) {
+		if(this.row(index.node() ).data() == "VENDIDO")
+	    $( this.row( index ).node() ).addClass( 'devolucion' );
+	} );}
+*/
 

@@ -89,7 +89,8 @@ public class Ventas extends HttpServlet {
 				response.setContentType("json");
 			    response.setCharacterEncoding("UTF-8");
 			    //SobreCarga
-			    response.getWriter().write(JsonResponses.devolverMensaje(sr, "",importe, pro.getEstado()));
+			    String json = JsonResponses.devolverMensaje(sr, "",importe, pro.getEstado());
+			    response.getWriter().write(json);
 			}
 		}
 		else if (action.equals("recargarTabla"))
@@ -98,7 +99,9 @@ public class Ventas extends HttpServlet {
 		    response.setCharacterEncoding("UTF-8");
 				//Gson g = new Gson();
 			    //response.getWriter().write(g.toJson(vta.getProductosArrayList()));
-			    response.getWriter().write(JsonResponses.arrayTodosProductosVenta(vta));
+		    String toJson = JsonResponses.arrayTodosProductosVenta(vta);
+		    System.out.println(toJson);
+			   response.getWriter().write(toJson);
 			
 		}
 		else if(action.equals("realizarVenta"))
@@ -142,6 +145,13 @@ public class Ventas extends HttpServlet {
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(JsonResponses.devolverMensaje(sr, "La venta se registró con éxito"));
+		}
+		else if(action.equals("actualizarTotal"))
+		{
+			String msg = "{\"tot\":\""+vta.getImporte()+"\"}";
+			response.setContentType("json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(msg);
 		}
 	}
 	
