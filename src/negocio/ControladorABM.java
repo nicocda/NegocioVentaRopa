@@ -170,4 +170,8 @@ public class ControladorABM
 	{
 		return CatalogoSucursales.buscarTodasSucursales();
 	}
+	public static ArrayList<TipoTarjeta> getTipoTarjetas()
+	{
+		return CatalogoTarjetas.buscarTipoTarjetas();
+	}
 }

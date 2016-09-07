@@ -60,7 +60,13 @@ function agregarEventos()
 		});
 		
 	});
-	
+	$("#radioTarjeta").change(function()
+		{
+			if($("#radioTarjeta").val() == 3)
+			{
+				$(".tarjeta").show();
+			}
+		});
 	$("#realizarVenta").click(function(){
 		
 		var totalRegistros = $("#tablaVentas").DataTable().page.info().recordsTotal;
