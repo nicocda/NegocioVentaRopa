@@ -73,35 +73,8 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 	</form>
 </div>
 <div class="tarjeta" hidden="true">
-	<div class="form-group">
-		<label>Número de Tarjeta: </label>
-		<input id="txtNroTarjeta" class="form-control">
-	</div>
-	<div class="form-group">
-		<label>Nombre : </label>
-		<input id="txtNombre" class="form-control">
-	</div>
-	<div class="form-group">
-		<label>Apellido: </label>
-		<input id="txtApellido" class="form-control">
-	</div>
-	<div class="form-group">
-		<label>Nro de Cuotas: </label>
-		<input id="txtCuotas" class="form-control">
-	</div>
-	<div class="form-group">
-		<label>Numero de Cupón: </label>
-		<input id="txtCupon" class="form-control">
-	</div>
-	<div class="form-group">
-		<label>Tipo de Tarjeta: </label>
-		<select id="cbTipoTarjeta" class="form-control">
-								<%for(TipoTarjeta tp : ControladorABM.getTipoTarjetas()) 
-								{%>
-									<option value="<%=tp.getId()%>"><%=tp.getDescripcion()%></option>
-								<%}%>
-		</select>
-	</div>
+	<jsp:include page="Tarjeta.jsp"></jsp:include>
+</div>
 	
 	
 </div>

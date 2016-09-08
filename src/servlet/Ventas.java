@@ -17,6 +17,7 @@ import util.JsonResponses;
 import entidades.Cliente;
 import entidades.Producto;
 import entidades.Producto.estado;
+import entidades.Tarjeta;
 import entidades.Venta;
 import excepciones.RespuestaServidor;
 import negocio.ControladorABM;
@@ -106,6 +107,8 @@ public class Ventas extends HttpServlet {
 		}
 		else if(action.equals("realizarVenta"))
 		{
+
+			String formaPago = request.getParameter("formaPago");
 			int idCliente; 
 			try
 			{
@@ -116,7 +119,7 @@ public class Ventas extends HttpServlet {
 				idCliente = -1;
 			}
 			RespuestaServidor sr = new RespuestaServidor();
-
+			
 			Cliente cli;
 			try
 			{
@@ -126,11 +129,29 @@ public class Ventas extends HttpServlet {
 			{
 				cli = null;
 			}
+			if(formaPago == "3")
+			{
+				Tarjeta trj = new Tarjeta();
+				trj.setNroTarjeta(Integer.parseInt(request.getParameter("nroTarjetaTrj")));
+				trj.setCliente(cli);
+				trj.setCuotas(Integer.parseInt(request.getParameter("txtCuotasTrj")));
+				trj.setNroCupon(Integer.parseInt(request.getParameter("txtCuponTrj")));
+				int tipoTarjeta;
+				try
+				{
+				 tipoTarjeta = Integer.parseInt(request.getParameter("cbTipoTarjetaTrj"));	
+				}
+				catch(NumberFormatException nfe)
+				{
+				 tipoTarjeta = -1;
+				}
+				//BuscarTipoTarjeta y Agregarselo a la Tarjeta
+			}
+			
 			vta.setCliente(cli);
 			Calendar today = Calendar.getInstance();
 			today.set(Calendar.HOUR_OF_DAY, 0);
 			vta.setFechaVenta(today.getTime());
-			String formaPago = request.getParameter("formaPago");
 			vta.setFormaPago(Integer.parseInt(formaPago));
 			try
 			{

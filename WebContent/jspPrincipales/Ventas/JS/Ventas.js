@@ -15,16 +15,30 @@ function inicioPopUps()
 			buttons:{
 				Aceptar: function()
 				{
-					$.postData('/NegocioRopa/Ventas', 
-					{
-						"action":"realizarVenta", 
-						"idCliente": $("#comboClientes").val(), 
-						"formaPago": $("input[type='radio'][name='tipoPago']:checked").val()
-					}, 
-					function(result)
-					{
-						$("#tablaVentas").DataTable().clear().draw();
-					});
+					var datos = {};
+					if ($("input[type='radio'][name='tipoPago']:checked").val() === "3")
+						datos=  {
+								"action":"realizarVenta", 
+								"idCliente": $("#comboClientes").val(), 
+								"formaPago": $("input[type='radio'][name='tipoPago']:checked").val(),
+								"nroTarjetaTrj" : $("#txtNroTarjetaTrj").val(),
+								"txtNombreTrj" : $("#txtNombreTrj").val(),
+								"txtApellidoTrj" : $("#txtApellidoTrj").val(),
+								"txtCuotasTrj" : $("#txtCuotasTrj").val(),
+								"txtCuponTrj" : $("#txtCuponTrj").val(),
+								"cbTipoTarjetaTrj" : $("#cbTipoTarjetaTrj").val(),
+								}
+					else datos=  {
+								"action":"realizarVenta", 
+								"idCliente": $("#comboClientes").val(), 
+								"formaPago": $("input[type='radio'][name='tipoPago']:checked").val()
+								};
+						$.postData('/NegocioRopa/Ventas', 
+						datos, 
+						function(result)
+						{
+							$("#tablaVentas").DataTable().clear().draw();
+						});
 					$(this).dialog('close');
 				},
 				Cancelar: function()
