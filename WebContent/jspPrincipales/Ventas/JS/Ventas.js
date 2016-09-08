@@ -19,7 +19,7 @@ function inicioPopUps()
 					{
 						"action":"realizarVenta", 
 						"idCliente": $("#comboClientes").val(), 
-						"formaPago": $("#rdbtnTipoPago").val() 
+						"formaPago": $("input[type='radio'][name='tipoPago']:checked").val()
 					}, 
 					function(result)
 					{
@@ -119,24 +119,7 @@ function agregarEventos()
 		$("#mensaje").hide("slow");
 	});
 	
-	$("#radioEfectivo").click(function()
-	{
-		$("#divPaga").show();
-		$('#lblVueltoDebe').empty();
-		$('#lblVueltoDebe').append('Vuelto: ')
-	});
 	
-	$("#radioCtaCte").click(function()
-	{
-		$("#divPaga").show();
-		$('#lblVueltoDebe').empty();
-		$('#lblVueltoDebe').append('Debe: ')
-	});
-	
-	$("#radioTarjeta").click(function()
-	{
-		$("#divPaga").hide();
-	});
 }
 
 function cargarComboClientes()
@@ -184,7 +167,7 @@ function actualizarTotal(){
 					{
 						$("#realizarVenta").attr("disabled", true);
 					} else {
-						$("#realizarCambio").attr("enabled", true);
+						$("#realizarVenta").removeAttr("disabled");
 					}
 			});
 }
