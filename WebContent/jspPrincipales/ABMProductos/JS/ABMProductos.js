@@ -9,10 +9,7 @@ $(document).ready(function()
 function eventosRelacionados()
 {
 	
-	$("#btnVolverDeBarcode").click(function()
-	{
-		$("#divBarcode").dialog("close");
-	});
+	
 	
 	$("#btnMostrarCreate").click(function()
 	{
@@ -108,6 +105,7 @@ function eventosDelDetalle()
 		},
 		function()
 		{ 
+			
 			$("#divPrintBarCode").show();
 			$("#divCrearProducto").hide();
 			$("#divError").hide();
@@ -118,7 +116,7 @@ function eventosDelDetalle()
 			$("#idBarcode2").text($("#txtID2").val());
 			$("#codNoBarcode2").text($("#txtID2").val());
 			$("#precio2").text($("#txtPrecio2").val());
-			window.print();
+			
 			
 			buscarId();
 			$("#txtDescripcion").val("");
@@ -128,12 +126,18 @@ function eventosDelDetalle()
 			$("#divProducto2").show();
 			$("#accordion #mostrar").click();
 			$("#nuevoEditar").val("Nuevo Producto:");
-			$("#txtDescripcion").focus();
-			$("#tablaProductos").DataTable().ajax.reload();
-			$("#divPrintBarCode").hide();
-			$("#divCrearProducto").show();
+			
+			
 			
 		});
+	});
+	
+	$("#imprimir").click(function()
+	{
+		window.print();
+		$("#tablaProductos").DataTable().ajax.reload();
+		$("#divPrintBarCode").hide();
+		$("#divCrearProducto").show();
 	});
 }
 

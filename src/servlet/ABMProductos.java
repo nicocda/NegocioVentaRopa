@@ -46,6 +46,11 @@ public class ABMProductos extends HttpServlet {
 					descripcion2 = request.getParameter("descripcion2"), 
 					precio2 =request.getParameter("precio2"),
 					id2 = request.getParameter("id2");
+			if(descripcion.length() >=45)
+				descripcion = descripcion.substring(0, 41) +"...";
+			if(descripcion2.length() >=45)
+				descripcion2 = descripcion2.substring(0, 41) +"...";
+
 
 			float precioFloat, precioFloat2;
 			try

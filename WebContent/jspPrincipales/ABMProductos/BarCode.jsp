@@ -6,5 +6,3 @@
 	<span id="codNoBarcode"></span>
 	<span class="titulo">KAIRÓS</span>
 </div>
-<button class="btn btn-default pull-right" id="btnVolverDeBarcode">Volver</button>
-s

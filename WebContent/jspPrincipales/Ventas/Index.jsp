@@ -6,7 +6,6 @@
 if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttribute("usuario")).getTipoUsuario() >= 1) 
 {%>
 <script type="text/javascript" src="jspPrincipales/Ventas/JS/Ventas.js"></script>	
-
 <div id="divError"></div>
 <div id="divPrincipal">
 
@@ -38,7 +37,7 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 					
 					<td style="text-align: center"> <button style= "width:60%" id="agregar" class="btn btn-info">Agregar</button></td>
 					<td><select id="comboProductos" style="width: 80%" class="js-example-basic-single"></select></td>
-					<td><b id="total">Total: <%if(venta != null){%><%=venta.getImporte() %><%} else { %><label>0</label><%} %></b>
+					<td><b id="total">Total: $<%if(venta != null){%><%=venta.getImporte() %><%} else { %><label>0</label><%} %></b>
 						<br>
 						<div id="divPaga" style="text-align: right" hidden = "hidden">
 							<label>Paga: </label>
@@ -88,7 +87,7 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 
 <div id="divConfirmacion" hidden="hidden" >
 	<div style="text-align: center;">
-	<p>Desea realizar la venta?</p>
+	<p id="txtConfirmacion">¿Desea realizar la venta?</p>
 	</div>
 </div>
 <%}

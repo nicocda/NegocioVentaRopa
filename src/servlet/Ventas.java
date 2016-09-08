@@ -78,15 +78,19 @@ public class Ventas extends HttpServlet {
 				float importe= 0;
 				for(Producto p : vta.getProductos())
 				{
-					importe= importe + p.getPrecio().getPrecio();
+					if(p.getEstado() == Producto.estado.STOCK.ordinal())
+						importe= importe + p.getPrecio().getPrecio();
+					else if(p.getEstado() == Producto.estado.VENDIDO.ordinal())
+						importe = importe - p.getPrecio().getPrecio();
 				}
 				vta.setImporte(importe);
-				
 				session.setAttribute("venta", vta);
 				
 				response.setContentType("json");
 			    response.setCharacterEncoding("UTF-8");
-			    response.getWriter().write(JsonResponses.devolverMensaje(sr, ""));
+			    //SobreCarga
+			    String json = JsonResponses.devolverMensaje(sr, "",importe, pro.getEstado());
+			    response.getWriter().write(json);
 			}
 		}
 		else if (action.equals("recargarTabla"))
@@ -94,8 +98,10 @@ public class Ventas extends HttpServlet {
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
 				//Gson g = new Gson();
-			   // response.getWriter().write(g.toJson(vta.getProductosArrayList()));
-			    response.getWriter().write(JsonResponses.arrayTodosProductosVenta(vta));
+			    //response.getWriter().write(g.toJson(vta.getProductosArrayList()));
+		    String toJson = JsonResponses.arrayTodosProductosVenta(vta);
+		    System.out.println(toJson);
+			   response.getWriter().write(toJson);
 			
 		}
 		else if(action.equals("realizarVenta"))
@@ -140,6 +146,13 @@ public class Ventas extends HttpServlet {
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(JsonResponses.devolverMensaje(sr, "La venta se registró con éxito"));
 		}
+		else if(action.equals("actualizarTotal"))
+		{
+			String msg = "{\"tot\":\""+vta.getImporte()+"\"}";
+			response.setContentType("json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(msg);
+		}
 	}
 	
 	private RespuestaServidor validarProducto(Producto pro, Venta venta)
@@ -151,8 +164,7 @@ public class Ventas extends HttpServlet {
 		
 		if (pro != null)
 		{
-			if(pro.getEstado() == estado.VENDIDO.ordinal())
-				sr.addError("El producto ingresado ya fue vendido.");
+			
 			
 			if(pro.getEstado() == estado.SEÑADO.ordinal())
 				sr.addError("El producto ingresado está señado.");

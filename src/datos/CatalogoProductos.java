@@ -86,7 +86,7 @@ public class CatalogoProductos extends CatalogoBase
 		abrirEntityManager();
 		try
 		{
-			ArrayList<Producto> todosProductos = (ArrayList<Producto>)getEm().createQuery("SELECT p FROM Producto p WHERE p.estado = 1").getResultList();
+			ArrayList<Producto> todosProductos = (ArrayList<Producto>)getEm().createQuery("SELECT p FROM Producto p").getResultList();
 			
 			for(Producto p : todosProductos)
 				buscarUltimoPrecio(p);

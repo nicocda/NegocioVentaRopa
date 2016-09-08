@@ -105,9 +105,9 @@ public class ABMUsuarios extends HttpServlet
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
 		    
-		    response.getWriter().write(JsonUtil.toJson(ControladorABM.buscarTodosUsuarios()));		    
+		   // response.getWriter().write(JsonUtil.toJson(ControladorABM.buscarTodosUsuarios()));		    
 		    
-		    //response.getWriter().write(JsonResponses.arrayTodosUsuarios(ControladorABM.buscarTodosUsuarios()));
+		    response.getWriter().write(JsonResponses.arrayTodosUsuarios(ControladorABM.buscarTodosUsuarios()));
 		}
 	}
 

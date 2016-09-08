@@ -3,11 +3,11 @@ $(document).ready(function()
 	agregarEventos();
 	cargarComboClientes();
 	cargarTabla();
-	inicioPopUsche();
-	inicializarPopUp
+	inicioPopUps();
+	//validarRows();
 });
 
-function inicioPopUsche()
+function inicioPopUps()
 {
 		$("#divConfirmacion").dialog({
 			autoOpen: false,
@@ -33,6 +33,11 @@ function inicioPopUsche()
 					}
 			}
 		});
+		
+		$("#addCliente").dialog(
+				{
+					autoOpen: false
+				});
 }
 
 function agregarEventos() 
@@ -51,7 +56,9 @@ function agregarEventos()
 		function()
 		{
 			$("#tablaVentas").DataTable().ajax.reload();
+			actualizarTotal();
 		});
+		
 	});
 	
 	$("#realizarVenta").click(function(){
@@ -131,13 +138,13 @@ function cargarComboClientes()
 	$.post('/NegocioRopa/ABMClientes', { "action": "recargarTabla" }, function(resultado)
 	{
 		var clientes = [];
-		jQuery.each(resultado.data, function()
+		jQuery.each(resultado, function()
 		{
 			clientes.push({id: this.id, text: this.nombre+" "+this.apellido});
 		});
 		$('#comboClientes').select2(
 		{
-			placeholder: 'Seleccione una opcion',
+			placeholder: 'Seleccione un cliente',
 			data: clientes
 		});
 		
@@ -150,47 +157,59 @@ function cargarComboProductos()
 	$.post('/NegocioRopa/ABMProductos', { "action": "recargarCombo" }, function(resultado)
 	{
 		var productos = [];
-		jQuery.each(resultado.data, function()
+		jQuery.each(resultado, function()
 		{
 			productos.push({id: this.id, text: this.descripcion});
 		});
 		$('#comboProductos').select2(
 		{
-			placeholder: 'Seleccione una opcion',
+			placeholder: 'Seleccione un producto',
 			data: productos
 		});
 		
 	});
 }
 
-function cargarTabla()
-{
+function actualizarTotal(){
+	$.post('/NegocioRopa/Ventas', { "action": "actualizarTotal" }, function(resultado)
+			{
+				$("#total").text("Total: $"+resultado.tot)
+				if(resultado.tot < 0)
+					{
+						$("#realizarVenta").attr("disabled", true);
+					} else {
+						$("#realizarCambio").attr("enabled", true);
+					}
+			});
+}
+
+function cargarTabla(){
 	$("#tablaVentas").DataTable(
 	{
         info: false,
         paginate: false,
         searching: false,
    	 	scrollY:"200px",
-
     	url: "/NegocioRopa/Ventas",
-    	params: function () { return {"action" : "recargarTabla" } },
-    	dataSrc: "productos",
-    	
+    	params: function () { return { "action": "recargarTabla" } },
 		columns: 
 		[
 			 {data: "id"},
 			 {data: "descripcion", bSortable: false},
 			 {data: "precio", bSortable: false},
-			 {data: "estado", visible: false}
+			 {data: "estado", visible:false}
 		]
         
     } );
 } 
 
-function inicializarPopUp()
+/*function validarRows()
 {
-	$("#addCliente").dialog(
-	{
-		autoOpen: false
-	});
-}
+
+	var table=$("#tablaVentas").DataTable();
+	table.rows().iterator( 'row', function ( context, index ) {
+		if(this.row(index.node() ).data() == "VENDIDO")
+	    $( this.row( index ).node() ).addClass( 'devolucion' );
+	} );}
+*/
+
