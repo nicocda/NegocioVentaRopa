@@ -77,51 +77,6 @@ public class ABMClientes extends HttpServlet
 		{
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
-		    
-		    ArrayList<Cliente> listaClientes = ControladorABM.buscarTodosClientes();
-		    	
-		    JsonObject jsonResponse = new JsonObject();
-		    		    
-		    for(Cliente cliente : listaClientes)
-		    {
-			    JsonObject jsonCliente = new JsonObject();
-		    	
-		    	jsonCliente.addProperty("apellido", cliente.getApellido());
-		    	jsonCliente.addProperty("direccion", cliente.getDireccion());
-		    	jsonCliente.addProperty("id", cliente.getId());
-		    	jsonCliente.addProperty("nombre", cliente.getNombre());
-		    	jsonCliente.addProperty("telefono", cliente.getTelefono());
-		    			    	
-			    JsonArray arrayVenta = new JsonArray();
-		    	
-		    	for(Venta venta : cliente.getVentasArrayList())
-		    	{
-				    JsonObject jsonVenta = new JsonObject();
-
-				    jsonVenta.addProperty("fecha", venta.getFechaVenta().toString());
-				    jsonVenta.addProperty("formaPago", venta.getFormaPago());
-				    jsonVenta.addProperty("importe", venta.getImporte());
-		    		
-				    arrayVenta.add(jsonVenta);
-				    
-				    JsonArray arrayProducto = new JsonArray();
-				    
-		    		for(Producto producto : venta.getProductosArrayList())
-		    		{
-		    		    JsonObject jsonProducto = new JsonObject();
-
-		    		    jsonProducto.addProperty("descripcion", producto.getDescripcion());
-		    		    jsonProducto.addProperty("estado", producto.getEstado());
-		    		    jsonProducto.addProperty("id", producto.getId());
-		    		    jsonProducto.addProperty("precio", producto.getPrecio().getPrecio());
-		    		    
-					    arrayProducto.add(jsonProducto);
-		    		}
-		    	}
-		    	
-		    	jsonCliente.add("ventas", arrayVenta);
-		    }
-		    
 		    response.getWriter().write(JsonUtil.toJson(ControladorABM.buscarTodosClientes()));
 		}
 	}

@@ -23,9 +23,11 @@ import negocio.ControladorABM;
 import negocio.ControladorTransaccion;
 
 @WebServlet("/Ventas")
-public class Ventas extends HttpServlet {
+public class Ventas extends HttpServlet 
+{
 	private static final long serialVersionUID = 1L;
-    public Ventas() {
+    public Ventas() 
+    {
         super();
     }
 
@@ -102,7 +104,6 @@ public class Ventas extends HttpServlet {
 		    String toJson = JsonResponses.arrayTodosProductosVenta(vta);
 		    System.out.println(toJson);
 			   response.getWriter().write(toJson);
-			
 		}
 		else if(action.equals("realizarVenta"))
 		{

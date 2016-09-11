@@ -86,22 +86,18 @@ function cargarTabla()
 	$("#tablaUsuarios").DataTable(
 	{
         info: false,
-		ajax: 
-    	{
-        	type: "POST",
-        	url: "/NegocioRopa/ABMUsuarios",
-        	data: { "action": "recargarTabla" },
-        	dataSrc: ""
-    	},
+
+    	url: "/NegocioRopa/ABMUsuarios",
+    	params: function() { return { "action": "recargarTabla" } },
 		columns: 
 		[
 			 {"data": "usuario"},
-			 {"data": "nombreYApellido"},
-			 {"data": "mail"},
-			 {"data": "tipoUsuario"},
+			 {"data": "nombreApellido"},
+			 {"data": "email"},
+			 {"data": "tipo"},
 			 {"data": null, "targets": -1, "defaultContent": "<button class='btn btn-info btnEditar'>Editar</button>"},
-			 {"data": null, "targets": -1, "defaultContent": "<button class='btn btn-danger btnEliminar'>Eliminar</button>"},
-	         {"data": "password", "visible": false}
+			 {"data": null, "targets": -1, "defaultContent": "<button class='btn btn-danger btnEliminar'>Eliminar</button>"}
+	         //{"data": "password", "visible": false}
 	    ]
 	});
 }

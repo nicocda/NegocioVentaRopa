@@ -41,13 +41,6 @@ $.extend( $.fn.dataTable.defaults,
 				var respuesta = { data: d };
 				
 				callback(respuesta);
-				
-				/*
-				//Acá se puede manejar la respuesta del servidor si hicieramos un JSON genérico
-				if (settings.oInit.dataSrc != null)
-					callback(JSON.parse(JSON.stringify(d).replace(settings.oInit.dataSrc, "data")));
-				else
-					callback(d);*/
 			},
 			error: function (d)
 			{

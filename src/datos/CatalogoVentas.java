@@ -69,6 +69,10 @@ public class CatalogoVentas  extends CatalogoBase
 				buscarUltimoPrecio(p);
 			}
 		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		finally
 		{
 			cerrarEntityManager();

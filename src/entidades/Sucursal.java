@@ -9,34 +9,46 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="sucursal")
-public class Sucursal {
+public class Sucursal 
+{
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy=GenerationType.AUTO)
-private int id;
+	private int id;
+	
 	@Column(name = "localidad")
-private String localidad;
+	private String localidad;
+	
 	@Column(name = "direccion")
-private String direccion;
-	public int getId() {
+	private String direccion;
+	
+	//Getters y setters
+	public int getId() 
+	{
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(int id)
+	{
 		this.id = id;
 	}
-	public String getLocalidad() {
+	public String getLocalidad() 
+	{
 		return localidad;
 	}
-	public void setLocalidad(String localidad) {
+	public void setLocalidad(String localidad) 
+	{
 		this.localidad = localidad;
 	}
-	public String getDireccion() {
+	public String getDireccion()
+	{
 		return direccion;
 	}
-	public void setDireccion(String direccion) {
+	public void setDireccion(String direccion) 
+	{
 		this.direccion = direccion;
 	}
-	public String toString() {
+	public String toString()
+	{
 		return "Localidad: "+localidad+" Direccion: "+direccion;
 	}
 	

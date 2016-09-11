@@ -71,7 +71,7 @@ public class JsonResponses
 	public static String arrayTodosProductosVenta(Venta venta)
 	{
 		if(venta.getProductosArrayList().isEmpty())
-			return "{\"productos\": []}";
+			return "[]";
 		
 		ArrayList<Producto> productos = venta.getProductosArrayList();
 		String rsp = "[";
@@ -86,15 +86,15 @@ public class JsonResponses
 	public static String arrayTodosProductos(ArrayList<Producto> productos)
 	{
 		if(productos.isEmpty())
-			return "{ }";
+			return "[]";
 		else
 		{
-		String rsp = "{[";
+		String rsp = "[";
 	    for(int i=0;i<productos.size()-1;i++)
 	    {
 	    	rsp= rsp + "{\"id\": \"" + productos.get(i).getId()+"\", \"descripcion\": \"" + productos.get(i).getDescripcion() + "\", \"precio\": \"" + productos.get(i).getPrecio().getPrecio() +"\", \"estado\": \"" + estado.values()[productos.get(i).getEstado()].name() + "\"},";
 	    }
-	    rsp= rsp + "{\"id\": \"" + productos.get(productos.size()-1).getId()+"\", \"descripcion\": \"" + productos.get(productos.size()-1).getDescripcion() + "\", \"precio\": \"" + productos.get(productos.size()-1).getPrecio().getPrecio() +"\", \"estado\": \"" + estado.values()[productos.get(productos.size()-1).getEstado()].name() +"\"}]}";
+	    rsp= rsp + "{\"id\": \"" + productos.get(productos.size()-1).getId()+"\", \"descripcion\": \"" + productos.get(productos.size()-1).getDescripcion() + "\", \"precio\": \"" + productos.get(productos.size()-1).getPrecio().getPrecio() +"\", \"estado\": \"" + estado.values()[productos.get(productos.size()-1).getEstado()].name() +"\"}]";
 	    return rsp;
 		}
 	}
@@ -104,26 +104,26 @@ public class JsonResponses
 		if (!ventas.isEmpty())
 		{
 			SimpleDateFormat form = new SimpleDateFormat("dd MMM yyyy", new Locale("es", "ES"));
-			String rsp = "{\"ventas\": [";
+			String rsp = "[";
 		    for(int i=0;i<ventas.size()-1;i++)
 		    {
 		    	rsp= rsp + "{\"nombreApellido\": \"" + ventas.get(i).getCliente().getNombre()+" "+ventas.get(i).getCliente().getApellido()+"\", \"fecha\": \"" + form.format(ventas.get(i).getFechaVenta()) +"\", \"importe\": \"" + ventas.get(i).getImporte() +"\", \"formaPago\": \"" + formaPago.values()[ventas.get(i).getFormaPago()].name() +"\", \"idVenta\": \""+ ventas.get(i).getId()+"\"},";
 		    }
-		    rsp= rsp + "{\"nombreApellido\": \"" + ventas.get(ventas.size()-1).getCliente().getNombre()+" "+ventas.get(ventas.size()-1).getCliente().getApellido()+"\", \"fecha\": \"" +  form.format(ventas.get(ventas.size()-1).getFechaVenta()) +"\", \"importe\": \"" + ventas.get(ventas.size()-1).getImporte() +"\", \"formaPago\": \"" + formaPago.values()[ventas.get(ventas.size()-1).getFormaPago()].name() +"\", \"idVenta\": \""+ ventas.get(ventas.size()-1).getId()+"\"}]}";
+		    rsp= rsp + "{\"nombreApellido\": \"" + ventas.get(ventas.size()-1).getCliente().getNombre()+" "+ventas.get(ventas.size()-1).getCliente().getApellido()+"\", \"fecha\": \"" +  form.format(ventas.get(ventas.size()-1).getFechaVenta()) +"\", \"importe\": \"" + ventas.get(ventas.size()-1).getImporte() +"\", \"formaPago\": \"" + formaPago.values()[ventas.get(ventas.size()-1).getFormaPago()].name() +"\", \"idVenta\": \""+ ventas.get(ventas.size()-1).getId()+"\"}]";
 		    return rsp;
 		}
 		else 
-			return "{\"ventas\": []}";
+			return "[]";
 	}
 
 	public static String arrayTodosUsuarios(ArrayList<Usuario> usuarios) 
 	{
-		String rsp = "{\"usuarios\": [";
+		String rsp = "[";
 	    for(int i=0;i<usuarios.size()-1;i++)
 	    {
 	    	rsp= rsp + "{\"usuario\": \"" + usuarios.get(i).getUsuario()+"\", \"nombreApellido\": \"" + usuarios.get(i).getNombreYApellido() + "\", \"email\": \"" + usuarios.get(i).getEmail() +"\", \"tipo\": \"" + tipoUsuario.values()[usuarios.get(i).getTipoUsuario()].name() + "\"},";
 	    }
-	    rsp= rsp + "{\"usuario\": \"" + usuarios.get(usuarios.size()-1).getUsuario()+"\", \"nombreApellido\": \"" + usuarios.get(usuarios.size()-1).getNombreYApellido() + "\", \"email\": \"" + usuarios.get(usuarios.size()-1).getEmail() +"\", \"tipo\": \"" + tipoUsuario.values()[usuarios.get(usuarios.size()-1).getTipoUsuario()].name() + "\"}]}";
+	    rsp= rsp + "{\"usuario\": \"" + usuarios.get(usuarios.size()-1).getUsuario()+"\", \"nombreApellido\": \"" + usuarios.get(usuarios.size()-1).getNombreYApellido() + "\", \"email\": \"" + usuarios.get(usuarios.size()-1).getEmail() +"\", \"tipo\": \"" + tipoUsuario.values()[usuarios.get(usuarios.size()-1).getTipoUsuario() - 1].name() + "\"}]";
 	    return rsp;
 	}
 
