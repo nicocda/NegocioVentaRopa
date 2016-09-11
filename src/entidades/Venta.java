@@ -90,7 +90,7 @@ public class Venta
 	private List<Cuota> cuotas = new ArrayList<Cuota>();
 	
 	@Expose
-	@OneToMany(fetch=FetchType.EAGER, mappedBy="venta")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="venta")
 	private List<Producto> productos = new ArrayList<Producto>();
 	
 	public List<Producto> getProductos() 

@@ -68,6 +68,7 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 	<table id="tablaVenta" class="display" style="width: 100%">
 		<thead>
 			<tr>
+				<th width="5%">Id</th>
 				<th width="15%">Fecha</th>
 				<th width="30%">Comprador</th>
 				<th width="20%">Importe</th>

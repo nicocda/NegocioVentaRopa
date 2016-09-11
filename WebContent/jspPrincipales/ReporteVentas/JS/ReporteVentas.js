@@ -81,20 +81,12 @@ function eventosDeTabla()
 {
 	$("#tablaVenta tbody").on('click', ".detalleVenta", function()
 	{
+		var data = $("#tablaVenta").DataTable().row($(this).closest('tr')).data();
+
 		if (! $.fn.DataTable.isDataTable("#tablaVentasMorosas"))
 		{
-			cargarTablaDetalle();
-		}
-		var data = $("#tablaVenta").DataTable().row($(this).closest('tr')).data();
-		$("#divPrincipal").hide();
-		$("#idVenta").val(data.idVenta);
-		$("#divDetalleVenta").show();
-		$("#nombreComprador").html(data.nombreApellido);
-		$("#fechaVta").html(data.fecha);
-		$("#formaPago").html(data.formaPago);
-		$.fn.dataTable.ext.errMode = 'none';
-		$("#tablaDetalleVenta").DataTable().ajax.reload();
-		
+			cargarTablaDetalle(data);
+		}		
 	});
 }
 
@@ -141,7 +133,7 @@ function cargarComboClientes()
 	$.post('/NegocioRopa/ABMClientes', { "action": "recargarTabla" }, function(resultado)
 	{
 		var clientes = [];
-		jQuery.each(resultado.data, function()
+		jQuery.each(resultado, function()
 		{
 			clientes.push({id: this.id, text: this.nombre+" "+this.apellido});
 		});
@@ -170,7 +162,6 @@ function cargarTabla()
         searching: false,
         cache: false,
     	url: "/NegocioRopa/ReporteVentas",
-    	dataSrc: "ventas",
     	params: function () 
     	{
     		return {
@@ -184,6 +175,7 @@ function cargarTabla()
     	width: 100,
     	columns: 
 		[
+		 	 {"data": "idVenta"},
 			 {"data": "fecha"},
 			 {"data": "nombreApellido"},
 			 {"data": "importe"},
@@ -192,7 +184,7 @@ function cargarTabla()
 	    ]
 	});
 }
-function cargarTablaDetalle()
+function cargarTablaDetalle(data)
 {
 	$("#tablaDetalleVenta").DataTable(
 			{
@@ -201,8 +193,7 @@ function cargarTablaDetalle()
 		        searching: false,
 		        cache: false,
 		    	url: "/NegocioRopa/ReporteVentas",
-		    	params: function () { return { "action" : "detalleVenta", "idVenta": $("#idVenta").val() } },
-		    	dataSrc: "venta",
+		    	params: function () { return { "action" : "detalleVenta", "idVenta": data.idVenta } },
 				columns: 
 				[
 					 {data: "id"},
@@ -212,6 +203,14 @@ function cargarTablaDetalle()
 				]
 		        
 		    });
+	
+	$("#divPrincipal").hide();
+	$("#idVenta").val(data.idVenta);
+	$("#divDetalleVenta").show();
+	$("#nombreComprador").html(data.nombreApellido);
+	$("#fechaVta").html(data.fecha);
+	$("#formaPago").html(data.formaPago);
+	//$("#tablaDetalleVenta").DataTable().ajax.reload();
 }
 
 

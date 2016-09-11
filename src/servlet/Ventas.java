@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import javax.servlet.ServletException;
@@ -18,7 +17,6 @@ import entidades.Cliente;
 import entidades.Producto;
 import entidades.Producto.estado;
 import entidades.Tarjeta;
-import entidades.TipoTarjeta;
 import entidades.Usuario;
 import entidades.Venta;
 import excepciones.RespuestaServidor;
@@ -155,7 +153,7 @@ public class Ventas extends HttpServlet {
 				response.setContentType("json");
 			    response.setCharacterEncoding("UTF-8");
 			    //SobreCarga
-			    String json = JsonResponses.devolverMensaje(sr, "",importe, pro.getEstado());
+			    String json = JsonResponses.devolverMensaje(sr, "");
 			    response.getWriter().write(json);
 			}
 		}
@@ -168,6 +166,7 @@ public class Ventas extends HttpServlet {
 		    String toJson = JsonResponses.arrayTodosProductosVenta(vta);
 		    System.out.println(toJson);
 			   response.getWriter().write(toJson);
+			
 		}
 		else if(action.equals("actualizarTotal"))
 		{
@@ -175,16 +174,6 @@ public class Ventas extends HttpServlet {
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(msg);
-		}
-		else if(action.equals("borrarProducto"))
-		{
-			/*String idProducto = request.getParameter("idProducto");
-			Producto pr = ControladorTransaccion.buscarProducto(idProducto);
-			Venta venta = (Venta) session.getAttribute("venta");
-			ArrayList<Producto> prVta = venta.getProductosArrayList();
-			prVta.remove(pr);
-			venta.setProductos(prVta);
-			session.setAttribute("venta", venta);*/
 		}
 	}
 	

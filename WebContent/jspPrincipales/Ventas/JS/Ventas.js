@@ -1,18 +1,24 @@
 $(document).ready(function()
 {
-	agregarEventos();
+	agregarEventos()
 	cargarComboClientes();
-	cargarTabla();
-	inicioPopUps();
-	//validarRows();
+	cargarTabla(function()
+			{
+				inicioPopUpCli();
+				inicioPopUpConf();
+
+			});
 });
 
-function inicioPopUps()
+function inicioPopUpConf()
 {
 		$("#divConfirmacion").dialog({
+			resizable: false,
+			height: "auto",
+		     width: 400,
 			autoOpen: false,
 			modal: true,
-			buttons:{
+			buttons: {
 				Aceptar: function()
 				{
 					var datos = {};
@@ -33,13 +39,14 @@ function inicioPopUps()
 								"idCliente": $("#comboClientes").val(), 
 								"formaPago": $("input[type='radio'][name='tipoPago']:checked").val()
 								};
-						$.postData('/NegocioRopa/Ventas', 
-						datos, 
-						function(result)
-						{
-							$("#tablaVentas").DataTable().clear().draw();
-						});
-					$(this).dialog('close');
+					$.postData('/NegocioRopa/Ventas', 
+					datos, 
+					function(result)
+					{
+						$("#tablaVentas").DataTable().clear().draw();
+						$(this).dialog('close');
+					});
+					
 				},
 				Cancelar: function()
 					{
@@ -48,13 +55,55 @@ function inicioPopUps()
 			}
 		});
 		
-		$("#addCliente").dialog(
-				{
-					autoOpen: false,
-					modal: true,
-					width: 800
-				});
+		
+		$("#divConfirmacionAgregar").dialog({
+			resizable: false,
+			height: "auto",
+		     width: 400,
+			autoOpen: false,
+			modal: true,
+			buttons: {
+					Aceptar: agregarProducto,
+					Cancelar: function() {
+						$(this).dialog('close');
+					}
+			}
+		});
 }
+function inicioPopUpCli()
+{
+	$("#addCliente").dialog(
+			{
+				autoOpen: false,
+				modal: true,
+				
+				buttons: {
+						 	 Aceptar: function()
+							{
+								$.postData('/NegocioRopa/ABMClientes',
+								{
+									"id": $("#txtID").val(),
+									"nombre": $("#txtNombre").val(),
+									"apellido": $("#txtApellido").val(), 
+									"direccion": $("#txtDireccion").val(),
+									"telefono": $("#txtTelefono").val(),
+									"action": "agregarCliente"
+								}, 
+								function()
+								{
+									cargarComboClientes();
+									$(this).dialog('close');
+								});
+								
+						},
+							Cancelar : function()
+							{
+								$(this).dialog('close');
+							}
+				}
+			});
+	}
+
 
 function agregarEventos() 
 {   
@@ -63,19 +112,32 @@ function agregarEventos()
 	{
 		//Evito que se ejecute el post del form.
 		e.preventDefault();
+		if(data.estado === 0 || data.estado === "0")
+		{
+			$("#divConfirmacionAgregar").dialog("open");
+		}
+		else
+		{
+			agregarProducto();
+		}
 		
-		$.postDataSinExito('/NegocioRopa/Ventas',
-		{
-			"action": "agregarProducto",
-			"id": $("#comboProductos").val()
-		},
-		function()
-		{
-			$("#tablaVentas").DataTable().ajax.reload();
-			actualizarTotal();
-		});
 		
 	});
+	
+	function agregarProducto()
+	{
+		$.postDataSinExito('/NegocioRopa/Ventas',
+				{
+					"action": "agregarProducto",
+					"id": $("#comboProductos").val()
+				},
+				function()
+				{
+					$("#tablaVentas").DataTable().ajax.reload();
+					actualizarTotal();
+				});
+	}
+	
 	$("#radioTarjeta").change(function()
 		{
 			if($("#radioTarjeta").val() == 3)
@@ -99,36 +161,12 @@ function agregarEventos()
 	
 	$("#addCli").click(function()
 	{
-		$("#addCliente").dialog();
+		$("#addCliente").dialog("open");
 		$("#txtID").empty();
 		$("#txtNombre").empty();
 		$("#txtApellido").empty();
 		$("#txtDireccion").empty();
 		$("#txtTelefono").empty();
-	});
-	
-	
-	$(document).on('click', '#btnCancelarCreate',function()
-	{
-		$("#addCliente").dialog("close");
-	});
-	
-	$(document).on('click', "#btnGuardarCreate", function()
-	{
-		$.postData('/NegocioRopa/ABMClientes',
-		{
-			"id": $("#txtID").val(),
-			"nombre": $("#txtNombre").val(),
-			"apellido": $("#txtApellido").val(), 
-			"direccion": $("#txtDireccion").val(),
-			"telefono": $("#txtTelefono").val(),
-			"action": "agregarCliente"
-		}, 
-		function()
-		{
-			cargarComboClientes();
-			$("#addCliente").hide();
-		});
 	});
 	
 	$(document).on('click', "#btnCerrarMensaje", function()
@@ -198,7 +236,7 @@ function actualizarTotal(){
 			});
 }
 
-function cargarTabla(){
+function cargarTabla(callback){
 	$("#tablaVentas").DataTable(
 	{
         info: false,
@@ -212,11 +250,13 @@ function cargarTabla(){
 			 {data: "id"},
 			 {data: "descripcion", bSortable: false},
 			 {data: "precio", bSortable: false},
-			 {data: "estado", visible:false},
-			 {data: null, defaultContent: "<button class='btn btn-danger borrarProducto'>X</button>", bsortable: false}
+			 {data: null, defaultContent: "<button class='btn btn-danger borrarProducto'>X</button>", bsortable: false},
+			 {data: "estado", visible:false, bSortable: false}
 		]
         
     } );
+	
+	callback();
 } 
 
 /*function validarRows()

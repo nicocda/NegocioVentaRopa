@@ -86,13 +86,9 @@ function cargarTabla()
 	$("#tablaUsuarios").DataTable(
 	{
         info: false,
-		ajax: 
-    	{
-        	type: "POST",
-        	url: "/NegocioRopa/ABMUsuarios",
-        	data: { "action": "recargarTabla" },
-        	dataSrc: ""
-    	},
+
+    	url: "/NegocioRopa/ABMUsuarios",
+    	params: function() { return { "action": "recargarTabla" } },
 		columns: 
 		[
 			 {"data": "usuario"},
