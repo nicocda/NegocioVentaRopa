@@ -41,8 +41,8 @@ function eventosRelacionados()
 		
 		$("#txtUsuario").val(data.usuario);
 		$("#txtNombreYApellido").val(data.nombreYApellido);
-		$("#txtEmail").val(data.mail);
-		$("#cbTipo").val(data.tipoUsuario);
+		$("#txtEmail").val(data.email);
+		$("#cbTipo").text(data.tipoUsuario);
 		$("#txtPassword").val(data.password);
 		$("#txtPassword").prop("disabled", true);
 	});
@@ -92,12 +92,12 @@ function cargarTabla()
 		columns: 
 		[
 			 {"data": "usuario"},
-			 {"data": "nombreApellido"},
+			 {"data": "nombreYApellido"},
 			 {"data": "email"},
-			 {"data": "tipo"},
+			 {"data": "tipoUsuario"},
 			 {"data": null, "targets": -1, "defaultContent": "<button class='btn btn-info btnEditar'>Editar</button>"},
-			 {"data": null, "targets": -1, "defaultContent": "<button class='btn btn-danger btnEliminar'>Eliminar</button>"}
-	         //{"data": "password", "visible": false}
+			 {"data": null, "targets": -1, "defaultContent": "<button class='btn btn-danger btnEliminar'>Eliminar</button>"},
+	         
 	    ]
 	});
 }

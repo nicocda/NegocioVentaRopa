@@ -8,8 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import entidades.Producto;
+import entidades.Usuario;
 import excepciones.RespuestaServidor;
 import negocio.ControladorABM;
 import negocio.ControladorTransaccion;
@@ -32,6 +34,7 @@ public class ABMProductos extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		String action = request.getParameter("action");
+		HttpSession session = request.getSession(false);
 		
 		if (action == null)
 		{
@@ -40,17 +43,18 @@ public class ABMProductos extends HttpServlet {
 		}	
 		else if (action.equals("alta"))
 		{
-			String descripcion = request.getParameter("descripcion"), 
+			String descr= request.getParameter("descripcion"), 
 					precio=request.getParameter("precio"),
 					id = request.getParameter("id"),
-					descripcion2 = request.getParameter("descripcion2"), 
+					descr2 = request.getParameter("descripcion2"), 
 					precio2 =request.getParameter("precio2"),
 					id2 = request.getParameter("id2");
+		String	descripcion = descr.replace('"', '\'');
+		String	descripcion2 = descr2.replace('"', '\'');
 			if(descripcion.length() >=45)
-				descripcion = descripcion.substring(0, 41) +"...";
+				descripcion = descripcion.substring(0, 141) +"...";
 			if(descripcion2.length() >=45)
-				descripcion2 = descripcion2.substring(0, 41) +"...";
-
+				descripcion2 = descripcion2.substring(0, 141) +"...";
 
 			float precioFloat, precioFloat2;
 			try
@@ -70,11 +74,12 @@ public class ABMProductos extends HttpServlet {
 				precioFloat2 = -1;
 			}
 			RespuestaServidor sr = new RespuestaServidor();
+			Usuario us = (Usuario) session.getAttribute("usuario");
 			try
 			{
-				ControladorABM.guardarProducto(id, descripcion, Producto.estado.STOCK.ordinal(), precioFloat);
+				ControladorABM.guardarProducto(id, descripcion, Producto.estado.STOCK.ordinal(), precioFloat, us.getSucursal().getId());
 				if(!descripcion2.isEmpty())
-					ControladorABM.guardarProducto(id2, descripcion2, Producto.estado.STOCK.ordinal(), precioFloat2);
+					ControladorABM.guardarProducto(id2, descripcion2, Producto.estado.STOCK.ordinal(), precioFloat2, us.getSucursal().getId());
 			}
 			catch (RespuestaServidor e)
 			{

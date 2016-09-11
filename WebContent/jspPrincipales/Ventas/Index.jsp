@@ -1,7 +1,9 @@
 <%@page import="entidades.Usuario"
 		import="entidades.Producto"
 		import="java.util.List"
-		import="entidades.Venta"%>
+		import="entidades.Venta"
+		import="entidades.TipoTarjeta"
+		import="negocio.ControladorABM"%>
 <%
 if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttribute("usuario")).getTipoUsuario() >= 1) 
 {%>
@@ -17,7 +19,7 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 	
 		<div class="row">
 			<select id="comboClientes" style="width: 80%" class="js-example-basic-single"></select>
-			<a id="addCli"><i class="fa fa-plus-circle fa-fw"></i>¿Nuevo Cliente?</a>
+			<input  type="button" id="addCli" class="btn btn-link"value="¿Nuevo Cliente?">
 		</div>
 		<%Venta venta = (Venta) session.getAttribute("venta");%>
 		<div id="divTabla">
@@ -38,14 +40,6 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 					<td style="text-align: center"> <button style= "width:60%" id="agregar" class="btn btn-info">Agregar</button></td>
 					<td><select id="comboProductos" style="width: 80%" class="js-example-basic-single"></select></td>
 					<td><b id="total">Total: $<%if(venta != null){%><%=venta.getImporte() %><%} else { %><label>0</label><%} %></b>
-						<br>
-						<div id="divPaga" style="text-align: right" hidden = "hidden">
-							<label>Paga: </label>
-							<input type="text" id="txtPago"/>
-							<br>
-							<label id="lblVueltoDebe"></label>
-							<input type="text" id="txtVuelto"/>
-						</div>
 					</td>
 				<tr>
 			</table>
@@ -56,27 +50,33 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 			<br><br>
 			
 			<label class="css-label radGroup1" for="radioEfectivo">
-				<input type="radio" name="tipoPago" id="rdbtnTipoPago" class="css-checkbox" value="1"/>
+				<input type="radio" name="tipoPago" id="radioEfectivo" class="css-checkbox" value="1"/>
 				<i class="fa fa-dollar"></i> 
 				Efectivo
 			</label>
 			
 			<label class="css-label radGroup1" for="radioCtaCte">
-				<input type="radio" name="tipoPago" id="rdbtnTipoPago" class="css-checkbox" value="2"/>
+				<input type="radio" name="tipoPago" id="radioCtaCte" class="css-checkbox" value="2"/>
 				<i class="fa fa-floppy-o"></i> 
 				Cuenta Corriente
 			</label>
 			
 			<label class="css-label radGroup1" for="radioTarjeta">
-				<input type="radio" name="tipoPago" id="rdbtnTipoPago" class="css-checkbox" value="3"/>
+				<input type="radio" name="tipoPago" id="radioTarjeta" class="css-checkbox" value="3"/>
 				<i class=" fa fa-credit-card"></i> 
 				Tarjeta
 			</label>
 			
 			<br><br>
-			<input class="botones" type="button" id="realizarVenta" value="Realizar Venta">
+			<input class="btn btn-danger" type="button" id="realizarVenta" value="Realizar Venta">
 		</div>
 	</form>
+</div>
+<div class="tarjeta" hidden="true">
+	<jsp:include page="Tarjeta.jsp"></jsp:include>
+</div>
+	
+	
 </div>
 
 		

@@ -113,9 +113,15 @@ function eventosDelDetalle()
 			$("#codNoBarcode1").text($("#txtID").val());
 			$("#precio1").text($("#txtPrecio").val());
 			
-			$("#idBarcode2").text($("#txtID2").val());
-			$("#codNoBarcode2").text($("#txtID2").val());
-			$("#precio2").text($("#txtPrecio2").val());
+			if($("#txtDescripcion2").val() != "" && $("#txtPrecio2").val()!= ""){
+				$("#idBarcode2").text($("#txtID2").val());
+				$("#codNoBarcode2").text($("#txtID2").val());
+				$("#precio2").text($("#txtPrecio2").val());
+				$("#etiqueta2").show();
+			}
+			else {
+				$("#etiqueta2").hide();
+			}
 			
 			
 			buscarId();

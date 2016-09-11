@@ -43,6 +43,8 @@ public class Cliente
 	@OneToMany(fetch=FetchType.EAGER, mappedBy="cliente")
 	private List<Venta> ventas;
 	
+	@OneToMany(fetch=FetchType.EAGER, mappedBy="cliente")
+	private List<Tarjeta> tarjetas;
 	public int getId() 
 	{
 		return id;
