@@ -8,7 +8,8 @@ import excepciones.RespuestaServidor;
 
 public class ControladorABM 
 {
-	public static void guardarProducto(String idProducto, String descripcion, int estado, float valor) throws RespuestaServidor
+	
+	public static void guardarProducto(String idProducto, String descripcion, int estado, float valor, int idSucursal) throws RespuestaServidor
 	{		
 		Calendar hoy = Calendar.getInstance();
 		hoy.set(Calendar.HOUR_OF_DAY, 0);
@@ -23,6 +24,7 @@ public class ControladorABM
 		producto.setDescripcion(descripcion);
 		producto.setId(idProducto);
 		producto.setEstado(estado);
+		producto.setIdSucursal(idSucursal);
 		
 		//Busco el producto, si no existe le agrego el precio, si existe y el precio es distinto al actual se lo agrego.
 		Producto dbProducto = CatalogoProductos.buscarProducto(idProducto);

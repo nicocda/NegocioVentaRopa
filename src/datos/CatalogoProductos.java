@@ -143,7 +143,6 @@ public class CatalogoProductos extends CatalogoBase
 		
 		if(producto.getPrecio() != null && producto.getPrecio().getPrecio() < 0)
 			sr.addError("El precio ingresado no es válido.");
-		
 		return sr;
 	}
 	@SuppressWarnings("unchecked")

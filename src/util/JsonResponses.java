@@ -118,12 +118,12 @@ public class JsonResponses
 
 	public static String arrayTodosUsuarios(ArrayList<Usuario> usuarios) 
 	{
-		String rsp = "{\"usuarios\": [";
+		String rsp = "[";
 	    for(int i=0;i<usuarios.size()-1;i++)
 	    {
-	    	rsp= rsp + "{\"usuario\": \"" + usuarios.get(i).getUsuario()+"\", \"nombreApellido\": \"" + usuarios.get(i).getNombreYApellido() + "\", \"email\": \"" + usuarios.get(i).getEmail() +"\", \"tipo\": \"" + tipoUsuario.values()[usuarios.get(i).getTipoUsuario()].name() + "\"},";
+	    	rsp= rsp + "{\"usuario\": \"" + usuarios.get(i).getUsuario()+"\", \"nombreYApellido\": \"" + usuarios.get(i).getNombreYApellido() + "\", \"email\": \"" + usuarios.get(i).getEmail() +"\", \"tipoUsuario\": \"" + tipoUsuario.values()[usuarios.get(i).getTipoUsuario()].name() + "\"},";
 	    }
-	    rsp= rsp + "{\"usuario\": \"" + usuarios.get(usuarios.size()-1).getUsuario()+"\", \"nombreApellido\": \"" + usuarios.get(usuarios.size()-1).getNombreYApellido() + "\", \"email\": \"" + usuarios.get(usuarios.size()-1).getEmail() +"\", \"tipo\": \"" + tipoUsuario.values()[usuarios.get(usuarios.size()-1).getTipoUsuario()].name() + "\"}]}";
+	    rsp= rsp + "{\"usuario\": \"" + usuarios.get(usuarios.size()-1).getUsuario()+"\", \"nombreYApellido\": \"" + usuarios.get(usuarios.size()-1).getNombreYApellido() + "\", \"email\": \"" + usuarios.get(usuarios.size()-1).getEmail() +"\", \"tipoUsuario\": \"" + tipoUsuario.values()[usuarios.get(usuarios.size()-1).getTipoUsuario()].name() + "\"}]";
 	    return rsp;
 	}
 

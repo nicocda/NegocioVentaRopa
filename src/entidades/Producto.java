@@ -50,6 +50,16 @@ public class Producto
 	@Transient
 	private Precio precio;
 	
+	@Expose
+	@Column(name = "idSucursal")
+	private int idSucursal;
+	
+	public int getIdSucursal() {
+		return idSucursal;
+	}
+	public void setIdSucursal(int idSucursal) {
+		this.idSucursal = idSucursal;
+	}
 	public List<Precio> getPrecios()
 	{
 		return precios;
