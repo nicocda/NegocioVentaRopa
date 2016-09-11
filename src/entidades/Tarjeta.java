@@ -1,5 +1,7 @@
 package entidades;
 
+import java.util.List;
+
 import javax.persistence.*;
 import com.google.gson.annotations.Expose;
 
@@ -29,6 +31,9 @@ public class Tarjeta {
 	@ManyToOne(optional=true)
 	@JoinColumn(name="idCliente")
 	private Cliente cliente;
+	
+	//@OneToMany(cascade = CascadeType.REMOVE, mappedBy="venta")
+	//private List<Venta> venta;
 	
 	public int getNroTarjeta() {
 		return nroTarjeta;

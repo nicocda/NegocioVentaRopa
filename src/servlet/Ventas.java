@@ -18,6 +18,7 @@ import entidades.Cliente;
 import entidades.Producto;
 import entidades.Producto.estado;
 import entidades.Tarjeta;
+import entidades.TipoTarjeta;
 import entidades.Venta;
 import excepciones.RespuestaServidor;
 import negocio.ControladorABM;
@@ -45,7 +46,71 @@ public class Ventas extends HttpServlet {
 		{
 			request.setAttribute("url","../jspPrincipales/Ventas/Index.jsp");
 			request.getRequestDispatcher("jspCompartido/newMainLayout.jsp").forward(request, response);
-		}	
+		}
+		else if(action.equals("realizarVenta"))
+		{
+
+			String formaPago = request.getParameter("formaPago");
+			int idCliente; 
+			try
+			{
+				idCliente = Integer.parseInt(request.getParameter("idCliente"));
+			}
+			catch(NumberFormatException nfe)
+			{
+				idCliente = -1;
+			}
+			RespuestaServidor sr = new RespuestaServidor();
+			
+			Cliente cli;
+			try
+			{
+				cli=ControladorABM.buscarCliente(idCliente);
+			}
+			catch(RespuestaServidor res)
+			{
+				cli = null;
+			}
+			if(formaPago.equals("3"))
+			{
+				Tarjeta trj = new Tarjeta();
+				int idTarjeta = request.getParameter("nroTarjetaTrj") != ""? Integer.parseInt(request.getParameter("nroTarjetaTrj")): -1;
+				trj.setNroTarjeta(idTarjeta);
+				trj.setCliente(cli);
+				trj.setCuotas(request.getParameter("txtCuotasTrj") != ""? Integer.parseInt(request.getParameter("txtCuotasTrj")): -1);
+				trj.setNroCupon(request.getParameter("txtCuponTrj") != ""? Integer.parseInt(request.getParameter("txtCuponTrj")): -1);
+				int tipoTarjeta;
+				try
+				{
+				 tipoTarjeta = Integer.parseInt(request.getParameter("cbTipoTarjetaTrj"));	
+				}
+				catch(NumberFormatException nfe)
+				{
+				 tipoTarjeta = -1;
+				}
+				trj.setTipoTarjeta(ControladorABM.buscartipoTarjeta(tipoTarjeta));
+				vta.setTarjeta(trj);
+			}
+			
+			vta.setCliente(cli);
+			Calendar today = Calendar.getInstance();
+			today.set(Calendar.HOUR_OF_DAY, 0);
+			vta.setFechaVenta(today.getTime());
+			vta.setFormaPago(Integer.parseInt(formaPago));
+			try
+			{
+				ControladorTransaccion.registrarVenta(vta);
+			
+			}
+			catch(RespuestaServidor e)
+			{
+				sr = e;
+			}	
+			session.setAttribute("venta", new Venta());
+			response.setContentType("json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(JsonResponses.devolverMensaje(sr, "La venta se registró con éxito"));
+		}
 		else if (action.equals("agregarProducto"))
 		{	
 			//Primero intento buscar y validar el producto
@@ -103,69 +168,6 @@ public class Ventas extends HttpServlet {
 		    String toJson = JsonResponses.arrayTodosProductosVenta(vta);
 		    System.out.println(toJson);
 			   response.getWriter().write(toJson);
-			
-		}
-		else if(action.equals("realizarVenta"))
-		{
-
-			String formaPago = request.getParameter("formaPago");
-			int idCliente; 
-			try
-			{
-				idCliente = Integer.parseInt(request.getParameter("idCliente"));
-			}
-			catch(NumberFormatException nfe)
-			{
-				idCliente = -1;
-			}
-			RespuestaServidor sr = new RespuestaServidor();
-			
-			Cliente cli;
-			try
-			{
-				cli=ControladorABM.buscarCliente(idCliente);
-			}
-			catch(RespuestaServidor res)
-			{
-				cli = null;
-			}
-			if(formaPago == "3")
-			{
-				Tarjeta trj = new Tarjeta();
-				trj.setNroTarjeta(Integer.parseInt(request.getParameter("nroTarjetaTrj")));
-				trj.setCliente(cli);
-				trj.setCuotas(Integer.parseInt(request.getParameter("txtCuotasTrj")));
-				trj.setNroCupon(Integer.parseInt(request.getParameter("txtCuponTrj")));
-				int tipoTarjeta;
-				try
-				{
-				 tipoTarjeta = Integer.parseInt(request.getParameter("cbTipoTarjetaTrj"));	
-				}
-				catch(NumberFormatException nfe)
-				{
-				 tipoTarjeta = -1;
-				}
-				//BuscarTipoTarjeta y Agregarselo a la Tarjeta
-			}
-			
-			vta.setCliente(cli);
-			Calendar today = Calendar.getInstance();
-			today.set(Calendar.HOUR_OF_DAY, 0);
-			vta.setFechaVenta(today.getTime());
-			vta.setFormaPago(Integer.parseInt(formaPago));
-			try
-			{
-				ControladorTransaccion.registrarVenta(vta);
-			
-			}
-			catch(RespuestaServidor e)
-			{
-				sr = e;
-			}	
-			session.setAttribute("venta", new Venta());
-			response.setContentType("json");
-		    response.setCharacterEncoding("UTF-8");
-		    response.getWriter().write(JsonResponses.devolverMensaje(sr, "La venta se registró con éxito"));
 		}
 		else if(action.equals("actualizarTotal"))
 		{
@@ -173,6 +175,16 @@ public class Ventas extends HttpServlet {
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(msg);
+		}
+		else if(action.equals("borrarProducto"))
+		{
+			/*String idProducto = request.getParameter("idProducto");
+			Producto pr = ControladorTransaccion.buscarProducto(idProducto);
+			Venta venta = (Venta) session.getAttribute("venta");
+			ArrayList<Producto> prVta = venta.getProductosArrayList();
+			prVta.remove(pr);
+			venta.setProductos(prVta);
+			session.setAttribute("venta", venta);*/
 		}
 	}
 	

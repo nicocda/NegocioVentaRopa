@@ -43,17 +43,18 @@ public class ABMProductos extends HttpServlet {
 		}	
 		else if (action.equals("alta"))
 		{
-			String descripcion = request.getParameter("descripcion"), 
+			String descr= request.getParameter("descripcion"), 
 					precio=request.getParameter("precio"),
 					id = request.getParameter("id"),
-					descripcion2 = request.getParameter("descripcion2"), 
+					descr2 = request.getParameter("descripcion2"), 
 					precio2 =request.getParameter("precio2"),
 					id2 = request.getParameter("id2");
+		String	descripcion = descr.replace('"', '\'');
+		String	descripcion2 = descr2.replace('"', '\'');
 			if(descripcion.length() >=45)
 				descripcion = descripcion.substring(0, 141) +"...";
 			if(descripcion2.length() >=45)
 				descripcion2 = descripcion2.substring(0, 141) +"...";
-
 
 			float precioFloat, precioFloat2;
 			try

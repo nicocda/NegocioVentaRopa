@@ -173,6 +173,15 @@ function cargarComboProductos()
 	});
 }
 
+$('#tablaVentas tbody').on( 'click', '.borrarProducto', function() 
+		{
+			var data = $("#tablaVentas").DataTable().row($(this).closest('tr')).data();
+			$.post('/NegocioRopa/Ventas',{"action":"borrarProducto", "idProducto": "\""+data.id+"\""}, function(resultado)
+			{
+				cargarTabla();
+			});
+		});
+
 function actualizarTotal(){
 	$.post('/NegocioRopa/Ventas', { "action": "actualizarTotal" }, function(resultado)
 			{
@@ -200,7 +209,8 @@ function cargarTabla(){
 			 {data: "id"},
 			 {data: "descripcion", bSortable: false},
 			 {data: "precio", bSortable: false},
-			 {data: "estado", visible:false}
+			 {data: "estado", visible:false},
+			 {data: null, defaultContent: "<button class='btn btn-danger borrarProducto'>X</button>", bsortable: false}
 		]
         
     } );

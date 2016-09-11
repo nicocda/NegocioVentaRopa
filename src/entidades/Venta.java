@@ -53,15 +53,28 @@ public class Venta
 	@Transient
 	private float deudaPendiente;
 	
-	@Expose
+
 	@ManyToOne(optional=true)
+	@JoinColumn(name="idTarjeta")
+	private Tarjeta tarjeta;
+	
+	public Tarjeta getTarjeta() {
+		return tarjeta;
+	}
+	public void setTarjeta(Tarjeta tarjet) {
+		tarjeta = tarjet;
+	}
+
+
+	@Expose
+	@ManyToOne(optional=false)
 	@JoinColumn(name="idCliente")
 	private Cliente cliente;
 	
-	@OneToMany(mappedBy="venta")
+	@OneToMany(fetch=FetchType.EAGER, mappedBy="venta")
 	private List<Devolucion> devoluciones;
 	
-	@OneToMany(mappedBy="venta_cuota")
+	@OneToMany(fetch=FetchType.EAGER, mappedBy="venta_cuota")
 	private List<Cuota> cuotas = new ArrayList<Cuota>();
 	
 	@Expose

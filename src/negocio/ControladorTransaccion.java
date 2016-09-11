@@ -1,6 +1,7 @@
 package negocio;
 import entidades.Cliente;
 import entidades.Producto;
+import entidades.Tarjeta;
 import entidades.Usuario;
 import entidades.Venta;
 import entidades.Cuota;
@@ -42,7 +43,15 @@ public class ControladorTransaccion {
 
 	public static void registrarVenta(Venta vta) throws RespuestaServidor
 	{	
-			CatalogoVentas.registrarVenta(vta);
+		if(vta.getFormaPago() == Venta.formaPago.TARJETA.ordinal())
+		{
+			Tarjeta tar = CatalogoTarjetas.buscarTarjeta(vta.getTarjeta());
+			if(tar == null)
+			{
+				CatalogoTarjetas.registrarTarjeta(vta.getTarjeta());
+			}
+		}	
+		CatalogoVentas.registrarVenta(vta);
 	}
 	
 	public static ArrayList<Venta> buscarVentasDia(Date fechaMin, Date fechaMax, int idCliente, int formaPago) throws RespuestaServidor
@@ -73,6 +82,7 @@ public class ControladorTransaccion {
 					ventasMorosas.add(v);
 				}
 			}
+			
 		}
 		return ventasMorosas;
 	}

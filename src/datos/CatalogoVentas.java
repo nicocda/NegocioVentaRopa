@@ -109,6 +109,10 @@ public class CatalogoVentas  extends CatalogoBase
 		{
 			sr.addError("Seleccione una forma de pago.");
 		}
+		if((vta.getFormaPago()== 3) &&( vta.getTarjeta().getNroTarjeta() == -1))
+		{
+			sr.addError("Ingrese los datos de la tarjeta.");
+		}
 		return sr;
 	}
 	
