@@ -17,6 +17,7 @@ import negocio.ControladorABM;
 import negocio.ControladorTransaccion;
 import util.JsonResponses;
 import util.JsonUtil;
+import util.Tipos;
 
 @WebServlet("/ABMProductos")
 public class ABMProductos extends HttpServlet {
@@ -43,48 +44,41 @@ public class ABMProductos extends HttpServlet {
 		}	
 		else if (action.equals("alta"))
 		{
-			String descr= request.getParameter("descripcion"), 
-					precio=request.getParameter("precio"),
-					id = request.getParameter("id"),
-					descr2 = request.getParameter("descripcion2"), 
-					precio2 =request.getParameter("precio2"),
-					id2 = request.getParameter("id2");
-		String	descripcion = descr.replace('"', '\'');
-		String	descripcion2 = descr2.replace('"', '\'');
+			RespuestaServidor sr = new RespuestaServidor();
+
+			//Datos del lado del cliente
+			String descr= request.getParameter("descripcion"); 
+			String precio=request.getParameter("precio");
+			String id = request.getParameter("id");
+			String descr2 = request.getParameter("descripcion2");
+			String precio2 =request.getParameter("precio2");
+			String id2 = request.getParameter("id2");
+			
+			//Parseo para adaptar a la DB
+			String	descripcion = descr.replace('"', '\'');
+			String	descripcion2 = descr2.replace('"', '\'');
+		
 			if(descripcion.length() >=45)
 				descripcion = descripcion.substring(0, 141) +"...";
 			if(descripcion2.length() >=45)
 				descripcion2 = descripcion2.substring(0, 141) +"...";
-
-			float precioFloat, precioFloat2;
+			
+			float precioFloat = Tipos.esFloat(precio) ? Float.parseFloat(precio) : -1;
+			float precioFloat2 = Tipos.esFloat(precio2) ? Float.parseFloat(precio2) : -1;
+			
+			Usuario ususario = (Usuario) session.getAttribute("usuario");
 			try
 			{
-				precioFloat = Float.parseFloat(precio);
-			}
-			catch(NumberFormatException e)
-			{
-				precioFloat = -1;
-			}		
-			try
-			{
-				precioFloat2 = Float.parseFloat(precio2);
-			}
-			catch(NumberFormatException e)
-			{
-				precioFloat2 = -1;
-			}
-			RespuestaServidor sr = new RespuestaServidor();
-			Usuario us = (Usuario) session.getAttribute("usuario");
-			try
-			{
-				ControladorABM.guardarProducto(id, descripcion, Producto.estado.STOCK.ordinal(), precioFloat, us.getSucursal().getId());
+				ControladorABM.guardarProducto(id, descripcion, Producto.estado.STOCK.ordinal(), precioFloat, ususario.getSucursal().getId());
+				
 				if(!descripcion2.isEmpty())
-					ControladorABM.guardarProducto(id2, descripcion2, Producto.estado.STOCK.ordinal(), precioFloat2, us.getSucursal().getId());
+					ControladorABM.guardarProducto(id2, descripcion2, Producto.estado.STOCK.ordinal(), precioFloat2, ususario.getSucursal().getId());
 			}
 			catch (RespuestaServidor e)
 			{
 				sr = e;
 			}
+			
 			String mensajesJson = JsonResponses.devolverMensaje(sr, "Producto exitosamente cargado!");
 			
 			response.setContentType("json");
@@ -94,10 +88,12 @@ public class ABMProductos extends HttpServlet {
 		else if (action.equals("buscarId"))
 		{
 			String tipo = request.getParameter("tipo"), 
-					subTipo=request.getParameter("subTipo"),tipo2 = request.getParameter("tipo2"), 
-							subTipo2=request.getParameter("subTipo2");
+				subTipo=request.getParameter("subTipo"),tipo2 = request.getParameter("tipo2"), 
+				subTipo2=request.getParameter("subTipo2");
+			
 			String ID = ControladorABM.obtenerIdCompleto(tipo.charAt(0), subTipo.charAt(0));
 			String ID2 = ControladorABM.obtenerIdCompleto2(tipo.charAt(0), subTipo.charAt(0),tipo2.charAt(0),subTipo2.charAt(0));
+			
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write("{\"id\": \"" + ID + "\", \"id2\": \""+ ID2 +"\" }"); 
@@ -122,6 +118,7 @@ public class ABMProductos extends HttpServlet {
 			ArrayList<Producto> productos = ControladorTransaccion.buscarProductosDescripcion(cadena);
 			//String mensajeJson = JsonResponses.arrayTodosProductos(productos);
 			String mensajeJson = JsonUtil.toJson(productos);
+			
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(mensajeJson);

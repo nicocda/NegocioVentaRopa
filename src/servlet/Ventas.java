@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import javax.servlet.ServletException;
@@ -11,9 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
-
 import util.JsonResponses;
+import util.Tipos;
 import entidades.Cliente;
 import entidades.Producto;
 import entidades.Producto.estado;
@@ -24,9 +22,11 @@ import negocio.ControladorABM;
 import negocio.ControladorTransaccion;
 
 @WebServlet("/Ventas")
-public class Ventas extends HttpServlet {
+public class Ventas extends HttpServlet 
+{
 	private static final long serialVersionUID = 1L;
-    public Ventas() {
+    public Ventas() 
+    {
         super();
     }
 
@@ -48,30 +48,22 @@ public class Ventas extends HttpServlet {
 		}	
 		else if (action.equals("agregarProducto"))
 		{	
-			//Primero intento buscar y validar el producto
+			// Primero intento buscar y validar el producto
 			String id = request.getParameter("id");
-			Producto pro;
 			
-			try
-			{
-				pro= ControladorTransaccion.buscarProducto(id);
-			}
-			catch(Exception sr)
-			{
-				pro = null;
-			}
-			
+			Producto pro= ControladorTransaccion.buscarProducto(id);
+
 			RespuestaServidor sr = new RespuestaServidor();
 			sr = validarProducto(pro, vta);
 			
-			//Si el producto ingresado no es correcto, muestro el mensaje
+			// Si el producto ingresado no es correcto, muestro el mensaje
 			if (!sr.getStatus())
 			{
 				response.setContentType("json");
 			    response.setCharacterEncoding("UTF-8");
 			    response.getWriter().write(JsonResponses.devolverMensaje(sr, ""));
 			}
-			//Sino lo agrego a la lista de la venta, y actualizo el importe.
+			// Sino lo agrego a la lista de la venta, y actualizo el importe.
 			else	
 			{
 				vta.addProducto(pro);
@@ -98,8 +90,8 @@ public class Ventas extends HttpServlet {
 		{
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
-				//Gson g = new Gson();
-			    //response.getWriter().write(g.toJson(vta.getProductosArrayList()));
+			//Gson g = new Gson();
+		    //response.getWriter().write(g.toJson(vta.getProductosArrayList()));
 		    String toJson = JsonResponses.arrayTodosProductosVenta(vta);
 		    System.out.println(toJson);
 			   response.getWriter().write(toJson);
@@ -107,52 +99,45 @@ public class Ventas extends HttpServlet {
 		}
 		else if(action.equals("realizarVenta"))
 		{
-
 			String formaPago = request.getParameter("formaPago");
-			int idCliente; 
-			try
-			{
-				idCliente = Integer.parseInt(request.getParameter("idCliente"));
-			}
-			catch(NumberFormatException nfe)
-			{
-				idCliente = -1;
-			}
+			
+			int idCliente = Tipos.esEntero(request.getParameter("idCliente")) ? Integer.parseInt(request.getParameter("idCliente")) : -1; 
+			
 			RespuestaServidor sr = new RespuestaServidor();
 			
-			Cliente cli;
+			Cliente cliente;
 			try
 			{
-				cli=ControladorABM.buscarCliente(idCliente);
+				cliente=ControladorABM.buscarCliente(idCliente);
 			}
 			catch(RespuestaServidor res)
 			{
-				cli = null;
+				cliente = null;
 			}
 			if(formaPago == "3")
 			{
-				Tarjeta trj = new Tarjeta();
-				trj.setNroTarjeta(Integer.parseInt(request.getParameter("nroTarjetaTrj")));
-				trj.setCliente(cli);
-				trj.setCuotas(Integer.parseInt(request.getParameter("txtCuotasTrj")));
-				trj.setNroCupon(Integer.parseInt(request.getParameter("txtCuponTrj")));
-				int tipoTarjeta;
-				try
-				{
-				 tipoTarjeta = Integer.parseInt(request.getParameter("cbTipoTarjetaTrj"));	
-				}
-				catch(NumberFormatException nfe)
-				{
-				 tipoTarjeta = -1;
-				}
-				//BuscarTipoTarjeta y Agregarselo a la Tarjeta
+				Tarjeta tarjeta = new Tarjeta();
+				
+				tarjeta.setNroTarjeta(Tipos.esEntero(request.getParameter("nroTarjetaTrj")) ? Integer.parseInt(request.getParameter("nroTarjetaTrj")) : -1);
+				tarjeta.setCliente(cliente);
+				tarjeta.setCuotas(Tipos.esEntero(request.getParameter("txtCuotasTrj")) ? Integer.parseInt(request.getParameter("txtCuotasTrj")) : -1);
+				tarjeta.setNroCupon(Tipos.esEntero(request.getParameter("txtCuponTrj")) ? Integer.parseInt(request.getParameter("txtCuponTrj")) : -1);
+				int tipoTarjeta = Tipos.esEntero(request.getParameter("cbTipoTarjetaTrj")) ? Integer.parseInt(request.getParameter("cbTipoTarjetaTrj")) : -1;
+
+				//BuscarTipoTarjeta y Agregarselo a la Tarjeta				
+				tarjeta.setTipoTarjeta(ControladorABM.buscartipoTarjeta(tipoTarjeta));
+				vta.setTarjeta(tarjeta);
 			}
 			
-			vta.setCliente(cli);
+			// Le seteo el cliente a la venta.
+			vta.setCliente(cliente);
+			
+			// Le seteo fecha actual a la venta.
 			Calendar today = Calendar.getInstance();
 			today.set(Calendar.HOUR_OF_DAY, 0);
 			vta.setFechaVenta(today.getTime());
 			vta.setFormaPago(Integer.parseInt(formaPago));
+			
 			try
 			{
 				ControladorTransaccion.registrarVenta(vta);
@@ -162,6 +147,7 @@ public class Ventas extends HttpServlet {
 			{
 				sr = e;
 			}	
+			
 			session.setAttribute("venta", new Venta());
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");

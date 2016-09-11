@@ -20,4 +20,23 @@ public class Tipos
 		
 		return false;
 	}
+	
+	public static boolean esFloat(String entrada)
+	{
+		if(!entrada.isEmpty() && entrada!= null)
+		{			
+			try
+			{
+				Float.parseFloat(entrada);
+			}
+			catch(NumberFormatException e)
+			{
+				return false;
+			}
+			
+			return true;
+		}
+		
+		return false;
+	}
 }
