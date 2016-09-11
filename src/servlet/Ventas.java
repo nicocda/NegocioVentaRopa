@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import com.google.gson.Gson;
 
 import util.JsonResponses;
+import util.JsonUtil;
 import entidades.Cliente;
 import entidades.Producto;
 import entidades.Producto.estado;
@@ -175,6 +177,18 @@ public class Ventas extends HttpServlet {
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(msg);
 		}
+		else if(action.equals("borrarProducto"))
+		{
+			String idProducto = request.getParameter("idProducto");
+			Producto pr = ControladorTransaccion.buscarProducto(idProducto);
+			Venta ventaActual = (Venta) session.getAttribute("venta");
+			ArrayList<Producto> productosEnVenta = ventaActual.getProductosArrayList();
+			ventaActual.setProductos(removeProducto(productosEnVenta, pr));
+			session.setAttribute("venta", ventaActual);
+			response.setContentType("json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(JsonUtil.toJson(ventaActual.getProductosArrayList()));
+		}
 	}
 	
 	private RespuestaServidor validarProducto(Producto pro, Venta venta)
@@ -201,5 +215,19 @@ public class Ventas extends HttpServlet {
 				sr.addError("El producto seleccionado ya fue ingresado en esta venta");
 		}
 		return sr;
+	}
+	
+	private ArrayList<Producto> removeProducto(ArrayList<Producto> productos, Producto p)
+	{
+		for(Producto pr : productos )
+		{
+			if(pr.getId().equals(p.getId()))
+			{
+				productos.remove(pr);
+				return productos;
+			}
+			
+		}
+		return productos;
 	}
 }

@@ -6,7 +6,7 @@ $(document).ready(function()
 			{
 				inicioPopUpCli();
 				inicioPopUpConf();
-
+				eventosTabla();
 			});
 });
 
@@ -63,7 +63,11 @@ function inicioPopUpConf()
 			autoOpen: false,
 			modal: true,
 			buttons: {
-					Aceptar: agregarProducto,
+					Aceptar: function()
+					{
+						agregarProducto(),
+						$(this).dialog('close');
+					},
 					Cancelar: function() {
 						$(this).dialog('close');
 					}
@@ -112,31 +116,29 @@ function agregarEventos()
 	{
 		//Evito que se ejecute el post del form.
 		e.preventDefault();
-		if(data.estado === 0 || data.estado === "0")
-		{
-			$("#divConfirmacionAgregar").dialog("open");
-		}
-		else
-		{
-			agregarProducto();
-		}
+		$.post('/NegocioRopa/ABMProductos',
+				{
+					"action": "buscarProducto",
+					"idProducto": $("#comboProductos").val()
+				},
+				function(resultado)
+				{	
+					if(resultado.estado === 0)
+					{
+						$("#divConfirmacionAgregar").dialog("open");
+					}
+					else
+					{
+						agregarProducto();
+					}	
+				});
+	
+		
 		
 		
 	});
 	
-	function agregarProducto()
-	{
-		$.postDataSinExito('/NegocioRopa/Ventas',
-				{
-					"action": "agregarProducto",
-					"id": $("#comboProductos").val()
-				},
-				function()
-				{
-					$("#tablaVentas").DataTable().ajax.reload();
-					actualizarTotal();
-				});
-	}
+
 	
 	$("#radioTarjeta").change(function()
 		{
@@ -214,14 +216,6 @@ function cargarComboProductos()
 	});
 }
 
-$('#tablaVentas tbody').on( 'click', '.borrarProducto', function() 
-		{
-			var data = $("#tablaVentas").DataTable().row($(this).closest('tr')).data();
-			$.post('/NegocioRopa/Ventas',{"action":"borrarProducto", "idProducto": "\""+data.id+"\""}, function(resultado)
-			{
-				cargarTabla();
-			});
-		});
 
 function actualizarTotal(){
 	$.post('/NegocioRopa/Ventas', { "action": "actualizarTotal" }, function(resultado)
@@ -250,7 +244,7 @@ function cargarTabla(callback){
 			 {data: "id"},
 			 {data: "descripcion", bSortable: false},
 			 {data: "precio", bSortable: false},
-			 {data: null, defaultContent: "<button class='btn btn-danger borrarProducto'>X</button>", bsortable: false},
+			 {data: null, defaultContent: "<button type='button' class='btn btn-danger borrarProducto'>X</button>", bsortable: false},
 			 {data: "estado", visible:false, bSortable: false}
 		]
         
@@ -259,6 +253,33 @@ function cargarTabla(callback){
 	callback();
 } 
 
+
+function agregarProducto()
+{
+	$.postDataSinExito('/NegocioRopa/Ventas',
+			{
+				"action": "agregarProducto",
+				"id": $("#comboProductos").val()
+			},
+			function()
+			{
+				$("#tablaVentas").DataTable().ajax.reload();
+				actualizarTotal();
+			});
+}
+
+function eventosTabla()
+{
+	$('#tablaVentas tbody').on( 'click', '.borrarProducto', function(e) 
+			{
+				e.preventDefault();
+				var data = $("#tablaVentas").DataTable().row($(this).closest('tr')).data();
+				$.post('/NegocioRopa/Ventas',{"action":"borrarProducto", "idProducto": data.id}, function(resultado)
+				{
+					$("#tablaVentas").DataTable().ajax.reload();
+				});
+			});
+}
 /*function validarRows()
 {
 

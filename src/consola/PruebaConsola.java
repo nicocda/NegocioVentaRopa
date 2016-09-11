@@ -16,7 +16,8 @@ public class PruebaConsola
                 .excludeFieldsWithoutExposeAnnotation()
                 .create();
 		
-		System.out.println(gson.toJson(CatalogoVentas.buscarVenta(2)));
+		System.out.println(gson.toJson(CatalogoProductos.buscarProducto("RH00004")));
+		
 		
 	}
 }
