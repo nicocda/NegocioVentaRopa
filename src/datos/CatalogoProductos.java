@@ -11,6 +11,7 @@ import javax.persistence.Query;
 
 import entidades.Precio;
 import entidades.Producto;
+import entidades.Producto.estado;
 import excepciones.RespuestaServidor;
 
 public class CatalogoProductos extends CatalogoBase
@@ -164,6 +165,16 @@ public class CatalogoProductos extends CatalogoBase
 		{
 			cerrarEntityManager();
 		}
+	}
+
+	public static void devolverProducto(Producto p) 
+	{
+		getEm().getTransaction().begin();
+		Producto dbProducto = getEm().find(Producto.class, p.getId());
+		dbProducto.setEstado(estado.STOCK.ordinal());
+		dbProducto.setVenta(null);
+		getEm().getTransaction().commit();
+		
 	}
 	
 }

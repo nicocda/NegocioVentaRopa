@@ -50,7 +50,9 @@ function inicioPopUps()
 		
 		$("#addCliente").dialog(
 				{
-					autoOpen: false
+					autoOpen: false,
+					modal: true,
+					width: 800
 				});
 }
 
@@ -79,6 +81,7 @@ function agregarEventos()
 			if($("#radioTarjeta").val() == 3)
 			{
 				$(".tarjeta").show();
+				$("#txtNroTarjetaTrj").focus();
 			}
 		});
 	$("#realizarVenta").click(function(){

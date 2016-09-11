@@ -30,7 +30,6 @@ public class CatalogoVentas  extends CatalogoBase
 				dbProducto.setEstado(estado.VENDIDO.ordinal());
 				dbProducto.setVenta(vta);
 			}
-			
 			getEm().getTransaction().commit();	
 		}
 		finally

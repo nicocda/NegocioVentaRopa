@@ -19,6 +19,7 @@ import entidades.Producto;
 import entidades.Producto.estado;
 import entidades.Tarjeta;
 import entidades.TipoTarjeta;
+import entidades.Usuario;
 import entidades.Venta;
 import excepciones.RespuestaServidor;
 import negocio.ControladorABM;
@@ -51,15 +52,7 @@ public class Ventas extends HttpServlet {
 		{
 
 			String formaPago = request.getParameter("formaPago");
-			int idCliente; 
-			try
-			{
-				idCliente = Integer.parseInt(request.getParameter("idCliente"));
-			}
-			catch(NumberFormatException nfe)
-			{
-				idCliente = -1;
-			}
+			int idCliente = request.getParameter("idCliente") != ""?Integer.parseInt(request.getParameter("idCliente")) : -1; 
 			RespuestaServidor sr = new RespuestaServidor();
 			
 			Cliente cli;
@@ -91,16 +84,24 @@ public class Ventas extends HttpServlet {
 				trj.setTipoTarjeta(ControladorABM.buscartipoTarjeta(tipoTarjeta));
 				vta.setTarjeta(trj);
 			}
-			
+			Usuario usu = (Usuario) session.getAttribute("usuario");
+			vta.setSucursal(usu.getSucursal());
 			vta.setCliente(cli);
 			Calendar today = Calendar.getInstance();
 			today.set(Calendar.HOUR_OF_DAY, 0);
 			vta.setFechaVenta(today.getTime());
 			vta.setFormaPago(Integer.parseInt(formaPago));
+			//Devuelvo los productos que sean devolucion
+			for(Producto p : vta.getProductos())
+			{
+				if(p.getEstado() == Producto.estado.VENDIDO.ordinal())
+				{
+					ControladorTransaccion.devolverProducto(p);
+				}
+			}
 			try
 			{
 				ControladorTransaccion.registrarVenta(vta);
-			
 			}
 			catch(RespuestaServidor e)
 			{
@@ -116,7 +117,6 @@ public class Ventas extends HttpServlet {
 			//Primero intento buscar y validar el producto
 			String id = request.getParameter("id");
 			Producto pro;
-			
 			try
 			{
 				pro= ControladorTransaccion.buscarProducto(id);

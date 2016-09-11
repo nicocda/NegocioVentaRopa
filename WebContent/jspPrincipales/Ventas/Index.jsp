@@ -76,9 +76,6 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 	<jsp:include page="Tarjeta.jsp"></jsp:include>
 </div>
 	
-	
-</div>
-
 		
 <!-- HTML para el popup -->
 <div id="addCliente" hidden="hidden">
