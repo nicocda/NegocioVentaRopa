@@ -53,7 +53,7 @@ public class Venta
 	@Transient
 	private float deudaPendiente;
 	
-
+	@Expose
 	@ManyToOne(optional=true)
 	@JoinColumn(name="idTarjeta")
 	private Tarjeta tarjeta;

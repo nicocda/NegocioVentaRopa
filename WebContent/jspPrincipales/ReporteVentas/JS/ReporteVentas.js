@@ -3,7 +3,6 @@ $(document).ready(function()
 	setearFormatosDatePicker();
 	agregarEventos();
 	cargarComboClientes();
-	//cargarOtrosCombos();
 	cargarTabla();
 	eventosDeTabla();
 	eventosVolver();
@@ -82,11 +81,7 @@ function eventosDeTabla()
 	$("#tablaVenta tbody").on('click', ".detalleVenta", function()
 	{
 		var data = $("#tablaVenta").DataTable().row($(this).closest('tr')).data();
-
-		if (! $.fn.DataTable.isDataTable("#tablaVentasMorosas"))
-		{
-			cargarTablaDetalle(data);
-		}		
+		cargarTablaDetalle(data);	
 	});
 }
 
@@ -127,7 +122,6 @@ function setearFormatosDatePicker()
 	$("#fechaMaxima").datepicker();
 }
 
-
 function cargarComboClientes()
 {
 	$.post('/NegocioRopa/ABMClientes', { "action": "recargarTabla" }, function(resultado)
@@ -141,7 +135,6 @@ function cargarComboClientes()
 		{
 		  data: clientes
 		});
-		
 		cargarOtrosCombos();
 	});
 }
@@ -150,6 +143,27 @@ function cargarOtrosCombos()
 {
 	$("#cbFecha").select2({minimumResultsForSearch: -1});
 	$("#cbTipoPago").select2({minimumResultsForSearch: -1});
+	$("#cbTipoPago").change(function()
+			{
+				$("#divTarjeta").hide();
+				if($("#cbTipoPago").val() == 3)
+				{
+					$("#divTarjeta").show();
+					$.post('/NegocioRopa/ReporteVentas', { "action": "cargarTipoTarjeta" }, function(resultado)
+							{
+								var tarjetas = [];
+								jQuery.each(resultado, function()
+								{
+									tarjetas.push({id: this.id, text: this.descripcion});
+								});
+								$("#comboTipoTarjetas").select2(
+								{
+								  data: tarjetas
+								});
+							});
+				}
+			});
+	
 }
 
 
@@ -169,7 +183,8 @@ function cargarTabla()
 	        	"fechaMinima" : $("#fechaMinima").datepicker( "getDate" ),
 	        	"fechaMaxima" : $("#fechaMaxima").datepicker( "getDate" ),
 	        	"idCliente" :  $("#comboClientes").val(),
-	        	"tipoPago" : $("#cbTipoPago").val()
+	        	"tipoPago" : $("#cbTipoPago").val(),
+	        	"tipoTarjeta" : $("#comboTipoTarjetas").val()
 	    	};
     	},
     	width: 100,
@@ -180,6 +195,7 @@ function cargarTabla()
 			 {"data": "nombreApellido"},
 			 {"data": "importe"},
 			 {"data": "formaPago"},
+			 {"data": "tipoTarjeta"},
 	         {"data": null, "targets": -1, "defaultContent": "<button class='btn btn-info detalleVenta'>Ver Detalle</button>", "bSortable": false}
 	    ]
 	});

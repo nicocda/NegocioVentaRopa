@@ -143,7 +143,7 @@
             </ul>
             <!-- /.navbar-top-links -->
 
-            <div class="navbar-default sidebar" role="navigation">
+            <div class="navbar navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         
@@ -168,8 +168,12 @@
                         <li>
                             <a href="Ventas"><i class="fa fa-star fa-fw"></i> Venta</a>
                         </li>
-                        <li>
-                            <a href="ReporteVentas"><i class="fa fa-folder-open fa-fw"></i> Reportes</a>
+                        <li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-folder-open fa-fw"></i>Reportes<b class="caret"></b></a>
+	                        	<ul class="nav">
+					                <li><a href="ReporteVentas">Ventas</a></li>
+					                <li><a href="ReporteVentas">Tipo de Tarjeta</a></li>
+				              	</ul>
                         </li>
                     </ul>
                 </div>
