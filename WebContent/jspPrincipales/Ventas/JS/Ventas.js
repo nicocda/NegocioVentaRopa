@@ -43,8 +43,9 @@ function inicioPopUpConf()
 					datos, 
 					function(result)
 					{
-						$("#tablaVentas").DataTable().clear().draw();
 						$(this).dialog('close');
+						$("#tablaVentas").DataTable().clear().draw();
+					
 					});
 					
 				},

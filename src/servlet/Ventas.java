@@ -91,11 +91,13 @@ public class Ventas extends HttpServlet {
 			today.set(Calendar.HOUR_OF_DAY, 0);
 			vta.setFechaVenta(today.getTime());
 			vta.setFormaPago(Integer.parseInt(formaPago));
+			
 			//Devuelvo los productos que sean devolucion
 			for(Producto p : vta.getProductos())
 			{
 				if(p.getEstado() == Producto.estado.VENDIDO.ordinal())
 				{
+					
 					ControladorTransaccion.devolverProducto(p);
 				}
 			}
