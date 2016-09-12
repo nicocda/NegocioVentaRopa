@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import entidades.Prestamo;
 import entidades.Usuario;
 import entidades.Venta;
 import negocio.ControladorABM;
@@ -43,7 +44,9 @@ public class Login extends HttpServlet
 				session.setAttribute("usuario", usu);
 				//Agrego esto para probar lo de venta nomas, despues hay que sacarlo
 				Venta vta = new Venta();
+				Prestamo prestamo = new Prestamo();
 				session.setAttribute("venta", vta);
+				session.setAttribute("prestamo", prestamo);
 				response.setContentType("json");
 			    response.setCharacterEncoding("UTF-8");
 			    response.getWriter().write("{\"exito\":true,\"mensaje\":\"Conectado\"}");			

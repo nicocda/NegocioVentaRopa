@@ -91,7 +91,7 @@ public class Venta
 	private List<Cuota> cuotas = new ArrayList<Cuota>();
 	
 	@Expose
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="venta")
+	@OneToMany(cascade = CascadeType.REFRESH, mappedBy="venta")
 	private List<Producto> productos = new ArrayList<Producto>();
 	
 	public List<Producto> getProductos() 

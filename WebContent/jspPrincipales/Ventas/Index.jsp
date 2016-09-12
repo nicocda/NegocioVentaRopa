@@ -12,7 +12,7 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 <div id="divPrincipal">
 
 	<div class="col-lg-9">
-		    <h1 class="page-header">Venta</h1>
+		    <h1 class="page-header">Transacción</h1>
 	</div>
 	
 	<form action="Ventas" method="POST">
