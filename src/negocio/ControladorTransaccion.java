@@ -35,7 +35,11 @@ public class ControladorTransaccion {
 	{
 		return CatalogoProductos.buscarProducto(id);
 	}
-
+	
+	public static void devolverProducto(Producto p)
+	{
+		CatalogoProductos.devolverProducto(p);
+	}
 	public static Cliente buscarCliente(int idCliente) {
 		
 		return CatalogoClientes.buscarCliente(idCliente);
@@ -96,4 +100,6 @@ public class ControladorTransaccion {
 	{
 		return CatalogoVentas.buscarVenta(idVenta);
 	}
+
+	
 }

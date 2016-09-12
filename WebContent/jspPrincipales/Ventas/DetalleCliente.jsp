@@ -1,11 +1,5 @@
 <div class="row">
 	<div class="col-lg-12">
-	    <h1 id="nuevoEditar"class="page-header">Nuevo Cliente</h1>
-	</div>
-</div>
-
-<div class="row">
-	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				Ingrese los datos del cliente
@@ -34,11 +28,6 @@
 				</div>
 			</div>
 			
-			<div class="pull-right">
-			<hr />
-				<button type="submit" id="btnGuardarCreate" class="btn btn-primary">Guardar</button>
-               	<button type="reset" id="btnCancelarCreate" class="btn btn-default">Cancelar</button>
-			</div>
 		</div>
 	</div>
 </div>

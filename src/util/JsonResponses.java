@@ -31,40 +31,26 @@ public class JsonResponses
 		return mensajesJson;
 	}
 	
-	public static String devolverMensaje(RespuestaServidor sr, String mensajeExito, float importe, int estado)
-	{
-		String tipoMensaje = sr.getErrors().isEmpty() ? mensajeExito : "error";
-		String mensajesJson = "{\"mensajes\":[{";
-		for(int i = 1; i <= sr.getErrors().size(); i++)
-		{
-			if(sr.getErrors().size()!=i)
-				mensajesJson = mensajesJson + "\"mensaje\":\""+sr.getErrors().get(i-1).getErrorMessage()+"\"},{";
-			else
-				mensajesJson = mensajesJson + "\"mensaje\":\""+sr.getErrors().get(i-1).getErrorMessage()+"\"";
-		}
-		mensajesJson = mensajesJson + "}], \"tipoMensaje\":\"" + tipoMensaje +"\", \"importe\":"+ importe+", \"estado\":\""+estado+"\"}";
-		return mensajesJson;
-	}
 	
 	public static String jsonClientes(ArrayList<Cliente> clientes)
 	{
-		String rsp = "{\"array\": [\"";
+		String rsp = " [\"";
 	    for(int i=0;i<clientes.size()-1;i++)
 	    {
 	    	rsp=rsp.concat(clientes.get(i).getNombre()+"\", \"");
 	    }
-	    rsp=rsp.concat(clientes.get(clientes.size()-1).getNombre()+"\"]}");
+	    rsp=rsp.concat(clientes.get(clientes.size()-1).getNombre()+"\"]");
 	    return rsp;
 	}
 	
 	public static String arrayTodosClientes(ArrayList<Cliente> clientes)
 	{
-		String rsp = "{\"data\": [";
+		String rsp = "[";
 	    for(int i=0;i<clientes.size()-1;i++)
 	    {
 	    	rsp= rsp + "{\"nombre\": \"" + clientes.get(i).getNombre()+"\", \"apellido\": \"" + clientes.get(i).getApellido()+"\", \"direccion\": \"" + clientes.get(i).getDireccion() + "\", \"id\": \"" + clientes.get(i).getId() + "\", \"telefono\": \"" + clientes.get(i).getTelefono() + "\"},";
 	    }
-	    rsp= rsp + "{\"nombre\": \"" + clientes.get(clientes.size()-1).getNombre()+"\", \"apellido\": \"" + clientes.get(clientes.size()-1).getApellido()+"\", \"direccion\": \"" + clientes.get(clientes.size()-1).getDireccion() + "\", \"id\": \"" + clientes.get(clientes.size()-1).getId() + "\", \"telefono\": \"" + clientes.get(clientes.size()-1).getTelefono() +"\"}]}";
+	    rsp= rsp + "{\"nombre\": \"" + clientes.get(clientes.size()-1).getNombre()+"\", \"apellido\": \"" + clientes.get(clientes.size()-1).getApellido()+"\", \"direccion\": \"" + clientes.get(clientes.size()-1).getDireccion() + "\", \"id\": \"" + clientes.get(clientes.size()-1).getId() + "\", \"telefono\": \"" + clientes.get(clientes.size()-1).getTelefono() +"\"}]";
 	    return rsp;
 	}
 
@@ -172,6 +158,7 @@ public class JsonResponses
 		    	rsp= rsp + "{\"id\": \"" + productos.get(i).getId()+"\", \"descripcion\": \"" + productos.get(i).getDescripcion() + "\", \"precio\": \"" + productos.get(i).getPrecio().getPrecio() +"\", \"estado\": \"" + estado.values()[productos.get(i).getEstado()].name() + "\"},";
 		    }
 		    rsp= rsp + "{\"id\": \"" + productos.get(productos.size()-1).getId()+"\", \"descripcion\": \"" + productos.get(productos.size()-1).getDescripcion() + "\", \"precio\": \"" + productos.get(productos.size()-1).getPrecio().getPrecio() +"\", \"estado\": \"" + estado.values()[productos.get(productos.size()-1).getEstado()].name() +"\"}]";
+
 		    return rsp;
 		}
 	}

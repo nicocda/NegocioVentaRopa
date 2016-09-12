@@ -29,7 +29,8 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 					<tr>
 						<th width="15%">Código</th>
 						<th width="50%">Descripción</th>
-						<th width="35%">Precio</th>
+						<th width="25%">Precio</th>
+						<th width="10%"></th>
 					</tr>
 				</thead>
 			</table>
@@ -76,18 +77,20 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 	<jsp:include page="Tarjeta.jsp"></jsp:include>
 </div>
 	
-	
-</div>
-
 		
 <!-- HTML para el popup -->
-<div id="addCliente" hidden="hidden">
+<div id="addCliente" hidden="hidden" title="Agregar cliente">
 	<jsp:include page="DetalleCliente.jsp"></jsp:include>
 </div>
 
-<div id="divConfirmacion" hidden="hidden" >
+<div id="divConfirmacion" hidden="hidden" title="Confirmacion">
 	<div style="text-align: center;">
 	<p id="txtConfirmacion">¿Desea realizar la venta?</p>
+	</div>
+</div>
+<div id="divConfirmacionAgregar" hidden="hidden" title="Confirmacion">
+	<div style="text-align: center;">
+	<p id="txtConfirmacion">¿Desea hacer una devolución?</p>
 	</div>
 </div>
 <%}

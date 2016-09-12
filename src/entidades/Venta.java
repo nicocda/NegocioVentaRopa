@@ -52,8 +52,21 @@ public class Venta
 	
 	@Transient
 	private float deudaPendiente;
-	
+
 	@Expose
+	@ManyToOne(optional=true)
+	@JoinColumn(name="idSucursal")
+	private Sucursal sucursal;
+	
+
+	public Sucursal getSucursal() {
+		return sucursal;
+	}
+	public void setSucursal(Sucursal sucursal) {
+		this.sucursal = sucursal;
+	}
+
+
 	@ManyToOne(optional=true)
 	@JoinColumn(name="idTarjeta")
 	private Tarjeta tarjeta;
