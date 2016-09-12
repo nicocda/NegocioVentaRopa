@@ -169,6 +169,9 @@
                             <a href="Ventas"><i class="fa fa-star fa-fw"></i> Venta</a>
                         </li>
                         <li>
+                            <a href="Condicional"><i class="fa fa-book fa-fw"></i> Condicional</a>
+                        </li>
+                        <li>
                             <a href="ReporteVentas"><i class="fa fa-folder-open fa-fw"></i> Reportes</a>
                         </li>
                     </ul>

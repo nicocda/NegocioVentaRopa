@@ -143,6 +143,7 @@ public class Producto
 	{
 		VENDIDO,
 		STOCK,
-		SEÑADO
+		SEÑADO,
+		CONDICIONAL
 	}
 }
