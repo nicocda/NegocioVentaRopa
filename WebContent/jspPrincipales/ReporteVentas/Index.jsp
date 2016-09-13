@@ -13,6 +13,8 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 {%>
 <script type="text/javascript" src="jspPrincipales/ReporteVentas/JS/ReporteVentas.js"></script>
 
+
+
 <div id="divError"></div>
 <div id="divPrincipal">
 
@@ -25,10 +27,13 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 	<div class="filtros">
 		<label style="color: #6F6F6F">Reporte Ventas</label>
 		<div style="padding: 20px">
+			<span>
 			Cliente:
 			<select id="comboClientes" style="width: 200px">
 		    	<option value="0" selected>TODOS</option>
 			</select>
+			</span>
+			<span>
 			Tipo de Pago:
 			<select id="cbTipoPago" style="width: 200px">
 				<option value="">TODOS</option>
@@ -38,6 +43,13 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 					<option value ="<%=e.ordinal()%>"><%=e.toString() %></option>
 				<%}%>
 			</select>
+			</span>
+			<span id="divTarjeta" style="width:400px;" hidden="hidden">
+			Tipo de Tarjeta:
+			<select id="comboTipoTarjetas" style="width: 200px">
+		    	<option value="0" selected>Seleccionar Tarjeta</option>
+			</select>
+			</span>
 		</div>
 	</div>
 	<div class="filtros">
@@ -71,8 +83,9 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 				<th width="5%">Id</th>
 				<th width="15%">Fecha</th>
 				<th width="30%">Comprador</th>
-				<th width="20%">Importe</th>
+				<th width="10%">Importe</th>
 				<th width="20%">Forma Pago</th>
+				<th width="10%">Tipo Tarjeta</th>
 				<th width="15%"></th>
 			</tr>
 		</thead>

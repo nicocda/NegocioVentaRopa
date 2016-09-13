@@ -55,6 +55,7 @@ public class Venta
 	
 	@Transient
 	private float deudaPendiente;
+
 	
 	public float getDeudaPendiente() {
 		return deudaPendiente;
@@ -68,7 +69,6 @@ public class Venta
 	public void setPagada(boolean pagada) {
 		this.pagada = pagada;
 	}
-
 
 	@ManyToOne(optional=true)
 	@JoinColumn(name="idSucursal")

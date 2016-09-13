@@ -15,9 +15,8 @@ public class PruebaConsola
 		Gson gson = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
                 .create();
-		
-		System.out.println(gson.toJson(CatalogoProductos.buscarProducto("RH00004")));
-		
+		System.out.println(gson.toJson(CatalogoVentas.buscarVenta(1).getTarjeta().getTipoTarjeta()));
+
 		
 	}
 }
