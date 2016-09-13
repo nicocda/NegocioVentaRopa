@@ -7,7 +7,9 @@ $(document).ready(function()
 				inicioPopUpCli();
 				inicioPopUpConf();
 				eventosTabla();
+				
 			});
+	validaciones();
 });
 
 function inicioPopUpConf()
@@ -54,6 +56,7 @@ function inicioPopUpConf()
 					function(result)
 					{
 						$($("#divConfirmacion")).dialog('close');
+						 actualizarTotal()
 						$("#tablaVentas").DataTable().clear().draw();
 					
 					});
@@ -146,22 +149,23 @@ function agregarEventos()
 	});
 	
 
+
 	
-	$("#radioTarjeta").change(function()
+	$(".css-checkbox").change(function()
 		{
-			if($("#radioTarjeta").val() == 3)
+			if($("#radioTarjeta").is(":checked"))
 			{
-				$(".tarjeta").show();
+				$("#tarjeta").show();
 				$("#txtNroTarjetaTrj").focus();
 			}
 			else
 			{
-			$(".tarjeta").hide();
+				$("#tarjeta").hide();
 			}
 		});
 	
-	$("#radioCtaCte").change(function(){
-		if($("#radioCtaCte").val() == 2)
+	$(".css-checkbox").change(function(){
+		if($("#radioCtaCte").is(":checked"))
 		{
 			$("#divCtaCte").show();
 		}
@@ -207,6 +211,7 @@ function agregarEventos()
 			{
 				$("#realizarVenta").removeAttr("disabled");
 				$("#pswResp").text("");
+				$("#divPswSeg").hide();
 			}
 			else
 			{
@@ -259,16 +264,16 @@ function cargarComboProductos()
 function actualizarTotal(){
 	$.post('/NegocioRopa/Ventas', { "action": "actualizarTotal" }, function(resultado)
 			{
-				$("#total").text("Total: $"+resultado.tot)
+				$("#total").text(resultado.tot)
 				var importe = resultado.tot;
 				if(resultado.tot < 0)
-					{
-						$("#realizarVenta").attr("disabled", true);
-						$("#divPswSeg").show();
-					} else {
-						$("#realizarVenta").removeAttr("disabled");
-						$("#divPswSeg").hide();
-					}
+				{
+					$("#realizarVenta").attr("disabled", true);
+					$("#divPswSeg").show();
+				} else {
+					$("#realizarVenta").removeAttr("disabled");
+					$("#divPswSeg").hide();
+				}
 			});
 }
 
@@ -322,6 +327,20 @@ function eventosTabla()
 					$("#tablaVentas").DataTable().ajax.reload();
 				});
 			});
+}
+
+function validaciones()
+{
+	var tot = $("#total").text();
+	
+	if(parseFloat(tot) < 0)
+	{
+		$("#realizarVenta").attr("disabled", true);
+		$("#divPswSeg").show();
+	} else {
+		$("#realizarVenta").removeAttr("disabled");
+		$("#divPswSeg").hide();
+	}
 }
 /*function validarRows()
 {
