@@ -147,9 +147,9 @@ function agregarEventos()
 	
 
 	
-	$("#radioTarjeta").change(function()
+	$(".css-checkbox").change(function()
 		{
-			if($("#radioTarjeta").val() == 3)
+			if($("#radioTarjeta").is(":checked"))
 			{
 				$(".tarjeta").show();
 				$("#txtNroTarjetaTrj").focus();
@@ -160,8 +160,8 @@ function agregarEventos()
 			}
 		});
 	
-	$("#radioCtaCte").change(function(){
-		if($("#radioCtaCte").val() == 2)
+	$(".css-checkbox").change(function(){
+		if($("#radioCtaCte").is(":checked"))
 		{
 			$("#divCtaCte").show();
 		}

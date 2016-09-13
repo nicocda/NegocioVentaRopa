@@ -116,9 +116,12 @@ public class ReporteVentas extends HttpServlet
 				ArrayList<Venta> ventasTipoTarjeta= new ArrayList<Venta>();
 				for(Venta v : ventas)
 				{
+					if(v.getTarjeta() != null)
+					{
 					if(v.getTarjeta().getTipoTarjeta().getId() == tipoTarjeta)
 					{
 						ventasTipoTarjeta.add(v);
+					}
 					}
 				}
 				response.setContentType("json");
