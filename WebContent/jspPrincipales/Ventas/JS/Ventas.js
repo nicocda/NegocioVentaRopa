@@ -34,16 +34,26 @@ function inicioPopUpConf()
 								"txtCuponTrj" : $("#txtCuponTrj").val(),
 								"cbTipoTarjetaTrj" : $("#cbTipoTarjetaTrj").val(),
 								}
-					else datos=  {
+					else if($("input[type='radio'][name='tipoPago']:checked").val() === "2")
+					{
+						datos=  {
 								"action":"realizarVenta", 
 								"idCliente": $("#comboClientes").val(), 
-								"formaPago": $("input[type='radio'][name='tipoPago']:checked").val()
-								};
+								"formaPago": $("input[type='radio'][name='tipoPago']:checked").val(),
+								"paga" : $("#txtPaga").val()
+						}
+					}
+					else
+						datos=  {
+									"action":"realizarVenta", 
+									"idCliente": $("#comboClientes").val(), 
+									"formaPago": $("input[type='radio'][name='tipoPago']:checked").val()
+									};
 					$.postData('/NegocioRopa/Ventas', 
 					datos, 
 					function(result)
 					{
-						$(this).dialog('close');
+						$($("#divConfirmacion")).dialog('close');
 						$("#tablaVentas").DataTable().clear().draw();
 					
 					});
@@ -97,7 +107,7 @@ function inicioPopUpCli()
 								function()
 								{
 									cargarComboClientes();
-									$(this).dialog('close');
+									$("#addCliente").dialog('close');
 								});
 								
 						},
@@ -133,10 +143,6 @@ function agregarEventos()
 						agregarProducto();
 					}	
 				});
-	
-		
-		
-		
 	});
 	
 
@@ -148,7 +154,23 @@ function agregarEventos()
 				$(".tarjeta").show();
 				$("#txtNroTarjetaTrj").focus();
 			}
+			else
+			{
+			$(".tarjeta").hide();
+			}
 		});
+	
+	$("#radioCtaCte").change(function(){
+		if($("#radioCtaCte").val() == 2)
+		{
+			$("#divCtaCte").show();
+		}
+		else
+		{
+			$("#divCtaCte").hide();
+		}
+	});
+	
 	$("#realizarVenta").click(function(){
 		
 		var totalRegistros = $("#tablaVentas").DataTable().page.info().recordsTotal;
@@ -177,7 +199,23 @@ function agregarEventos()
 		$("#mensaje").hide("slow");
 	});
 	
-	
+	$("#pswSeg").keyup(function()
+	{
+		$.post('/NegocioRopa/Ventas',{"action": "validaPass", "pswSeg" : $("#pswSeg").val()}, function(resultado)
+		{
+			if(resultado.estado === "true")
+			{
+				$("#realizarVenta").removeAttr("disabled");
+				$("#pswResp").text("");
+			}
+			else
+			{
+				if($("#pswSeg").val().length >= 4)
+				$("#pswResp").text("La contraseña no es correcta");
+				$("#realizarVenta").attr("disabled", true);
+			}
+		})
+	});
 }
 
 function cargarComboClientes()
@@ -222,11 +260,14 @@ function actualizarTotal(){
 	$.post('/NegocioRopa/Ventas', { "action": "actualizarTotal" }, function(resultado)
 			{
 				$("#total").text("Total: $"+resultado.tot)
+				var importe = resultado.tot;
 				if(resultado.tot < 0)
 					{
 						$("#realizarVenta").attr("disabled", true);
+						$("#divPswSeg").show();
 					} else {
 						$("#realizarVenta").removeAttr("disabled");
+						$("#divPswSeg").hide();
 					}
 			});
 }
@@ -246,7 +287,7 @@ function cargarTabla(callback){
 			 {data: "descripcion", bSortable: false},
 			 {data: "precio", bSortable: false},
 			 {data: null, defaultContent: "<button type='button' class='btn btn-danger borrarProducto'>X</button>", bsortable: false},
-			 {data: "estado", visible:false, bSortable: false}
+			 {data: "estado", visible:false}
 		]
         
     } );
@@ -277,6 +318,7 @@ function eventosTabla()
 				var data = $("#tablaVentas").DataTable().row($(this).closest('tr')).data();
 				$.post('/NegocioRopa/Ventas',{"action":"borrarProducto", "idProducto": data.id}, function(resultado)
 				{
+					actualizarTotal();
 					$("#tablaVentas").DataTable().ajax.reload();
 				});
 			});

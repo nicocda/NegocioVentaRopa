@@ -132,15 +132,15 @@ public class JsonResponses
 
 	public static String arrayVentasMorosas(ArrayList<Venta> ventasMorosas) {
 		if(ventasMorosas.isEmpty())
-			return "{\"data\": []}";	
+			return "[]";	
 		else
 		{
-			String rsp = "{\"cliente\": \""+ventasMorosas.get(0).getCliente().getNombre()+" "+ventasMorosas.get(0).getCliente().getApellido()+"\", \"data\": [";
+			String rsp = "[";
 		    for(int i=0;i<ventasMorosas.size()-1;i++)
 		    {
 		    	rsp= rsp + "{\"Id\": \"" + ventasMorosas.get(i).getId()+"\", \"fechaVenta\": \"" + ventasMorosas.get(i).getFechaVenta() + "\", \"importeTotal\": \"" + ventasMorosas.get(i).getImporte() +"\", \"deuda\": \"" + ventasMorosas.get(i).getDeudaPendiente() + "\"},";
 		    }
-		    rsp= rsp + "{\"Id\": \"" + ventasMorosas.get(ventasMorosas.size()-1).getId()+"\", \"fechaVenta\": \"" + ventasMorosas.get(ventasMorosas.size()-1).getFechaVenta() + "\", \"importeTotal\": \"" + ventasMorosas.get(ventasMorosas.size()-1).getImporte() +"\", \"deuda\": \"" + ventasMorosas.get(ventasMorosas.size()-1).getDeudaPendiente() + "\"}]}";
+		    rsp= rsp + "{\"Id\": \"" + ventasMorosas.get(ventasMorosas.size()-1).getId()+"\", \"fechaVenta\": \"" + ventasMorosas.get(ventasMorosas.size()-1).getFechaVenta() + "\", \"importeTotal\": \"" + ventasMorosas.get(ventasMorosas.size()-1).getImporte() +"\", \"deuda\": \"" + ventasMorosas.get(ventasMorosas.size()-1).getDeudaPendiente() + "\"}]";
 			return rsp;
 		}
 	}

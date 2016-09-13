@@ -30,6 +30,20 @@ public class ControladorTransaccion {
 		}
 		return usu; 	
 	}
+	private static String contraseñaAdministracion = "1234";
+	
+	public static void definirContraseñaAdministracion(String pass)
+	{
+		contraseñaAdministracion = pass;
+	}
+	public static boolean validarContraseñaAdministracion(String pass)
+	{
+		if(contraseñaAdministracion.equals(pass))
+			return true;
+		else
+			return false;
+		
+	}
 	
 	public static Producto buscarProducto (String id)
 	{

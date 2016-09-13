@@ -70,6 +70,15 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 			
 			<br><br>
 			<input class="btn btn-danger" type="button" id="realizarVenta" value="Realizar Venta">
+			<div id="divPswSeg" hidden="true">
+			<label style="width=400px;">Por motivos de seguridad, necesita un código de seguridad para poder realizar, la devolución de un producto siendo el saldo negativo, a favor del cliente
+			Por favor, digite la clave correspondiente para que se vuelva a habilitar la opción deseada</label>
+			<input type="password" id="pswSeg" PlaceHolder="Ingrese contraseña de seguridad"><label id="pswResp"></label>
+			</div>
+		</div>
+		<div id="divCtaCte" hidden="true">
+		<label>Paga: </label>
+		<input type="text" id="txtPaga" placeHolder="Ingrese el monto que va a pagar el cliente">
 		</div>
 	</form>
 </div>
