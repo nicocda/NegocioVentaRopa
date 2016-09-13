@@ -54,7 +54,6 @@ public class Ventas extends HttpServlet {
 			String formaPago = request.getParameter("formaPago");
 			int idCliente = request.getParameter("idCliente") != ""?Integer.parseInt(request.getParameter("idCliente")) : -1; 
 			RespuestaServidor sr = new RespuestaServidor();
-			
 			Cliente cli;
 			try
 			{
@@ -83,6 +82,20 @@ public class Ventas extends HttpServlet {
 				}
 				trj.setTipoTarjeta(ControladorABM.buscartipoTarjeta(tipoTarjeta));
 				vta.setTarjeta(trj);
+				vta.setPagada(true);
+			}
+			if(formaPago.equals("2"))
+			{
+				vta.setPagada(false);
+				
+				float paga = Float.parseFloat(request.getParameter("paga"));
+				vta.setDeudaPendiente(vta.getImporte()-paga);
+				cli.setDeudaTotal(vta.getImporte()-paga);
+				//TODO ANOTAR DEUDA Y GENERAR PAGO EN CASO QUE PAGUE ALGO
+			}
+			if(formaPago.equals("1"))
+			{
+				vta.setPagada(true);
 			}
 			Usuario usu = (Usuario) session.getAttribute("usuario");
 			vta.setSucursal(usu.getSucursal());
@@ -174,6 +187,7 @@ public class Ventas extends HttpServlet {
 		}
 		else if(action.equals("actualizarTotal"))
 		{
+			vta = (Venta) session.getAttribute("venta");
 			String msg = "{\"tot\":\""+vta.getImporte()+"\"}";
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
@@ -184,14 +198,29 @@ public class Ventas extends HttpServlet {
 			String idProducto = request.getParameter("idProducto");
 			Producto pr = ControladorTransaccion.buscarProducto(idProducto);
 			Venta ventaActual = (Venta) session.getAttribute("venta");
+			float importeActual = ventaActual.getImporte();
 			ArrayList<Producto> productosEnVenta = ventaActual.getProductosArrayList();
 			ventaActual.setProductos(removeProducto(productosEnVenta, pr));
+			if(pr.getEstado()== 0)
+				ventaActual.setImporte(importeActual + pr.getPrecio().getPrecio());
+			else
+				ventaActual.setImporte(importeActual- pr.getPrecio().getPrecio());
 			session.setAttribute("venta", ventaActual);
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(JsonUtil.toJson(ventaActual.getProductosArrayList()));
 		}
+		else if(action.equals("validaPass"))
+		{
+			String pass = request.getParameter("pswSeg");
+			boolean bandera = ControladorTransaccion.validarContraseñaAdministracion(pass);
+			String msg = "{\"estado\":\""+bandera+"\"}";
+			response.setContentType("json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(msg);
+		}
 	}
+	
 	
 	private RespuestaServidor validarProducto(Producto pro, Venta venta)
 	{

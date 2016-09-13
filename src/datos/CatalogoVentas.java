@@ -3,6 +3,7 @@ package datos;
 import java.util.ArrayList;
 import java.util.Date;
 
+import entidades.Cliente;
 import entidades.Precio;
 import entidades.Producto;
 import entidades.Producto.estado;
@@ -23,6 +24,11 @@ public class CatalogoVentas  extends CatalogoBase
 		{
 			getEm().getTransaction().begin();
 			getEm().persist(vta);
+			if(vta.getFormaPago() == Venta.formaPago.CTACORRIENTE.ordinal())
+					{
+					Cliente dbCliente = getEm().find(Cliente.class, vta.getCliente());
+					dbCliente.setDeudaTotal(vta.getDeudaPendiente());
+					}
 			for(Producto p : vta.getProductosArrayList())
 			{
 				Producto dbProducto = getEm().find(Producto.class, p.getId());

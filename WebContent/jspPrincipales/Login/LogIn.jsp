@@ -28,12 +28,12 @@
 		
 		<script type="text/javascript" src="${pageContext.request.contextPath}/jspPrincipales/Login/JS/Login2.js"></script>
 			
-		<title>Iniciá Sesión</title>
+		<title>Inicio de Sesión</title>
 	</head>
 	
 	<body>
 		<div class="login-card">
-		    <h1>Iniciá Sesión</h1><br>
+		    <h1>Inicio de Sesión</h1><br>
 			<form style="text-align: center"> 
 				<input id="txtLogin" type="text" placeholder="Usuario">
 				<input id="txtPass" type="password" placeholder="Contraseña">

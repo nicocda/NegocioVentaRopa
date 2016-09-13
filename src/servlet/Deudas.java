@@ -41,7 +41,6 @@ public class Deudas extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 
-			System.out.println("llegue");
 			int idClie = Integer.parseInt(request.getParameter("idCliente"));
 			ArrayList<Venta> ventasMorosas = new ArrayList<Venta>();
 			
@@ -57,7 +56,7 @@ public class Deudas extends HttpServlet {
 			}
 			else
 			
-				response.getWriter().write("{\"data\": []}");
+				response.getWriter().write("[]");
 			
 			
 		}
