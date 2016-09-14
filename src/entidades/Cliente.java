@@ -50,7 +50,7 @@ public class Cliente
 		return deudaTotal;
 	}
 	public void setDeudaTotal(float deudaTotal) {
-		this.deudaTotal = this.deudaTotal + deudaTotal;
+		this.deudaTotal = deudaTotal;
 	}
 	public List<Tarjeta> getTarjetas() {
 		return tarjetas;

@@ -1,9 +1,10 @@
 <input type="hidden" id="tablaVentasId" value="0">
 <div class="row">
 	<div class="col-lg-12">
-	    <h1 class="page-header">
-	    	Deudas de: <br><small id="nombreDeuda"></small>
-		</h1>
+	    <h2>
+	    	Deudas de: <label id="nombreDeuda"></label>
+		</h2>
+		<h3>Total deuda: $<label id="totalDeuda"></label></h3>
 	</div>
 </div>
 <table id="tablaVentasMorosas" class="display">
@@ -16,5 +17,9 @@
 			</tr>
 	</thead>
 </table>
+<br>
+<label>Ingrese la cantidad de dinero que desea pagar:</label>
+<input type="text" id="pagoUnico" placeholder="Monto a pagar" />
+<input type="button" id="registrarPagoDeuda" class="btn btn-info" value="Cancelar Deuda"/> 
 <br>
 <button class="btn btn-default pull-right" id="btnVolverDeDeudas">Volver</button>

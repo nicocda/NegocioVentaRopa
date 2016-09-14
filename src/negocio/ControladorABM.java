@@ -34,6 +34,10 @@ public class ControladorABM
 		cliente.setDireccion(direccion);
 		CatalogoClientes.guardarCliente(cliente);
 	}
+	public static void actualizarDeuda(Cliente clie) {
+		
+		CatalogoClientes.actualizarDeuda(clie);
+	}
 	
 	//PRODUCTO
 	public static void guardarProducto(String idProducto, String descripcion, int estado, float valor, int idSucursal) throws RespuestaServidor
@@ -184,4 +188,5 @@ public class ControladorABM
 	{
 		return CatalogoConfiguracion.buscarConfiguracion();
 	}
+	
 }

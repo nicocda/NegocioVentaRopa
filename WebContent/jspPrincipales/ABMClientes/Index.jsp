@@ -24,13 +24,13 @@ import="negocio.ControladorABM" %>
 	<table id="tablaClientes" class="display">
 		<thead>
 			<tr>
-				<th width="10%">ID</td>
-				<th width="15%">Nombre</td>
-				<th width="15%">Apellido</td>
-				<th width="20%">Dirección</td>
-				<th width="20%">Teléfono</td>
-				<th width="10%"></td>
-				<th width="10%"></td>
+				<th width="10%">ID</th>
+				<th width="15%">Nombre</th>
+				<th width="15%">Apellido</th>
+				<th width="20%">Dirección</th>
+				<th width="20%">Teléfono</th>
+				<th width="10%"></th>
+				<th width="10%"></th>
 			</tr>
 		</thead>		
 	</table>

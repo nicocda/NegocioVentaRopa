@@ -32,8 +32,14 @@ function eventosDeDetalle()
 	});
 }
 
-function eventosDeDeuda()
+function eventosDeDeuda(id)
 {
+	$("#registrarPagoDeuda").click(function()
+	{
+		var saldarDeuda = $("#pagoUnico").val();
+		$.post("/NegocioRopa/ABMClientes", {"action" : "saldarDeuda", "monto" : saldarDeuda, "idCliente" : id}, function(){});
+	});
+	
 	$("#btnVolverDeDeudas").click(function()
 	{
 		$("#divDeudas").hide();
@@ -55,8 +61,10 @@ function eventosDeTabla()
 		$("#divPrincipal").hide();
 		$("#divDeudas").show();
 		$("#tablaVentasId").val(data.id);
+		$("#totalDeuda").empty();
+		$("#totalDeuda").append(data.deudaTotal);
 		$("#tablaVentasMorosas").DataTable().ajax.reload();
-		eventosDeDeuda();
+		eventosDeDeuda(data.id);
 	});
 			
 	$("#tablaClientes tbody").on('click', ".btnEditar", function()
@@ -97,7 +105,8 @@ function cargarTablaDeClientes()
 	        {data: "direccion"},
 	        {data: "telefono"},
 	        {data: null, targets: -1, defaultContent: "<button class='btn btn-info btnDeuda'>Ver deuda</button>", bSortable: false},
-	        {data: null, targets: -1, defaultContent: "<button class='btn btn-info btnEditar'>Editar</button>", bSortable: false}
+	        {data: null, targets: -1, defaultContent: "<button class='btn btn-info btnEditar'>Editar</button>", bSortable: false},
+	        {data: "deudaTotal", bSortable: false, visible: false}
         ],
     	url: "/NegocioRopa/ABMClientes",
     	params: function () { return { "action": "recargarTabla" } },
