@@ -4,7 +4,7 @@ public class Tipos
 {
 	public static boolean esEntero(String entrada)
 	{
-		if(!entrada.isEmpty() && entrada!= null)
+		if(entrada!= null && !entrada.isEmpty())
 		{			
 			try
 			{
@@ -23,7 +23,7 @@ public class Tipos
 	
 	public static boolean esFloat(String entrada)
 	{
-		if(!entrada.isEmpty() && entrada!= null)
+		if(entrada!= null && !entrada.isEmpty())
 		{			
 			try
 			{

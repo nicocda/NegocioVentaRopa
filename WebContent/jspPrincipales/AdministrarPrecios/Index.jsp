@@ -1,7 +1,9 @@
 <script type="text/javascript" src="jspPrincipales/AdministrarPrecios/JS/AdministrarPrecios.js"></script>	
 
-<div>
-	<table class="table table-stripped">
+<div id="divError"></div>
+
+<div class="container">
+	<table id="tablaPrecios" class="table">
 		<thead>
 			<tr>
 				<th>Código</th>
@@ -12,46 +14,26 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td>RH00003</td>
-				<td>Tu</td>
-				<td>Hermana</td>
-				<td>5pe</td>
-				<td><button>Eliminar</button></td>
-			</tr>
-			<tr>
-				<td>RH00003</td>
-				<td>Tu</td>
-				<td>Hermana</td>
-				<td>5pe</td>
-				<td><button>Eliminar</button></td>
-			</tr>
-			<tr>
-				<td>RH00003</td>
-				<td>Tu</td>
-				<td>Hermana</td>
-				<td>5pe</td>
-				<td><button>Eliminar</button></td>
-			</tr>
-			<tr>
-				<td>RH00003</td>
-				<td>Tu</td>
-				<td>Hermana</td>
-				<td>5pe</td>
-				<td><button>Eliminar</button></td>
-			</tr>
+			
 		</tbody>
 	</table>
 	
+	<hr/>
 	
-	<select id="productos" style="width: 90%;">		
-	</select>
+	<div class="row">
+		<div class="col-md-4 col-md-offset-6">
+			<select id="productos" style="width: 100%;"></select>
+		</div>
+		<div class="col-md-2">
+			<button id="agregarProducto" type="button" class="btn btn-default pull-right">Agregar</button>
+		</div>
+	</div>
+
 	
-	<button type="button" class="btn btn-default">Agregar</button>
 	
 	<hr />
 	
-	<form class="form-group">
+	<form id="guardarPrecios" class="form-group">
 		<div class="row">
 			<div class="col-md-5">
 				<input id="fechaDesde" type="text" class="form-control" placeholder="Desde" readonly="readonly"/>
@@ -63,7 +45,7 @@
 			
 			<div class=" col-md-2">
 				<div class="input-group">
-					<input type="text" class="form-control" placeholder="Porcentaje" />
+					<input id="porcentaje" type="text" class="form-control" placeholder="Porcentaje" />
 					<span class="input-group-addon">%</span>
 				</div>
 			</div>

@@ -159,4 +159,21 @@ public class JsonResponses
 		    return rsp;
 		}
 	}
+	
+	public static String unProducto(Producto producto)
+	{
+		String json = "";
+		
+		if (producto != null)
+		{
+			json = json + "{";
+			json = json + "\"codigo\": \"" + producto.getId() + "\", ";
+			json = json + "\"descripcion\": \"" + producto.getDescripcion() + "\", ";
+			json = json + "\"precioActual\": " + producto.getPrecio().getPrecio() + ", ";
+			json = json + "\"fechaCambio\": \"" + producto.getPrecio().getFecha() + "\"";
+			json = json + "}";
+		}
+		
+		return json;
+	}
 }

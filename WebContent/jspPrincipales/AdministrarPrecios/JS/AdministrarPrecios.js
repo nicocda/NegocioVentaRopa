@@ -1,6 +1,8 @@
 $(document).ready(function()
 {	
-	eventosRelacionados();
+	var listaProductos = [];
+	var productosElegidos = [];
+	eventosRelacionados(productosElegidos, listaProductos);
 	inicializarDatePicker();
 	cargarComboProductos();
 });
@@ -31,7 +33,7 @@ function inicializarDatePicker()
 	$("#fechaHasta").datepicker();
 }
 
-function eventosRelacionados()
+function eventosRelacionados(productosElegidos, listaProductos)
 {
 	$("#fechaDesde").change(function()
 	{
@@ -41,6 +43,40 @@ function eventosRelacionados()
 	$("#fechaHasta").change(function()
 	{
 		actualizarDiferenciaDias();
+	});
+	
+	$("#agregarProducto").click(function()
+	{
+		var producto = $("#productos").val();
+				
+		//Si no está ya en el arreglo, lo agrego
+		if ($.inArray(producto, productosElegidos) === -1)
+		{
+			productosElegidos.push(producto);
+			
+			$.post("/NegocioRopa/AdministrarPrecios", {"action": "buscarProducto", "producto": producto }, function(data)
+			{
+				listaProductos.push(data);
+				recargarTabla(listaProductos);
+			});
+		}
+	});
+	
+	$("#guardarPrecios").submit(function(event)
+	{
+		event.preventDefault();
+		$.postData("/NegocioRopa/AdministrarPrecios", 
+		{ 
+			"action": "guardarPrecios", 
+			"fechaInicio": $("#fechaDesde").datepicker("getDate"), 
+			"fechaFin": $("#fechaHasta").datepicker("getDate"),
+			"porcentaje": $("#porcentaje").val(),
+			"productos": JSON.stringify(productosElegidos) 
+		}, 
+		function(data)
+		{
+			
+		});
 	});
 }
 
@@ -58,4 +94,22 @@ function actualizarDiferenciaDias()
 	}
 	else
 		$("#diferenciaDias").text("Error al ingresar fecha");
+}
+
+function recargarTabla(listaProductos)
+{	
+	$("#tablaPrecios tbody").empty();
+	
+	$.each(listaProductos, function()
+	{
+		var tr = $("<tr>");
+		
+		tr.append($("<td>").append(this.codigo));
+		tr.append($("<td>").append(this.descripcion));
+		tr.append($("<td>").append(this.precioActual));
+		tr.append($("<td>").append(this.fechaCambio));
+		tr.append($("<td>").append(""));
+
+		$("#tablaPrecios tbody").append(tr);
+	});
 }
