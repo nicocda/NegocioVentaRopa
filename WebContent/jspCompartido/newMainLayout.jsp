@@ -82,13 +82,12 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-shopping-cart fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
-                    <ul class="dropdown-menu dropdown-messages">
+                     <ul class="dropdown-menu dropdown-messages">
                         <%if((Venta)session.getAttribute("venta") != null) 
                         {%>
                         	<%for(Producto p : ((Venta)session.getAttribute("venta")).getProductosArrayList())
                        		{%>
 		                        <li>
-		                            <a href="#">
 		                            <div class="row">
 											<div class="col-lg-3">	<img src="http://www.gylenterprise.com.ar/images/productos/1379605178.jpg" width="50" height="50" alt="Alternate Text" /> </div>
 											<div class="col-lg-9">
@@ -96,7 +95,7 @@
 												<p>$<%=p.getPrecio().getPrecio()%></p>
 											</div>
 									</div>
-		                            </a>
+		                            
 		                        </li>
 		                        <%}%>
                         <%}%>

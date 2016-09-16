@@ -25,20 +25,26 @@ public class CatalogoVentas  extends CatalogoBase
 			getEm().getTransaction().begin();
 			getEm().persist(vta);
 			if(vta.getFormaPago() == Venta.formaPago.CTACORRIENTE.ordinal())
-					{
-					Cliente dbCliente = getEm().find(Cliente.class, vta.getCliente());
-					dbCliente.setDeudaTotal(vta.getDeudaPendiente());
-					}
+			{
+				Cliente dbCliente = getEm().find(Cliente.class, vta.getCliente());
+				dbCliente.setDeudaTotal(vta.getDeudaPendiente());
+			}
 			for(Producto p : vta.getProductosArrayList())
 			{
 				Producto dbProducto = getEm().find(Producto.class, p.getId());
 				if(p.getEstado() == Producto.estado.STOCK.ordinal())
-				{
-					
+				{	
 					dbProducto.setVenta(vta);
-					dbProducto.setEstado(Producto.estado.VENDIDO.ordinal());
+					if(vta.getFormaPago() == Venta.formaPago.NULL.ordinal())
+					{
+						dbProducto.setEstado(Producto.estado.CONDICIONAL.ordinal());
+					}
+					else
+					{
+						dbProducto.setEstado(Producto.estado.VENDIDO.ordinal());
+					}
 				}
-				else
+				else if (p.getEstado() == Producto.estado.VENDIDO.ordinal())
 				{
 					dbProducto.setVenta(null);
 					dbProducto.setEstado(Producto.estado.STOCK.ordinal());
@@ -68,6 +74,23 @@ public class CatalogoVentas  extends CatalogoBase
 			ArrayList<Venta> ventas = new ArrayList<Venta>();
 			 ventas = (ArrayList<Venta>) getEm().createQuery("FROM Venta v WHERE (fechaVenta >= :fmin AND fechaVenta <= :fmax) AND (:idCliente = 0 OR (idCliente = :idCliente)) AND (:formaPago < 0 OR (formaPago = :formaPago))")
 			.setParameter("fmin", fechaMin).setParameter("fmax", fechaMax).setParameter("idCliente", idCliente).setParameter("formaPago", formaPago).getResultList();
+			return ventas;	
+		}
+		finally
+		{
+			cerrarEntityManager();
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static ArrayList<Venta> buscarVentasPorDia(Date fechaMin, Date fechaMax) 
+	{
+		abrirEntityManager();
+		try
+		{
+			ArrayList<Venta> ventas = new ArrayList<Venta>();
+			 ventas = (ArrayList<Venta>) getEm().createQuery("FROM Venta v WHERE (fechaVenta >= :fmin AND fechaVenta <= :fmax) ")
+			.setParameter("fmin", fechaMin).setParameter("fmax", fechaMax).getResultList();
 			return ventas;	
 		}
 		finally
@@ -125,7 +148,7 @@ public class CatalogoVentas  extends CatalogoBase
 		{
 			sr.addError("La venta debe contener al menos un producto.");
 		}
-		if(vta.getFormaPago()==0)
+		if(vta.getFormaPago()==-1)
 		{
 			sr.addError("Seleccione una forma de pago.");
 		}

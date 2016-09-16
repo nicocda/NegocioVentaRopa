@@ -52,7 +52,7 @@ public class Ventas extends HttpServlet {
 		{
 
 			String formaPago = request.getParameter("formaPago");
-			int idCliente = request.getParameter("idCliente") != ""?Integer.parseInt(request.getParameter("idCliente")) : -1; 
+			int idCliente = util.Tipos.esEntero(request.getParameter("idCliente"))?Integer.parseInt(request.getParameter("idCliente")) : -1; 
 			RespuestaServidor sr = new RespuestaServidor();
 			Cliente cli;
 			try
@@ -66,11 +66,11 @@ public class Ventas extends HttpServlet {
 			if(formaPago.equals("3"))
 			{
 				Tarjeta trj = new Tarjeta();
-				int idTarjeta = request.getParameter("nroTarjetaTrj") != ""? Integer.parseInt(request.getParameter("nroTarjetaTrj")): -1;
+				int idTarjeta = util.Tipos.esEntero(request.getParameter("nroTarjetaTrj"))? Integer.parseInt(request.getParameter("nroTarjetaTrj")): -1;
 				trj.setNroTarjeta(idTarjeta);
 				trj.setCliente(cli);
-				trj.setCuotas(request.getParameter("txtCuotasTrj") != ""? Integer.parseInt(request.getParameter("txtCuotasTrj")): -1);
-				trj.setNroCupon(request.getParameter("txtCuponTrj") != ""? Integer.parseInt(request.getParameter("txtCuponTrj")): -1);
+				trj.setCuotas(util.Tipos.esEntero(request.getParameter("txtCuotasTrj"))? Integer.parseInt(request.getParameter("txtCuotasTrj")): -1);
+				trj.setNroCupon(util.Tipos.esEntero(request.getParameter("txtCuponTrj"))? Integer.parseInt(request.getParameter("txtCuponTrj")): -1);
 				int tipoTarjeta;
 				try
 				{
@@ -107,21 +107,11 @@ public class Ventas extends HttpServlet {
 			
 			//Devuelvo los productos que sean devolucion
 			for(Producto p : vta.getProductos())
-			{
 				if(p.getEstado() == Producto.estado.VENDIDO.ordinal())
-				{
-					
 					ControladorTransaccion.devolverProducto(p);
-				}
-			}
-			try
-			{
-				ControladorTransaccion.registrarVenta(vta);
-			}
-			catch(RespuestaServidor e)
-			{
-				sr = e;
-			}	
+			try{ControladorTransaccion.registrarVenta(vta);}
+			catch(RespuestaServidor e){sr = e;}
+
 			session.setAttribute("venta", new Venta());
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
@@ -231,8 +221,6 @@ public class Ventas extends HttpServlet {
 		
 		if (pro != null)
 		{
-			
-			
 			if(pro.getEstado() == estado.SEÑADO.ordinal())
 				sr.addError("El producto ingresado está señado.");
 		

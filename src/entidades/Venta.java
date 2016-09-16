@@ -53,48 +53,17 @@ public class Venta
 	@Expose
 	private boolean pagada;
 	
-	@Transient
+	@Expose
 	private float deudaPendiente;
-
-	
-	public float getDeudaPendiente() {
-		return deudaPendiente;
-	}
-	public void setDeudaPendiente(float deudaPendiente) {
-		this.deudaPendiente = deudaPendiente;
-	}
-	public boolean isPagada() {
-		return pagada;
-	}
-	public void setPagada(boolean pagada) {
-		this.pagada = pagada;
-	}
 
 	@ManyToOne(optional=true)
 	@JoinColumn(name="idSucursal")
 	private Sucursal sucursal;
 	
-
-	public Sucursal getSucursal() {
-		return sucursal;
-	}
-	public void setSucursal(Sucursal sucursal) {
-		this.sucursal = sucursal;
-	}
-	
-
 	@ManyToOne(optional=true)
 	@JoinColumn(name="idTarjeta")
 	private Tarjeta tarjeta;
 	
-	public Tarjeta getTarjeta() {
-		return tarjeta;
-	}
-	public void setTarjeta(Tarjeta tarjet) {
-		tarjeta = tarjet;
-	}
-
-
 	@Expose
 	@ManyToOne(optional=false)
 	@JoinColumn(name="idCliente")
@@ -104,11 +73,14 @@ public class Venta
 	private List<Devolucion> devoluciones;
 	
 	@OneToMany(fetch=FetchType.EAGER, mappedBy="venta_cuota")
-	private List<Cuota> cuotas = new ArrayList<Cuota>();
+	private List<Cuota> cuotas;
 	
 	@Expose
-	@OneToMany(cascade = CascadeType.REFRESH, mappedBy="venta")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="venta")
 	private List<Producto> productos = new ArrayList<Producto>();
+	
+	
+	//PROPIEDADES 
 	
 	public List<Producto> getProductos() 
 	{
@@ -116,7 +88,10 @@ public class Venta
 	}
 	public ArrayList<Producto> getProductosArrayList() 
 	{
-		return new ArrayList<Producto>(productos);
+		if(productos != null)
+			return new ArrayList<Producto>(productos);
+		else 
+			return null;
 	}
 	public void setProductos(List<Producto> productos) 
 	{
@@ -217,7 +192,33 @@ public class Venta
 	public void setCuotas(List<Cuota> cuotas) {
 		this.cuotas = cuotas;
 	}
-
+	public void setCuotas(ArrayList<Cuota> cuotas) {
+		this.cuotas = cuotas;
+	}
+	public float getDeudaPendiente() {
+		return deudaPendiente;
+	}
+	public void setDeudaPendiente(float deudaPendiente) {
+		this.deudaPendiente = deudaPendiente;
+	}
+	public boolean isPagada() {
+		return pagada;
+	}
+	public void setPagada(boolean pagada) {
+		this.pagada = pagada;
+	}
+	public Sucursal getSucursal() {
+		return sucursal;
+	}
+	public void setSucursal(Sucursal sucursal) {
+		this.sucursal = sucursal;
+	}
+	public Tarjeta getTarjeta() {
+		return tarjeta;
+	}
+	public void setTarjeta(Tarjeta tarjet) {
+		tarjeta = tarjet;
+	}
 
 
 

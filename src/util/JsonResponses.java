@@ -162,4 +162,67 @@ public class JsonResponses
 		    return rsp;
 		}
 	}
+
+
+	public static String jsonReporteProductos(ArrayList<Venta> ventas) 
+	{
+		if(ventas.isEmpty())
+		return "[]";
+		else
+		{
+			String rsp= "[";
+			Venta v = null;
+			Producto p = null;
+			
+			for(int j=0;j<ventas.size()-1;j++)
+			{
+				v = ventas.get(j);
+				if(v.getProductosArrayList() != null)
+					for(int i=0;i<v.getProductosArrayList().size();i++)
+					{
+						 p = v.getProductosArrayList().get(i);
+						rsp = rsp + "{\"idProducto\":\""+p.getId()+"\",";
+						rsp = rsp + " \"detalleProducto\":\""+p.getDescripcion()+"\",";
+						rsp = rsp + " \"fecha\":\""+v.getFechaVenta()+"\",";
+						rsp = rsp + " \"nombreApellido\":\""+v.getCliente().getNombre()+" "+v.getCliente().getApellido()+"\",";
+						rsp = rsp + " \"tipoPago\":\""+v.getFormaPago()+"\",";
+						rsp = rsp + " \"importe\":\""+p.getPrecio().getPrecio()+"\"},";	
+					}
+				
+			}  
+			
+			if(v.getProductosArrayList() != null)
+			{
+				for(int i=0;i<v.getProductos().size()-1;i++)
+				{
+					p = v.getProductosArrayList().get(i);
+					rsp = rsp + "{\"idProducto\":\""+p.getId()+"\",";
+					rsp = rsp + " \"detalleProducto\":\""+p.getDescripcion()+"\",";
+					rsp = rsp + " \"fecha\":\""+v.getFechaVenta()+"\",";
+					rsp = rsp + " \"nombreApellido\":\""+v.getCliente().getNombre()+" "+v.getCliente().getApellido()+"\",";
+					rsp = rsp + " \"tipoPago\":\""+v.getFormaPago()+"\",";
+					rsp = rsp + " \"importe\":\""+p.getPrecio().getPrecio()+"\"},";	
+				}
+			}			
+				v = ventas.get(ventas.size()-1);
+				p = v.getProductosArrayList().get(v.getProductosArrayList().size()-1);
+			if(p != null)
+			{
+				rsp = rsp + "{\"idProducto\":\""+p.getId()+"\",";
+				rsp = rsp + " \"detalleProducto\":\""+p.getDescripcion()+"\",";
+				rsp = rsp + " \"fecha\":\""+v.getFechaVenta()+"\",";
+				rsp = rsp + " \"nombreApellido\":\""+v.getCliente().getNombre()+" "+v.getCliente().getApellido()+"\",";
+				rsp = rsp + " \"tipoPago\":\""+v.getFormaPago()+"\",";
+				rsp = rsp + " \"importe\":\""+p.getPrecio().getPrecio()+"\"}]";	
+			}
+			else
+			{
+				rsp.substring(0, rsp.length());
+				rsp = rsp +"]";
+			}
+				System.out.println(rsp);
+			return rsp;
+		}
+		
+	}
 }

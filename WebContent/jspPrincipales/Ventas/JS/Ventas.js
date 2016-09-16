@@ -45,21 +45,27 @@ function inicioPopUpConf()
 								"paga" : $("#txtPaga").val()
 						}
 					}
-					else
+					else if($("input[type='radio'][name='tipoPago']:checked").val() === "1") 
 						datos=  {
 									"action":"realizarVenta", 
 									"idCliente": $("#comboClientes").val(), 
 									"formaPago": $("input[type='radio'][name='tipoPago']:checked").val()
+									}
+					else 
+						datos=  {
+									"action":"realizarVenta", 
+									"idCliente": $("#comboClientes").val(), 
+									"formaPago": "-1"
 									};
 					$.postData('/NegocioRopa/Ventas', 
 					datos, 
 					function(result)
 					{
-						$($("#divConfirmacion")).dialog('close');
 						 actualizarTotal()
 						$("#tablaVentas").DataTable().clear().draw();
 					
 					});
+					$($("#divConfirmacion")).dialog('close');
 					
 				},
 				Cancelar: function()
@@ -248,8 +254,8 @@ function cargarComboProductos()
 	{
 		var productos = [];
 		jQuery.each(resultado, function()
-		{
-			productos.push({id: this.id, text: this.descripcion});
+		{	if(resultado.estado !== 3)
+			productos.push({id: this.id, text: "("+this.estado+") "+this.descripcion});
 		});
 		$('#comboProductos').select2(
 		{

@@ -77,6 +77,10 @@ public class ControladorABM
 	{
 		return CatalogoProductos.buscarTodosProductosEnStock();
 	}
+	public static ArrayList<Producto> buscarTodosProductosCondicional() 
+	{
+		return CatalogoProductos.buscarTodosProductosCondicional();
+	}
 			//si no existe me da el primero para ese tipo y para ese subtipo.
 	public static String obtenerIdCompleto(char tipo, char subTipo) 
 	{
@@ -184,4 +188,5 @@ public class ControladorABM
 	{
 		return CatalogoConfiguracion.buscarConfiguracion();
 	}
+
 }

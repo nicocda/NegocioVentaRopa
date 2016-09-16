@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,10 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.mysql.jdbc.Util;
+
+import entidades.Cliente;
 import entidades.Prestamo;
 import entidades.Producto;
+import entidades.Usuario;
+import entidades.Venta;
 import entidades.Producto.estado;
 import excepciones.RespuestaServidor;
+import negocio.ControladorABM;
 import negocio.ControladorTransaccion;
 import util.JsonResponses;
 import util.JsonUtil;
@@ -38,7 +45,7 @@ public class Condicional extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		HttpSession session = request.getSession(false);
-		Prestamo prestamo = (Prestamo) session.getAttribute("condicional");
+		Prestamo prestamo = (Prestamo) session.getAttribute("prestamo");
 		String action = request.getParameter("action");	
 		
 		if (action == null)
@@ -48,7 +55,36 @@ public class Condicional extends HttpServlet {
 		}
 		else if(action.equals("registrarCondicional"))
 		{
-			//TODO
+			int idCliente = util.Tipos.esEntero(request.getParameter("idCliente"))?Integer.parseInt(request.getParameter("idCliente")) : -1; 
+			RespuestaServidor sr = new RespuestaServidor();
+			Cliente cli;
+			try
+			{
+				cli=ControladorABM.buscarCliente(idCliente);
+			}
+			catch(RespuestaServidor res)
+			{
+				cli = null;
+			}
+			Usuario usu = (Usuario) session.getAttribute("usuario");
+			prestamo.setSucursal(usu.getSucursal());
+			prestamo.setCliente(cli);
+			Calendar today = Calendar.getInstance();
+			today.set(Calendar.HOUR_OF_DAY, 0);
+			prestamo.setFechaVenta(today.getTime());
+			prestamo.setPrestamo(true);
+			for(Producto p : prestamo.getProductos())
+				if(p.getEstado() == Producto.estado.VENDIDO.ordinal())
+					ControladorTransaccion.devolverProducto(p);
+			try{
+				ControladorTransaccion.registrarVenta(prestamo);}
+			catch(RespuestaServidor e){
+				sr = e;}
+
+			session.setAttribute("prestamo", new Prestamo());
+			response.setContentType("json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(JsonResponses.devolverMensaje(sr, "La transacción se registró con éxito"));
 		}
 		else if (action.equals("agregarProducto"))
 		{	
@@ -105,7 +141,13 @@ public class Condicional extends HttpServlet {
 		    String toJson = JsonResponses.arrayTodosProductosVenta(prestamo);
 		    System.out.println(toJson);
 			   response.getWriter().write(toJson);
-			
+		}
+		else if(action.equals("recargarCombo"))
+		{
+			ArrayList<Producto> productos = ControladorABM.buscarTodosProductosCondicional();
+			response.setContentType("json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(JsonResponses.arrayTodosProductos(productos));
 		}
 		else if(action.equals("actualizarTotal"))
 		{
@@ -131,7 +173,7 @@ public class Condicional extends HttpServlet {
 	private RespuestaServidor validarProducto(Producto pro, Prestamo prestamo)
 	{
 		RespuestaServidor sr = new RespuestaServidor();
-		
+	
 		if(pro == null)
 			sr.addError("El producto ingresado no existe.");
 		
@@ -144,6 +186,8 @@ public class Condicional extends HttpServlet {
 				sr.addError("El producto ingresado no se encuentra en el local, ya que esta en modo condicional.");
 		
 			boolean enLista = false;
+			if(prestamo.getProductosArrayList() != null)
+			{
 			for(Producto p : prestamo.getProductos())
 			{
 				if(p.getId().equals(pro.getId()))
@@ -151,6 +195,7 @@ public class Condicional extends HttpServlet {
 			}
 			if(enLista)
 				sr.addError("El producto seleccionado ya fue ingresado en esta lista");
+			}
 		}
 		return sr;
 	}

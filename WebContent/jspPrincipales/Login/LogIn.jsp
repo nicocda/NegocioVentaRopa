@@ -35,7 +35,7 @@
 		<div class="login-card">
 		    <h1>Inicio de Sesión</h1><br>
 			<form style="text-align: center"> 
-				<input id="txtLogin" type="text" placeholder="Usuario">
+				<input id="txtLogin" type="text" placeholder="Usuario" autofocus>
 				<input id="txtPass" type="password" placeholder="Contraseña">
 				<button type="submit" id="btnLogin" class="login login-submit">Login</button>
 				<div id="divLoader"></div>

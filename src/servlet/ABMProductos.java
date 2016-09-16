@@ -114,7 +114,7 @@ public class ABMProductos extends HttpServlet {
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
 		    //response.getWriter().write(JsonResponses.arrayTodosProductos(ControladorABM.buscarTodosProductosEnStock()));
-		    response.getWriter().write(JsonUtil.toJson(ControladorABM.buscarTodosProductosEnStock()));
+		    response.getWriter().write(JsonUtil.toJson(ControladorABM.buscarTodosProductos()));
 		}
 		else if (action.equals("buscar"))
 		{

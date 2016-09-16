@@ -76,6 +76,10 @@ public class ControladorTransaccion {
 	{
 		return CatalogoVentas.buscarVentasPorDia(fechaMin, fechaMax, idCliente, formaPago);
 	}
+	public static ArrayList<Venta> buscarVentasDia(Date fechaMin, Date fechaMax) throws RespuestaServidor
+	{
+		return CatalogoVentas.buscarVentasPorDia(fechaMin, fechaMax);
+	}
 
 	public static ArrayList<Venta> buscarVentasCliente(int idClie) {
 	

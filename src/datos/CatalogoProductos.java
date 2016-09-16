@@ -87,7 +87,25 @@ public class CatalogoProductos extends CatalogoBase
 		abrirEntityManager();
 		try
 		{
-			ArrayList<Producto> todosProductos = (ArrayList<Producto>)getEm().createQuery("SELECT p FROM Producto p").getResultList();
+			ArrayList<Producto> todosProductos = (ArrayList<Producto>)getEm().createQuery("SELECT p FROM Producto p where estado = 1").getResultList();
+			
+			for(Producto p : todosProductos)
+				buscarUltimoPrecio(p);
+	
+			return todosProductos;
+		}
+		finally
+		{
+			cerrarEntityManager();
+		}
+	}
+	public static ArrayList<Producto> buscarTodosProductosCondicional() 
+	{
+		abrirEntityManager();
+		try
+		{
+			@SuppressWarnings("unchecked")
+			ArrayList<Producto> todosProductos = (ArrayList<Producto>)getEm().createQuery("SELECT p FROM Producto p where estado = 1 or estado = 3").getResultList();
 			
 			for(Producto p : todosProductos)
 				buscarUltimoPrecio(p);
@@ -188,5 +206,7 @@ public class CatalogoProductos extends CatalogoBase
 		
 		
 	}
+
+	
 	
 }
