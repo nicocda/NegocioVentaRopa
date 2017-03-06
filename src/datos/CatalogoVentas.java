@@ -3,6 +3,7 @@ package datos;
 import java.util.ArrayList;
 import java.util.Date;
 
+import entidades.Cliente;
 import entidades.Precio;
 import entidades.Producto;
 import entidades.Producto.estado;
@@ -23,15 +24,34 @@ public class CatalogoVentas  extends CatalogoBase
 		{
 			getEm().getTransaction().begin();
 			getEm().persist(vta);
-			
+			if(vta.getFormaPago() == Venta.formaPago.CTACORRIENTE.ordinal())
+					{
+					Cliente dbCliente = getEm().find(Cliente.class, vta.getCliente());
+					dbCliente.setDeudaTotal(vta.getDeudaPendiente());
+					}
 			for(Producto p : vta.getProductosArrayList())
 			{
 				Producto dbProducto = getEm().find(Producto.class, p.getId());
-				dbProducto.setEstado(estado.VENDIDO.ordinal());
-				dbProducto.setVenta(vta);
+				if(p.getEstado() == Producto.estado.STOCK.ordinal())
+				{
+					
+					dbProducto.setVenta(vta);
+					dbProducto.setEstado(Producto.estado.VENDIDO.ordinal());
+				}
+				else
+				{
+					dbProducto.setVenta(null);
+					dbProducto.setEstado(Producto.estado.STOCK.ordinal());
+				}
 			}
 			
 			getEm().getTransaction().commit();	
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			if(getEm().getTransaction().isActive())
+			getEm().getTransaction().rollback();
 		}
 		finally
 		{
@@ -68,10 +88,6 @@ public class CatalogoVentas  extends CatalogoBase
 			{
 				buscarUltimoPrecio(p);
 			}
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
 		}
 		finally
 		{

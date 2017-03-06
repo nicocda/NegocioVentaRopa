@@ -123,6 +123,14 @@ public class ABMProductos extends HttpServlet {
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(mensajeJson);
 		}
+		else if (action.equals("buscarProducto"))
+		{
+			String id = request.getParameter("idProducto");
+			Producto pr = ControladorTransaccion.buscarProducto(id);
+			response.setContentType("json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(JsonUtil.toJson(pr));
+		    }
 	}
 
 }

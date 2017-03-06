@@ -1,12 +1,11 @@
 <%@page import="entidades.Producto"%>
 <%@page import="entidades.Venta"%>
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	import="entidades.Usuario"
     pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-
 	<%
 	//Carga de css de forma dinámica
 	String themes = "/themes/";
@@ -143,7 +142,7 @@
             </ul>
             <!-- /.navbar-top-links -->
 
-            <div class="navbar-default sidebar" role="navigation">
+            <div class="navbar navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         
@@ -167,6 +166,15 @@
                         </li>
                         <li>
                             <a href="Ventas"><i class="fa fa-star fa-fw"></i> Venta</a>
+                        </li>
+                        <li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-folder-open fa-fw"></i>Reportes<b class="caret"></b></a>
+	                        	<ul class="nav">
+					                <li><a href="ReporteVentas">Ventas</a></li>
+					                <li><a href="ReporteVentas">Tipo de Tarjeta</a></li>
+				              	</ul>
+                        <li>
+                            <a href="Condicional"><i class="fa fa-book fa-fw"></i> Condicional</a>
                         </li>
                         <li>
                             <a href="ReporteVentas"><i class="fa fa-folder-open fa-fw"></i> Reportes</a>

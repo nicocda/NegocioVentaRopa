@@ -9,8 +9,10 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import entidades.Cliente;
 import entidades.Precio;
 import entidades.Producto;
+import entidades.Producto.estado;
 import excepciones.RespuestaServidor;
 
 public class CatalogoProductos extends CatalogoBase
@@ -22,7 +24,6 @@ public class CatalogoProductos extends CatalogoBase
 		try
 		{
 			Producto producto = getEm().find(Producto.class, idProducto);
-			
 			if (producto != null)
 				buscarUltimoPrecio(producto);
 			
@@ -164,6 +165,28 @@ public class CatalogoProductos extends CatalogoBase
 		{
 			cerrarEntityManager();
 		}
+	}
+
+	public static void devolverProducto(Producto p) 
+	{
+		abrirEntityManager();
+		getEm().getTransaction().begin();
+		try
+		{
+			
+		Producto dbProducto = getEm().find(Producto.class, p.getId());
+		dbProducto.setEstado(estado.STOCK.ordinal());
+		dbProducto.setVenta(null);
+		getEm().getTransaction().commit();
+		}catch (Exception e) {
+			getEm().getTransaction().rollback();
+		}
+		finally
+		{
+			cerrarEntityManager();
+		}
+		
+		
 	}
 	
 }

@@ -1,18 +1,26 @@
 $(document).ready(function()
 {
-	agregarEventos();
+	agregarEventos()
 	cargarComboClientes();
-	cargarTabla();
-	inicioPopUps();
-	//validarRows();
+	cargarTabla(function()
+			{
+				inicioPopUpCli();
+				inicioPopUpConf();
+				eventosTabla();
+				
+			});
+	validaciones();
 });
 
-function inicioPopUps()
+function inicioPopUpConf()
 {
 		$("#divConfirmacion").dialog({
+			resizable: false,
+			height: "auto",
+		     width: 400,
 			autoOpen: false,
 			modal: true,
-			buttons:{
+			buttons: {
 				Aceptar: function()
 				{
 					var datos = {};
@@ -28,18 +36,31 @@ function inicioPopUps()
 								"txtCuponTrj" : $("#txtCuponTrj").val(),
 								"cbTipoTarjetaTrj" : $("#cbTipoTarjetaTrj").val(),
 								}
-					else datos=  {
+					else if($("input[type='radio'][name='tipoPago']:checked").val() === "2")
+					{
+						datos=  {
 								"action":"realizarVenta", 
 								"idCliente": $("#comboClientes").val(), 
-								"formaPago": $("input[type='radio'][name='tipoPago']:checked").val()
-								};
-						$.postData('/NegocioRopa/Ventas', 
-						datos, 
-						function(result)
-						{
-							$("#tablaVentas").DataTable().clear().draw();
-						});
-					$(this).dialog('close');
+								"formaPago": $("input[type='radio'][name='tipoPago']:checked").val(),
+								"paga" : $("#txtPaga").val()
+						}
+					}
+					else
+						datos=  {
+									"action":"realizarVenta", 
+									"idCliente": $("#comboClientes").val(), 
+									"formaPago": $("input[type='radio'][name='tipoPago']:checked").val()
+									};
+					$.postData('/NegocioRopa/Ventas', 
+					datos, 
+					function(result)
+					{
+						$($("#divConfirmacion")).dialog('close');
+						 actualizarTotal()
+						$("#tablaVentas").DataTable().clear().draw();
+					
+					});
+					
 				},
 				Cancelar: function()
 					{
@@ -48,11 +69,59 @@ function inicioPopUps()
 			}
 		});
 		
-		$("#addCliente").dialog(
-				{
-					autoOpen: false
-				});
+		
+		$("#divConfirmacionAgregar").dialog({
+			resizable: false,
+			height: "auto",
+		     width: 400,
+			autoOpen: false,
+			modal: true,
+			buttons: {
+					Aceptar: function()
+					{
+						agregarProducto(),
+						$(this).dialog('close');
+					},
+					Cancelar: function() {
+						$(this).dialog('close');
+					}
+			}
+		});
 }
+function inicioPopUpCli()
+{
+	$("#addCliente").dialog(
+			{
+				autoOpen: false,
+				modal: true,
+				
+				buttons: {
+						 	 Aceptar: function()
+							{
+								$.postData('/NegocioRopa/ABMClientes',
+								{
+									"id": $("#txtID").val(),
+									"nombre": $("#txtNombre").val(),
+									"apellido": $("#txtApellido").val(), 
+									"direccion": $("#txtDireccion").val(),
+									"telefono": $("#txtTelefono").val(),
+									"action": "agregarCliente"
+								}, 
+								function()
+								{
+									cargarComboClientes();
+									$("#addCliente").dialog('close');
+								});
+								
+						},
+							Cancelar : function()
+							{
+								$(this).dialog('close');
+							}
+				}
+			});
+	}
+
 
 function agregarEventos() 
 {   
@@ -61,26 +130,51 @@ function agregarEventos()
 	{
 		//Evito que se ejecute el post del form.
 		e.preventDefault();
-		
-		$.postDataSinExito('/NegocioRopa/Ventas',
-		{
-			"action": "agregarProducto",
-			"id": $("#comboProductos").val()
-		},
-		function()
-		{
-			$("#tablaVentas").DataTable().ajax.reload();
-			actualizarTotal();
-		});
-		
+		$.post('/NegocioRopa/ABMProductos',
+				{
+					"action": "buscarProducto",
+					"idProducto": $("#comboProductos").val()
+				},
+				function(resultado)
+				{	
+					if(resultado.estado === 0)
+					{
+						$("#divConfirmacionAgregar").dialog("open");
+					}
+					else
+					{
+						agregarProducto();
+					}	
+				});
 	});
-	$("#radioTarjeta").change(function()
+	
+
+
+	
+	$(".css-checkbox").change(function()
 		{
-			if($("#radioTarjeta").val() == 3)
+			if($("#radioTarjeta").is(":checked"))
 			{
-				$(".tarjeta").show();
+				$("#tarjeta").show();
+				$("#txtNroTarjetaTrj").focus();
+			}
+			else
+			{
+				$("#tarjeta").hide();
 			}
 		});
+	
+	$(".css-checkbox").change(function(){
+		if($("#radioCtaCte").is(":checked"))
+		{
+			$("#divCtaCte").show();
+		}
+		else
+		{
+			$("#divCtaCte").hide();
+		}
+	});
+	
 	$("#realizarVenta").click(function(){
 		
 		var totalRegistros = $("#tablaVentas").DataTable().page.info().recordsTotal;
@@ -96,7 +190,7 @@ function agregarEventos()
 	
 	$("#addCli").click(function()
 	{
-		$("#addCliente").dialog();
+		$("#addCliente").dialog("open");
 		$("#txtID").empty();
 		$("#txtNombre").empty();
 		$("#txtApellido").empty();
@@ -104,36 +198,29 @@ function agregarEventos()
 		$("#txtTelefono").empty();
 	});
 	
-	
-	$(document).on('click', '#btnCancelarCreate',function()
-	{
-		$("#addCliente").dialog("close");
-	});
-	
-	$(document).on('click', "#btnGuardarCreate", function()
-	{
-		$.postData('/NegocioRopa/ABMClientes',
-		{
-			"id": $("#txtID").val(),
-			"nombre": $("#txtNombre").val(),
-			"apellido": $("#txtApellido").val(), 
-			"direccion": $("#txtDireccion").val(),
-			"telefono": $("#txtTelefono").val(),
-			"action": "agregarCliente"
-		}, 
-		function()
-		{
-			cargarComboClientes();
-			$("#addCliente").hide();
-		});
-	});
-	
 	$(document).on('click', "#btnCerrarMensaje", function()
 	{
 		$("#mensaje").hide("slow");
 	});
 	
-	
+	$("#pswSeg").keyup(function()
+	{
+		$.post('/NegocioRopa/Ventas',{"action": "validaPass", "pswSeg" : $("#pswSeg").val()}, function(resultado)
+		{
+			if(resultado.estado === "true")
+			{
+				$("#realizarVenta").removeAttr("disabled");
+				$("#pswResp").text("");
+				$("#divPswSeg").hide();
+			}
+			else
+			{
+				if($("#pswSeg").val().length >= 4)
+				$("#pswResp").text("La contraseña no es correcta");
+				$("#realizarVenta").attr("disabled", true);
+			}
+		})
+	});
 }
 
 function cargarComboClientes()
@@ -173,29 +260,24 @@ function cargarComboProductos()
 	});
 }
 
-$('#tablaVentas tbody').on( 'click', '.borrarProducto', function() 
-		{
-			var data = $("#tablaVentas").DataTable().row($(this).closest('tr')).data();
-			$.post('/NegocioRopa/Ventas',{"action":"borrarProducto", "idProducto": "\""+data.id+"\""}, function(resultado)
-			{
-				cargarTabla();
-			});
-		});
 
 function actualizarTotal(){
 	$.post('/NegocioRopa/Ventas', { "action": "actualizarTotal" }, function(resultado)
 			{
-				$("#total").text("Total: $"+resultado.tot)
+				$("#total").text(resultado.tot)
+				var importe = resultado.tot;
 				if(resultado.tot < 0)
-					{
-						$("#realizarVenta").attr("disabled", true);
-					} else {
-						$("#realizarVenta").removeAttr("disabled");
-					}
+				{
+					$("#realizarVenta").attr("disabled", true);
+					$("#divPswSeg").show();
+				} else {
+					$("#realizarVenta").removeAttr("disabled");
+					$("#divPswSeg").hide();
+				}
 			});
 }
 
-function cargarTabla(){
+function cargarTabla(callback){
 	$("#tablaVentas").DataTable(
 	{
         info: false,
@@ -209,13 +291,57 @@ function cargarTabla(){
 			 {data: "id"},
 			 {data: "descripcion", bSortable: false},
 			 {data: "precio", bSortable: false},
-			 {data: "estado", visible:false},
-			 {data: null, defaultContent: "<button class='btn btn-danger borrarProducto'>X</button>", bsortable: false}
+			 {data: null, defaultContent: "<button type='button' class='btn btn-danger borrarProducto'>X</button>", bsortable: false},
+			 {data: "estado", visible:false}
 		]
         
     } );
+	
+	callback();
 } 
 
+
+function agregarProducto()
+{
+	$.postDataSinExito('/NegocioRopa/Ventas',
+			{
+				"action": "agregarProducto",
+				"id": $("#comboProductos").val()
+			},
+			function()
+			{
+				$("#tablaVentas").DataTable().ajax.reload();
+				actualizarTotal();
+			});
+}
+
+function eventosTabla()
+{
+	$('#tablaVentas tbody').on( 'click', '.borrarProducto', function(e) 
+			{
+				e.preventDefault();
+				var data = $("#tablaVentas").DataTable().row($(this).closest('tr')).data();
+				$.post('/NegocioRopa/Ventas',{"action":"borrarProducto", "idProducto": data.id}, function(resultado)
+				{
+					actualizarTotal();
+					$("#tablaVentas").DataTable().ajax.reload();
+				});
+			});
+}
+
+function validaciones()
+{
+	var tot = $("#total").text();
+	
+	if(parseFloat(tot) < 0)
+	{
+		$("#realizarVenta").attr("disabled", true);
+		$("#divPswSeg").show();
+	} else {
+		$("#realizarVenta").removeAttr("disabled");
+		$("#divPswSeg").hide();
+	}
+}
 /*function validarRows()
 {
 

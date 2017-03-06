@@ -3,6 +3,7 @@ package entidades;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
 
 import com.google.gson.annotations.Expose;
 
@@ -40,7 +43,22 @@ public class Cliente
 	@Expose
 	private String telefono;
 	
-	@OneToMany(fetch=FetchType.EAGER, mappedBy="cliente")
+	@Expose
+	private float deudaTotal;
+	
+	public float getDeudaTotal() {
+		return deudaTotal;
+	}
+	public void setDeudaTotal(float deudaTotal) {
+		this.deudaTotal = this.deudaTotal + deudaTotal;
+	}
+	public List<Tarjeta> getTarjetas() {
+		return tarjetas;
+	}
+	public void setTarjetas(List<Tarjeta> tarjetas) {
+		this.tarjetas = tarjetas;
+	}
+	@OneToMany(cascade = CascadeType.REFRESH, fetch=FetchType.EAGER, mappedBy="cliente")
 	private List<Venta> ventas;
 	
 	@OneToMany(fetch=FetchType.EAGER, mappedBy="cliente")

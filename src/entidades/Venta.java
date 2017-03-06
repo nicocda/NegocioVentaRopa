@@ -50,8 +50,37 @@ public class Venta
 	@Expose
 	private float importe;
 	
+	@Expose
+	private boolean pagada;
+	
 	@Transient
 	private float deudaPendiente;
+
+	
+	public float getDeudaPendiente() {
+		return deudaPendiente;
+	}
+	public void setDeudaPendiente(float deudaPendiente) {
+		this.deudaPendiente = deudaPendiente;
+	}
+	public boolean isPagada() {
+		return pagada;
+	}
+	public void setPagada(boolean pagada) {
+		this.pagada = pagada;
+	}
+
+	@ManyToOne(optional=true)
+	@JoinColumn(name="idSucursal")
+	private Sucursal sucursal;
+	
+
+	public Sucursal getSucursal() {
+		return sucursal;
+	}
+	public void setSucursal(Sucursal sucursal) {
+		this.sucursal = sucursal;
+	}
 	
 
 	@ManyToOne(optional=true)
@@ -78,7 +107,7 @@ public class Venta
 	private List<Cuota> cuotas = new ArrayList<Cuota>();
 	
 	@Expose
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="venta")
+	@OneToMany(cascade = CascadeType.REFRESH, mappedBy="venta")
 	private List<Producto> productos = new ArrayList<Producto>();
 	
 	public List<Producto> getProductos() 
@@ -188,12 +217,7 @@ public class Venta
 	public void setCuotas(List<Cuota> cuotas) {
 		this.cuotas = cuotas;
 	}
-	public float getDeudaPendiente() {
-		return deudaPendiente;
-	}
-	public void setDeudaPendiente(float deudaPendiente) {
-		this.deudaPendiente = deudaPendiente;
-	}
+
 
 
 

@@ -7,15 +7,8 @@ import entidades.Venta;
 import entidades.Cuota;
 import entidades.Precio;
 import excepciones.RespuestaServidor;
-import util.UtilidadesWeb;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-
-import com.mysql.fabric.xmlrpc.base.Array;
-import com.sun.javafx.webkit.UtilitiesImpl;
 
 import datos.*;
 
@@ -31,12 +24,30 @@ public class ControladorTransaccion {
 		}
 		return usu; 	
 	}
+	private static String contraseñaAdministracion = "1234";
+	
+	public static void definirContraseñaAdministracion(String pass)
+	{
+		contraseñaAdministracion = pass;
+	}
+	public static boolean validarContraseñaAdministracion(String pass)
+	{
+		if(contraseñaAdministracion.equals(pass))
+			return true;
+		else
+			return false;
+		
+	}
 	
 	public static Producto buscarProducto (String id)
 	{
 		return CatalogoProductos.buscarProducto(id);
 	}
-
+	
+	public static void devolverProducto(Producto p)
+	{
+		CatalogoProductos.devolverProducto(p);
+	}
 	public static Cliente buscarCliente(int idCliente) {
 		
 		return CatalogoClientes.buscarCliente(idCliente);
