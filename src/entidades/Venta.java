@@ -1,5 +1,6 @@
 package entidades;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,7 +31,7 @@ public class Venta
 	private int id;
 		
 	@Expose
-	private Date fechaVenta;
+	private Timestamp fechaVenta;
 	
 	@Expose
 	private boolean isReserva;
@@ -42,7 +43,7 @@ public class Venta
 	private float seña;
 	
 	@Expose
-	private Date fechaCaducidad;
+	private Timestamp fechaCaducidad;
 	
 	@Expose
 	private int formaPago;
@@ -147,11 +148,11 @@ public class Venta
 	{
 		this.id = id;
 	}
-	public Date getFechaVenta() 
+	public Timestamp getFechaVenta() 
 	{
 		return fechaVenta;
 	}
-	public void setFechaVenta(Date fechaVenta) 
+	public void setFechaVenta(Timestamp fechaVenta) 
 	{
 		this.fechaVenta = fechaVenta;
 	}
@@ -179,11 +180,11 @@ public class Venta
 	{
 		this.seña = seña;
 	}
-	public Date getFechaCaducidad() 
+	public Timestamp getFechaCaducidad() 
 	{
 		return fechaCaducidad;
 	}
-	public void setFechaCaducidad(Date fechaCaducidad) 
+	public void setFechaCaducidad(Timestamp fechaCaducidad) 
 	{
 		this.fechaCaducidad = fechaCaducidad;
 	}

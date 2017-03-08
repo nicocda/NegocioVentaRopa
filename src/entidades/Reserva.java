@@ -1,19 +1,20 @@
 package entidades;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class Reserva extends Venta
 {
 	//Fields
 	private float importe;
-	private Date fechaCaducidad;
+	private Timestamp fechaCaducidad;
 	
 	//Constructores
 	public Reserva()
 	{
 	}
 	
-	public Reserva(float importe, Date fechaCaducidad)
+	public Reserva(float importe, Timestamp fechaCaducidad)
 	{
 		super();
 		this.setImporte(importe);
@@ -21,11 +22,11 @@ public class Reserva extends Venta
 	}
 	
 	//Getters - Setters
-	public Date getFechaCaducidad() 
+	public Timestamp getFechaCaducidad() 
 	{
 		return fechaCaducidad;
 	}
-	public void setFechaCaducidad(Date fechaCaducidad) 
+	public void setFechaCaducidad(Timestamp fechaCaducidad) 
 	{
 		this.fechaCaducidad = fechaCaducidad;
 	}

@@ -13,8 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-
 import com.google.gson.annotations.Expose;
 
 @Entity
@@ -45,6 +43,8 @@ public class Cliente
 	
 	@Expose
 	private float deudaTotal;
+	
+	private boolean activo;
 	
 	public float getDeudaTotal() {
 		return deudaTotal;
@@ -116,5 +116,11 @@ public class Cliente
 	public ArrayList<Venta> getVentasArrayList()
 	{
 		return new ArrayList<Venta>(ventas);
+	}
+	public boolean isActivo() {
+		return activo;
+	}
+	public void setActivo(boolean activo) {
+		this.activo = activo;
 	}
 }
