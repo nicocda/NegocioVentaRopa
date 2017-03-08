@@ -218,11 +218,14 @@ public class Ventas extends HttpServlet {
 		
 		if(pro == null)
 			sr.addError("El producto ingresado no existe.");
-		
-		if (pro != null)
+		else
 		{
 			if(pro.getEstado() == estado.SEÑADO.ordinal())
 				sr.addError("El producto ingresado está señado.");
+			
+			if(pro.getEstado() == estado.CONDICIONAL.ordinal())
+				sr.addError("El producto ingresado no se encuentra en el local, ya que esta en modo condicional.");
+			
 		
 			boolean enLista = false;
 			for(Producto p : venta.getProductos())

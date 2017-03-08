@@ -16,11 +16,12 @@
         <class>entidades.Usuario</class>
         <class>entidades.EventLog</class>
         <class>entidades.Configuracion</class>
+        <class>entidades.Cuota</class>
         <properties>
 			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
 			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/ropa" />
 			<property name="hibernate.connection.username" value="root" />
-			<property name="hibernate.connection.password" value="12@LeoPeretti" />
+			<property name="hibernate.connection.password" value="root" />
 			<property name="hibernate.archive.autodetection" value="class"/>
             <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.format_sql" value="true"/>

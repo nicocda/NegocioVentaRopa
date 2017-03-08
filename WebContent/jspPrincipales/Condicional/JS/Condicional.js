@@ -41,6 +41,23 @@ function inicioPopUpConf()
 					}
 			}
 		});
+		$("#divConfirmacionAgregar").dialog({
+			resizable: false,
+			height: "auto",
+		     width: 400,
+			autoOpen: false,
+			modal: true,
+			buttons: {
+					Aceptar: function()
+					{
+						agregarProducto(),
+						$(this).dialog('close');
+					},
+					Cancelar: function() {
+						$(this).dialog('close');
+					}
+			}
+		});
 }
 
 
@@ -51,7 +68,6 @@ function agregarEventos()
 	$.fn.dataTable.ext.errMode = 'none';
 	$("#agregar").click(function(e)
 	{
-		//Evito que se ejecute el post del form.
 		e.preventDefault();
 		$.post('/NegocioRopa/ABMProductos',
 				{
@@ -60,21 +76,15 @@ function agregarEventos()
 				},
 				function(resultado)
 				{	
-					$.postDataSinExito('/NegocioRopa/Condicional',
-							{
-								"action": "agregarProducto",
-								"id": $("#comboProductos").val()
-							},
-							function()
-							{
-								$("#tablaVentas").DataTable().ajax.reload();
-								actualizarTotal();
-							});
+					if(resultado.estado ===  3)
+					{
+						$("#divConfirmacionAgregar").dialog("open");
+					}
+					else
+					{
+						agregarProducto();
+					}	
 				});
-	
-		
-		
-		
 	});
 	
 
@@ -118,6 +128,19 @@ function cargarComboClientes()
 		});
 	});
 }
+function agregarProducto()
+{
+	$.postDataSinExito('/NegocioRopa/Condicional',
+			{
+				"action": "agregarProducto",
+				"id": $("#comboProductos").val()
+			},
+			function()
+			{
+				$("#tablaVentas").DataTable().ajax.reload();
+				actualizarTotal();
+			});
+}
 function cargarComboProductos()
 {
 	$.post('/NegocioRopa/Condicional', { "action": "recargarCombo" }, function(resultado)
@@ -140,7 +163,7 @@ function cargarComboProductos()
 function actualizarTotal(){
 	$.post('/NegocioRopa/Condicional', { "action": "actualizarTotal" }, function(resultado)
 			{
-				$("#total").text("Total: $"+resultado.tot)
+				$("#total").text(resultado.tot)
 			});
 }
 
@@ -177,6 +200,7 @@ function eventosTabla()
 				$.post('/NegocioRopa/Condicional',{"action":"borrarProducto", "idProducto": data.id}, function(resultado)
 				{
 					$("#tablaVentas").DataTable().ajax.reload();
+					actualizarTotal();
 				});
 			});
 }

@@ -39,8 +39,7 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 					
 					<td style="text-align: center"> <button style= "width:60%" id="agregar" class="btn btn-info">Agregar</button></td>
 					<td><select id="comboProductos" style="width: 80%" class="js-example-basic-single"></select></td>
-					<td><b id="total">Total: $<%if(prestamo != null){%><%=prestamo.getImporte() %><%} else { %><label>0</label><%} %></b>
-					</td>
+					<td><b>Total: $</b><label id="total"><%=prestamo.getImporte() %></label></td>
 				<tr>
 			</table>
 		</div>
@@ -56,6 +55,11 @@ if ((Usuario)session.getAttribute("usuario")!= null && ((Usuario)session.getAttr
 	</div>
 </div>
 
+<div id="divConfirmacionAgregar" hidden="hidden" title="El producto se encuentra en condicional">
+	<div style="text-align: center;">
+	<p id="txtConfirmacion"> ¿Va a devolver el producto ingresado?</p>
+	</div>
+</div>
 <%}
 else
 {%>

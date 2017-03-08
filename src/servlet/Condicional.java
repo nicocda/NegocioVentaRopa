@@ -74,7 +74,7 @@ public class Condicional extends HttpServlet {
 			prestamo.setFechaVenta(today.getTime());
 			prestamo.setPrestamo(true);
 			for(Producto p : prestamo.getProductos())
-				if(p.getEstado() == Producto.estado.VENDIDO.ordinal())
+				if(p.getEstado() == Producto.estado.CONDICIONAL.ordinal())
 					ControladorTransaccion.devolverProducto(p);
 			try{
 				ControladorTransaccion.registrarVenta(prestamo);}
@@ -115,15 +115,7 @@ public class Condicional extends HttpServlet {
 			{
 				prestamo.addProducto(pro);
 				
-				float importe= 0;
-				for(Producto p : prestamo.getProductos())
-				{
-					if(p.getEstado() == Producto.estado.STOCK.ordinal())
-						importe= importe + p.getPrecio().getPrecio();
-					
-				}
-				prestamo.setImporte(importe);
-				session.setAttribute("prestamo", prestamo);
+				setearImporte(prestamo,session);
 				
 				response.setContentType("json");
 			    response.setCharacterEncoding("UTF-8");
@@ -161,6 +153,7 @@ public class Condicional extends HttpServlet {
 			String idProducto = request.getParameter("idProducto");
 			Producto pr = ControladorTransaccion.buscarProducto(idProducto);
 			Prestamo prestamoActual = (Prestamo) session.getAttribute("prestamo");
+			prestamoActual.setImporte(setearImporte(prestamoActual, session));
 			ArrayList<Producto> productosEnPrestamo = prestamoActual.getProductosArrayList();
 			prestamoActual.setProductos(removeProducto(productosEnPrestamo, pr));
 			session.setAttribute("prestamo", prestamoActual);
@@ -168,33 +161,50 @@ public class Condicional extends HttpServlet {
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(JsonUtil.toJson(prestamoActual.getProductosArrayList()));
 		}
-	}
 	
+}	
+	private float setearImporte(Prestamo prestamo, HttpSession session) 
+	{
+		float importe= 0;
+		for(Producto p : prestamo.getProductos())
+		{
+			if(p.getEstado() == Producto.estado.STOCK.ordinal())
+				importe= importe + p.getPrecio().getPrecio();
+			else
+				importe= importe - p.getPrecio().getPrecio();
+			
+		}
+		prestamo.setImporte(importe);
+		session.setAttribute("prestamo", prestamo);
+		
+		return importe;
+	}
+
+
 	private RespuestaServidor validarProducto(Producto pro, Prestamo prestamo)
 	{
 		RespuestaServidor sr = new RespuestaServidor();
 	
 		if(pro == null)
 			sr.addError("El producto ingresado no existe.");
-		
 		else
 		{
 			if(pro.getEstado() == estado.SEÑADO.ordinal())
 				sr.addError("El producto ingresado está señado.");
 			
-			if(pro.getEstado() == estado.CONDICIONAL.ordinal())
-				sr.addError("El producto ingresado no se encuentra en el local, ya que esta en modo condicional.");
+			if(pro.getEstado() == estado.VENDIDO.ordinal())
+				sr.addError("El producto ingresado ya fue vendido.");
 		
 			boolean enLista = false;
 			if(prestamo.getProductosArrayList() != null)
 			{
-			for(Producto p : prestamo.getProductos())
-			{
-				if(p.getId().equals(pro.getId()))
-					enLista = true;
-			}
-			if(enLista)
-				sr.addError("El producto seleccionado ya fue ingresado en esta lista");
+				for(Producto p : prestamo.getProductos())
+				{
+					if(p.getId().equals(pro.getId()))
+						enLista = true;
+				}
+				if(enLista)
+					sr.addError("El producto seleccionado ya fue ingresado en esta lista");
 			}
 		}
 		return sr;
