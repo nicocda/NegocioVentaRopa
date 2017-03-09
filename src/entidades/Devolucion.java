@@ -12,35 +12,30 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "devolucion")
 public class Devolucion
 {
-	//Fields
-	@Id
 	private int id;
 	
-	@Column(name = "fechaDevolucion")
 	private Date fechaDevolucion;
 	
-	@ManyToOne(optional=true)
-	@JoinColumn(name = "idVenta")
 	private Venta venta;
 	
-	@OneToMany(mappedBy = "devolucion")
 	private List<Producto> productos;
 	
-	
-	public Venta getVenta() {
+	public Venta getVenta()
+	{
 		return venta;
 	}
-	public void setVenta(Venta venta) {
+	public void setVenta(Venta venta)
+	{
 		this.venta = venta;
 	}
-	public List<Producto> getProductos() {
+	public List<Producto> getProductos()
+	{
 		return productos;
 	}
-	public void setProductos(List<Producto> productos) {
+	public void setProductos(List<Producto> productos)
+	{
 		this.productos = productos;
 	}
 	public int getId() 

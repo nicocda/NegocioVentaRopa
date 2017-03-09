@@ -9,6 +9,7 @@ import entidades.Precio;
 import excepciones.RespuestaServidor;
 import java.util.ArrayList;
 import java.util.Date;
+import datosTODOparsear.CatalogoUsuarios;
 
 import datos.*;
 
@@ -17,7 +18,7 @@ public class ControladorTransaccion {
 	public Usuario buscarUsuario(String id, String pass)
 	{	
 		Usuario usu = null;
-		usu = CatalogoUsuarios.buscarUsuario(id);
+		usu = datos.CatalogoUsuarios.buscarUsuario(id);
 		if(usu.getPassword() != pass)
 		{
 			usu = null;
@@ -77,7 +78,7 @@ public class ControladorTransaccion {
 		ArrayList<Venta> ventas = CatalogoVentas.buscarVentasCliente(idClie);
 		for(Venta v : ventas)
 		{
-			if(v.getFormaPago() == Venta.formaPago.CTACORRIENTE.ordinal())
+			if(v.getFormaPago() == Venta.formaPago.CTACORRIENTE.ordinal() && v.isPagada() == false && v.getImporte() != 0)
 			{
 				int cantPagado = 0;
 				ArrayList<Cuota> cuotas = CatalogoCuotas.buscarCuotas(v);
@@ -107,6 +108,10 @@ public class ControladorTransaccion {
 	public static Venta buscarVenta(int idVenta)
 	{
 		return CatalogoVentas.buscarVenta(idVenta);
+	}
+	public static String setearMonto(int monto) {
+		
+		return CatalogoClientes.setearMonto(monto);
 	}
 
 	public static void guardarPrecios(float porcentaje, String[] productos, Date fechaInicio, Date fechaFin) throws RespuestaServidor
@@ -170,5 +175,10 @@ public class ControladorTransaccion {
 			sr.addError("Debe ingresar al menos un producto.");
 				
 		return sr;
+	}
+	public static Usuario validarLogueo(String usuario, String pass) {
+		
+		return CatalogoUsuarios.validarLogueo(usuario, pass);
+		
 	}
 }

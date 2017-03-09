@@ -86,6 +86,37 @@ public class CatalogoClientes extends CatalogoBase
 		
 		return sr;
 	}
+
+	public static String setearMonto(int monto) {
+		
+		
+		return null;
+	}
+
+	public static void actualizarDeuda(Cliente clie) {
+		
+		abrirEntityManager();
+		try
+		{
+			getEm().getTransaction().begin();
+			
+			Cliente clienteDB = getEm().find(Cliente.class, clie.getId());
+			clienteDB.setVentas(clie.getVentasArrayList());
+			clienteDB.setDeudaTotal(clie.getDeudaTotal());
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			if(getEm().getTransaction().isActive())
+			getEm().getTransaction().rollback();
+		}
+		finally
+		{
+			getEm().getTransaction().commit();
+			cerrarEntityManager();
+		}
+		
+	}
 }
 
 

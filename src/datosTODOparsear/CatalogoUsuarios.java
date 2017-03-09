@@ -252,5 +252,38 @@ public class CatalogoUsuarios extends CatalogoBase
 		
 		return rs;
 	}
+	
+	public static Usuario validarLogueo(String username, String pass) {
+		
+		ResultSet rs = null;
+		PreparedStatement sentencia = null;
+		
+		Usuario usuario = null;
+		String sql = "SELECT * FROM usuario WHERE usuario = ? AND password = ?";
+		try
+		{
+			sentencia = prepareStatement(sql);
+			sentencia.setString(1, username);
+			sentencia.setString(2, pass);
+			
+			rs = sentencia.executeQuery();
+			
+			if(rs.next())
+			{
+				usuario = setUsuario(rs);			
+			}
+		}
+		catch(SQLException ex)
+		{
+			
+		}
+		finally
+		{
+			cerrarStatement(sentencia);
+		}	
+		return usuario;
+	}
 	//endregion
+
+	
 }

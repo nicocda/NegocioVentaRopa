@@ -8,12 +8,6 @@ import excepciones.RespuestaServidor;
 
 public class ControladorABM 
 {
-	
-	
-	
-	
-	
-	
 	//CLIENTE
 	public static Cliente buscarCliente(int idCliente) throws RespuestaServidor
 	{
@@ -33,6 +27,10 @@ public class ControladorABM
 		cliente.setTelefono(telefono);
 		cliente.setDireccion(direccion);
 		CatalogoClientes.guardarCliente(cliente);
+	}
+	public static void actualizarDeuda(Cliente clie) {
+		
+		CatalogoClientes.actualizarDeuda(clie);
 	}
 	
 	//PRODUCTO
@@ -127,16 +125,6 @@ public class ControladorABM
 		return Character.toString(tipo2).concat(Character.toString(subTipo2)).concat(idNuevo);
 	}
 	//Usuario
-	public static Usuario validarUsuario(String nombreUsuario, String password)
-	{
-		Usuario usuario = CatalogoUsuarios.buscarUsuario(nombreUsuario);
-		if(usuario != null)
-		{
-			if(usuario.getPassword().equals(password))
-					return usuario;
-		}
-		return null;
-	}
 	public static void guardarUsuario(String nombreUsuario, String password, String nombreApellido, String email, int tipoUsuario, int idSucursal) throws RespuestaServidor
 	{
 		Usuario usuario = new Usuario();
@@ -184,4 +172,5 @@ public class ControladorABM
 	{
 		return CatalogoConfiguracion.buscarConfiguracion();
 	}
+	
 }

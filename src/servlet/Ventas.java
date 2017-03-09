@@ -92,7 +92,8 @@ public class Ventas extends HttpServlet
 				
 				float paga = Float.parseFloat(request.getParameter("paga"));
 				vta.setDeudaPendiente(vta.getImporte()-paga);
-				cli.setDeudaTotal(vta.getImporte()-paga);
+				float deudaAnterior = cli.getDeudaTotal();
+				cli.setDeudaTotal(deudaAnterior+vta.getImporte()-paga);
 				//TODO ANOTAR DEUDA Y GENERAR PAGO EN CASO QUE PAGUE ALGO
 			}
 			if(formaPago.equals("1"))

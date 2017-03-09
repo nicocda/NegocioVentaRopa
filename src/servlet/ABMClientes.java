@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,8 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import entidades.Cliente;
+import entidades.Venta;
 import excepciones.RespuestaServidor;
 import negocio.ControladorABM;
+import negocio.ControladorTransaccion;
 import util.JsonResponses;
 import util.JsonUtil;
 import util.Tipos;
@@ -48,6 +52,43 @@ public class ABMClientes extends HttpServlet
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(JsonUtil.toJson(ControladorABM.buscarTodosClientes()));
 		}
+		else if (action.equals("saldarDeuda"))
+		{
+			float monto = Float.parseFloat(request.getParameter("monto"));
+			int idCliente = Tipos.esEntero(request.getParameter("idCliente")) ? Integer.parseInt(request.getParameter("idCliente")) : -1;
+			Cliente clie = null;
+			try
+			{
+				clie = ControladorABM.buscarCliente(idCliente);
+				float deuda = clie.getDeudaTotal();
+				clie.setDeudaTotal(deuda - monto);
+			}
+			catch (RespuestaServidor e)
+			{
+				e.printStackTrace();
+			}
+			ArrayList<Venta> ventasDeCliente = clie.getVentasArrayList();
+			for(Venta v : ventasDeCliente)
+			{
+				if(v.getFormaPago() == 2)
+				{
+					if(monto > 0)
+					{
+						if(v.getDeudaPendiente() > monto)
+						{
+							v.setDeudaPendiente(v.getDeudaPendiente() - monto) ;
+						}
+						else
+						{
+							v.setDeudaPendiente(0);
+							v.setPagada(true);
+						}
+					}
+				}
+			}
+			ControladorABM.actualizarDeuda(clie);
+		}
+		
 	}
 	
 	private void agregarCliente(HttpServletRequest request, HttpServletResponse response)
