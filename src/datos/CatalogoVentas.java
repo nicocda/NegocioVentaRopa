@@ -31,7 +31,7 @@ public class CatalogoVentas  extends CatalogoBase
 					}
 			for(Producto p : vta.getProductosArrayList())
 			{
-				Producto dbProducto = getEm().find(Producto.class, p.getId());
+				Producto dbProducto = getEm().find(Producto.class, p.getCodigoProducto());
 				if(p.getEstado() == Producto.estado.STOCK.ordinal())
 				{
 					

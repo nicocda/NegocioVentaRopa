@@ -1,6 +1,7 @@
 package consola;
 
 import datosTODOparsear.CatalogoClientes;
+import datosTODOparsear.CatalogoProductos;
 import datosTODOparsear.CatalogoUsuarios;
 import entidades.Cliente;
 import entidades.Usuario;
@@ -21,7 +22,10 @@ public class TestConsola
 		//testListarUsuarios();
 		//testListarUsuariosPorPagina(1, 2);
 		//testGuardarUsuario("test");
-		testContarUsuarios();
+		//testContarUsuarios();
+		
+		testBuscarProducto(1);
+		testBuscarProductos();
 	}	
 	
 	//region Privados
@@ -149,6 +153,30 @@ public class TestConsola
 	private static void testContarUsuarios()
 	{
 		System.out.println(CatalogoUsuarios.contarUsuarios());
+	}
+	
+	private static void testBuscarProducto(int idProducto)
+	{
+		try
+		{
+			System.out.println(Json.producto(CatalogoProductos.obtenerProducto(idProducto)));
+		}
+		catch (RespuestaServidor e)
+		{
+			System.out.println(e.toString());
+		}
+	}
+	
+	private static void testBuscarProductos()
+	{
+		try
+		{
+			System.out.println(Json.listarProductos(CatalogoProductos.obtenerProductos()));
+		}
+		catch (RespuestaServidor e)
+		{
+			System.out.println(e.toString());
+		}
 	}
 	//endregion
 }

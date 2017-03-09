@@ -44,7 +44,7 @@ public class CatalogoProductos extends CatalogoBase
 		abrirEntityManager();
 		try
 		{
-			Producto dbProducto = getEm().find(Producto.class, producto.getId());
+			Producto dbProducto = getEm().find(Producto.class, producto.getCodigoProducto());
 			
 			getEm().getTransaction().begin();
 			
@@ -136,7 +136,7 @@ public class CatalogoProductos extends CatalogoBase
 	{
 		RespuestaServidor sr = new RespuestaServidor();
 		
-		if(!(producto.getId() != null && !producto.getId().isEmpty()))
+		if(!(producto.getCodigoProducto() != null && !producto.getCodigoProducto().isEmpty()))
 			sr.addError("Ocurrió un error interno. El id es obligatorio.");
 		
 		if(!(producto.getDescripcion() != null && !producto.getDescripcion().isEmpty()))
@@ -174,7 +174,7 @@ public class CatalogoProductos extends CatalogoBase
 		try
 		{
 			
-		Producto dbProducto = getEm().find(Producto.class, p.getId());
+		Producto dbProducto = getEm().find(Producto.class, p.getCodigoProducto());
 		dbProducto.setEstado(estado.STOCK.ordinal());
 		dbProducto.setVenta(null);
 		getEm().getTransaction().commit();

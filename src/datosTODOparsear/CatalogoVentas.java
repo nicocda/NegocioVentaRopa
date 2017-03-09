@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import conexion.Conexion;
+import constantes.EstadoProducto;
 import entidades.Producto;
 import entidades.Venta;
 import excepciones.RespuestaServidor;
@@ -64,12 +65,11 @@ public class CatalogoVentas extends CatalogoBase
 			sentencia.setFloat(7, venta.getImporte()); // <- esto no es calculable?
 			sentencia.setInt(8, venta.getCliente().getId());
 			
-			/*
 			for (Producto p : venta.getProductosArrayList())
 			{
-				CatalogoProducto.guardarProducto(p);
+				p.setEstado(EstadoProducto.VENDIDO.getEstado());
+				CatalogoProductos.guardarProducto(p);
 			}
-			*/
 			
 			sentencia.executeUpdate();
 		}

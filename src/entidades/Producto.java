@@ -1,5 +1,6 @@
 package entidades;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,9 @@ public class Producto
 	@Id
 	@Column(name = "id")
 	@Expose
-	private String id;
+	private int id;
+	
+	private String codigoProducto;
 	
 	@Expose
 	@Column(name = "descripcion")
@@ -80,14 +83,14 @@ public class Producto
 	{
 		return descripcion;
 	}
-	public String getId() 
+	public String getCodigoProducto() 
 	{
-		return id;
+		return codigoProducto;
 	}
 
-	public void setId(String id)
+	public void setCodigoProducto(String codigoProducto)
 	{
-		this.id = id;
+		this.codigoProducto = codigoProducto;
 	}
 	
 	public void setDescripcion(String descripcion)
@@ -126,16 +129,46 @@ public class Producto
 	
 	public Precio getPrecio() 
 	{
-		return precio;
+		if (this.precios == null || this.precios.isEmpty())
+			return null;
+		
+		Precio maxPrecio = new Precio();
+		
+		for (Precio precio : this.precios)
+		{
+			if (maxPrecio.getFecha() == null || precio.getFecha().after(maxPrecio.getFecha()))
+				maxPrecio = precio;
+		}
+		
+		return maxPrecio;
 	}
 	public void setPrecio(Precio precio) 
 	{
+		this.precio = precio;
+	}
+	public void setPrecio(float cantidad)
+	{
+		Precio precio = new Precio();
+		
+		precio.setPrecio(cantidad);
+		precio.setFecha(new Timestamp(System.currentTimeMillis()));
+		
 		this.precio = precio;
 	}
 	public void addPrecio(Precio precio)
 	{
 		this.precios.add(precio);
 		precio.setProducto(this);
+	}
+	
+	public void setId(int id)
+	{
+		this.id = id;
+	}
+	
+	public int getId ()
+	{
+		return this.id;
 	}
 	
 	//Enums

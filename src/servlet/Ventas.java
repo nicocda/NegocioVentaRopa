@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -101,9 +102,8 @@ public class Ventas extends HttpServlet
 			Usuario usu = (Usuario) session.getAttribute("usuario");
 			vta.setSucursal(usu.getSucursal());
 			vta.setCliente(cli);
-			Calendar today = Calendar.getInstance();
-			today.set(Calendar.HOUR_OF_DAY, 0);
-			vta.setFechaVenta(today.getTime());
+
+			vta.setFechaVenta(new Timestamp(System.currentTimeMillis()));
 			vta.setFormaPago(Integer.parseInt(formaPago));
 			
 			//Devuelvo los productos que sean devolucion
@@ -224,9 +224,7 @@ public class Ventas extends HttpServlet
 			vta.setCliente(cliente);
 			
 			// Le seteo fecha actual a la venta.
-			Calendar today = Calendar.getInstance();
-			today.set(Calendar.HOUR_OF_DAY, 0);
-			vta.setFechaVenta(today.getTime());
+			vta.setFechaVenta(new Timestamp(System.currentTimeMillis()));
 			vta.setFormaPago(Integer.parseInt(formaPago));
 			
 			try
@@ -294,7 +292,7 @@ public class Ventas extends HttpServlet
 			boolean enLista = false;
 			for(Producto p : venta.getProductos())
 			{
-				if(p.getId().equals(pro.getId()))
+				if(p.getCodigoProducto().equals(pro.getCodigoProducto()))
 					enLista = true;
 			}
 			if(enLista)
@@ -307,7 +305,7 @@ public class Ventas extends HttpServlet
 	{
 		for(Producto pr : productos )
 		{
-			if(pr.getId().equals(p.getId()))
+			if(pr.getCodigoProducto().equals(p.getCodigoProducto()))
 			{
 				productos.remove(pr);
 				return productos;

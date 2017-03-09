@@ -64,9 +64,9 @@ public class JsonResponses
 		String rsp = "[";
 	    for(int i=0;i<productos.size()-1;i++)
 	    {
-	    	rsp= rsp + "{\"id\":\"" + productos.get(i).getId()+"\",\"descripcion\":\"" + productos.get(i).getDescripcion() + "\",\"precio\":\"" + productos.get(i).getPrecio().getPrecio() +"\", \"estado\": \"" + estado.values()[productos.get(i).getEstado()].name() +"\"},";
+	    	rsp= rsp + "{\"id\":\"" + productos.get(i).getCodigoProducto()+"\",\"descripcion\":\"" + productos.get(i).getDescripcion() + "\",\"precio\":\"" + productos.get(i).getPrecio().getPrecio() +"\", \"estado\": \"" + estado.values()[productos.get(i).getEstado()].name() +"\"},";
 	    }
-	    rsp= rsp + "{\"id\":\"" + productos.get(productos.size()-1).getId()+"\",\"descripcion\":\"" + productos.get(productos.size()-1).getDescripcion() + "\",\"precio\":\"" + productos.get(productos.size()-1).getPrecio().getPrecio() +"\", \"estado\": \"" + estado.values()[productos.get(productos.size()-1).getEstado()].name() +"\"}]";
+	    rsp= rsp + "{\"id\":\"" + productos.get(productos.size()-1).getCodigoProducto()+"\",\"descripcion\":\"" + productos.get(productos.size()-1).getDescripcion() + "\",\"precio\":\"" + productos.get(productos.size()-1).getPrecio().getPrecio() +"\", \"estado\": \"" + estado.values()[productos.get(productos.size()-1).getEstado()].name() +"\"}]";
 	    return rsp;
 	}
 	
@@ -79,9 +79,9 @@ public class JsonResponses
 		String rsp = "[";
 	    for(int i=0;i<productos.size()-1;i++)
 	    {
-	    	rsp= rsp + "{\"id\": \"" + productos.get(i).getId()+"\", \"descripcion\": \"" + productos.get(i).getDescripcion() + "\", \"precio\": \"" + productos.get(i).getPrecio().getPrecio() +"\", \"estado\": \"" + estado.values()[productos.get(i).getEstado()].name() + "\"},";
+	    	rsp= rsp + "{\"id\": \"" + productos.get(i).getCodigoProducto()+"\", \"descripcion\": \"" + productos.get(i).getDescripcion() + "\", \"precio\": \"" + productos.get(i).getPrecio().getPrecio() +"\", \"estado\": \"" + estado.values()[productos.get(i).getEstado()].name() + "\"},";
 	    }
-	    rsp= rsp + "{\"id\": \"" + productos.get(productos.size()-1).getId()+"\", \"descripcion\": \"" + productos.get(productos.size()-1).getDescripcion() + "\", \"precio\": \"" + productos.get(productos.size()-1).getPrecio().getPrecio() +"\", \"estado\": \"" + estado.values()[productos.get(productos.size()-1).getEstado()].name() +"\"}]";
+	    rsp= rsp + "{\"id\": \"" + productos.get(productos.size()-1).getCodigoProducto()+"\", \"descripcion\": \"" + productos.get(productos.size()-1).getDescripcion() + "\", \"precio\": \"" + productos.get(productos.size()-1).getPrecio().getPrecio() +"\", \"estado\": \"" + estado.values()[productos.get(productos.size()-1).getEstado()].name() +"\"}]";
 	    return rsp;
 		}
 	}
@@ -155,9 +155,9 @@ public class JsonResponses
 			String rsp = "[";
 		    for(int i=0;i<productos.size()-1;i++)
 		    {
-		    	rsp= rsp + "{\"id\": \"" + productos.get(i).getId()+"\", \"descripcion\": \"" + productos.get(i).getDescripcion() + "\", \"precio\": \"" + productos.get(i).getPrecio().getPrecio() +"\", \"estado\": \"" + estado.values()[productos.get(i).getEstado()].name() + "\"},";
+		    	rsp= rsp + "{\"id\": \"" + productos.get(i).getCodigoProducto()+"\", \"descripcion\": \"" + productos.get(i).getDescripcion() + "\", \"precio\": \"" + productos.get(i).getPrecio().getPrecio() +"\", \"estado\": \"" + estado.values()[productos.get(i).getEstado()].name() + "\"},";
 		    }
-		    rsp= rsp + "{\"id\": \"" + productos.get(productos.size()-1).getId()+"\", \"descripcion\": \"" + productos.get(productos.size()-1).getDescripcion() + "\", \"precio\": \"" + productos.get(productos.size()-1).getPrecio().getPrecio() +"\", \"estado\": \"" + estado.values()[productos.get(productos.size()-1).getEstado()].name() +"\"}]";
+		    rsp= rsp + "{\"id\": \"" + productos.get(productos.size()-1).getCodigoProducto()+"\", \"descripcion\": \"" + productos.get(productos.size()-1).getDescripcion() + "\", \"precio\": \"" + productos.get(productos.size()-1).getPrecio().getPrecio() +"\", \"estado\": \"" + estado.values()[productos.get(productos.size()-1).getEstado()].name() +"\"}]";
 
 		    return rsp;
 		}
@@ -170,7 +170,7 @@ public class JsonResponses
 		if (producto != null)
 		{
 			json = json + "{";
-			json = json + "\"codigo\": \"" + producto.getId() + "\", ";
+			json = json + "\"codigo\": \"" + producto.getCodigoProducto() + "\", ";
 			json = json + "\"descripcion\": \"" + producto.getDescripcion() + "\", ";
 			json = json + "\"precioActual\": " + producto.getPrecio().getPrecio() + ", ";
 			json = json + "\"fechaCambio\": \"" + producto.getPrecio().getFecha() + "\"";

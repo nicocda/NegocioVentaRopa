@@ -3,6 +3,7 @@ package json;
 import java.util.ArrayList;
 
 import entidades.Cliente;
+import entidades.Producto;
 import entidades.Usuario;
 
 public class Json 
@@ -78,6 +79,48 @@ public class Json
 			count ++;
 			
 			if (count < usuarios.size())
+				output = output + ", ";
+		}
+		
+		output = output + "]}";
+		
+		return output;
+	}
+	//endregion
+
+	//region productos
+	public static String producto(Producto producto)
+	{
+		String output = "{";
+		output = output + "\"descripcion\":\"" + producto.getDescripcion() + "\"";
+		output = output + ", ";
+		output = output + "\"codigoProducto\":\"" + producto.getCodigoProducto() + "\"";
+		output = output + ", ";
+		output = output + "\"estado\":\"" + producto.getEstado() + "\"";
+		output = output + ", ";
+		output = output + "\"idSucursal\":\"" + producto.getIdSucursal() + "\"";
+		
+		if (producto.getPrecio() != null)
+			output = ", " + output + "\"precio\":\"" + producto.getPrecio().getPrecio() + "\"";
+		
+		output = output + "}";
+		
+		return output;
+	}
+	
+	public static String listarProductos(ArrayList<Producto> productos) 
+	{
+		String output = "{[";
+		
+		int count = 0;
+		
+		for (Producto producto : productos)
+		{
+			output = output + producto(producto);
+			
+			count ++;
+			
+			if (count < productos.size())
 				output = output + ", ";
 		}
 		

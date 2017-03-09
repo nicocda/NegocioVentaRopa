@@ -18,7 +18,7 @@ public class Conexion
 	}
 	
 	private static String dbUrl="jdbc:mysql://localhost:3306/ropa";
-	private static String dbUser="root";
+	private static String dbUser="javaUser";
 	private static String dbPassword="root";
 	
 	private Connection conn;

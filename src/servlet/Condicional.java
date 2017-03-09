@@ -146,7 +146,7 @@ public class Condicional extends HttpServlet {
 			boolean enLista = false;
 			for(Producto p : prestamo.getProductos())
 			{
-				if(p.getId().equals(pro.getId()))
+				if(p.getCodigoProducto().equals(pro.getCodigoProducto()))
 					enLista = true;
 			}
 			if(enLista)
@@ -159,7 +159,7 @@ public class Condicional extends HttpServlet {
 	{
 		for(Producto pr : productos )
 		{
-			if(pr.getId().equals(p.getId()))
+			if(pr.getCodigoProducto().equals(p.getCodigoProducto()))
 			{
 				productos.remove(pr);
 				return productos;

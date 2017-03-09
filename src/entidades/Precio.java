@@ -1,5 +1,6 @@
 package entidades;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -22,7 +23,7 @@ public class Precio
 	@Id
 	@Column(name = "fecha")
 	@Expose
-	private Date fecha;
+	private Timestamp fecha;
 	
 	@Column(name = "precio")
 	@Expose
@@ -53,13 +54,12 @@ public class Precio
 		this.producto = producto;
 	}
 
-	public Date getFecha() 
+	public Timestamp getFecha() 
 	{
 		return fecha;
 	}
 
-
-	public void setFecha(Date fecha)
+	public void setFecha(Timestamp fecha)
 	{
 		this.fecha = fecha;
 	}

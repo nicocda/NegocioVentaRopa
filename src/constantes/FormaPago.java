@@ -2,18 +2,18 @@ package constantes;
 
 public class FormaPago 
 {
-	private String formaPago;
+	private int formaPago;
 	
-	public static final FormaPago EFECTIVO = new FormaPago("efectivo");
-	public static final FormaPago CUENTACORRIENTE = new FormaPago("ctaCorriente");
-	public static final FormaPago TARJETA = new FormaPago("tarjeta");
+	public static final FormaPago EFECTIVO = new FormaPago(1);
+	public static final FormaPago CUENTACORRIENTE = new FormaPago(2);
+	public static final FormaPago TARJETA = new FormaPago(3);
 	
-	public FormaPago(String formaPago)
+	public FormaPago(int formaPago)
 	{
 		this.formaPago = formaPago;
 	}
 	
-	public String toString()
+	public int getFormaPago()
 	{
 		return formaPago;
 	}

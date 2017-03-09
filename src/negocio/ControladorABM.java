@@ -49,7 +49,7 @@ public class ControladorABM
 		Producto producto = new Producto();
 		
 		producto.setDescripcion(descripcion);
-		producto.setId(idProducto);
+		producto.setCodigoProducto(idProducto);
 		producto.setEstado(estado);
 		producto.setIdSucursal(idSucursal);
 		
