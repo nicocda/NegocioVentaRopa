@@ -5,16 +5,11 @@ import entidades.Tarjeta;
 import entidades.Usuario;
 import entidades.Venta;
 import entidades.Cuota;
+import entidades.Precio;
 import excepciones.RespuestaServidor;
-import util.UtilidadesWeb;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-
-import com.mysql.fabric.xmlrpc.base.Array;
-import com.sun.javafx.webkit.UtilitiesImpl;
+import datosTODOparsear.CatalogoUsuarios;
 
 import datos.*;
 
@@ -23,7 +18,7 @@ public class ControladorTransaccion {
 	public Usuario buscarUsuario(String id, String pass)
 	{	
 		Usuario usu = null;
-		usu = CatalogoUsuarios.buscarUsuario(id);
+		usu = datos.CatalogoUsuarios.buscarUsuario(id);
 		if(usu.getPassword() != pass)
 		{
 			usu = null;
@@ -119,5 +114,71 @@ public class ControladorTransaccion {
 		return CatalogoClientes.setearMonto(monto);
 	}
 
+	public static void guardarPrecios(float porcentaje, String[] productos, Date fechaInicio, Date fechaFin) throws RespuestaServidor
+	{
+		RespuestaServidor sr = validarCambioDePrecios(porcentaje, productos, fechaInicio, fechaFin);
+		
+		if(!sr.getStatus())
+			throw sr;
+		
+		ArrayList<Producto> listaProductos = new ArrayList<>();
+		
+		// Con cada string del array busco los productos correspondientes
+		for(String p : productos)
+		{
+			listaProductos.add(CatalogoProductos.buscarProducto(p));
+		}
+		
+		for (Producto producto : listaProductos)
+		{
+			//Precio actual
+			float precioActual = producto.getPrecio().getPrecio();
+			
+			// Creo los nuevos precios
+			Precio precio = new Precio();
+			Precio precioFuturo = new Precio();
+			
+			precio.setFecha(fechaInicio);
+			precio.setPrecio(precioActual - precioActual * porcentaje);
+			precio.setProducto(producto);
+			
+			precioFuturo.setFecha(fechaFin);
+			precioFuturo.setPrecio(precioActual);
+			precioFuturo.setProducto(producto);
+						
+			// Se los seteo al producto
+			producto.getPrecios().add(precio);
+			producto.getPrecios().add(precioFuturo);
+			
+			// Lo guardo en la DB
+			CatalogoProductos.guardarProducto(producto);
+		}
+	}
 	
+	private static RespuestaServidor validarCambioDePrecios(float porcentaje,  String[] productos, Date fechaInicio, Date fechaFin)
+	{
+		RespuestaServidor sr = new RespuestaServidor();
+		
+		if (fechaInicio == null)
+			sr.addError("No se ingresó fecha de inicio.");
+		
+		if (fechaFin == null)
+			sr.addError("No se ingresó fecha final.");
+		
+		if (porcentaje == 0)
+			sr.addError("El porcentaje ingresado no es válido.");
+		
+		if (porcentaje < 0)
+			sr.addError("No se puede ingresar un descuento negativo :).");
+		
+		if (productos.length == 0)
+			sr.addError("Debe ingresar al menos un producto.");
+				
+		return sr;
+	}
+	public static Usuario validarLogueo(String usuario, String pass) {
+		
+		return CatalogoUsuarios.validarLogueo(usuario, pass);
+		
+	}
 }

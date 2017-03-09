@@ -9,13 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
-
 import entidades.Usuario;
 import excepciones.RespuestaServidor;
 import negocio.ControladorABM;
 import util.JsonResponses;
-import util.JsonUtil;
+import util.Tipos;
 
 @WebServlet("/ABMUsuarios")
 public class ABMUsuarios extends HttpServlet 
@@ -50,31 +48,16 @@ public class ABMUsuarios extends HttpServlet
 			String password = request.getParameter("password");
 			String sucursalstr = request.getParameter("sucursal");
 			
-			int idSucursal;
-			try
-			{
-				idSucursal = Integer.parseInt(sucursalstr);
-			}
-			catch(NumberFormatException e)
-			{
-				idSucursal = -1;
-			}
+			int idSucursal = Tipos.esEntero(sucursalstr) ? Integer.parseInt(sucursalstr) : -1;
 			
-			int tipoUsuario;
-			try
-			{
-				tipoUsuario = Integer.parseInt(tipoUsuariostr);
-			}
-			catch(NumberFormatException e)
-			{
-				tipoUsuario = -1;
-			}
+			int tipoUsuario = Tipos.esEntero(tipoUsuariostr) ? Integer.parseInt(tipoUsuariostr) : -1;
 			
 			RespuestaServidor sr = new RespuestaServidor();
-			 String mensaje="";
+			
+			String mensaje="";
+			
 			try
 			{
-				
 				 Usuario user = (Usuario) session.getAttribute("usuario");
 				 if(validaUsuario(sr,usuario,password, tipoUsuario,user))
 				 {
@@ -90,7 +73,9 @@ public class ABMUsuarios extends HttpServlet
 			{
 				sr = res;
 			}
+			
 			String mensajesJson = JsonResponses.devolverMensaje(sr, mensaje);
+			
 			response.setContentType("json");
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write(mensajesJson);

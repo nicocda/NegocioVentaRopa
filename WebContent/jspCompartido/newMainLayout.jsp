@@ -2,12 +2,12 @@
 <%@page import="entidades.Venta"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	import="entidades.Usuario"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 	<%
-	//Carga de css de forma dinámica
+	//Carga de css de forma dinÃ¡mica
 	String themes = "/themes/";
 	String[] stylesheets = 
 		{
@@ -30,7 +30,7 @@
 	%>
 	
 	<%
-	//Carga de script de fomra dinámica
+	//Carga de script de fomra dinÃ¡mica
 	String lib = "/scripts/lib/";
 	String[] scripts = 
 		{
@@ -58,7 +58,7 @@
 	<link rel="icon" type="image/png" href="themes/images/favicon.ico" />
 	
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Software Kairós</title>
+<title>Software KairÃ³s</title>
 </head>
 <body>
 

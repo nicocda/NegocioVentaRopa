@@ -7,16 +7,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import com.google.gson.Gson;
 
 import entidades.Venta;
 import excepciones.RespuestaServidor;
@@ -55,6 +51,7 @@ public class ReporteVentas extends HttpServlet
 		else if (action.equals("cargarTipoTarjeta"))
 			cargarComboTarjeta(request, response);
 		else if (action.equals("mostrarVenta"))
+		{
 			try
 			{
 				mostrarVenta(request, response);
@@ -63,6 +60,7 @@ public class ReporteVentas extends HttpServlet
 			{
 				e.printStackTrace();
 			}
+		}
 		else if (action.equals("detalleVenta"))
 			detalleVenta(request, response);
 	}

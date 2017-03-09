@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,12 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-
-import entidades.Cliente;
-import entidades.Producto;
-import entidades.Venta;
 import excepciones.RespuestaServidor;
 import negocio.ControladorABM;
 import negocio.ControladorTransaccion;
@@ -48,32 +41,7 @@ public class ABMClientes extends HttpServlet
 		}
 		else if (action.equals("agregarCliente"))
 		{
-			int id;
-
-			String idString = request.getParameter("id");
-			if(idString == null || idString.isEmpty())  
-				id=0; 
-			else
-				id = Integer.parseInt(idString);
-			
-			String nombre = request.getParameter("nombre");
-			String apellido = request.getParameter("apellido");
-			String direccion = request.getParameter("direccion");
-			String telefono = request.getParameter("telefono");
-			
-			RespuestaServidor sr = new RespuestaServidor();
-			try
-			{
-				ControladorABM.guardarCliente(id, nombre, apellido, direccion, telefono);
-			}
-			catch(RespuestaServidor res)
-			{
-				sr = res;
-			}
-			String mensajesJson = JsonResponses.devolverMensaje(sr, "Se guardo correctamente el cliente");
-			response.setContentType("json");
-		    response.setCharacterEncoding("UTF-8");
-		    response.getWriter().write(mensajesJson);
+			agregarCliente(request, response);
 		}
 		else if (action.equals("recargarTabla"))
 		{
@@ -118,6 +86,42 @@ public class ABMClientes extends HttpServlet
 			ControladorABM.actualizarDeuda(clie);
 		}
 		
+	}
+	
+	private void agregarCliente(HttpServletRequest request, HttpServletResponse response)
+	{
+		String idString = request.getParameter("id");
+		
+		int id = Tipos.esEntero(idString) ? Integer.parseInt(idString) : 1;
+		
+		String nombre = request.getParameter("nombre");
+		String apellido = request.getParameter("apellido");
+		String direccion = request.getParameter("direccion");
+		String telefono = request.getParameter("telefono");
+		
+		RespuestaServidor sr = new RespuestaServidor();
+		try
+		{
+			ControladorABM.guardarCliente(id, nombre, apellido, direccion, telefono);
+		}
+		catch(RespuestaServidor res)
+		{
+			sr = res;
+		}
+		
+		String mensajesJson = JsonResponses.devolverMensaje(sr, "Se guardo correctamente el cliente");
+		
+		response.setContentType("json");
+	    response.setCharacterEncoding("UTF-8");
+	    
+	    try 
+	    {
+			response.getWriter().write(mensajesJson);
+		} 
+	    catch (IOException e)
+	    {
+			e.printStackTrace();
+		}
 	}
 
 }
