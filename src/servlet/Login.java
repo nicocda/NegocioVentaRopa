@@ -13,6 +13,7 @@ import entidades.Prestamo;
 import entidades.Usuario;
 import entidades.Venta;
 import negocio.ControladorABM;
+import negocio.ControladorTransaccion;
 
 @WebServlet("/Login")
 public class Login extends HttpServlet 
@@ -37,7 +38,7 @@ public class Login extends HttpServlet
 		{
 			String usuario = (String) request.getParameter("usuario");
 			String pass = (String) request.getParameter("password");
-			Usuario usu = ControladorABM.validarUsuario(usuario, pass);
+			Usuario usu = ControladorTransaccion.validarLogueo(usuario, pass);
 			if (usu != null)
 			{
 				HttpSession session = request.getSession();

@@ -20,43 +20,39 @@ import javax.persistence.Transient;
 
 import com.google.gson.annotations.Expose;
 
-@Entity
-@Table(name="venta")
 public class Venta 
 {
-	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Expose
 	private int id;
 		
-	@Expose
 	private Timestamp fechaVenta;
 	
-	@Expose
 	private boolean isReserva;
 	
-	@Expose
 	private boolean isPrestamo;
 	
-	@Expose
 	private float seña;
 	
-	@Expose
 	private Timestamp fechaCaducidad;
 	
-	@Expose
 	private int formaPago;
 	
-	@Expose
 	private float importe;
 	
-	@Expose
 	private boolean pagada;
 	
-	@Transient
 	private float deudaPendiente;
+	
+	private Sucursal sucursal;
+	
+	private Tarjeta tarjeta;
 
+	private Cliente cliente;
+	
+	private List<Devolucion> devoluciones;
+	
+	private List<Cuota> cuotas = new ArrayList<Cuota>();
+	
+	private List<Producto> productos = new ArrayList<Producto>();
 	
 	public float getDeudaPendiente() {
 		return deudaPendiente;
@@ -71,11 +67,6 @@ public class Venta
 		this.pagada = pagada;
 	}
 
-	@ManyToOne(optional=true)
-	@JoinColumn(name="idSucursal")
-	private Sucursal sucursal;
-	
-
 	public Sucursal getSucursal() {
 		return sucursal;
 	}
@@ -83,33 +74,12 @@ public class Venta
 		this.sucursal = sucursal;
 	}
 	
-
-	@ManyToOne(optional=true)
-	@JoinColumn(name="idTarjeta")
-	private Tarjeta tarjeta;
-	
 	public Tarjeta getTarjeta() {
 		return tarjeta;
 	}
 	public void setTarjeta(Tarjeta tarjet) {
 		tarjeta = tarjet;
 	}
-
-
-	@Expose
-	@ManyToOne(optional=false)
-	@JoinColumn(name="idCliente")
-	private Cliente cliente;
-	
-	@OneToMany(fetch=FetchType.EAGER, mappedBy="venta")
-	private List<Devolucion> devoluciones;
-	
-	@OneToMany(fetch=FetchType.EAGER, mappedBy="venta_cuota")
-	private List<Cuota> cuotas = new ArrayList<Cuota>();
-	
-	@Expose
-	@OneToMany(cascade = CascadeType.REFRESH, mappedBy="venta")
-	private List<Producto> productos = new ArrayList<Producto>();
 	
 	public List<Producto> getProductos() 
 	{
@@ -218,9 +188,6 @@ public class Venta
 	public void setCuotas(List<Cuota> cuotas) {
 		this.cuotas = cuotas;
 	}
-
-
-
 
 	//Enum
 	public static enum formaPago

@@ -9,6 +9,7 @@ import entidades.Precio;
 import excepciones.RespuestaServidor;
 import java.util.ArrayList;
 import java.util.Date;
+import datosTODOparsear.CatalogoUsuarios;
 
 import datos.*;
 
@@ -17,7 +18,7 @@ public class ControladorTransaccion {
 	public Usuario buscarUsuario(String id, String pass)
 	{	
 		Usuario usu = null;
-		usu = CatalogoUsuarios.buscarUsuario(id);
+		usu = datos.CatalogoUsuarios.buscarUsuario(id);
 		if(usu.getPassword() != pass)
 		{
 			usu = null;
@@ -170,5 +171,10 @@ public class ControladorTransaccion {
 			sr.addError("Debe ingresar al menos un producto.");
 				
 		return sr;
+	}
+	public static Usuario validarLogueo(String usuario, String pass) {
+		
+		return CatalogoUsuarios.validarLogueo(usuario, pass);
+		
 	}
 }
