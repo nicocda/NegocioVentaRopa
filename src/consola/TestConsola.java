@@ -1,9 +1,15 @@
 package consola;
 
+import java.sql.Timestamp;
+
+import constantes.EstadoProducto;
 import datosTODOparsear.CatalogoClientes;
 import datosTODOparsear.CatalogoProductos;
 import datosTODOparsear.CatalogoUsuarios;
 import entidades.Cliente;
+import entidades.Precio;
+import entidades.Producto;
+import entidades.Sucursal;
 import entidades.Usuario;
 import excepciones.RespuestaServidor;
 import json.Json;
@@ -24,8 +30,9 @@ public class TestConsola
 		//testGuardarUsuario("test");
 		//testContarUsuarios();
 		
-		testBuscarProducto(1);
-		testBuscarProductos();
+		//testBuscarProducto(1);
+		//testBuscarProductos();
+		testGuardarProducto(0);
 	}	
 	
 	//region Privados
@@ -33,7 +40,7 @@ public class TestConsola
 	{
 		try
 		{			
-			System.out.println(Json.cliente(CatalogoClientes.obtenerCliente(idCliente)));
+			System.out.println(CatalogoClientes.obtenerCliente(idCliente).toJson());
 		}
 		catch (RespuestaServidor e)
 		{
@@ -45,7 +52,7 @@ public class TestConsola
 	{
 		try
 		{			
-			System.out.println(Json.listarClientes(CatalogoClientes.obtenerClientes()));
+			System.out.println(Json.listar(CatalogoClientes.obtenerClientes()));
 		}
 		catch (RespuestaServidor e)
 		{
@@ -57,7 +64,7 @@ public class TestConsola
 	{
 		try
 		{			
-			System.out.println(Json.listarClientes(CatalogoClientes.obtenerClientesPorPagina(paginaActual, porPagina)));
+			System.out.println(Json.listar(CatalogoClientes.obtenerClientesPorPagina(paginaActual, porPagina)));
 		}
 		catch (RespuestaServidor e)
 		{
@@ -98,7 +105,7 @@ public class TestConsola
 	{
 		try 
 		{
-			System.out.println(Json.usuario(CatalogoUsuarios.obtenerUsuario(username)));
+			System.out.println(CatalogoUsuarios.obtenerUsuario(username).toJson());
 		} 
 		catch (RespuestaServidor e) 
 		{
@@ -110,7 +117,7 @@ public class TestConsola
 	{
 		try 
 		{
-			System.out.println(Json.listarUsuarios(CatalogoUsuarios.obtenerUsuarios()));
+			System.out.println(Json.listar(CatalogoUsuarios.obtenerUsuarios()));
 		} 
 		catch (RespuestaServidor e) 
 		{
@@ -122,7 +129,7 @@ public class TestConsola
 	{
 		try 
 		{
-			System.out.println(Json.listarUsuarios(CatalogoUsuarios.obtenerUsuariosPorPagina(paginaActual, porPagina)));
+			System.out.println(Json.listar(CatalogoUsuarios.obtenerUsuariosPorPagina(paginaActual, porPagina)));
 		} 
 		catch (RespuestaServidor e) 
 		{
@@ -159,7 +166,7 @@ public class TestConsola
 	{
 		try
 		{
-			System.out.println(Json.producto(CatalogoProductos.obtenerProducto(idProducto)));
+			System.out.println(CatalogoProductos.obtenerProducto(idProducto).toJson());
 		}
 		catch (RespuestaServidor e)
 		{
@@ -171,7 +178,37 @@ public class TestConsola
 	{
 		try
 		{
-			System.out.println(Json.listarProductos(CatalogoProductos.obtenerProductos()));
+			System.out.println(Json.listar(CatalogoProductos.obtenerProductos()));
+		}
+		catch (RespuestaServidor e)
+		{
+			System.out.println(e.toString());
+		}
+	}
+	
+	private static void testGuardarProducto(int idProducto)
+	{
+		Producto producto = new Producto();
+		Precio precio = new Precio();
+		Sucursal sucursal = new Sucursal();
+		
+		sucursal.setId(1);
+		
+		precio.setFecha(new Timestamp(System.currentTimeMillis()));
+		precio.setPrecio(200);
+		precio.setProducto(producto);
+		
+		producto.setCodigoProducto("12345678");
+		producto.setDescripcion("test");
+		producto.setEstado(EstadoProducto.STOCK);
+		producto.setId(idProducto);
+		
+		producto.setNuevoPrecio(precio);
+		producto.setSucursal(sucursal);
+		
+		try
+		{
+			CatalogoProductos.guardarProducto(producto);
 		}
 		catch (RespuestaServidor e)
 		{

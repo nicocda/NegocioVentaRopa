@@ -1,57 +1,39 @@
 package entidades;
 
-import java.util.List;
+import constantes.TipoUsuario;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-@Entity
-@Table(name = "usuario")
-public class Usuario 
+public class Usuario implements Entidad
 {
-	@Id
-	@Column(name = "usuario")
-	String usuario;
-	
-	@Column(name = "nombreYApellido")
-	String nombreYApellido;
-	
-	@Column(name = "password")
-	String password;
-	
-	@Column(name = "mail")
-	String mail;
-	
-	@ManyToOne(optional=true)
-	@JoinColumn(name="idSucursal")
+	private String usuario, nombreYApellido, password, mail;
 	private Sucursal sucursal;
+	int tipoUsuario;
 	
-	
-	
-	public Sucursal getSucursal() {
+	//region Getters y Setters
+	public Sucursal getSucursal() 
+	{
 		return sucursal;
 	}
-	public void setSucursal(Sucursal sucursal) {
+	
+	public void setSucursal(Sucursal sucursal)
+	{
 		this.sucursal = sucursal;
 	}
+	
 	public String getUsuario() 
 	{
 		return usuario;
 	}
+	
 	public void setUsuario(String usuario) 
 	{
 		this.usuario = usuario;
 	}
-	int tipoUsuario;
+	
 	public String getNombreYApellido() 
 	{
 		return nombreYApellido;
 	}
+	
 	public void setNombreYApellido(String nombreYApellido) 
 	{
 		this.nombreYApellido = nombreYApellido;
@@ -61,32 +43,53 @@ public class Usuario
 	{
 		return password;
 	}
+	
 	public void setPassword(String password) 
 	{
 		this.password = password;
 	}
+	
 	public String getEmail() 
 	{
 		return mail;
 	}
+	
 	public void setEmail(String email) 
 	{
 		this.mail = email;
 	}
+	
 	public int getTipoUsuario() 
 	{
 		return tipoUsuario;
 	}
+	
 	public void setTipoUsuario(int tipoUsuario)
 	{
 		this.tipoUsuario = tipoUsuario;
 	}
 	
-	public static enum tipoUsuario
+	public void setTipoUsuario(TipoUsuario tipoUsuario)
 	{
-		INACTIVO,
-		USUARIO,
-		ADMIN,
-		SUPERUSER
+		this.tipoUsuario = tipoUsuario.getTipo();
 	}
+	//endregion
+	
+	//region Útil
+	public String toJson()
+	{
+		String usuario = "\"usuario\": " + "\"" + this.usuario + "\","
+				+ "\"nombreYApellido\": " + "\"" + this.nombreYApellido + "\","
+				+ "\"mail\": " + "\"" + this.mail + "\","
+				+ "\"password\": " + "\"" + this.password + "\","
+				+ "\"tipoUsuario\": " + this.tipoUsuario;
+		
+		if (this.sucursal != null)
+		{
+			usuario = usuario + ",\"sucursal\": " + "\"" + this.sucursal.toJson() + "\"";
+		}
+		
+		return "{" + usuario + "}";
+	}
+	//endreion
 }

@@ -1,73 +1,75 @@
 package entidades;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="eventLog")
-public class EventLog 
+public class EventLog implements Entidad 
 {
-	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+	private int id;	
+	private String tipoDeEvento, descripcion, nivelLog;
+	private Timestamp fechaAlta;
 	
-	@Column(name = "tipoDeEvento")
-	private String tipoDeEvento;
-	
-	@Column(name = "descripcion")
-	private String descripcion;
-	
-	@Column(name = "fechaAlta")
-	private Date fechaAlta;
-	
-	@Column(name = "nivelLog")
-	private String nivelLog;
-
-	public int getId() {
+	//region Geters y Setters
+	public int getId() 
+	{
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(int id) 
+	{
 		this.id = id;
 	}
 
-	public String getTipoDeEvento() {
+	public String getTipoDeEvento() 
+	{
 		return tipoDeEvento;
 	}
 
-	public void setTipoDeEvento(String tipoDeEvento) {
+	public void setTipoDeEvento(String tipoDeEvento) 
+	{
 		this.tipoDeEvento = tipoDeEvento;
 	}
 
-	public String getDescripcion() {
+	public String getDescripcion() 
+	{
 		return descripcion;
 	}
 
-	public void setDescripcion(String descripcion) {
+	public void setDescripcion(String descripcion) 
+	{
 		this.descripcion = descripcion;
 	}
 
-	public Date getFechaAlta() {
+	public Timestamp getFechaAlta() 
+	{
 		return fechaAlta;
 	}
 
-	public void setFechaAlta(Date fechaAlta) {
+	public void setFechaAlta(Timestamp fechaAlta) 
+	{
 		this.fechaAlta = fechaAlta;
 	}
 
-	public String getNivelLog() {
+	public String getNivelLog() 
+	{
 		return nivelLog;
 	}
 
-	public void setNivelLog(String nivelLog) {
+	public void setNivelLog(String nivelLog) 
+	{
 		this.nivelLog = nivelLog;
 	}
-	
+	//endregion
+
+	//region Útil
+	public String toJson()
+	{
+		String eventLog = "\"id\": " + this.id + ","
+				+ "\"descripcion\": " + "\"" + this.descripcion + "\","
+				+ "\"nivelLog\": " + "\"" + this.nivelLog + "\","
+				+ "\"tipoDeEvento\": " + "\"" + this.tipoDeEvento + "\","
+				+ "\"fechaAlta\": " + "\"" + this.fechaAlta + "\"";
+		
+		return "{" + eventLog + "}";
+	}
+	//endregion
 }

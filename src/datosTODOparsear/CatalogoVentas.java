@@ -50,7 +50,7 @@ public class CatalogoVentas extends CatalogoBase
 	{
 		PreparedStatement sentencia = null;
 		
-		String sql = "INSERT INTO venta (fechaVenta, seña, isPrestamo, isReserva, fechaCaducidad, formaPago, importe, idCliente) is VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO venta (fechaVenta, seña, tipoVenta, fechaCaducidad, formaPago, importe, idCliente) is VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		try
 		{
@@ -58,16 +58,15 @@ public class CatalogoVentas extends CatalogoBase
 			
 			sentencia.setTimestamp(1, venta.getFechaVenta());
 			sentencia.setFloat(2, venta.getSeña());
-			sentencia.setBoolean(3, venta.isPrestamo());
-			sentencia.setBoolean(4, venta.isReserva());
-			sentencia.setTimestamp(5, venta.getFechaCaducidad());
-			sentencia.setInt(6, venta.getFormaPago());
-			sentencia.setFloat(7, venta.getImporte()); // <- esto no es calculable?
-			sentencia.setInt(8, venta.getCliente().getId());
+			sentencia.setInt(3, venta.getTipoVenta());
+			sentencia.setTimestamp(4, venta.getFechaCaducidad());
+			sentencia.setInt(5, venta.getFormaPago());
+			sentencia.setFloat(6, venta.getImporte()); // <- esto no es calculable?
+			sentencia.setInt(7, venta.getCliente().getId());
 			
-			for (Producto p : venta.getProductosArrayList())
+			for (Producto p : venta.getProductos())
 			{
-				p.setEstado(EstadoProducto.VENDIDO.getEstado());
+				p.setEstado(EstadoProducto.VENDIDO);
 				CatalogoProductos.guardarProducto(p);
 			}
 			

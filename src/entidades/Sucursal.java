@@ -1,55 +1,50 @@
 package entidades;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="sucursal")
-public class Sucursal 
+public class Sucursal implements Entidad 
 {
-	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
+	private String localidad, direccion;
 	
-	@Column(name = "localidad")
-	private String localidad;
-	
-	@Column(name = "direccion")
-	private String direccion;
-	
-	//Getters y setters
+	//region Getters y setters
 	public int getId() 
 	{
 		return id;
 	}
+	
 	public void setId(int id)
 	{
 		this.id = id;
 	}
+	
 	public String getLocalidad() 
 	{
 		return localidad;
 	}
+	
 	public void setLocalidad(String localidad) 
 	{
 		this.localidad = localidad;
 	}
+	
 	public String getDireccion()
 	{
 		return direccion;
 	}
+	
 	public void setDireccion(String direccion) 
 	{
 		this.direccion = direccion;
 	}
-	public String toString()
-	{
-		return "Localidad: "+localidad+" Direccion: "+direccion;
-	}
+	//endregion
 	
+	//region Útil
+	public String toJson()
+	{
+		String sucursal = "\"id\": " + this.id + ","
+				+ "\"direccion\": " + "\"" + this.direccion + "\","
+				+ "\"localidad\": " + "\"" + this.localidad + "\"";
+		
+		return "{" + sucursal + "}";
+	}
+	//endregion
 }

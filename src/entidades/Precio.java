@@ -1,39 +1,14 @@
 package entidades;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-import com.google.gson.annotations.Expose;
-
-@Entity 
-@Table(name = "precio")
-@IdClass(PrecioId.class)
-public class Precio
+public class Precio implements Entidad
 {
-	//Fields
-	@Id
-	@Column(name = "fecha")
-	@Expose
 	private Timestamp fecha;
-	
-	@Column(name = "precio")
-	@Expose
 	private float precio;
-	
-	@Id
-	@ManyToOne(optional=true)
-	@JoinColumn(name="idProducto")
 	private Producto producto;
 	
+	//region Getters y Setters
 	public float getPrecio() 
 	{
 		return precio;
@@ -63,4 +38,15 @@ public class Precio
 	{
 		this.fecha = fecha;
 	}
+	//endregion
+	
+	//region Útil
+	public String toJson()
+	{
+		String precio = "\"precio\": " + this.precio + ","
+				+ "\"fecha\": " + "\"" + this.fecha + "\"";
+		
+		return "{" + precio + "}";
+	}
+	//endregion
 }

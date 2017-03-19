@@ -1,84 +1,39 @@
 package entidades;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.List;
+import constantes.EstadoProducto;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-
-import com.google.gson.annotations.Expose;
-
-@Entity 
-@Table(name = "producto")
-public class Producto 
+public class Producto implements Entidad
 {
-	@Id
-	@Column(name = "id")
-	@Expose
-	private int id;
-	
-	private String codigoProducto;
-	
-	@Expose
-	@Column(name = "descripcion")
-	private String descripcion;
-	
-	@Expose
-	@Column(name = "estado")
-	private int estado;
-	
-	@ManyToOne(optional=true)
-	@JoinColumn(name="idVenta")
+	private int id, estado;
+	private String codigoProducto, descripcion;
 	private Venta venta;
-	
-	@ManyToOne(optional=true)
-	@JoinColumn(name="idDevolucion")
 	private Devolucion devolucion;
+	private ArrayList<Precio> precios = new ArrayList<Precio>();
+	private Precio precio = new Precio();
+	private Sucursal sucursal;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="producto")
-	private List<Precio> precios = new ArrayList<Precio>();
-
-	@Expose
-	@Transient
-	private Precio precio;
-	
-	@Expose
-	@Column(name = "idSucursal")
-	private int idSucursal;
-	
-	public int getIdSucursal() {
-		return idSucursal;
+	//region Getters y Setters
+	public Sucursal getSucursal() 
+	{
+		return sucursal;
 	}
-	public void setIdSucursal(int idSucursal) {
-		this.idSucursal = idSucursal;
+	
+	public void setSucursal(Sucursal sucursal) 
+	{
+		this.sucursal = sucursal;
 	}
-	public List<Precio> getPrecios()
+	
+	public ArrayList<Precio> getPrecios()
 	{
 		return precios;
 	}
-	public ArrayList<Precio> getPreciosArrayList()
-	{
-		return new ArrayList<Precio>(precios);
-	}
-	public void setPrecios(List<Precio> precios)
-	{
-		this.precios = precios;
-	}
+
 	public void setPrecios(ArrayList<Precio> precios)
 	{
 		this.precios = precios;
 	}
+
 	public String getDescripcion() 
 	{
 		return descripcion;
@@ -97,6 +52,7 @@ public class Producto
 	{
 		this.descripcion = descripcion;
 	}
+	
 	public int getEstado() 
 	{
 		return estado;
@@ -105,6 +61,11 @@ public class Producto
 	public void setEstado(int estado) 
 	{
 		this.estado = estado;
+	}
+	
+	public void setEstado(EstadoProducto estado)
+	{
+		this.estado = estado.getEstado();
 	}
 	
 	public Venta getVenta() 
@@ -142,19 +103,7 @@ public class Producto
 		
 		return maxPrecio;
 	}
-	public void setPrecio(Precio precio) 
-	{
-		this.precio = precio;
-	}
-	public void setPrecio(float cantidad)
-	{
-		Precio precio = new Precio();
-		
-		precio.setPrecio(cantidad);
-		precio.setFecha(new Timestamp(System.currentTimeMillis()));
-		
-		this.precio = precio;
-	}
+
 	public void addPrecio(Precio precio)
 	{
 		this.precios.add(precio);
@@ -171,12 +120,39 @@ public class Producto
 		return this.id;
 	}
 	
-	//Enums
-	public static enum estado
+	public void setNuevoPrecio(Precio precio)
 	{
-		VENDIDO,
-		STOCK,
-		SEÑADO,
-		CONDICIONAL
+		this.precio = precio;
 	}
+	
+	public Precio getNuevoPrecio()
+	{
+		return precio;
+	}
+	//endregion
+	
+	//region Útil
+	public String toJson()
+	{
+		String producto = "\"id\": " + this.id + ","
+				+ "\"codigoProducto\": " + "\"" + this.codigoProducto + "\","
+				+ "\"descripcion\": " + "\"" + this.descripcion + "\","
+				+ "\"estado\": " + this.estado + ","
+				+ "\"sucursal\": " + this.sucursal.toJson();
+		
+		if (this.precios != null && !this.precios.isEmpty())
+		{
+			String precios = ", \"precios\": [";
+			
+			for (Precio precio : this.precios)
+			{
+				precios = precios + precio.toJson();
+			}
+			
+			producto = producto + precios + "]";
+		}
+		
+		return "{" + producto + "}";
+	}
+	//endregion
 }

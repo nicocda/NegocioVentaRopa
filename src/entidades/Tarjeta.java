@@ -1,68 +1,61 @@
 package entidades;
 
-import java.util.List;
-
-import javax.persistence.*;
-import com.google.gson.annotations.Expose;
-
-@Entity
-@Table(name="tarjeta")
-public class Tarjeta {
-	
-	@Id
-	@Column(name = "id")
-	@Expose
-	private int nroTarjeta;
-	
-	@Column(name = "cuotas")
-	@Expose
-	private int cuotas;
-	
-	@Column(name = "nroCupon")
-	@Expose
-	private int nroCupon;
-	
-	@Expose
-	@ManyToOne(optional=true)
-	@JoinColumn(name="tipoTarjeta")
+public class Tarjeta implements Entidad
+{	
+	private int nroTarjeta, cuotas, nroCupon;
 	private TipoTarjeta tipoTarjeta;
-	
-	@Expose
-	@ManyToOne(optional=true)
-	@JoinColumn(name="idCliente")
-	private Cliente cliente;
-	
-	//@OneToMany(cascade = CascadeType.REMOVE, mappedBy="venta")
-	//private List<Venta> venta;
-	
-	public int getNroTarjeta() {
+
+	//region Getters y Setters
+	public int getNroTarjeta() 
+	{
 		return nroTarjeta;
 	}
-	public void setNroTarjeta(int nroTarjeta) {
+	
+	public void setNroTarjeta(int nroTarjeta)
+	{
 		this.nroTarjeta = nroTarjeta;
 	}
-	public int getCuotas() {
+	
+	public int getCuotas() 
+	{
 		return cuotas;
 	}
-	public void setCuotas(int cuotas) {
+	
+	public void setCuotas(int cuotas) 
+	{
 		this.cuotas = cuotas;
 	}
-	public int getNroCupon() {
+	
+	public int getNroCupon() 
+	{
 		return nroCupon;
 	}
-	public void setNroCupon(int nroCupon) {
+	
+	public void setNroCupon(int nroCupon) 
+	{
 		this.nroCupon = nroCupon;
 	}
-	public TipoTarjeta getTipoTarjeta() {
+	
+	public TipoTarjeta getTipoTarjeta() 
+	{
 		return tipoTarjeta;
 	}
-	public void setTipoTarjeta(TipoTarjeta tipoTarjeta) {
+	
+	public void setTipoTarjeta(TipoTarjeta tipoTarjeta)
+	{
 		this.tipoTarjeta = tipoTarjeta;
 	}
-	public Cliente getCliente() {
-		return cliente;
+	//endregion
+	
+	//region Util
+	public String toJson()
+	{
+		String tarjeta = "\"nroTarjeta\": " + this.nroTarjeta + ","
+				+ "\"nroCupon\": " + this.nroCupon + ","
+				+ "\"cuotas\": " + this.cuotas + ","
+				+ "\"tipoTarjeta\": " + this.tipoTarjeta.toJson();
+		
+		return "{" + tarjeta + "}";
 	}
-	public void setCliente(Cliente cl) {
-		cliente = cl;
-	}
+	//endregion
 }

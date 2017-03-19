@@ -1,52 +1,32 @@
 package entidades;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-@Entity
-@Table(name = "Cuota")
-@IdClass(CuotaId.class)
 public class Cuota 
 {
-	//Fields
-	@Id
-	@Column(name = "fecha")
-	private Date fecha;
-	
-	@Column(name = "importe")
+	private Timestamp fecha;	
 	private float importe;
+	private Venta venta;
 	
-	@Id
-	@ManyToOne(optional=true)
-	@JoinColumn(name = "idVenta")
-	private Venta venta_cuota;
-	
-	//Constructores
 	public Cuota()
 	{
+		
 	}
 	
-	public Cuota(Date fecha, float importe, Venta vta)
+	public Cuota(Timestamp fecha, float importe, Venta venta)
 	{
 		this.setFecha(fecha);
 		this.setImporte(importe);
-		this.setVenta_cuota(vta);
+		this.setVenta(venta);
 	}
 	
-	//Getters-Setters
-	public Date getFecha() 
+	//region Getters y Setters
+	public Timestamp getFecha() 
 	{
 		return fecha;
 	}
 	
-	public void setFecha(Date fecha) 
+	public void setFecha(Timestamp fecha) 
 	{
 		this.fecha = fecha;
 	}
@@ -61,12 +41,24 @@ public class Cuota
 		this.importe = importe;
 	}
 
-	public Venta getVenta_cuota() {
-		return venta_cuota;
+	public Venta getVenta() {
+		return venta;
 	}
 
-	public void setVenta_cuota(Venta venta_cuota) {
-		this.venta_cuota = venta_cuota;
+	public void setVenta(Venta venta) 
+	{
+		this.venta = venta;
 	}
+	//endregion
 	
+	//region Útil
+	public String toJson()
+	{
+		String cuota = "\"venta\": " + this.venta.toJson() + ","
+				+ "\"importe\": " + this.importe + ","
+				+ "\"fecha\": " + "\"" + this.fecha + "\"";
+	
+		return "{" + cuota + "}";
+	}
+	//endregion
 }

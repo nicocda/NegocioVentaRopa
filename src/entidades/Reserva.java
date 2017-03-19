@@ -1,17 +1,15 @@
 package entidades;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
-public class Reserva extends Venta
+public class Reserva extends Venta implements Entidad
 {
-	//Fields
 	private float importe;
 	private Timestamp fechaCaducidad;
 	
-	//Constructores
 	public Reserva()
 	{
+		
 	}
 	
 	public Reserva(float importe, Timestamp fechaCaducidad)
@@ -21,24 +19,36 @@ public class Reserva extends Venta
 		this.setFechaCaducidad(fechaCaducidad);
 	}
 	
-	//Getters - Setters
+	//region Getters y Setters
 	public Timestamp getFechaCaducidad() 
 	{
 		return fechaCaducidad;
 	}
+	
 	public void setFechaCaducidad(Timestamp fechaCaducidad) 
 	{
 		this.fechaCaducidad = fechaCaducidad;
 	}
+	
 	public float getImporte() 
 	{
 		return importe;
 	}
+	
 	public void setImporte(float importe) 
 	{
 		this.importe = importe;
 	}
+	//endregion
 	
-
-
+	//region Útil
+	public String toJson()
+	{
+		String reserva = "\"venta\": " + super.toJson()
+			+ "\"importe\": " + this.importe + ","
+			+ "\"fechaCaducidad\": " + "\"" + this.fechaCaducidad + "\"";
+		
+		return "{" + reserva + "}";
+	}
+	//endregion
 }

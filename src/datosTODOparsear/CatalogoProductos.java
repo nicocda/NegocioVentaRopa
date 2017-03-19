@@ -150,12 +150,28 @@ public class CatalogoProductos extends CatalogoBase
 			sentencia.setString(1, producto.getDescripcion());
 			sentencia.setInt(2, producto.getEstado());
 			sentencia.setString(3, producto.getCodigoProducto());
-			sentencia.setInt(4, producto.getIdSucursal());
+			sentencia.setInt(4, producto.getSucursal().getId());
 			
 			if (producto.getId() != 0)
 				sentencia.setInt(5, producto.getId());
 			
-			sentencia.executeUpdate();
+			if(sentencia.executeUpdate() == 0)
+			{
+	            throw new SQLException("No hubo rows afectadas al intentar guardar producto");
+	        }
+			else
+			{
+				try (ResultSet generatedKeys = sentencia.getGeneratedKeys())
+				{
+					if (generatedKeys.next())
+						producto.getNuevoPrecio().getProducto().setId(generatedKeys.getInt(1));
+					else
+						throw new SQLException("No se pudo obtener el id del producto guardado");
+		        }
+			}
+			
+			if (producto.getNuevoPrecio() != null)
+				CatalogoPrecios.guardarPrecio(producto.getNuevoPrecio());
 		}
 		catch (SQLException e) 
 		{
@@ -211,8 +227,8 @@ public class CatalogoProductos extends CatalogoBase
 			producto.setId(rs.getInt("id"));
 			producto.setDescripcion(rs.getString("descripcion"));
 			producto.setEstado(rs.getInt("estado"));
-			producto.setIdSucursal(rs.getInt("idSucursal"));
 			
+			producto.setSucursal(CatalogoSucursal.obtenerSucursal(rs.getInt("idSucursal")));
 			producto.setPrecios(CatalogoPrecios.buscarPrecio(producto.getId()));
 		} 
 		catch (SQLException e) 

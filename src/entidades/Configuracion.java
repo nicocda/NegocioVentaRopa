@@ -1,48 +1,51 @@
 package entidades;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="configuracion")
-public class Configuracion 
+public class Configuracion implements Entidad
 {
-	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
-	
-	@Column(name = "permitirLog")
 	private boolean permitirLog;
-	
-	@Column(name = "tipoLog")
 	private String tipoLog;
 
-	public int getId() {
+	//region Getters y Setters
+	public int getId() 
+	{
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(int id) 
+	{
 		this.id = id;
 	}
 
-	public boolean isPermitirLog() {
+	public boolean isPermitirLog() 
+	{
 		return permitirLog;
 	}
 
-	public void setPermitirLog(boolean permitirLog) {
+	public void setPermitirLog(boolean permitirLog) 
+	{
 		this.permitirLog = permitirLog;
 	}
 
-	public String getTipoLog() {
+	public String getTipoLog() 
+	{
 		return tipoLog;
 	}
 
-	public void setTipoLog(String tipoLog) {
+	public void setTipoLog(String tipoLog) 
+	{
 		this.tipoLog = tipoLog;
 	}
+	//endregion
+
+	//region Útil
+	public String toJson()
+	{
+		String configuracion = "\"id\": " + this.id + ","
+				+ "\"tipoLog\": " + "\"" + this.tipoLog + "\","
+				+ "\"permitirLog\": " + this.permitirLog;
+	
+		return "{" + configuracion + "}";
+	}
+	//endregion
 }
