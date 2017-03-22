@@ -11,15 +11,10 @@ import excepciones.RespuestaServidor;
 public class CatalogoClientes extends CatalogoBase
 {
 	//region Públicos
-	public static Cliente obtenerCliente(int idCliente) throws RespuestaServidor
+	public Cliente obtenerCliente(int idCliente) throws SQLException
 	{
 		ResultSet rs = null;
 		PreparedStatement sentencia = null;
-
-		RespuestaServidor sr = validarCliente(idCliente);
-		
-		if (!sr.getStatus())
-			throw sr;
 			
 		Cliente cliente = null;
 		String sql = "SELECT * FROM cliente WHERE id = ?";
@@ -35,30 +30,23 @@ public class CatalogoClientes extends CatalogoBase
 			{
 				cliente = setCliente(rs);			
 			}
-			else
-			{
-				sr.addError("El cliente que se intenta obtener no existe");
-				throw sr;
-			}
 		}
 		catch(SQLException e)
 		{
-			sr.addError(e);
-			throw sr;
+			throw e;
 		} 
 		finally
 		{
 			cerrarStatement(sentencia);
 		}	
+		
 		return cliente;
 	}
 	
-	public static ArrayList<Cliente> obtenerClientesPorPagina(int paginaActual, int porPagina) throws RespuestaServidor
+	public ArrayList<Cliente> obtenerClientes(int paginaActual, int porPagina) throws SQLException
 	{
 		ResultSet rs = null;
 		PreparedStatement sentencia = null;
-
-		RespuestaServidor sr = new RespuestaServidor();
 		
 		ArrayList<Cliente> clientes = new ArrayList<Cliente>();	
 		
@@ -79,8 +67,7 @@ public class CatalogoClientes extends CatalogoBase
 		}
 		catch(SQLException e)
 		{
-			sr.addError(e);
-			throw sr;
+			throw e;
 		} 
 		finally
 		{
@@ -90,12 +77,10 @@ public class CatalogoClientes extends CatalogoBase
 		return clientes;
 	}
 
-	public static ArrayList<Cliente> obtenerClientes() throws RespuestaServidor
+	public ArrayList<Cliente> obtenerClientes() throws SQLException
 	{
 		ResultSet rs = null;
 		PreparedStatement sentencia = null;
-
-		RespuestaServidor sr = new RespuestaServidor();
 		
 		ArrayList<Cliente> clientes = new ArrayList<Cliente>();	
 		
@@ -114,8 +99,7 @@ public class CatalogoClientes extends CatalogoBase
 		}
 		catch(SQLException e)
 		{
-			sr.addError(e);
-			throw sr;
+			throw e;
 		} 
 		finally
 		{
@@ -125,29 +109,16 @@ public class CatalogoClientes extends CatalogoBase
 		return clientes;
 	}
 
-	public static void guardarCliente(Cliente cliente) throws RespuestaServidor
+	public void guardarCliente(Cliente cliente) throws SQLException
 	{
 		PreparedStatement sentencia = null;
-
-		RespuestaServidor sr = validarCliente(cliente);
-		
-		if (!sr.getStatus())
-			throw sr;
 		
 		String sql;
 		
 		if (cliente.getId() == 0)
 			sql = "INSERT INTO cliente(nombre, apellido, telefono, direccion, activo) VALUES(?, ?, ?, ?, ?)";
 		else
-		{
-			if (obtenerCliente(cliente.getId()) != null)
-				sql = "UPDATE cliente SET nombre = ?, apellido = ?, telefono = ?, direccion = ?, activo = ? WHERE id = ?";
-			else
-			{
-				sr.addError("Se está intentando actualizar un cliente con id inexistente");
-				throw sr;
-			}
-		}
+			sql = "UPDATE cliente SET nombre = ?, apellido = ?, telefono = ?, direccion = ?, activo = ? WHERE id = ?";
 			
 		try
 		{
@@ -166,8 +137,7 @@ public class CatalogoClientes extends CatalogoBase
 		}
 		catch (SQLException e) 
 		{
-			sr.addError(e);
-			throw sr;
+			throw e;
 		}
 		finally
 		{
@@ -175,7 +145,7 @@ public class CatalogoClientes extends CatalogoBase
 		}
 	}
 	
-	public static int contarClientes()
+	public int contarClientes()
 	{
 		ResultSet rs = null;
 		PreparedStatement sentencia = null;
@@ -210,7 +180,7 @@ public class CatalogoClientes extends CatalogoBase
 	//endregion
 	
 	//region Privados
-	private static Cliente setCliente(ResultSet rs)
+	private Cliente setCliente(ResultSet rs)
 	{
 		Cliente cliente = new Cliente();
 		
@@ -228,40 +198,6 @@ public class CatalogoClientes extends CatalogoBase
 		}
 		
 		return cliente;
-	}
-	//endregion
-	
-	//region Validaciones
-	private static RespuestaServidor validarCliente(int idCliente)
-	{
-		RespuestaServidor rs = new RespuestaServidor();
-		
-		if (idCliente <= 0)
-			rs.addError("El cliente que se intenta obtener no es válido.");
-		
-		return rs;
-	}
-	
-	private static RespuestaServidor validarCliente(Cliente cliente)
-	{
-		RespuestaServidor rs = new RespuestaServidor();
-		
-		if (cliente == null)
-		{
-			rs.addError("Ocurrió un error inesperado. Intentando guardar cliente nulo.");
-			return rs;
-		}
-		
-		if (cliente.getId() < 0)
-			rs.addError("ID de cliente no válido");
-			
-		if (cliente.getApellido() == null || cliente.getApellido().isEmpty())
-			rs.addError("El campo APELLIDO es requerido");
-		
-		if (cliente.getNombre() == null || cliente.getNombre().isEmpty())
-			rs.addError("El campo NOMBRE es requerido");
-		
-		return rs;
 	}
 	//endregion
 }

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import entidades.Sucursal;
 import excepciones.RespuestaServidor;
 
-public class CatalogoSucursal extends CatalogoBase 
+public class CatalogoSucursales extends CatalogoBase 
 {
 	//region Públicos
 	public static Sucursal obtenerSucursal(int idSucursal) throws RespuestaServidor

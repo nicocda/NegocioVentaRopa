@@ -23,7 +23,7 @@ public class CatalogoVentas extends CatalogoBase
 		{
 			nuevaCon().setAutoCommit(false);
 			guardarVenta(venta, rs);
-			Conexion.getInstancia().commit();
+			nuevaCon().commit();
 		}
 		catch (SQLException e)
 		{
@@ -46,11 +46,21 @@ public class CatalogoVentas extends CatalogoBase
 		}
 	}
 	
-	public static void guardarVenta(Venta venta, RespuestaServidor sr) throws RespuestaServidor
+	//endregion
+	
+	//region Privados
+	private static RespuestaServidor validarVenta (Venta venta)
+	{
+		RespuestaServidor rs = new RespuestaServidor();
+		
+		return rs;
+	}
+	
+	private static void guardarVenta(Venta venta, RespuestaServidor sr) throws RespuestaServidor
 	{
 		PreparedStatement sentencia = null;
 		
-		String sql = "INSERT INTO venta (fechaVenta, seña, tipoVenta, fechaCaducidad, formaPago, importe, idCliente) is VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO venta (fechaVenta, seña, tipoVenta, fechaCaducidad, formaPago, idCliente, idSucursal) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		
 		try
 		{
@@ -58,11 +68,11 @@ public class CatalogoVentas extends CatalogoBase
 			
 			sentencia.setTimestamp(1, venta.getFechaVenta());
 			sentencia.setFloat(2, venta.getSeña());
-			sentencia.setInt(3, venta.getTipoVenta());
+			sentencia.setInt(3, venta.getTipoVenta().getTipo());
 			sentencia.setTimestamp(4, venta.getFechaCaducidad());
-			sentencia.setInt(5, venta.getFormaPago());
-			sentencia.setFloat(6, venta.getImporte()); // <- esto no es calculable?
-			sentencia.setInt(7, venta.getCliente().getId());
+			sentencia.setInt(5, venta.getFormaPago().getFormaPago());
+			sentencia.setInt(6, venta.getCliente().getId());
+			sentencia.setInt(7, venta.getSucursal().getId());
 			
 			for (Producto p : venta.getProductos())
 			{
@@ -81,15 +91,6 @@ public class CatalogoVentas extends CatalogoBase
 		{
 			cerrarStatement(sentencia);
 		}
-	}
-	//endregion
-	
-	//region Privados
-	private static RespuestaServidor validarVenta (Venta venta)
-	{
-		RespuestaServidor rs = new RespuestaServidor();
-		
-		return rs;
 	}
 	//endregion
 }

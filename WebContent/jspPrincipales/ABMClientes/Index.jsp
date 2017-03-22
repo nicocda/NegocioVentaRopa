@@ -1,9 +1,10 @@
+<%@page import="constantes.TipoUsuario"%>
 <%@page import="entidades.Usuario"%>
 <%@page import="entidades.Venta"%>
 <%@page import="java.util.ArrayList"%>
 <%
 Usuario usuario = (Usuario)session.getAttribute("usuario");
-if (usuario != null && usuario.getTipoUsuario() >= 1) 
+if (usuario != null && usuario.getTipoUsuario().getTipo() >= TipoUsuario.NORMAL.getTipo()) 
 {%>
 <%@ page import="entidades.Cliente"
 import="java.util.ArrayList"

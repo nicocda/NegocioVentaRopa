@@ -5,12 +5,13 @@ import constantes.EstadoProducto;
 
 public class Producto implements Entidad
 {
-	private int id, estado;
+	private int id;
+	private EstadoProducto estado;
 	private String codigoProducto, descripcion;
 	private Venta venta;
 	private Devolucion devolucion;
 	private ArrayList<Precio> precios = new ArrayList<Precio>();
-	private Precio precio = new Precio();
+	private Precio precio;
 	private Sucursal sucursal;
 	
 	//region Getters y Setters
@@ -53,19 +54,14 @@ public class Producto implements Entidad
 		this.descripcion = descripcion;
 	}
 	
-	public int getEstado() 
+	public EstadoProducto getEstado() 
 	{
 		return estado;
-	}
-
-	public void setEstado(int estado) 
-	{
-		this.estado = estado;
 	}
 	
 	public void setEstado(EstadoProducto estado)
 	{
-		this.estado = estado.getEstado();
+		this.estado = estado;
 	}
 	
 	public Venta getVenta() 

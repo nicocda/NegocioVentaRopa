@@ -6,7 +6,7 @@ public class Usuario implements Entidad
 {
 	private String usuario, nombreYApellido, password, mail;
 	private Sucursal sucursal;
-	int tipoUsuario;
+	private TipoUsuario tipoUsuario;
 	
 	//region Getters y Setters
 	public Sucursal getSucursal() 
@@ -59,19 +59,14 @@ public class Usuario implements Entidad
 		this.mail = email;
 	}
 	
-	public int getTipoUsuario() 
+	public TipoUsuario getTipoUsuario() 
 	{
 		return tipoUsuario;
 	}
 	
-	public void setTipoUsuario(int tipoUsuario)
-	{
-		this.tipoUsuario = tipoUsuario;
-	}
-	
 	public void setTipoUsuario(TipoUsuario tipoUsuario)
 	{
-		this.tipoUsuario = tipoUsuario.getTipo();
+		this.tipoUsuario = tipoUsuario;
 	}
 	//endregion
 	

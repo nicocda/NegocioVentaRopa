@@ -1,3 +1,4 @@
+<%@page import="constantes.TipoUsuario"%>
 <%@page import="entidades.Producto"%>
 <%@page import="entidades.Venta"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -85,7 +86,7 @@
                     <ul class="dropdown-menu dropdown-messages">
                         <%if((Venta)session.getAttribute("venta") != null) 
                         {%>
-                        	<%for(Producto p : ((Venta)session.getAttribute("venta")).getProductosArrayList())
+                        	<%for(Producto p : ((Venta)session.getAttribute("venta")).getProductos())
                        		{%>
 		                        <li>
 		                            <a href="#">
@@ -158,7 +159,7 @@
                         <li>
                         <%if (((Usuario)session.getAttribute("usuario")) != null) 
 						{
-                       		if (((Usuario)session.getAttribute("usuario")).getTipoUsuario() >1)
+                       		if (((Usuario)session.getAttribute("usuario")).getTipoUsuario().getTipo() > TipoUsuario.NORMAL.getTipo())
                        		{%>
                           	  <a href="ABMUsuarios"  ><i class="fa fa-user fa-fw"></i> Usuarios</a>
                             <%} 

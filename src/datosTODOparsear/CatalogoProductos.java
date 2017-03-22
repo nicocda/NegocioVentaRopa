@@ -5,20 +5,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import constantes.EstadoProducto;
 import entidades.Producto;
+import entidades.Sucursal;
 import excepciones.RespuestaServidor;
 
 public class CatalogoProductos extends CatalogoBase
 {
-	public static Producto obtenerProducto(int idProducto) throws RespuestaServidor
+	public Producto obtenerProducto(int idProducto) throws SQLException
 	{
 		ResultSet rs = null;
 		PreparedStatement sentencia = null;
-
-		RespuestaServidor sr = validarProducto(idProducto);
-		
-		if (!sr.getStatus())
-			throw sr;
 			
 		Producto producto = null;
 		String sql = "SELECT * FROM producto WHERE id = ?";
@@ -37,26 +34,24 @@ public class CatalogoProductos extends CatalogoBase
 		}
 		catch(SQLException e)
 		{
-			sr.addError(e);
-			throw sr;
+			throw e;
 		} 
 		finally
 		{
 			cerrarStatement(sentencia);
 		}	
+		
 		return producto;
 	}
 	
-	public static ArrayList<Producto> obtenerProductosPorPagina(int paginaActual, int porPagina) throws RespuestaServidor
+	public ArrayList<Producto> obtenerProductos(int paginaActual, int porPagina) throws SQLException
 	{
 		ResultSet rs = null;
 		PreparedStatement sentencia = null;
-
-		RespuestaServidor sr = new RespuestaServidor();
 		
 		ArrayList<Producto> productos = new ArrayList<Producto>();	
 		
-		String sql = "SELECT * FROM producto WHERE activo = TRUE ORDER BY id LIMIT ?, ?";
+		String sql = "SELECT * FROM producto ORDER BY id LIMIT ?, ?";
 		
 		try
 		{
@@ -73,8 +68,7 @@ public class CatalogoProductos extends CatalogoBase
 		}
 		catch(SQLException e)
 		{
-			sr.addError(e);
-			throw sr;
+			throw e;
 		} 
 		finally
 		{
@@ -84,12 +78,10 @@ public class CatalogoProductos extends CatalogoBase
 		return productos;
 	}
 
-	public static ArrayList<Producto> obtenerProductos() throws RespuestaServidor
+	public ArrayList<Producto> obtenerProductos() throws SQLException
 	{
 		ResultSet rs = null;
 		PreparedStatement sentencia = null;
-
-		RespuestaServidor sr = new RespuestaServidor();
 		
 		ArrayList<Producto> productos = new ArrayList<Producto>();	
 		
@@ -108,8 +100,7 @@ public class CatalogoProductos extends CatalogoBase
 		}
 		catch(SQLException e)
 		{
-			sr.addError(e);
-			throw sr;
+			throw e;
 		} 
 		finally
 		{
@@ -119,64 +110,34 @@ public class CatalogoProductos extends CatalogoBase
 		return productos;
 	}
 
-	public static void guardarProducto(Producto producto) throws RespuestaServidor
+	public boolean guardarProducto(Producto producto) throws SQLException
 	{
 		PreparedStatement sentencia = null;
-
-		RespuestaServidor sr = validarProducto(producto);
-		
-		if (!sr.getStatus())
-			throw sr;
 		
 		String sql;
 		
 		if (producto.getId() == 0)
 			sql = "INSERT INTO producto(descripcion, estado, codigoProducto, idSucursal) VALUES(?, ?, ?, ?)";
 		else
-		{
-			if (obtenerProducto(producto.getId()) != null)
-				sql = "UPDATE producto SET descripcion = ?, estado = ?, codigoProducto = ?, idSucursal = ? WHERE id = ?";
-			else
-			{
-				sr.addError("Se está intentando actualizar un producto con id inexistente");
-				throw sr;
-			}
-		}
+			sql = "UPDATE producto SET descripcion = ?, estado = ?, codigoProducto = ?, idSucursal = ? WHERE id = ?";
 			
 		try
 		{
 			sentencia = prepareStatement(sql);
 			
 			sentencia.setString(1, producto.getDescripcion());
-			sentencia.setInt(2, producto.getEstado());
+			sentencia.setInt(2, producto.getEstado().getEstado());
 			sentencia.setString(3, producto.getCodigoProducto());
 			sentencia.setInt(4, producto.getSucursal().getId());
 			
 			if (producto.getId() != 0)
 				sentencia.setInt(5, producto.getId());
 			
-			if(sentencia.executeUpdate() == 0)
-			{
-	            throw new SQLException("No hubo rows afectadas al intentar guardar producto");
-	        }
-			else
-			{
-				try (ResultSet generatedKeys = sentencia.getGeneratedKeys())
-				{
-					if (generatedKeys.next())
-						producto.getNuevoPrecio().getProducto().setId(generatedKeys.getInt(1));
-					else
-						throw new SQLException("No se pudo obtener el id del producto guardado");
-		        }
-			}
-			
-			if (producto.getNuevoPrecio() != null)
-				CatalogoPrecios.guardarPrecio(producto.getNuevoPrecio());
+			return sentencia.executeUpdate() != 0;
 		}
 		catch (SQLException e) 
 		{
-			sr.addError(e);
-			throw sr;
+			throw e;
 		}
 		finally
 		{
@@ -184,14 +145,14 @@ public class CatalogoProductos extends CatalogoBase
 		}
 	}
 	
-	public static int contarproductos()
+	public int contarproductos()
 	{
 		ResultSet rs = null;
 		PreparedStatement sentencia = null;
 		
 		int nroProductos = 0;
 		
-		String sql = "SELECT COUNT(*) FROM producto WHERE activo = TRUE";
+		String sql = "SELECT COUNT(*) FROM producto";
 		
 		try
 		{
@@ -218,7 +179,7 @@ public class CatalogoProductos extends CatalogoBase
 	//endregion
 	
 	//region Privados
-	private static Producto setProducto(ResultSet rs) throws RespuestaServidor
+	private Producto setProducto(ResultSet rs)
 	{
 		Producto producto = new Producto();
 		
@@ -226,10 +187,12 @@ public class CatalogoProductos extends CatalogoBase
 		{
 			producto.setId(rs.getInt("id"));
 			producto.setDescripcion(rs.getString("descripcion"));
-			producto.setEstado(rs.getInt("estado"));
+			producto.setEstado(new EstadoProducto().getEstado(rs.getInt("estado")));
 			
-			producto.setSucursal(CatalogoSucursal.obtenerSucursal(rs.getInt("idSucursal")));
-			producto.setPrecios(CatalogoPrecios.buscarPrecio(producto.getId()));
+			Sucursal sucursal = new Sucursal();
+			sucursal.setId(rs.getInt("idSucursal"));
+			
+			producto.setSucursal(sucursal);
 		} 
 		catch (SQLException e) 
 		{
@@ -237,34 +200,6 @@ public class CatalogoProductos extends CatalogoBase
 		}
 
 		return producto;
-	}
-	//endregion
-	
-	//region Validaciones
-	private static RespuestaServidor validarProducto(int idProducto)
-	{
-		RespuestaServidor sr = new RespuestaServidor();
-		
-		if (idProducto == 0)
-			sr.addError("Error, no se provee id para la búsqueda.");
-		
-		return sr;
-	}
-	
-	private static RespuestaServidor validarProducto(Producto producto)
-	{
-		RespuestaServidor sr = new RespuestaServidor();
-		
-		if(!(producto.getCodigoProducto() != null && !producto.getCodigoProducto().isEmpty()))
-			sr.addError("Ocurrió un error interno. El id es obligatorio.");
-		
-		if(!(producto.getDescripcion() != null && !producto.getDescripcion().isEmpty()))
-			sr.addError("El producto debe tener una descripción.");
-		
-		if(producto.getPrecio() != null && producto.getPrecio().getPrecio() < 0)
-			sr.addError("El precio ingresado no es válido.");
-		
-		return sr;
 	}
 	//endregion
 }

@@ -8,7 +8,9 @@ import constantes.TipoVenta;
 
 public class Venta implements Entidad
 {
-	private int id, formaPago, tipoVenta;		
+	private int id;	
+	private TipoVenta tipoVenta;
+	private FormaPago formaPago;
 	private Timestamp fechaVenta, fechaCaducidad;
 	private boolean isReserva, isPrestamo, pagada;
 	private float seña, deudaPendiente, importe;
@@ -156,19 +158,14 @@ public class Venta implements Entidad
 		this.cliente = cliente;
 	}
 	
-	public int getFormaPago() 
+	public FormaPago getFormaPago() 
 	{
 		return formaPago;
 	}
 	
-	public void setFormaPago(int formaPago) 
-	{
-		this.formaPago = formaPago;
-	}
-	
 	public void setFormaPago (FormaPago formaPago)
 	{
-		this.formaPago = formaPago.getFormaPago();
+		this.formaPago = formaPago;
 	}
 	
 	public float getImporte() 
@@ -191,19 +188,14 @@ public class Venta implements Entidad
 		this.cuotas = cuotas;
 	}
 	
-	public int getTipoVenta() 
+	public TipoVenta getTipoVenta() 
 	{
 		return tipoVenta;
 	}
 	
-	public void setTipoVenta(int tipoVenta)
-	{
-		this.tipoVenta = tipoVenta;
-	}
-	
 	public void setTipoVenta(TipoVenta tipoVenta)
 	{
-		this.tipoVenta = tipoVenta.getTipo();
+		this.tipoVenta = tipoVenta;
 	}
 	//endregion
 	

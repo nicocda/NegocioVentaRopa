@@ -2,10 +2,13 @@ package excepciones;
 
 import java.util.ArrayList;
 
+import entidades.Tarjeta;
+
 public class RespuestaServidor extends Exception 
 {
 	private static final long serialVersionUID = 1L;
 	private ArrayList<ErrorServidor> errors;
+	private String mensajeExito; 
 	private int returnId;
 	private String returnCode, returnName;
 	boolean status;
@@ -114,4 +117,38 @@ public class RespuestaServidor extends Exception
 		this.returnName = returnName;
 	}
 	
+	public String getMensajeExito()
+	{
+		return mensajeExito;
+	}
+
+	public void setMensajeExito(String mensajeExito)
+	{
+		this.mensajeExito = mensajeExito;
+	}
+
+	public String toJson()
+	{
+		String respuestaServidor = "\"mensajeExito\" : \"" + this.mensajeExito + "\","
+				+ "\"status\" : " + this.getStatus();
+		
+		if (this.errors != null && !this.errors.isEmpty())
+		{
+			String errors = ", \"errors\": [";
+			int i = 1;
+			
+			for (ErrorServidor error : this.errors)
+			{
+				errors = errors + "\"" + error.getErrorMessage() + "\"";
+				
+				if (i != this.errors.size())
+					errors = errors + ",";
+				
+				i++;
+			}
+			
+			respuestaServidor = respuestaServidor + errors + "]";
+		}
+		return "{" + respuestaServidor + "}";
+	}
 }

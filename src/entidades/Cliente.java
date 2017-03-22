@@ -10,6 +10,20 @@ public class Cliente implements Entidad
 	private boolean activo;
 	private ArrayList<Tarjeta> tarjetas;
 
+	//region Ctor
+	public Cliente(){ }
+	
+	public Cliente(int id, String nombre, String apellido, String direccion, String telefono, boolean activo)
+	{
+		this.id = id;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.direccion = direccion;
+		this.telefono = telefono;
+		this.activo = activo;
+	}
+	//endregion
+	
 	//region Setters y Getters
 	public float getDeudaTotal() 
 	{

@@ -9,13 +9,13 @@ $.postData = function(url, data, complete)
 		data: data,
 		success:function(result) 
 		{
-			if(result.tipoMensaje == "error")
+			if(!result.status)
 			{
 				$("#divError").load("./jspCompartido/MensajeError.jsp", function(){
 					$("#mensaje ul").empty();
-					jQuery.each(result.mensajes, function()
+					jQuery.each(result.errors, function()
 					{
-						$("#mensaje ul").append("<li>" + this.mensaje + "</li>");
+						$("#mensaje ul").append("<li>" + this + "</li>");
 						$("#mensaje").show("slow");
 					});
 				});
@@ -24,7 +24,7 @@ $.postData = function(url, data, complete)
 			else
 			{
 				$("#divError").load("./jspCompartido/MensajeExito.jsp", function(){
-					$("#mensaje strong").append(result.tipoMensaje);
+					$("#mensaje strong").append(result.mensajeExito);
 					$("#mensaje").show("slow");
 				});
 			}
@@ -51,13 +51,13 @@ $.postDataSinExito = function(url, data, exito)
 		data: data,
 		success: function(result) 
 		{
-			if(result.tipoMensaje == "error")
+			if(!result.status)
 			{
 				$("#divError").load("./jspCompartido/MensajeError.jsp", function(){
 					$("#mensaje ul").empty();
-					jQuery.each(result.mensajes, function()
+					jQuery.each(result.errors, function()
 					{
-						$("#mensaje ul").append("<li>" + this.mensaje + "</li>");
+						$("#mensaje ul").append("<li>" + this + "</li>");
 						$("#mensaje").show("slow");
 					});
 				});					
